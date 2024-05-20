@@ -66,7 +66,7 @@ $ npx shadcn-ui@latest init
 $ npx shadcn-ui@latest add button
 ```
 
-### 2. Storybook
+### 3. Storybook
 
 - add [Storybook](https://storybook.js.org/docs/get-started/nextjs) and `run it`
 
@@ -75,7 +75,7 @@ $ npx storybook@latest init
 $ npm run storybook
 ```
 
-### 3. Playwright and testing-library
+### 4. Playwright and testing-library
 
 - add [Playwright](https://playwright.dev/docs/intro) and run [example test](tests/example.spec.ts)
 
@@ -171,6 +171,8 @@ Snapshots: 0 total
 Time: 0.751 s
 Ran all test suites.
 ```
+
+## Section 2: Components
 
 ## External Links
 
