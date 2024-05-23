@@ -180,7 +180,10 @@ Ran all test suites.
 - add [Helvetica font](src/assets/fonts/helvetica/helvetica.ts)
 - add [nike font](src/assets/fonts/nike/nike.ts)
 
-### 6.
+### 6. Buttons
+
+- create [ArrowButton](src/components/ui/buttons/arrow-button/arrow-button.tsx)
+- create [Button](src/components/ui/buttons/button/button.tsx)
 
 ### 7.
 
