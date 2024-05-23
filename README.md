@@ -174,6 +174,22 @@ Ran all test suites.
 
 ## Section 2: Components
 
+### 5. Nike Colors and Fonts
+
+- add [Nike Colors](tailwind.config.ts)
+- add [Helvetica font](src/assets/fonts/helvetica/helvetica.ts)
+- add [nike font](src/assets/fonts/nike/nike.ts)
+
+### 6.
+
+### 7.
+
+### 8.
+
+### 9.
+
+### 10.
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
