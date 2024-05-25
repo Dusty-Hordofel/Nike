@@ -185,9 +185,103 @@ Ran all test suites.
 - create [ArrowButton](src/components/ui/buttons/arrow-button/arrow-button.tsx)
 - create [Button](src/components/ui/buttons/button/button.tsx)
 
-### 7.
+### 7. DiscountBanner
+
+```tsx
+<DiscountBanner {...discountedItems} />
+// <DiscountBanner discount={discountedItems} />
+```
+
+```tsx
+interface DiscountBannerProps {
+  // discount: {
+  title: string;
+  description: string;
+  link1: { label: string; href: string };
+  link2: { label: string; href: string };
+  // };
+}
+```
+
+```tsx
+import { nike } from "@/assets/fonts/nike/nike";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "./buttons/button/button";
+
+interface DiscountBannerProps {
+  // discount: {
+  title: string;
+  description: string;
+  link1: { label: string; href: string };
+  link2: { label: string; href: string };
+  // };
+}
+
+const DiscountBanner = ({
+  title,
+  description,
+  link1,
+  link2,
+}: DiscountBannerProps) => {
+  return (
+    <figure className="relative">
+      <picture>
+        <img
+          src="https://res.cloudinary.com/dgsc66scx/image/upload/v1695668027/nike-just-do-it_recpck.webp"
+          alt="Elephant at sunset"
+        />
+      </picture>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <figcaption className="text-center">
+            <div className={`${nike.className} mb-2 uppercase`}>
+              <h1 className="text-[40px] text-black-200 min-[960px]:text-5xl">
+                {title}
+              </h1>
+            </div>
+            <p>{description}</p>
+          </figcaption>
+          <div className="flex justify-center items-center mt-6">
+            {[link1, link2].map((link, index) => (
+              <Link
+                key={index}
+                href={link.href}
+                data-button-type="button"
+                aria-label={link.label}
+                className={cn(
+                  buttonVariants({ variant: "primary", size: "small" })
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </figure>
+  );
+};
+
+export default DiscountBanner;
+
+// other way
+// const DiscountBanner = ({
+//   discount: { title, description, link1, link2 },
+// }: any) => {
+//   // Le reste du composant reste inchangé...
+// };
+```
 
 ### 8.
+
+```tsx
+
+```
+
+```tsx
+
+```
 
 ### 9.
 

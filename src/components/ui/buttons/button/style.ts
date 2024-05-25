@@ -7,7 +7,7 @@ export const ButtonStyle = {
       secondary: "bg-white text-black-200  border-white hover:bg-gray-300",
     },
     size: {
-      small: "h-9 px-4 py-[6px]",
+      small: "h-9 px-4 py-[6px] mr-[6px]",
       medium: "h-12 px-6 py-3",
       large: "h-[58px] px-6 py-[18px]",
     },
