@@ -1,29 +1,37 @@
 export const discountedItems = {
+  src: "https://res.cloudinary.com/dgsc66scx/image/upload/v1695668027/nike-just-do-it_recpck.webp",
   title: "-25% sur tout le site",
   description:
     "Utilise le code SHINE23 à partir de 50€. Réservé aux membres.Des exclusions s'appliquent.*",
-  link1: {
-    label: "Acheter",
-    href: "https://www.nike.com/fr/w/promotions-9dklk",
-  },
-  link2: {
-    label: "* Conditions de l'offre",
-    href: "https://www.nike.com/fr/w/promotions-9dklk",
-  },
+  href: "/",
+  links: [
+    {
+      label: "Acheter",
+      href: "https://www.nike.com/fr/w/promotions-9dklk",
+    },
+    {
+      label: "* Conditions de l'offre",
+      href: "https://www.nike.com/fr/w/promotions-9dklk",
+    },
+  ],
 };
 
 export const discoverItems = {
+  // mediaType: "none",
   title: "le dancefloor t'appartient",
   description:
     "Quand tu danses, tes moves expriment qui tu es vraiment. Montre ton talent.",
-  link1: {
-    label: "Voir les articles de danse",
-    href: "https://www.nike.com/fr/w/promotions-9dklk",
-  },
-  link2: {
-    label: "Découvrir",
-    href: "https://www.nike.com/fr/w/promotions-9dklk",
-  },
+  href: "/",
+  links: [
+    {
+      label: "Voir les articles de danse",
+      href: "https://www.nike.com/fr/w/promotions-9dklk",
+    },
+    {
+      label: "Découvrir",
+      href: "https://www.nike.com/fr/w/promotions-9dklk",
+    },
+  ],
 };
 
 export const bannerImage = {
@@ -54,14 +62,16 @@ export const bannerVideo = {
   href: "/",
   title: "Ça va chauffer",
   description: "Des modèles pour tout changer cet été.",
-  link1: {
-    label: "Acheter",
-    href: "https://www.nike.com/fr/w/promotions-9dklk",
-  },
-  link2: {
-    label: "Enfant",
-    href: "https://www.nike.com/fr/w/promotions-9dklk",
-  },
+  links: [
+    {
+      label: "Acheter",
+      href: "https://www.nike.com/fr/w/promotions-9dklk",
+    },
+    {
+      label: "Enfant",
+      href: "https://www.nike.com/fr/w/promotions-9dklk",
+    },
+  ],
   // contentPosition: "bottomRight",
   // textAlign: "start",
   // linksAlign: "end",

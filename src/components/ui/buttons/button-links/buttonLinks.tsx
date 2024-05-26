@@ -1,24 +1,23 @@
 import Link from "next/link";
-import React from "react";
-import { buttonVariants } from "./buttons/button/button";
+import { buttonVariants } from "../button/button";
 import { cn } from "@/lib/utils";
 
-type LinkProps = {
-  links: { label: string; href: string }[];
+type ButtonLinkListProps = {
+  links?: { label: string; href: string }[];
   variant?: "primary" | "secondary";
   size?: "small" | "medium" | "large";
-  linksAlign?: "justify-start" | "justify-end" | "justify-center";
+  linksAlign?: string;
 };
 
-const LinkList = ({
+const buttonLinks = ({
   links,
   variant = "primary",
   size = "small",
   linksAlign = "justify-start",
-}: LinkProps) => {
+}: ButtonLinkListProps) => {
   return (
-    <div className={cn("flex items-center", linksAlign)}>
-      {links.map((link, index) => (
+    <div className={cn("flex items-center mt-[18px]", linksAlign)}>
+      {links?.map((link, index) => (
         <Link
           key={index}
           href={link.href}
@@ -33,4 +32,4 @@ const LinkList = ({
   );
 };
 
-export default LinkList;
+export default buttonLinks;

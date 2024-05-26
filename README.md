@@ -185,92 +185,239 @@ Ran all test suites.
 - create [ArrowButton](src/components/ui/buttons/arrow-button/arrow-button.tsx)
 - create [Button](src/components/ui/buttons/button/button.tsx)
 
-### 7. DiscountBanner
+### 7. Banner variants
+
+![Banner variants Demo](./public/website-demo/banner-variants.png "Banner Demo")
+
+- create [Banner](src/components/ui/banner/Banner.tsx)
 
 ```tsx
-<DiscountBanner {...discountedItems} />
-// <DiscountBanner discount={discountedItems} />
-```
-
-```tsx
-interface DiscountBannerProps {
-  // discount: {
-  title: string;
-  description: string;
-  link1: { label: string; href: string };
-  link2: { label: string; href: string };
-  // };
-}
-```
-
-```tsx
-import { nike } from "@/assets/fonts/nike/nike";
 import Link from "next/link";
+import React from "react";
+import BannerContent from "./BannerContent";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./buttons/button/button";
+import BannerVideo from "./BannerVideo";
+import BannerImage from "./BannerImage";
 
-interface DiscountBannerProps {
-  // discount: {
-  title: string;
-  description: string;
-  link1: { label: string; href: string };
-  link2: { label: string; href: string };
-  // };
-}
+export type ImageProps = {
+  mediaType: "image";
+  className?: string;
+} & React.ImgHTMLAttributes<HTMLImageElement>;
 
-const DiscountBanner = ({
-  title,
-  description,
-  link1,
-  link2,
-}: DiscountBannerProps) => {
+export type VideoProps = {
+  mediaType: "video";
+  className?: string;
+} & React.VideoHTMLAttributes<HTMLVideoElement>;
+
+export type NoMediaProps = {
+  mediaType: "none";
+};
+
+export type CommonBannerProps = {
+  href: string;
+  title?: string;
+  description?: string;
+  links?: { label: string; href: string }[];
+  descriptionClassName?: string;
+  titleClassName?: string;
+  bannerClassName?: string;
+  contentPosition?: string;
+  textAlign?: "text-start" | "text-center" | "text-end";
+  linksAlign?: string;
+  linksVariant?: "primary" | "secondary";
+  linksSize?: "small" | "medium" | "large";
+};
+
+type BannerProps = CommonBannerProps & (ImageProps | VideoProps | NoMediaProps);
+
+const Banner: React.FC<BannerProps> = (props) => {
+  const hasContent =
+    props.title ||
+    (props.title && props.description) ||
+    (props.title && props.description && props.links);
+
   return (
-    <figure className="relative">
-      <picture>
-        <img
-          src="https://res.cloudinary.com/dgsc66scx/image/upload/v1695668027/nike-just-do-it_recpck.webp"
-          alt="Elephant at sunset"
+    <figure
+      className={cn(
+        "relative text-white h-full max-h-[518px]",
+        props.bannerClassName
+      )}
+    >
+      {props.mediaType === "image" ? (
+        <Link href={props.href}>
+          <BannerImage {...(props as ImageProps)} />
+        </Link>
+      ) : props.mediaType === "video" ? (
+        <Link href={props.href}>
+          <BannerVideo {...(props as VideoProps)} />
+        </Link>
+      ) : null}
+      {hasContent && (
+        <BannerContent
+          {...(props as Omit<CommonBannerProps, "href" | "bannerClassName">)}
         />
-      </picture>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <figcaption className="text-center">
-            <div className={`${nike.className} mb-2 uppercase`}>
-              <h1 className="text-[40px] text-black-200 min-[960px]:text-5xl">
-                {title}
-              </h1>
-            </div>
-            <p>{description}</p>
-          </figcaption>
-          <div className="flex justify-center items-center mt-6">
-            {[link1, link2].map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                data-button-type="button"
-                aria-label={link.label}
-                className={cn(
-                  buttonVariants({ variant: "primary", size: "small" })
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+      )}
     </figure>
   );
 };
 
-export default DiscountBanner;
+export default Banner;
+```
 
-// other way
-// const DiscountBanner = ({
-//   discount: { title, description, link1, link2 },
-// }: any) => {
-//   // Le reste du composant reste inchangé...
-// };
+- [BannerVideo](src/components/ui/banner/BannerVideo.tsx)
+
+```tsx
+import React from "react";
+import { VideoProps } from "./Banner";
+import { cn } from "@/lib/utils";
+
+type BannerVideo = Omit<VideoProps, "mediaType">;
+
+const BannerVideo = ({
+  src,
+  poster,
+  autoPlay = true,
+  loop = true,
+  muted = true,
+  controls = false,
+  className,
+  ...videoProps
+}: BannerVideo) => {
+  return (
+    <video
+      className={cn("max-h-[518px] w-full h-full  object-cover", className)}
+      src={src}
+      poster={poster}
+      autoPlay={autoPlay}
+      loop={loop}
+      muted={muted}
+      controls={controls}
+      {...videoProps}
+    />
+  );
+};
+
+export default BannerVideo;
+```
+
+- [BannerImage](src/components/ui/banner/BannerImage.tsx)
+
+```tsx
+import React from "react";
+import { ImageProps } from "./Banner";
+import { cn } from "@/lib/utils";
+
+type BannerImageProps = Omit<ImageProps, "mediaType">;
+
+const BannerImage = ({
+  src,
+  alt,
+  className,
+  ...imgProps
+}: BannerImageProps) => {
+  return (
+    <picture>
+      <img
+        src={src}
+        alt={alt}
+        className={cn("max-h-[518px] w-full h-full object-cover", className)}
+        {...imgProps}
+      />
+    </picture>
+  );
+};
+
+export default BannerImage;
+```
+
+- [buttonLinks](src/components/ui/buttons/button-links/buttonLinks.tsx)
+
+```tsx
+import Link from "next/link";
+import { buttonVariants } from "./buttons/button/button";
+import { cn } from "@/lib/utils";
+
+type ButtonLinkListProps = {
+  links?: { label: string; href: string }[];
+  variant?: "primary" | "secondary";
+  size?: "small" | "medium" | "large";
+  linksAlign?: string;
+};
+
+const buttonLinks = ({
+  links,
+  variant = "primary",
+  size = "small",
+  linksAlign = "justify-start",
+}: ButtonLinkListProps) => {
+  return (
+    <div className={cn("flex items-center mt-[18px]", linksAlign)}>
+      {links?.map((link, index) => (
+        <Link
+          key={index}
+          href={link.href}
+          data-button-type="button"
+          aria-label={link.label}
+          className={cn(buttonVariants({ variant, size }), "font-medium")}
+        >
+          {link.label}
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+export default buttonLinks;
+```
+
+- [using Banner](src/app/page.tsx)
+
+```tsx
+  <SmallDiscountBanner
+        mediaType="image"
+        src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1512,c_limit/340cfca0-c6d2-4748-ac2b-aa77dcfe44ad/nike-just-do-it.png"
+        title="-25% sur tout le site"
+        alt="Molongui"
+        href="https://www.nike.com/fr/w/promotions-9dklk"
+        contentPosition="absolute-center text-black-200 w-[90%]"
+        titleClassName="text-2xl sm:text-3xl  md:text-[40px] min-[960px]:text-5xl"
+        bannerClassName="h-[104px] bg-orange"
+      />
+      <DiscountBanner
+        {...discountedItems}
+        mediaType="image"
+        contentPosition="absolute-center text-black-200 w-[90%]"
+        titleClassName="text-2xl sm:text-3xl md:text-[40px] min-[960px]:text-5xl"
+        bannerClassName="h-[250px]"
+      />
+      <DiscoverBanner
+        mediaType="none"
+        contentPosition="absolute-center w-[90%]"
+        titleClassName="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-black-200 px-10"
+        bannerClassName="h-[300px]"
+        linksAlign="justify-center"
+        {...discoverItems}
+      />
+      <ImageBanner
+        mediaType="image"
+        contentPosition="absolute-center w-[80%]"
+        textAlign="text-center"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-7xl  text-white"
+        bannerClassName="h-[518px]"
+        descriptionClassName="text-white"
+        {...bannerImage}
+      />
+      <VideoBanner
+        mediaType="video"
+        contentPosition="bottom-left w-[80%]"
+        textAlign="text-start"
+        linksAlign="justify-start"
+        linksVariant="secondary"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white"
+        descriptionClassName="text-white"
+        bannerClassName="h-[518px]"
+        {...bannerVideo}
+      />
 ```
 
 ### 8.

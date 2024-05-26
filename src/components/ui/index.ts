@@ -1,5 +1,4 @@
-export { default as Banner } from "./Banner";
-export { default as DiscountBanner } from "./DiscountBanner";
-export { default as DiscoverBanner } from "./DiscoverBanner";
-export { default as BannerContent } from "./BannerContent";
-// export { default as ArrowButton } from "./buttons/arrow-button";
+export { default as Banner } from "./banner/Banner";
+export { default as DiscountBanner } from "./banner/DiscountBanner";
+export { default as DiscoverBanner } from "./banner/DiscoverBanner";
+export { default as BannerContent } from "./banner/BannerContent";

@@ -1,19 +1,14 @@
 import { nike } from "@/assets/fonts/nike/nike";
-import DiscountLinks from "./LinkList";
+
+import DiscountLinks from "../buttons/button-links/buttonLinks";
 
 interface DiscountBannerProps {
   title: string;
   description: string;
-  link1: { label: string; href: string };
-  link2: { label: string; href: string };
+  links: { label: string; href: string }[];
 }
 
-const DiscountBanner = ({
-  title,
-  description,
-  link1,
-  link2,
-}: DiscountBannerProps) => {
+const DiscountBanner = ({ title, description, links }: DiscountBannerProps) => {
   return (
     <figure className="relative">
       <picture>
@@ -32,7 +27,7 @@ const DiscountBanner = ({
             </div>
             <p>{description}</p>
           </figcaption>
-          <DiscountLinks links={[link1, link2]} />
+          <DiscountLinks links={links} />
         </div>
       </div>
     </figure>
