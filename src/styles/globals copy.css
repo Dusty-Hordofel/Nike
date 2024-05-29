@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  .absolute-flex-center {
+    @apply absolute inset-0 w-full flex justify-center items-center;
+  }
+  .top-left {
+    @apply absolute top-12 left-12;
+  }
+  .bottom-left {
+    @apply absolute bottom-12 left-12;
+  }
+  .top-right {
+    @apply absolute top-12  right-12;
+  }
+  .bottom-right {
+    @apply absolute bottom-12 right-12;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 600px; /* Adjust width to show three items */
+}
+
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.slide-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out; /* Smooth transition for slide movement */
+}
+
+.carousel-item {
+  /* flex: 1 0 33.333%; Each item takes up one-third of the container */
+  width: 200px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+}
