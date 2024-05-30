@@ -420,7 +420,11 @@ export default buttonLinks;
       />
 ```
 
-### 8.
+### 8. Carousel Step 2
+
+### 9. Home Products Categories
+
+- create []()
 
 ```tsx
 

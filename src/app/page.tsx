@@ -1,10 +1,12 @@
 "use client";
+import { footerMenu } from "@/assets/data/footer";
 import {
   bannerImage,
   bannerVideo,
   discountedItems,
   discoverItems,
 } from "@/assets/data/links";
+import { categories } from "@/assets/data/products";
 import {
   AllForYourSport,
   AtTheMoment,
@@ -14,6 +16,7 @@ import {
   OurIconicModels,
   trendSlides,
 } from "@/assets/data/slides";
+import HomeProductsCategories from "@/components/home-products-categories";
 
 import {
   Banner as DiscountBanner,
@@ -54,7 +57,7 @@ export default function Home() {
       >
         {(slide) => (
           <CarouselContent carouselContentClassName="mt-[36px]">
-            <h3 className="text-[20px] font-medium">{slide.title}</h3>
+            <h3 className="text-xl font-medium">{slide.title}</h3>
           </CarouselContent>
         )}
       </Carousel>
@@ -152,6 +155,30 @@ export default function Home() {
           </CarouselContent>
         )}
       </Carousel>
+      <HomeProductsCategories categories={categories} />
+
+      <footer className="p-12 border-t border-gray-500 text-sm">
+        <ul className="grid grid-cols-4">
+          {footerMenu.map(({ name, content }, index) => (
+            <li key={index}>
+              <h4 className="font-medium mb-6">{name}</h4>
+              <ul className="">
+                {content.map(({ text, url }) => (
+                  <li
+                    className=" text-gray-500 hover:text-black-200"
+                    key={name}
+                  >
+                    <Link href={url} className="">
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </footer>
+
       {/* 
       <SmallDiscountBanner
         mediaType="image"
