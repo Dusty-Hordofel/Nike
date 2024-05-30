@@ -1,10 +1,19 @@
+"use client";
 import {
   bannerImage,
   bannerVideo,
   discountedItems,
   discoverItems,
 } from "@/assets/data/links";
-import { trendCrossSlides, trendSlides } from "@/assets/data/slides";
+import {
+  AllForYourSport,
+  AtTheMoment,
+  MoreArticles,
+  NewThisWeek,
+  NikeMemberAccess,
+  OurIconicModels,
+  trendSlides,
+} from "@/assets/data/slides";
 
 import {
   Banner as DiscountBanner,
@@ -13,42 +22,138 @@ import {
   Banner as ImageBanner,
   Banner as SmallDiscountBanner,
 } from "@/components/ui";
+import ButtonLinks from "@/components/ui/buttons/button-links/buttonLinks";
+import { buttonVariants } from "@/components/ui/buttons/button/button";
 
 import Carousel from "@/components/ui/carousels/Carousel";
+import CarouselContent from "@/components/ui/carousels/CarouselContent";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
       <div className="h-10 bg-info w-full mb-20"></div>
-      <Carousel
-        title="Tendances de la semaine"
-        data={trendSlides}
-        // isContentVisible={true}
-        type="content"
+
+      <VideoBanner
+        mediaType="video"
+        contentPosition="bottom-left w-[80%]"
+        textAlign="text-start"
+        linksAlign="justify-start"
+        linksVariant="secondary"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white"
+        descriptionClassName="text-white"
+        bannerClassName="h-[518px]"
+        {...bannerVideo}
       />
+
       <Carousel
-        title="Tendances de la semaine"
-        data={trendSlides}
-        carouselClassName="h-[637px] bg-gray-500"
+        title="En ce moment"
+        data={AtTheMoment}
         imageClassName="h-[571px]"
-        titleClassName="text-xl"
-        type="title"
-      />
-      {/* <TrendCaroussel data={trendSlides} crossProduct/> */}
-      {/* <TrendCaroussel
-        title="Tendances de la semaine"
-        exclusive
-        data={trendSlides}
-        crossProduct
-      /> */}
-      {/* <TrendCaroussel
-        title="Tendances de la semaine prochaine"
-        exclusive={false}
-        data={trendCrossSlides}
-        crossProduct
-      /> */}
-      {/* <Carousel data={trendSlides} /> */}
-      {/* <SmallDiscountBanner
+      >
+        {(slide) => (
+          <CarouselContent carouselContentClassName="mt-[36px]">
+            <h3 className="text-[20px] font-medium">{slide.title}</h3>
+          </CarouselContent>
+        )}
+      </Carousel>
+
+      <Carousel
+        title="Nos modèles iconiques"
+        data={OurIconicModels}
+        imageClassName="h-[311px]"
+      >
+        {(slide) => (
+          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+            <Link
+              href=""
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "small" }),
+                "font-medium"
+              )}
+            >
+              {slide.title}
+            </Link>
+          </CarouselContent>
+        )}
+      </Carousel>
+
+      <Carousel
+        title="Tout pour ton sport"
+        data={AllForYourSport}
+        imageClassName="h-[311px]"
+      >
+        {(slide) => (
+          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+            <Link
+              href=""
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "small" }),
+                "font-medium"
+              )}
+            >
+              {slide.title}
+            </Link>
+          </CarouselContent>
+        )}
+      </Carousel>
+
+      <Carousel title="Nouveau cette semaine" data={NewThisWeek}>
+        {(slide) => (
+          <CarouselContent carouselContentClassName="mt-[36px]">
+            <>
+              <h4 className="text-base font-medium">{slide.title}</h4>
+              <p className="w-full text-gray-500">{slide.type}</p>
+              <p className="pt-2 font-medium">{slide.prix}</p>
+            </>
+          </CarouselContent>
+        )}
+      </Carousel>
+
+      <Carousel
+        title="Plus d'articles"
+        data={MoreArticles}
+        imageClassName="h-[571px]"
+      >
+        {(slide) => (
+          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+            <Link
+              href=""
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "small" }),
+                "font-medium"
+              )}
+            >
+              {slide.title}
+            </Link>
+          </CarouselContent>
+        )}
+      </Carousel>
+
+      <Carousel
+        title="Accès Membre Nike"
+        data={NikeMemberAccess}
+        imageClassName="h-[458px]"
+      >
+        {(slide) => (
+          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+            <p className="w-full text-gray-500 pb-2">{slide.type}</p>
+            <h4 className="text-base font-medium">{slide.title}</h4>
+            <Link
+              href=""
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "small" }),
+                "font-medium mt-[18px]"
+              )}
+            >
+              {slide.title}
+            </Link>
+          </CarouselContent>
+        )}
+      </Carousel>
+      {/* 
+      <SmallDiscountBanner
         mediaType="image"
         src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1512,c_limit/340cfca0-c6d2-4748-ac2b-aa77dcfe44ad/nike-just-do-it.png"
         title="-25% sur tout le site"

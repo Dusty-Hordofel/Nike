@@ -9,7 +9,7 @@ type ButtonLinkListProps = {
   linksAlign?: string;
 };
 
-const buttonLinks = ({
+const ButtonLinks = ({
   links,
   variant = "primary",
   size = "small",
@@ -32,4 +32,4 @@ const buttonLinks = ({
   );
 };
 
-export default buttonLinks;
+export default ButtonLinks;

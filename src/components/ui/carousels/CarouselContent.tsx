@@ -1,36 +1,16 @@
+import React, { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import React from "react";
 
-type CarouselContentProps = {
-  exclusive: boolean;
-  slide: any;
-  type: "title" | "content";
-  titleClassName?: string;
-};
+interface CarouselContentProps {
+  children: ReactNode;
+  carouselContentClassName?: string;
+}
 
-const CarouselContent = ({
-  exclusive,
-  slide,
-  type,
-  titleClassName,
-}: CarouselContentProps) => {
-  return (
-    <>
-      <div className="mt-3">
-        <div>
-          {type === "title" && (
-            <h4 className={cn("text-base font-medium", titleClassName)}>
-              {slide.title}
-            </h4>
-          )}
-          {type === "content" && (
-            <p className="w-full text-gray-500">{slide.type}</p>
-          )}
-        </div>
-        {type === "content" && <p className="pt-2 font-medium">{slide.prix}</p>}
-      </div>
-    </>
-  );
+const CarouselContent: React.FC<CarouselContentProps> = ({
+  children,
+  carouselContentClassName,
+}) => {
+  return <div className={cn(carouselContentClassName)}>{children}</div>;
 };
 
 export default CarouselContent;

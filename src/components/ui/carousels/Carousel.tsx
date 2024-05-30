@@ -6,26 +6,21 @@ import { TrendSlidesProps } from "@/types/types";
 
 interface CarousselProps {
   title?: string;
-  exclusive?: boolean;
   data?: TrendSlidesProps[];
-  crossProduct?: boolean;
-  // isContentVisible?: boolean;
   slideClassName?: string;
   imageClassName?: string;
   carouselClassName?: string;
-  titleClassName?: string;
-  type: "title" | "content";
+  children: (slide: TrendSlidesProps) => React.ReactNode; // Ajouter children comme
 }
 
 const Carousel = ({
   title,
   data,
   imageClassName,
-  // isContentVisible,
   slideClassName,
   carouselClassName,
-  titleClassName,
-  type,
+
+  children,
 }: CarousselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAtStart, setIsAtStart] = useState(true);
@@ -91,13 +86,12 @@ const Carousel = ({
       <CarouselSlides
         carouselRef={carouselRef}
         data={data}
-        // isContentVisible={isContentVisible}
         slideClassName={slideClassName}
         imageClassName={imageClassName}
         carouselClassName={carouselClassName}
-        titleClassName={titleClassName}
-        type={type}
-      />
+      >
+        {children}
+      </CarouselSlides>
     </section>
   );
 };
