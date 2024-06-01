@@ -8,7 +8,7 @@ type Category = {
   products: Product[];
 };
 
-type ECommerceSite = Category[];
+export type ECommerceSite = Category[];
 
 export const categories: ECommerceSite = [
   {

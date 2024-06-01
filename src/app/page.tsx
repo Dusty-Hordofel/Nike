@@ -17,6 +17,7 @@ import {
   trendSlides,
 } from "@/assets/data/slides";
 import HomeProductsCategories from "@/components/home-products-categories";
+import Navbar from "@/components/navbar/Navbar";
 
 import {
   Banner as DiscountBanner,
@@ -36,7 +37,9 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="h-10 bg-info w-full mb-20"></div>
+      {/* <div className="h-10 bg-info w-full mb-20"></div> */}
+
+      <Navbar />
 
       <VideoBanner
         mediaType="video"
