@@ -4,23 +4,13 @@ import IconButton from "../../ui/IconButton";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-type SearchInputProps = {
-  expand?: boolean;
-  handleSearchInput: () => void;
-  // type?: "search";
-};
-
-// onMouseEnter={() => setIsIconHovered(true)}
-//           onMouseLeave={() => setIsIconHovered(false)}
-//           onClick={handleSearchInput}
-const SearchInput = ({ expand, handleSearchInput }: SearchInputProps) => {
+const SearchInput = () => {
   const [isIconHovered, setIsIconHovered] = useState(false);
 
   return (
     <div
       className={cn(
-        "w-[168px]   rounded-full overflow-hidden relative group",
-        expand ? "search__input__box__expand" : " search__input__box"
+        "w-[168px] mr-3  h-full   rounded-full overflow-hidden relative group"
       )}
     >
       <IconButton
@@ -34,6 +24,8 @@ const SearchInput = ({ expand, handleSearchInput }: SearchInputProps) => {
         tabIndex={0}
         data-search-closed-label="Rechercher"
         data-search-open-label="Ouvrir la recherche modale"
+        onMouseEnter={() => setIsIconHovered(true)}
+        onMouseLeave={() => setIsIconHovered(false)}
       />
 
       <input
@@ -46,9 +38,7 @@ const SearchInput = ({ expand, handleSearchInput }: SearchInputProps) => {
         name="search"
         autoComplete="off"
         aria-label="Rechercher des produits"
-        // role="combobox"
         aria-controls="search"
-        // aria-expanded={expand}
       />
     </div>
   );

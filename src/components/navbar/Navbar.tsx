@@ -1,6 +1,9 @@
 "use client";
+import { CartIcon, FavorisIcon, NikeIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
+import IconButton from "../ui/IconButton";
+import SearchInput from "./search/SearchInput";
 
 type Props = {};
 
@@ -15,15 +18,16 @@ const Navbar = (props: Props) => {
   };
   return (
     <header className="relative z-20 max-w-[1920px]">
-      <div className="grid grid-cols-12 px-12 bg-warning h-[60px] items-center overflow-hidden">
+      <div className="grid grid-cols-12 px-12 h-[60px] items-center overflow-hidden">
         {/* Nike */}
-        <div className="swoosh css-15dknis e4lt99o0 nds-grid-item col-span-2 bg-success h-full z-10">
-          <div className="w-[60px] h-[60px] bg-black-100 text-white">Nike</div>
+        <div className="col-span-2 h-full z-10">
+          <span className="sr-only">Page d&lsquo;accueil Nike</span>
+          <NikeIcon className="cursor-pointer hover:opacity-70 w-[60px] h-[60px]  scale-125 " />
         </div>
         {/* navbar */}
-        <div className="col-span-7 bg-blue-200 h-full">
-          <nav className="absolute inset-x-0 bg-green-800 h-full">
-            <ul className="flex justify-center items-center space-x-2 bg-orange h-full max-w-[1255px] w-[calc(100%-426px)] mx-auto desktop-category">
+        <div className="col-span-7 h-full">
+          <nav className="absolute inset-x-0 h-full">
+            <ul className="flex justify-center items-center space-x-2 h-full max-w-[1255px] w-[calc(100%-426px)] mx-auto desktop-category">
               <li>testako</li>
               <li>testako</li>
               <li>testako</li>
@@ -33,70 +37,26 @@ const Navbar = (props: Props) => {
             </ul>
           </nav>
         </div>
-        <div className="col-span-3 bg-green-200 h-full z-10">
-          <div className="float-right gap-[4px] flex bg-green-500 pt-3">
-            {/* <div className="w-[180px] h-[36px]"> */}
+        <div className="col-span-3 bg-white h-full z-10 pt-3">
+          <div className="float-right gap-1 flex h-[36px]">
             <search aria-label="Rechercher des articles Nikes">
-              <form action="">
-                <div
-                  // fixed inset-x-0
-                  className={cn(
-                    expand
-                      ? " bg-yellow-100  grid-cols-[20%_60%_20%]"
-                      : "grid-cols-[0px_180px_0px]",
-                    "transition-all grid "
-                  )}
-                  //   className={cn(
-                  //     expand
-                  //       ? "bg bg-yellow-100  grid-cols-[20%_60%_20%] fixed inset-x-0 "
-                  //       : "grid-cols-[0px_180px_0px] float-right flex",
-                  //     "transition-all grid"
-                  //   )}
-                  //   className={cn(
-                  //     "grid transition-all w-full",
-                  //     expand
-                  //       ? "grid-cols-[20%_60%_20%] fixed inset-x-0  pt-3 z-30 "
-                  //       : "grid-cols-[0px_180px_0px] search-bar-container"
-                  //   )}
-                >
-                  <p>MALA</p>
-                  {/* <p className="bg-blue-200">MALA</p>
-                  <p>MALA</p> */}
-                  {/* <div
-                    className={cn(
-                      "bar-swoosh-container hidden opacity-0 h-0 w-0 text-[0]"
-                    )}
-                  >
-                    Olingo
-                  </div>
-                  <div
-                    className={cn(
-                      "bar-input-container bg-blue-300 h-[36px] col-span-2"
-                    )}
-                  >
-                    Loko
-                  </div>
-                  <div
-                    className={cn(
-                      "bar-cancel-container hidden opacity-0 h-0 w-0 text-[0]"
-                    )}
-                  >
-                    <p>Mayela</p>
-                  </div> */}
-                  <div className="bar-search-results-tray"></div>
-                  <div className="search-scrim"></div>
-                </div>
-              </form>
+              <SearchInput />
             </search>
-            {/* </div> */}
             {!expand && (
               <>
-                <p className="w-[36px] h-[36px] bg-orange text-center">
-                  <span>Olo</span>
-                </p>
-                <p className="w-[36px] h-[36px] bg-blue-200">
-                  <span>Lio</span>
-                </p>
+                <IconButton
+                  icon={<FavorisIcon />}
+                  aria-label="Favoris"
+                  title="Favoris"
+                  className="mr-3 favoriteIcon"
+                />
+                <IconButton
+                  icon={<CartIcon />}
+                  aria-label="Articles du panier: 0"
+                  title="Articles du panier: 0"
+                  rel="nofollow"
+                  className="cartIcon"
+                />
               </>
             )}
           </div>
