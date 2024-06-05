@@ -1,12 +1,8 @@
-import { ECommerceSite } from "@/assets/data/products";
+import { Category } from "@/assets/data/products";
 import Link from "next/link";
 import React from "react";
 
-const HomeProductsCategories = ({
-  categories,
-}: {
-  categories: ECommerceSite;
-}) => {
+const HomeProductsCategories = ({ categories }: { categories: Category[] }) => {
   return (
     <ul className="grid grid-cols-4 w-[920px] mx-auto gap-x-10 px-5 h-[197px] hover:h-[903px] overflow-hidden group transition-all ">
       {categories.map(({ name, products }, index) => (

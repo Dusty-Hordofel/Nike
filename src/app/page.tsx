@@ -5,7 +5,7 @@ import {
   bannerVideo,
   discountedItems,
   discoverItems,
-} from "@/assets/data/links";
+} from "@/assets/data/banner";
 import { categories } from "@/assets/data/products";
 import {
   AllForYourSport,

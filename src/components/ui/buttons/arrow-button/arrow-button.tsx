@@ -15,6 +15,7 @@ export const iconButtonVariants = cva(ArrowButtonStyle.base, {
 export type ArrowButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof iconButtonVariants> & {
     disabled?: boolean;
+    // hover:ArrowButtonStyle.hover
   };
 
 export const ArrowButton = ({

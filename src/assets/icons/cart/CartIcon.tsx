@@ -1,6 +1,6 @@
-type Props = {};
+import { SVGProps } from "react";
 
-const CartIcon = (props: Props) => {
+const CartIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
       aria-hidden="true"

@@ -10,6 +10,7 @@ const FavorisIcon = (props: Props) => {
   return (
     <svg
       aria-hidden="true"
+      aria-label="Favoris"
       fill="none"
       focusable="false"
       height="24px"

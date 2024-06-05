@@ -420,23 +420,171 @@ export default buttonLinks;
       />
 ```
 
-### 8. Carousel Step 2
+### 8. Carousel
 
-### 9. Home Products Categories
+- create [Carousel](src/components/ui/carousels/Carousel.tsx)
 
-- create []()
+```ts
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import CarouselControls from "./CarouselControls";
+import CarouselSlides from "./CarouselSlides";
+import { TrendSlidesProps } from "@/types/types";
 
-```tsx
+interface CarousselProps {
+  title?: string;
+  data?: TrendSlidesProps[];
+  slideClassName?: string;
+  imageClassName?: string;
+  carouselClassName?: string;
+  children: (slide: TrendSlidesProps) => React.ReactNode; //
+}
+
+const Carousel = ({
+  title,
+  data,
+  imageClassName,
+  slideClassName,
+  carouselClassName,
+
+  children,
+}: CarousselProps) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+
+  const carouselRef = useRef<HTMLUListElement | null>(null);
+
+  const goToPreviousSlide = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -469,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const goToNextSlide = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: 469, //457+12(slide width + margin right)
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    if (carouselRef.current) {
+      const scrollLeft = carouselRef.current.scrollLeft;
+      const maxScrollLeft =
+        carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
+      const active = Math.round(scrollLeft / 469);
+      setActiveIndex(active);
+      setIsAtStart(scrollLeft === 0);
+      setIsAtEnd(scrollLeft >= maxScrollLeft);
+    }
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener("scroll", handleScroll);
+      return () => {
+        carousel.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
+
+  console.log("🚀 ~ Carousel ~ data:", data);
+
+  return (
+    <section>
+      <div className="flex justify-between items-center px-12 mb-3 pt-[2px] h-[56.398px]">
+        <h2 className="text-2xl font-medium ">{title}</h2>
+        <CarouselControls
+          isAtStart={isAtStart}
+          isAtEnd={isAtEnd}
+          goToPreviousSlide={goToPreviousSlide}
+          goToNextSlide={goToNextSlide}
+        />
+      </div>
+      <CarouselSlides
+        carouselRef={carouselRef}
+        data={data}
+        slideClassName={slideClassName}
+        imageClassName={imageClassName}
+        carouselClassName={carouselClassName}
+      >
+        {children}
+      </CarouselSlides>
+    </section>
+  );
+};
+
+export default Carousel;
 
 ```
 
+### 9. Navigation
+
+- create [Navbar](src/components/navbar/Navbar.tsx)
+
 ```tsx
+"use client";
+import { CartIcon, FavorisIcon, NikeIcon } from "@/assets/icons";
+import React, { useState } from "react";
+import SearchInput from "./search/SearchInput";
+import NavLinks from "./navigation/NavLinks";
+import { menuLinks } from "@/assets/data/menuLinks";
+import Link from "next/link";
 
+const Navbar = () => {
+  const [expand, setExpand] = useState(false);
+
+  return (
+    <header className="relative z-10 max-w-[1920px] h-16 bg-white">
+      <div className="grid grid-cols-12 px-12 h-full items-center overflow-hidden">
+        <div className="col-span-2 h-full z-10">
+          <span className="sr-only">Page d&lsquo;accueil Nike</span>
+          <NikeIcon className="cursor-pointer hover:opacity-70 w-[60px] h-[60px]  scale-125 " />
+        </div>
+
+        <div className="col-span-7 h-full">
+          <nav className="absolute inset-x-0 h-full ">
+            <NavLinks menuLinks={menuLinks} />
+          </nav>
+        </div>
+        <div className="col-span-3 h-full z-10 pt-3">
+          <div className="float-right gap-1 flex h-[36px]">
+            <search aria-label="Rechercher des articles Nikes">
+              <SearchInput />
+            </search>
+
+            {!expand && (
+              <>
+                <Link className="link-icon-hover" href="#">
+                  <FavorisIcon aria-label="Favoris" />
+                </Link>
+                <Link className="link-icon-hover" href="#">
+                  <CartIcon aria-label="Articles du panier: 0" />
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
 ```
-
-### 9.
 
 ### 10.
+
+```tsx
+
+```
 
 ## External Links
 

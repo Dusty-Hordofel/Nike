@@ -3,14 +3,12 @@ type Product = {
   url: string;
 };
 
-type Category = {
+export type Category = {
   name: string;
   products: Product[];
 };
 
-export type ECommerceSite = Category[];
-
-export const categories: ECommerceSite = [
+export const categories = [
   {
     name: "Chaussures",
     products: [

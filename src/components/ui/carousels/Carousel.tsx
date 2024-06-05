@@ -10,7 +10,7 @@ interface CarousselProps {
   slideClassName?: string;
   imageClassName?: string;
   carouselClassName?: string;
-  children: (slide: TrendSlidesProps) => React.ReactNode; // Ajouter children comme
+  children: (slide: TrendSlidesProps) => React.ReactNode; //
 }
 
 const Carousel = ({

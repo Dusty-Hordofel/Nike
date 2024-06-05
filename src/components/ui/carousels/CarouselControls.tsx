@@ -14,7 +14,7 @@ const CarouselControls = ({
   goToNextSlide,
 }: CarouselControlsProps) => {
   return (
-    <div className="flex bg-orange">
+    <div className="flex">
       <div onClick={() => goToPreviousSlide()}>
         <ArrowButton direction="left" disabled={isAtStart} />
       </div>

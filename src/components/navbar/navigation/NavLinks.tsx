@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import NavLink from "./NavLink";
 
 interface SubLink {
@@ -7,13 +6,7 @@ interface SubLink {
 }
 
 interface NavLinksProps {
-  name: string;
-  sublinks: SubLink[];
-  submenu: boolean;
-}
-
-interface NavLinksProps {
-  menuLinks: NavLinksProps[];
+  menuLinks: { name: string; sublinks?: SubLink[]; submenu: boolean }[];
 }
 
 const NavLinks = ({ menuLinks }: NavLinksProps) => {
@@ -28,7 +21,7 @@ const NavLinks = ({ menuLinks }: NavLinksProps) => {
         return (
           <>
             <li
-              className="bg-yellow-700 h-16 px-3 flex items-center justify-center"
+              className="h-16 px-3 flex items-center justify-center"
               key={index}
             >
               <NavLink name={name} submenu={submenu} />

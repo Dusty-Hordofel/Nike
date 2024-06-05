@@ -1,5 +1,16 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import React from "react";
+
+// interface IconLinkProps
+//   extends  React.AnchorHTMLAttributes<HTMLAnchorElement> {
+//   icon: React.ReactNode;
+//   href:string
+// }
+
+// interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLAnchorElement>, LinkProps {
+//   icon: React.ReactNode;
+// }
 
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,7 +24,6 @@ const IconButton = ({ icon, className, ...props }: IconButtonProps) => {
       {...props}
     >
       {icon && <span>{icon}</span>}
-      {/* SVG has aria-hidden="true" */}
     </button>
   );
 };
