@@ -16,7 +16,7 @@ import {
   OurIconicModels,
   trendSlides,
 } from "@/assets/data/slides";
-import HomeProductsCategories from "@/components/home-products-categories";
+import HomeProductsCategories from "@/components/HomeProductsCategories";
 import Navbar from "@/components/navbar/Navbar";
 
 import {

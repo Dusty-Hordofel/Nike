@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 
 import "../styles/globals.css";
 import { helvetica } from "@/assets/fonts/helvetica/helvetica";
+import Providers from "@/components/providers/Providers";
+import ClientOnly from "@/components/ClientOnly";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={helvetica.className}>{children}</body>
+      <body className={`${helvetica.className} max-w-[1924px]`}>
+        <Providers>
+          <ClientOnly>{children}</ClientOnly>
+        </Providers>
+      </body>
     </html>
   );
 }
