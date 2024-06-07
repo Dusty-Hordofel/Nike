@@ -70,8 +70,6 @@ const Carousel = ({
     }
   }, []);
 
-  console.log("🚀 ~ Carousel ~ data:", data);
-
   return (
     <section>
       <div className="flex justify-between items-center px-12 mb-3 pt-[2px] h-[56.398px]">

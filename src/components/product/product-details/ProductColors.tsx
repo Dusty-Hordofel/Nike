@@ -1,8 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { SubProduct } from "@/types/types";
+import React, { useState } from "react";
 import Image from "next/image";
 
 type ProductColorsProps = {
@@ -12,17 +11,8 @@ type ProductColorsProps = {
   productStyle: number;
 };
 
-const ProductColors = ({
-  slug,
-  productStyle,
-  subProducts,
-  name,
-}: ProductColorsProps) => {
-  const [colorVariants, setColorVariants] = useState<SubProduct[]>(
-    subProducts.map((subProduct: SubProduct) => {
-      return subProduct.color;
-    })
-  );
+const ProductColors = ({ slug, colors, productStyle, name }: any) => {
+  const [colorVariants, setColorVariants] = useState<any>(colors);
 
   return (
     <div className="flex gap-2 pb-[10px]">

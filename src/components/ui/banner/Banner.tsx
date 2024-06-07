@@ -1,17 +1,19 @@
 import Link from "next/link";
-import BannerContent from "./BannerContent";
 import { cn } from "@/lib/utils";
-import BannerVideo from "./BannerVideo";
-import BannerImage from "./BannerImage";
+import BannerVideo from "./banner-video";
+import BannerContent from "./banner-content";
+import BannerImage from "./banner-image";
+// import BannerImage from "./banner-image";
+// import BannerContent from "./banner-content";
 
 export type ImageProps = {
   mediaType: "image";
-  className?: string;
+  imageClassName?: string;
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
 export type VideoProps = {
   mediaType: "video";
-  className?: string;
+  videoClassName?: string;
 } & React.VideoHTMLAttributes<HTMLVideoElement>;
 
 export type NoMediaProps = {
@@ -31,6 +33,7 @@ export type CommonBannerProps = {
   linksAlign?: string;
   linksVariant?: "primary" | "secondary";
   linksSize?: "small" | "medium" | "large";
+  showContent?: boolean;
 };
 
 type BannerProps = CommonBannerProps & (ImageProps | VideoProps | NoMediaProps);
@@ -44,7 +47,7 @@ const Banner: React.FC<BannerProps> = (props) => {
   return (
     <figure
       className={cn(
-        "relative text-white h-full max-h-[518px]",
+        "relative text-white h-full min-h-[518px]",
         props.bannerClassName
       )}
     >
@@ -57,7 +60,7 @@ const Banner: React.FC<BannerProps> = (props) => {
           <BannerVideo {...(props as VideoProps)} />
         </Link>
       ) : null}
-      {hasContent && (
+      {hasContent && props.showContent && (
         <BannerContent
           {...(props as Omit<CommonBannerProps, "href" | "bannerClassName">)}
         />

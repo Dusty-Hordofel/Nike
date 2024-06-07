@@ -2,10 +2,10 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IProduct } from "@/models/Product";
-import ProductCardImage from "./ProductCardImage";
-import ProductCardPrice from "./ProductCardPrice";
-import ProductCardColor from "./ProductCardColor";
-import ProductCardDescription from "./ProductCardDescription";
+import ProductCardImage from "./product-card-image";
+import ProductCardPrice from "./product-card-price";
+import ProductCardColor from "./product-card-color";
+import ProductCardDescription from "./product-card-description";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { name, subProducts, slug } = product;

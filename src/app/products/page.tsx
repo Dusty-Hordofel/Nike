@@ -1,5 +1,5 @@
 "use client";
-import ProductCard from "@/components/products/productCard/ProductCard";
+import ProductCard from "@/components/product/product-card/product-card";
 import { useProducts } from "@/hooks/useProductData";
 import { IProduct } from "@/models/Product";
 
@@ -12,9 +12,6 @@ interface IProducts {
 const ProductsPage = () => {
   const { products, isProductsLoading, isProductsError }: IProducts =
     useProducts();
-  console.log("OLIB", window.innerWidth);
-
-  console.log(process.env.NEXT_PUBLIC_BASE_URL);
 
   if (isProductsLoading) return <p>Loading...</p>;
   if (isProductsError) return <p>Error...</p>;

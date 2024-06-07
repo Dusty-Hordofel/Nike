@@ -2,7 +2,7 @@ import React from "react";
 import BannerLinks from "../buttons/button-links/buttonLinks";
 import { nike } from "@/assets/fonts/nike/nike";
 import { cn } from "@/lib/utils";
-import { CommonBannerProps } from "./Banner";
+import { CommonBannerProps } from "./banner";
 
 type BannerContentProps = Omit<CommonBannerProps, "href" | "bannerClassName">;
 
@@ -35,15 +35,13 @@ const BannerContent = ({
           </figcaption>
         )}
         {links && links.length > 0 ? (
-          // <div className={cn(linksAlign)}>
           <BannerLinks
             links={links}
             linksAlign={linksAlign}
             size={linksSize}
             variant={linksVariant}
           />
-        ) : // </div>
-        null}
+        ) : null}
       </div>
     </div>
   );

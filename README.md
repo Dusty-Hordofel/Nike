@@ -495,8 +495,6 @@ const Carousel = ({
     }
   }, []);
 
-  console.log("🚀 ~ Carousel ~ data:", data);
-
   return (
     <section>
       <div className="flex justify-between items-center px-12 mb-3 pt-[2px] h-[56.398px]">
@@ -676,6 +674,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
 export default ProductCard;
 ```
+
+### 11. Product Détails
+
+- create [ProductInformation](src/components/product/ProductInformation.tsx)
+- create [ProductImages](src/components/product/ProductImages.tsx)
 
 ## External Links
 

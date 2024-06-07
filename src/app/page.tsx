@@ -29,8 +29,8 @@ import {
 import ButtonLinks from "@/components/ui/buttons/button-links/buttonLinks";
 import { buttonVariants } from "@/components/ui/buttons/button/button";
 
-import Carousel from "@/components/ui/carousels/Carousel";
-import CarouselContent from "@/components/ui/carousels/CarouselContent";
+import Carousel from "@/components/ui/carousels/carousel";
+import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { VideoProps } from "./Banner";
+import { VideoProps } from "./banner";
 import { cn } from "@/lib/utils";
 
 type BannerVideo = Omit<VideoProps, "mediaType">;
@@ -11,12 +11,15 @@ const BannerVideo = ({
   loop = true,
   muted = true,
   controls = false,
-  className,
+  videoClassName,
   ...videoProps
 }: BannerVideo) => {
   return (
     <video
-      className={cn("max-h-[518px] w-full h-full  object-cover", className)}
+      className={cn(
+        "min-h-[518px] w-full h-full  object-cover",
+        videoClassName
+      )}
       src={src}
       poster={poster}
       autoPlay={autoPlay}

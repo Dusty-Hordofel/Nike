@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageProps } from "./Banner";
+import { ImageProps } from "./banner";
 import { cn } from "@/lib/utils";
 
 type BannerImageProps = Omit<ImageProps, "mediaType">;
@@ -7,7 +7,7 @@ type BannerImageProps = Omit<ImageProps, "mediaType">;
 const BannerImage = ({
   src,
   alt,
-  className,
+  imageClassName,
   ...imgProps
 }: BannerImageProps) => {
   return (
@@ -15,7 +15,10 @@ const BannerImage = ({
       <img
         src={src}
         alt={alt}
-        className={cn("max-h-[518px] w-full h-full object-cover", className)}
+        className={cn(
+          "min-h-[518px] w-full h-full object-cover",
+          imageClassName
+        )}
         {...imgProps}
       />
     </picture>
