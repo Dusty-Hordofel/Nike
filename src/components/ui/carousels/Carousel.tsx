@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import CarouselControls from "./CarouselControls";
-import CarouselSlides from "./CarouselSlides";
+import CarouselControls from "./carousel-controls";
+import CarouselSlides from "./carousel-slides";
 import { TrendSlidesProps } from "@/types/types";
 
 interface CarousselProps {
