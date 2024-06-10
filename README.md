@@ -680,6 +680,17 @@ export default ProductCard;
 - create [ProductInformation](src/components/product/ProductInformation.tsx)
 - create [ProductImages](src/components/product/ProductImages.tsx)
 
+### 12. Redux Toolkit
+
+- install [redux toolkit ](https://redux-toolkit.js.org/introduction/getting-started) and [redux persist](https://redux-toolkit.js.org/rtk-query/usage/persistence-and-rehydration)
+
+```bash
+$ npm install react-redux @reduxjs/toolkit redux-persist redux-devtools-extension
+```
+
+- create [ cart Slice](src/store/cartSlice.ts)
+- create a [store](src/store/index.ts)
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
@@ -687,3 +698,6 @@ export default ProductCard;
 - 🔗 [Storybook](https://storybook.js.org/docs/get-started/nextjs)
 - 🔗 [Playwright](https://playwright.dev/docs/intro)
 - 🔗 [Testing-library](https://nextjs.org/docs/pages/building-your-application/testing/jest)
+- [redux toolkit example](https://dev.to/hossain45/how-to-persist-user-info-using-redux-persist-with-typescript-54g9)
+- 🔗 [redux toolkit example](https://github.com/Mohammad-Faisal/nextjs-app-router-redux-toolkit-persist-integration/blob/main/src/store/index.ts)
+- 🔗 []()

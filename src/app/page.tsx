@@ -33,8 +33,13 @@ import Carousel from "@/components/ui/carousels/carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useAppSelector } from "@/hooks/useReduxHooks";
 
 export default function Home() {
+  const cartItems = useAppSelector((state) => state);
+  console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
+  console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
+
   return (
     <>
       {/* <div className="h-10 bg-info w-full mb-20"></div> */}
