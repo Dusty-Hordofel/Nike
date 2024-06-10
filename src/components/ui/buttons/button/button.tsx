@@ -48,8 +48,8 @@ export const buttonVariants = cva(ButtonStyle.base, {
     },
   ],
   defaultVariants: {
-    variant: "secondary",
-    size: "small",
+    variant: "primary",
+    size: "medium",
     fullWidth: false,
   },
 });
@@ -80,7 +80,7 @@ export const Button = ({
         {children}
       </span>
       {isLoading && (
-        <span className="absolute inline-block -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+        <span className="absolute inline-block -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 ">
           <Loading />
           <span className="sr-only">Loading</span>
         </span>

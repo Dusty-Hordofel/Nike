@@ -691,6 +691,12 @@ $ npm install react-redux @reduxjs/toolkit redux-persist redux-devtools-extensio
 - create [ cart Slice](src/store/cartSlice.ts)
 - create a [store](src/store/index.ts)
 
+```bash
+$ npm i react-hook-form @hookform/resolvers zod
+```
+
+### 13. Authentification Phase 1
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)

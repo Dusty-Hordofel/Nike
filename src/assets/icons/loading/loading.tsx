@@ -2,8 +2,8 @@ import { SVGProps } from "react";
 
 const Loading: React.FC<SVGProps<SVGSVGElement>> = ({ ...props }) => (
   <svg
-    width="38"
-    height="38"
+    width="24"
+    height="24"
     viewBox="0 0 38 38"
     xmlns="http://www.w3.org/2000/svg"
     stroke="#fff"

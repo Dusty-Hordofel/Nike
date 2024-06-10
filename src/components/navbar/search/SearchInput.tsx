@@ -1,6 +1,6 @@
 "use client";
 import SearchIcon from "@/assets/icons/search/SearchIcon";
-import IconButton from "../../ui/IconButton";
+import IconButton from "@/components/ui/icon-button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 

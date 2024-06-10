@@ -16,46 +16,46 @@ export const ButtonStyle = {
       false: "w-max",
     },
   },
-  compoundVariants: [
-    {
-      variant: "primary",
-      size: "small",
-      fullWidth: false,
-    },
-    {
-      variant: "secondary",
-      size: "small",
-      fullWidth: false,
-    },
-    {
-      variant: "primary",
-      size: "medium",
-      fullWidth: false,
-    },
-    {
-      variant: "primary",
-      size: "medium",
-      fullWidth: false,
-    },
-    {
-      variant: "secondary",
-      size: "medium",
-      fullWidth: false,
-    },
-    {
-      variant: "primary",
-      size: "large",
-      fullWidth: true,
-    },
-    {
-      variant: "secondary",
-      size: "large",
-      fullWidth: true,
-    },
-  ],
-  defaultVariants: {
-    variant: "secondary",
-    size: "small",
-    fullWidth: false,
-  },
+  // compoundVariants: [
+  //   {
+  //     variant: "primary",
+  //     size: "small",
+  //     fullWidth: false,
+  //   },
+  //   {
+  //     variant: "secondary",
+  //     size: "small",
+  //     fullWidth: false,
+  //   },
+  //   {
+  //     variant: "primary",
+  //     size: "medium",
+  //     fullWidth: false,
+  //   },
+  //   {
+  //     variant: "primary",
+  //     size: "medium",
+  //     fullWidth: false,
+  //   },
+  //   {
+  //     variant: "secondary",
+  //     size: "medium",
+  //     fullWidth: false,
+  //   },
+  //   {
+  //     variant: "primary",
+  //     size: "large",
+  //     fullWidth: true,
+  //   },
+  //   {
+  //     variant: "secondary",
+  //     size: "large",
+  //     fullWidth: true,
+  //   },
+  // ],
+  // defaultVariants: {
+  //   variant: "secondary",
+  //   size: "small",
+  //   fullWidth: false,
+  // },
 };

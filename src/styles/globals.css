@@ -27,6 +27,9 @@
   .link-icon-hover {
     @apply rounded-full p-[6px] hover:bg-gray-200 mr-3;
   }
+  .focus {
+    @apply focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
 }
 
 /* Container using CSS Grid */

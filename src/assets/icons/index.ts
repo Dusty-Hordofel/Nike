@@ -6,3 +6,4 @@ export { default as CartIcon } from "./cart/CartIcon";
 export { default as LoginIcon } from "./login/Login";
 export { default as MobileMenu } from "./menu/MobileMenu";
 export { default as SearchIcon } from "./search/SearchIcon";
+export { default as JordanIcon } from "./jordan/JordanIcon";
