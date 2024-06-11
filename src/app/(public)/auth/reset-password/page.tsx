@@ -7,12 +7,12 @@ import {
   ResetPasswordFormData,
   userResetPasswordSchema,
 } from "@/lib/validations/auth";
-import { cn } from "@/lib/utils";
+import Form, { FormInputField } from "./form-input-field";
 import { Input } from "@/components/ui/input";
-import { UserLoginHeaderForm } from "@/components/auth/login";
-import { Button } from "@/components/ui/buttons/button/button";
-import Link from "next/link";
+import { UserAuthHeaderForm } from "@/components/auth";
 import PasswordRule from "./password-rule";
+import { Button } from "@/components/ui/buttons/button/button";
+import { RefreshCcw, X } from "lucide-react";
 
 const ResetPasswordPage = () => {
   const {
@@ -67,7 +67,7 @@ const ResetPasswordPage = () => {
   return (
     <div className="flex justify-center p-5 min-h-screen">
       <div className="flex flex-col justify-center max-w-[532px] w-full px-9 max-h-[569px] h-full">
-        <UserLoginHeaderForm
+        <UserAuthHeaderForm
           ariaLabel="Enter your email to password us or sign in."
           title="Enter your email to join us or sign in."
         />
@@ -118,7 +118,6 @@ const ResetPasswordPage = () => {
                 </button>
               </span>
             </div>
-
             <div className="h-6 px-4 pt-[6px] text-xs flex items-center justify-between">
               <p>
                 {" "}
@@ -134,7 +133,7 @@ const ResetPasswordPage = () => {
             </div>
           </div>
 
-          <div className="">
+          <div>
             <div>
               <label className="sr-only" htmlFor="password">
                 Password

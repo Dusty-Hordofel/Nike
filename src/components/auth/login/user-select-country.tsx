@@ -2,7 +2,7 @@
 import { countryNames } from "@/assets/data/countries";
 import React, { useState } from "react";
 
-const SelectUserCountry = () => {
+const UserSelectCountry = () => {
   const [selectedCountry, setSelectedCountry] = useState("FR");
 
   const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (
@@ -44,4 +44,4 @@ const SelectUserCountry = () => {
   );
 };
 
-export default SelectUserCountry;
+export default UserSelectCountry;

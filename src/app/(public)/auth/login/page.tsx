@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import {
   EmailFormData,
   PasswordFormData,
@@ -11,7 +11,7 @@ import {
 } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
 import {
-  SelectUserCountry,
+  UserSelectCountry,
   UserLoginEmailForm,
   UserLoginFooterForm,
   UserLoginForgotPasswordLink,
@@ -19,6 +19,7 @@ import {
   UserLoginPasswordForm,
   UserLoginTerms,
 } from "@/components/auth/login";
+import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
 
 const LoginPage = () => {
   const [isEmailLoading, setIsEmailLoading] = React.useState<boolean>(false);
@@ -79,7 +80,7 @@ const LoginPage = () => {
   return (
     <div className="flex justify-center p-5 min-h-screen">
       <div className="flex flex-col justify-center max-w-[532px] w-full px-9 max-h-[569px] h-full">
-        <UserLoginHeaderForm
+        <UserAuthHeaderForm
           ariaLabel={
             formStep === 0
               ? "Enter your email to join us or sign in."
@@ -94,7 +95,7 @@ const LoginPage = () => {
 
         {/* Selectionner un pays */}
         {formStep === 0 ? (
-          <SelectUserCountry />
+          <UserSelectCountry />
         ) : (
           <div
             className={cn(
@@ -123,16 +124,26 @@ const LoginPage = () => {
           }
         >
           {formStep === 0 ? (
-            <UserLoginEmailForm
-              isEmailLoading={isEmailLoading}
-              registerEmail={registerEmail}
-              errorsEmail={errorsEmail}
+            <UserAuthInputFieldForm
+              id="email"
+              label="email"
+              placeholder="Email*"
+              type="email"
+              isLoading={isEmailLoading}
+              register={registerEmail}
+              errors={errorsEmail as FieldErrors<EmailFormData>}
+              name="email"
             />
           ) : (
-            <UserLoginPasswordForm
-              isPasswordLoading={isPasswordLoading}
-              registerPassword={registerPassword}
-              errorsPassword={errorsPassword}
+            <UserAuthInputFieldForm
+              id="password"
+              label="password"
+              placeholder="Password*"
+              type="password"
+              isLoading={isPasswordLoading}
+              register={registerPassword}
+              errors={errorsPassword as FieldErrors<PasswordFormData>}
+              name="password"
             />
           )}
           {formStep === 0 ? (
