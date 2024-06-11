@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { UserLoginHeaderForm } from "@/components/auth/login";
 import { Button } from "@/components/ui/buttons/button/button";
+import Link from "next/link";
+import PasswordRule from "./password-rule";
 
 const ResetPasswordPage = () => {
   const {
@@ -83,7 +85,7 @@ const ResetPasswordPage = () => {
                 autoCapitalize="none"
                 autoComplete="number"
                 autoCorrect="off"
-                // disabled={isEmailLoading}
+                // disabled={timer > 0 || isLoading}
                 {...register("code")}
                 className="p-4 rounded-lg h-14 focus:outline-none pr-10"
               />
@@ -116,53 +118,63 @@ const ResetPasswordPage = () => {
                 </button>
               </span>
             </div>
-            {errors?.code && (
-              <p className="px-4 pt-[6px] text-xs text-red-600">
-                {errors.code.message}
+
+            <div className="h-6 px-4 pt-[6px] text-xs flex items-center justify-between">
+              <p>
+                {" "}
+                {errors?.code && (
+                  <p className=" text-red-600">{errors.code.message}</p>
+                )}
               </p>
-            )}
+              {timer > 0 && (
+                <p className=" text-gray-500">
+                  Renvoyer le code dans {timer} s
+                </p>
+              )}
+            </div>
           </div>
 
-          <div className="css-l8v1mv h-6 w-full flex justify-end items-center px-3">
-            {/* <button
-              onClick={handleResendCode}
-              disabled={timer > 0 || isLoading}
-              type="button"
+          <div className="">
+            <div>
+              <label className="sr-only" htmlFor="password">
+                Password
+              </label>
+              <Input
+                id="password"
+                placeholder="Nouveau mot de passe*"
+                type="password"
+                autoCapitalize="none"
+                autoComplete="password"
+                autoCorrect="off"
+                {...register("password")}
+                className="p-4 rounded-lg h-14 focus:outline-none"
+              />
+              {errors?.password && (
+                <p className="px-4 pt-[6px] text-xs text-red-600">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <div
+              id="password-rules"
+              aria-live="polite"
+              aria-atomic="true"
+              data-testid="password-error-text"
+              className="ml-4 my-3"
             >
-              {isLoading ? "Sending..." : "Resend Code"}
-            </button> */}
-            <p className="text-xs  text-gray-500">
-              Renvoyer le code dans {timer} s
-            </p>
-            {/* {!isResendEnabled && <p>Please wait {timer} seconds to resend the code.</p>} */}
-            {/* <div className="css-1a9v0n2"></div>
-            <div className="css-1lqvfkp">Renvoyer le code dans 16&nbsp;s</div> */}
-          </div>
-
-          <div>
-            <label className="sr-only" htmlFor="password">
-              Password
-            </label>
-            <Input
-              id="password"
-              placeholder="Mot de passe*"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="password"
-              autoCorrect="off"
-              //   disabled={isPasswordLoading}
-              {...register("password")}
-              className="p-4 rounded-lg h-14 focus:outline-none"
-            />
-            {errors?.password && (
-              <p className="px-4 pt-[6px] text-xs text-red-600">
-                {errors.password.message}
-              </p>
-            )}
+              <PasswordRule
+                rule="8 caractères minimum"
+                fieldError={errors.password}
+              />
+              <PasswordRule
+                rule="Majuscules, minuscules et un chiffre"
+                fieldError={errors.password}
+              />
+            </div>
           </div>
 
           <div className="flex space-x-2 mt-6  justify-end">
-            <Button variant="secondary" size="medium">
+            <Button variant="outline" size="medium">
               Annuler
             </Button>
             <Button>Enregistrer</Button>

@@ -9,8 +9,8 @@ export const userLoginPasswordSchema = z.object({
   password: z.string().min(3, "Obligatoire"),
 });
 export const userResetPasswordSchema = z.object({
-  code: z.number().min(4, "Obligatoire"),
-  password: z.string().min(3, "Obligatoire"),
+  code: z.string().min(5, "Obligatoire"),
+  password: z.string().min(8, "Obligatoire"),
 });
 
 export type EmailFormData = z.infer<typeof userLoginEmailSchema>;

@@ -36,28 +36,21 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 400px);
-  /* grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); */
   gap: 16px; /* Adjust the gap between cards as needed */
-  /* align-items: stretch; */
-  /* Ensure all cards stretch to the same height */
 }
 
 /* Card styling */
 .card {
   background-color: #fff;
   border: 1px solid #ddd;
-  /* border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column; */
 }
 
 .card h2 {
   margin-top: 0;
 }
 
-.card p {
-  /* flex-grow: 1;  */
-
-  /* Ensures the paragraph takes up available space */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

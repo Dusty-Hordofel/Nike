@@ -27,7 +27,7 @@ export const buttonVariants = cva(ButtonStyle.base, {
       fullWidth: false,
     },
     {
-      variant: "primary",
+      variant: "outline",
       size: "medium",
       fullWidth: false,
     },
