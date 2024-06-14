@@ -6,16 +6,19 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-interface FormInputFieldProps<T extends FieldValues> {
+export interface FormInputFieldProps<T extends FieldValues>
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string;
-  placeholder: string;
-  type: string;
+  placeholder?: string;
+  type?: string;
   isLoading: boolean;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   name: Path<T>;
+  className?: string;
 }
 
 const UserAuthInputFieldForm = <T extends FieldValues>({
@@ -27,12 +30,14 @@ const UserAuthInputFieldForm = <T extends FieldValues>({
   register,
   errors,
   name,
+  className,
+  ...props
 }: FormInputFieldProps<T>) => {
   const error = errors[name];
   const errorMessage = error ? (error.message as string) : "";
 
   return (
-    <div>
+    <div className=" w-full">
       <label className="sr-only" htmlFor={id}>
         {label}
       </label>
@@ -45,11 +50,15 @@ const UserAuthInputFieldForm = <T extends FieldValues>({
         autoCorrect="off"
         disabled={isLoading}
         {...register(name)}
-        className="p-4 rounded-lg h-14 focus:outline-none"
+        {...props}
+        className={cn("p-4 rounded-lg h-14 focus:outline-none", className)}
       />
-      {error && (
-        <p className="px-4 pt-[6px] text-xs text-red-600">{errorMessage}</p>
-      )}
+
+      <div className="h-6">
+        {error && type !== "checkbox" && (
+          <p className="px-4 pt-[6px] text-xs text-red-600">{errorMessage}</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -6,7 +6,7 @@ type HeaderFormProps = {
   ariaLabel: string;
 };
 
-const UserLoginHeaderForm = ({ title, ariaLabel }: HeaderFormProps) => {
+const UserAuthHeaderForm = ({ title, ariaLabel }: HeaderFormProps) => {
   return (
     <header tabIndex={0} aria-label={`${ariaLabel} group`}>
       <div className="flex items-center gap-4 w-[460px] h-[100px]">
@@ -28,4 +28,4 @@ const UserLoginHeaderForm = ({ title, ariaLabel }: HeaderFormProps) => {
   );
 };
 
-export default UserLoginHeaderForm;
+export default UserAuthHeaderForm;

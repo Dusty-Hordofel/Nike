@@ -1,31 +1,43 @@
 "use client";
 
-import * as React from "react";
+// import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, useForm } from "react-hook-form";
 import {
   EmailFormData,
   PasswordFormData,
-  userLoginEmailSchema,
-  userLoginPasswordSchema,
+  EmailSchema,
+  PasswordSchema,
 } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
 import {
   UserSelectCountry,
-  UserLoginEmailForm,
   UserLoginFooterForm,
   UserLoginForgotPasswordLink,
-  UserLoginHeaderForm,
-  UserLoginPasswordForm,
   UserLoginTerms,
 } from "@/components/auth/login";
 import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
+import { lookupEmail } from "@/utils/apiRequests";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { isRedirectError } from "next/dist/client/components/redirect";
+import { signInWithCredentials } from "@/actions/user.actions";
+import { CloudFog } from "lucide-react";
+// import { signIn } from "@/auth";
+// import { signIn, useSession } from "next-auth/react";
 
 const LoginPage = () => {
-  const [isEmailLoading, setIsEmailLoading] = React.useState<boolean>(false);
-  const [isPasswordLoading, setIsPasswordLoading] =
-    React.useState<boolean>(false);
-  const [formStep, setFormStep] = React.useState(0);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+  const [email, setEmail] = useState("");
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [formStep, setFormStep] = useState(0);
 
   const {
     register: registerEmail,
@@ -37,7 +49,7 @@ const LoginPage = () => {
     },
     reset: resetEmail,
     getValues: getValuesEmail,
-  } = useForm<EmailFormData>({ resolver: zodResolver(userLoginEmailSchema) });
+  } = useForm<EmailFormData>({ resolver: zodResolver(EmailSchema) });
 
   const {
     register: registerPassword,
@@ -50,31 +62,36 @@ const LoginPage = () => {
     reset: resetPassword,
     getValues: getValuesPassword,
   } = useForm<PasswordFormData>({
-    resolver: zodResolver(userLoginPasswordSchema),
+    resolver: zodResolver(PasswordSchema),
+  });
+
+  const { mutateAsync } = useMutation({
+    mutationFn: lookupEmail,
   });
 
   const onSubmitStep1 = async ({ email }: EmailFormData) => {
-    // setIsEmailLoading(true);
+    setIsEmailLoading(true);
 
-    console.log("🚀 ~ onSubmitStep1 ~ value:", email);
-    setFormStep(1);
-    // const { status } = await mutateAsync(data.email);
-    // if (status === 200) {
-    //   setFormStep(1);
-    // } else if (status === 400 || status === 500) {
-    //   router.push(`/signup?email=${data.email}`);
-    // }
+    const { status } = await mutateAsync(email);
+    console.log("🚀 ~ onSubmitStep1 ~ status:", status);
+    if (status === 200) {
+      setEmail(email);
+      setFormStep(1);
+    } else if (status === 400 || status === 500) {
+      router.push(`/signup?email=${email}`);
+    }
+
+    setIsEmailLoading(false);
   };
+
   const onSubmitStep2 = async ({ password }: PasswordFormData) => {
-    console.log("🚀 ~ onSubmitStep1 ~ value:", password);
-    setFormStep(0);
-    // setIsPasswordLoading(true);
-    // const { status } = await mutateAsync(data.email);
-    // if (status === 200) {
-    //   setFormStep(1);
-    // } else if (status === 400 || status === 500) {
-    //   router.push(`/signup?email=${data.email}`);
-    // }
+    console.log(getValuesEmail("email"), getValuesPassword("password"));
+    const { success, message } = await signInWithCredentials({
+      email: getValuesEmail("email"),
+      password,
+    });
+
+    success ? router.push(callbackUrl) : "";
   };
 
   return (
@@ -106,7 +123,7 @@ const LoginPage = () => {
               "min-h-[40px] pb-8"
             )}
           >
-            <span className="pr-[5px]">hordofel@gmail.com</span>
+            <span className="pr-[5px]">{email}</span>
             <button
               className="text-gray-500 underline"
               onClick={() => setFormStep(0)}

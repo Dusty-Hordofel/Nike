@@ -699,6 +699,8 @@ $ npm i react-hook-form @hookform/resolvers zod
 
 ### 14. Authentification Form Phase 2
 
+### 15. Register Form Phase 1
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
