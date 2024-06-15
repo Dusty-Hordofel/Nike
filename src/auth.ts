@@ -11,6 +11,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       authorize: async (credentials) => {
+        if (credentials == null) return null;
+
         const validatedFields = LogInSchema.safeParse(credentials);
 
         if (validatedFields.success) {
@@ -18,26 +20,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const user = await User.findOne({ email });
           console.log("🚀 ~ authorize: ~ user:", user);
 
+          if (!user || !user.password) return null;
+
           // étape normalement vérifier avec lookup
-          if (!user) {
-            throw new Error("Aucun utilisateur trouvé avec cet email");
-          }
+          // if (!user) {
+          //   throw new Error("Aucun utilisateur trouvé avec cet email");
+          // }
 
           const passwordMatch = await bcrypt.compare(password, user.password);
+          if (passwordMatch) return user;
+          // if (!passwordMatch) {
+          //   throw new Error(
+          //     "Mot de passe incorrect. Veuillez réessayer avec le bon mot de passe"
+          //   );
+          // }
 
-          if (!passwordMatch) {
-            throw new Error(
-              "Mot de passe incorrect. Veuillez réessayer avec le bon mot de passe"
-            );
-          }
-
-          return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            role: user.role,
-          };
+          // return {
+          //   id: user.id,
+          //   name: user.name,
+          //   email: user.email,
+          //   image: user.image,
+          //   role: user.role,
+          // };
         }
 
         return null;

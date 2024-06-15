@@ -28,12 +28,18 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "@/auth";
 import { signInWithCredentials } from "@/actions/user.actions";
 import { ZodError } from "zod";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 const SignUp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
   console.log("🚀 ~ SignUp ~ email:", email);
+
+  const user = useCurrentUser();
+  if (user /*&& userRole !== "user"*/) {
+    router.push(`${window.location.origin}` || "/");
+  }
 
   const {
     register,
@@ -50,8 +56,8 @@ const SignUp = () => {
       const om = JSON.stringify(userFormData);
       console.log("🚀 ~ mutationFn: ~ om:", om);
       const response = await fetch(
-        "http://localhost:3000/api/auth/register",
-        // `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
+        // "http://localhost:3000/api/auth/register",
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -83,24 +89,24 @@ const SignUp = () => {
       // console.log("🚀 ~ mutationFn: ~ user:", user);
       return response.json();
     },
-    onSuccess: async () => {
-      const credentials = {
-        email,
-        password: getValues("password"),
-      };
-      // await signInWithCredentials(credentials, `${window.location.origin}`);
-      // router.push("/");
-      // console.log("Successfully"); //redirectTo:
-      // await signIn("credentials", {
-      //   email,
-      //   password: getValues("password"),
-      //   callbackUrl: `${window.location.origin}` || "/",
-      // });
-    },
-    onError: (error: any) => {
-      console.error("Error registering user:", error);
-      console.log(error);
-    },
+    // onSuccess: async () => {
+    //   // const credentials = {
+    //   //   email,
+    //   //   password: getValues("password"),
+    //   // };
+    //   // await signInWithCredentials(credentials, `${window.location.origin}`);
+    //   // router.push("/");
+    //   // console.log("Successfully"); //redirectTo:
+    //   // await signIn("credentials", {
+    //   //   email,
+    //   //   password: getValues("password"),
+    //   //   callbackUrl: `${window.location.origin}` || "/",
+    //   // });
+    // },
+    // onError: (error: any) => {
+    //   console.error("Error registering user:", error);
+    //   console.log(error);
+    // },
   });
 
   const onSubmit = async (values: UserFormData) => {

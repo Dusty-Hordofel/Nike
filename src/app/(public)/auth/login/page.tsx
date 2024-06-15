@@ -17,28 +17,27 @@ import {
   UserLoginTerms,
 } from "@/components/auth/login";
 import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
-import { lookupEmail } from "@/utils/apiRequests";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-// import { signIn } from "next-auth/react";
-import { isRedirectError } from "next/dist/client/components/redirect";
-import { signInWithCredentials } from "@/actions/user.actions";
-import { CloudFog } from "lucide-react";
-// import { signIn } from "@/auth";
-// import { signIn } from "@/auth";
+
+import { CircleAlert } from "lucide-react";
+
 import { signIn, useSession } from "next-auth/react";
-import { AuthError } from "next-auth";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 const LoginPage = () => {
   const router = useRouter();
+  const user = useCurrentUser();
 
-  const searchParams = useSearchParams();
-  // const callbackUrl = searchParams.get("callbackUrl") || "/";
+  if (user /*&& userRole !== "user"*/) {
+    router.push(`${window.location.origin}` || "/");
+  }
 
   const [email, setEmail] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formStep, setFormStep] = useState(0);
 
   const {
@@ -79,7 +78,7 @@ const LoginPage = () => {
         }
       );
 
-      console.log(response);
+      // console.log(response);
 
       // if (!response.ok) {
       //   const errorData = await response.json();
@@ -88,14 +87,14 @@ const LoginPage = () => {
 
       return response.json();
     },
-    onSuccess: () => {
-      // router.push("/");
-      console.log("Successfully");
-    },
-    onError: (error: any) => {
-      console.error("Error registering user:", error);
-      console.log(error);
-    },
+    // onSuccess: () => {
+    //   // router.push("/");
+    //   console.log("Successfully");
+    // },
+    // onError: (error: any) => {
+    //   console.error("Error registering user:", error);
+    //   console.log(error);
+    // },
   });
 
   const onSubmitStep1 = async ({ email }: EmailFormData) => {
@@ -114,23 +113,17 @@ const LoginPage = () => {
   };
 
   const onSubmitStep2 = async ({ password }: PasswordFormData) => {
-    try {
-      await signIn("credentials", {
-        email: getValuesEmail("email"),
-        password,
-        callbackUrl: `${window.location.origin}`,
-      });
-    } catch (error: any) {
-      if (error instanceof AuthError) {
-        switch (error.type) {
-          case "CredentialsSignin":
-            return { error: "Invalid credentials!" };
-          default:
-            return { error: "Something went wrong!" };
-        }
-      }
-
-      throw error;
+    const result = await signIn("credentials", {
+      email: getValuesEmail("email"),
+      password,
+      redirect: false,
+      // callbackUrl: `${window.location.origin}`,
+    });
+    if (result?.error) {
+      setError("Your login information is invalid");
+      console.log("EKOSIMBA");
+    } else {
+      router.push(`${window.location.origin}` || "/");
     }
   };
 
@@ -180,6 +173,15 @@ const LoginPage = () => {
               : handleSubmitPassword(onSubmitStep2)
           }
         >
+          <div
+            className={cn(
+              ` h-11 bg-gray-100 py-3 px-4 mb-5 items-center gap-x-4 rounded-md ${formStep === 1 && error.length > 0 ? "flex" : "hidden"}`
+            )}
+          >
+            <CircleAlert color="#ee0005" />
+            <p>{error.length > 0 && error}</p>
+          </div>
+
           {formStep === 0 ? (
             <UserAuthInputFieldForm
               id="email"
