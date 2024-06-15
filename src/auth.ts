@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "./lib/mongodb";
-import { logInSchema } from "./lib/validations/auth";
+import { LogInSchema } from "./lib/validations/auth";
 import bcrypt from "bcrypt";
 import User from "./models/User";
 
@@ -11,7 +11,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       authorize: async (credentials) => {
-        const validatedFields = logInSchema.safeParse(credentials);
+        const validatedFields = LogInSchema.safeParse(credentials);
 
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;

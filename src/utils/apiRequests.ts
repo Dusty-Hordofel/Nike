@@ -1,3 +1,11 @@
+import { signIn } from "@/auth";
+import {
+  LoginFormData,
+  LogInSchema,
+  RegisterFormData,
+} from "@/lib/validations/auth";
+import { isRedirectError } from "next/dist/client/components/redirect";
+
 const getProducts = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
@@ -6,7 +14,7 @@ const getProducts = async () => {
   return data;
 };
 
-const getProduct = async (slug: string, style: number, size: number) => {
+export const getProduct = async (slug: string, style: number, size: number) => {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -36,4 +44,47 @@ export const lookupEmail = async (email: string) => {
   });
 };
 
-export { getProducts, getProduct };
+export async function logInWithCredentials(loginFormData: LoginFormData) {
+  try {
+    const user = LogInSchema.parse(loginFormData);
+    await signIn("credentials", user);
+    return { success: true, message: "Sign in successfully" };
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return { success: false, message: "Invalid email or password" };
+  }
+}
+
+export const registerUser = async (registerFormData: RegisterFormData) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          registerFormData,
+        }),
+      }
+    );
+    const user = await response.json();
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// async function signInWithCredentials(loginFormData: LoginFormData) {
+//   try {
+//     const user = LogInSchema.parse(loginFormData);
+//     await signIn("credentials", user);
+//     return { success: true, message: "Sign in successfully" };
+//   } catch (error) {
+//     if (isRedirectError(error)) {
+//       throw error;
+//     }
+//     return { success: false, message: "Invalid email or password" };
+//   }
+// }

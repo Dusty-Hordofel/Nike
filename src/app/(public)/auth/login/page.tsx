@@ -21,18 +21,20 @@ import { lookupEmail } from "@/utils/apiRequests";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { signInWithCredentials } from "@/actions/user.actions";
 import { CloudFog } from "lucide-react";
 // import { signIn } from "@/auth";
-// import { signIn, useSession } from "next-auth/react";
+// import { signIn } from "@/auth";
+import { signIn, useSession } from "next-auth/react";
+import { AuthError } from "next-auth";
 
 const LoginPage = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  // const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const [email, setEmail] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
@@ -65,33 +67,71 @@ const LoginPage = () => {
     resolver: zodResolver(PasswordSchema),
   });
 
-  const { mutateAsync } = useMutation({
-    mutationFn: lookupEmail,
+  const mutation = useMutation({
+    mutationFn: async (email: string) => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/lookup`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+          }),
+        }
+      );
+
+      console.log(response);
+
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   throw new Error(errorData.message || "Failed to login");
+      // }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      // router.push("/");
+      console.log("Successfully");
+    },
+    onError: (error: any) => {
+      console.error("Error registering user:", error);
+      console.log(error);
+    },
   });
 
   const onSubmitStep1 = async ({ email }: EmailFormData) => {
     setIsEmailLoading(true);
+    const { sucess, message } = await mutation.mutateAsync(email);
+    console.log("🚀 ~ onSubmitStep1 ~ sucess:", sucess, message);
 
-    const { status } = await mutateAsync(email);
-    console.log("🚀 ~ onSubmitStep1 ~ status:", status);
-    if (status === 200) {
+    if (sucess) {
       setEmail(email);
       setFormStep(1);
-    } else if (status === 400 || status === 500) {
-      router.push(`/signup?email=${email}`);
+    } else {
+      setIsEmailLoading(false);
+      router.push(`/auth/register?email=${encodeURIComponent(email)}`);
     }
-
     setIsEmailLoading(false);
   };
 
   const onSubmitStep2 = async ({ password }: PasswordFormData) => {
-    console.log(getValuesEmail("email"), getValuesPassword("password"));
-    const { success, message } = await signInWithCredentials({
-      email: getValuesEmail("email"),
-      password,
-    });
+    try {
+      await signIn("credentials", {
+        email: getValuesEmail("email"),
+        password,
+        callbackUrl: `${window.location.origin}`,
+      });
+    } catch (error: any) {
+      if (error instanceof AuthError) {
+        switch (error.type) {
+          case "CredentialsSignin":
+            return { error: "Invalid credentials!" };
+          default:
+            return { error: "Something went wrong!" };
+        }
+      }
 
-    success ? router.push(callbackUrl) : "";
+      throw error;
+    }
   };
 
   return (

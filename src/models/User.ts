@@ -7,20 +7,21 @@ interface Address {
   postalCode: string;
 }
 
-interface User extends Document {
+export interface User extends Document {
   firstName: string;
   lastName: string;
   email: string;
-  image: string;
+  image?: string;
   password: string;
-  genderPreference: "homme" | "femme";
-  emailVerified: boolean;
-  phone: string;
-  role: string;
-  address: Address;
-  wantsNewsletter: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  shoppingPreference?: "homme" | "femme";
+  emailVerified?: boolean;
+  phone?: string;
+  role?: string;
+  address?: Address;
+  terms: boolean;
+  marketingOption?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const addressSchema = new Schema<Address>({
@@ -47,7 +48,7 @@ const userSchema = new Schema<User>(
         "https://res.cloudinary.com/dgsc66scx/image/upload/v1712483523/Asset_5_icflwx.png",
     },
     password: { type: String, required: true, minlength: 6 },
-    genderPreference: {
+    shoppingPreference: {
       type: String,
       enum: ["homme", "femme"],
       // required: true,
@@ -59,9 +60,13 @@ const userSchema = new Schema<User>(
       type: addressSchema,
       // required: true
     },
-    wantsNewsletter: {
+    marketingOption: {
       type: Boolean,
-      // default: false
+      default: false,
+    },
+    terms: {
+      type: Boolean,
+      default: false,
     },
   },
   {

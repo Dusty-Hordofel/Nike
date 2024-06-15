@@ -19,20 +19,27 @@ export const LogInSchema = z.object({
 // });
 
 export const RegisterSchema = z.object({
-  code: z.string().min(5, "Obligatoire"),
-  email: z.string().email({ message: "Required" }),
-  lastName: z.string().min(2, { message: "Required" }),
-  firstName: z.string().min(2, { message: "Required" }),
+  code: z.string().min(5, "Required"),
+  // email: z.string().email("Obligatoire"),
+  lastName: z.string().min(2, "Required"),
+  firstName: z.string().min(2, "Required"),
   password: z.string().min(6, "Required"),
   shoppingPreference: z
     .string()
     .refine((value) => ["homme", "femme"].includes(value), {
       message: "Required",
     }),
-  terms: z.boolean().refine((value) => value === true, {
+
+  terms: z.boolean().refine((val) => val === true, {
     message: "Required",
   }),
-  marketingOption: z.boolean(),
+  // terms: z.boolean().refine((value) => value === true, {
+  //   message: "Required",
+  // }),
+  // terms: z.boolean().refine((value) => value === true, {
+  //   message: "Required",
+  // }),
+  marketingOption: z.boolean().optional(),
 });
 
 export const addressSchema = z.object({
@@ -43,21 +50,28 @@ export const addressSchema = z.object({
 });
 
 export const UserSchema = z.object({
+  code: z.string().min(5, "Required"),
   lastName: z.string({ message: "Le nom est requis." }),
   firstName: z.string({ message: "Le prénom est requis." }),
   email: z.string().email({ message: "L'adresse email est invalide." }),
-  image: z.string().url({ message: "L'URL de l'image est invalide." }),
+  // image: z.string().url({ message: "L'URL de l'image est invalide." }),
   password: z.string().min(6, {
     message: "Le mot de passe doit contenir au moins 6 caractères.",
   }),
-  genderPreference: z.enum(["homme", "femme"], {
-    message: "La préférence de genre est invalide.",
+  shoppingPreference: z
+    .string()
+    .refine((value) => ["homme", "femme"].includes(value), {
+      message: "Required",
+    }),
+
+  // emailVerified: z.boolean().default(false),
+  // phone: z.string().optional(),
+  // role: z.string().default("user"),
+  // address: addressSchema,
+  marketingOption: z.boolean().default(false),
+  terms: z.boolean().refine((val) => val === true, {
+    message: "Required",
   }),
-  emailVerified: z.boolean().default(false),
-  phone: z.string().optional(),
-  role: z.string().default("user"),
-  address: addressSchema,
-  wantsNewsletter: z.boolean().default(false),
 });
 
 // const addressSchema = z.object({

@@ -1,6 +1,5 @@
 "use client";
 
-import React, { use, useState } from "react";
 import {
   FieldValues,
   useForm,
@@ -8,15 +7,12 @@ import {
   FieldErrors,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React, { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
 import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
-import {
-  RegisterFormData,
-  RegisterSchema,
-  UserFormData,
-} from "@/lib/validations/auth";
+import { RegisterFormData, RegisterSchema } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
 import { CrossedEye } from "@/assets/icons";
 import { Eye } from "lucide-react";
@@ -24,16 +20,17 @@ import ShoppingPreference from "./ShoppingPreference";
 import { Button } from "@/components/ui/buttons/button/button";
 import FormCheckbox from "./form-checkbox";
 import { Input } from "@/components/ui/input";
+import { registerUser } from "@/utils/apiRequests";
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "@/auth";
-import { signInWithCredentials } from "@/actions/user.actions";
-import { ZodError } from "zod";
 
 const SignUp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email") as string;
-  console.log("🚀 ~ SignUp ~ email:", email);
+  const email = searchParams.get("email");
+
+  // const mutation = useMutation({
+  //   mutationFn: registerUser,
+  // });
 
   const {
     register,
@@ -41,75 +38,52 @@ const SignUp = () => {
     formState: { errors, isSubmitting, dirtyFields, touchedFields },
     reset,
     getValues,
-  } = useForm<UserFormData>({ resolver: zodResolver(RegisterSchema) });
+  } = useForm<RegisterFormData>({ resolver: zodResolver(RegisterSchema) });
 
-  console.log("password", getValues("password"));
+  // const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (userFormData: UserFormData) => {
-      const om = JSON.stringify(userFormData);
-      console.log("🚀 ~ mutationFn: ~ om:", om);
-      const response = await fetch(
-        "http://localhost:3000/api/auth/register",
-        // `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            // ...userFormData,
-            code: 12345678,
-            lastName: "lionellebassola@gmail.com",
-            firstName: "lionellebassola@gmail.com",
-            email: "lionellebassola@gmail.com",
-            // password: ,
-            shoppingPreference: "homme",
-            marketingOption: true,
-            terms: true,
-          }),
-        }
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("INSTANCE,", errorData.message instanceof ZodError);
-        if (errorData.message instanceof ZodError) {
-          console.log("Zod Error olive", errorData.message);
-        }
-        console.log("🚀 ~ mutationFn: ~ errorData:", errorData);
-        throw new Error(errorData.message || "Failed to register");
-      }
+  const [timer, setTimer] = React.useState<number>(59); // Initial timer set to
 
-      console.log("🚀 ~ mutationFn: ~ response:", response);
+  React.useEffect(() => {
+    let interval: NodeJS.Timeout | undefined;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      // setIsResendEnabled(true);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
 
-      // const user = await response.json();
-      // console.log("🚀 ~ mutationFn: ~ user:", user);
-      return response.json();
-    },
-    onSuccess: async () => {
-      const credentials = {
-        email,
-        password: getValues("password"),
-      };
-      // await signInWithCredentials(credentials, `${window.location.origin}`);
-      // router.push("/");
-      // console.log("Successfully"); //redirectTo:
-      // await signIn("credentials", {
-      //   email,
-      //   password: getValues("password"),
-      //   callbackUrl: `${window.location.origin}` || "/",
-      // });
-    },
-    onError: (error: any) => {
-      console.error("Error registering user:", error);
-      console.log(error);
-    },
-  });
+  const handleResendCode = () => {
+    setTimer(30); // Reset timer
+  };
 
-  const onSubmit = async (values: UserFormData) => {
+  const onSubmit = async (values: RegisterFormData) => {
     console.log("🚀 ~ SignUp ~ values:", values);
-    await mutateAsync({ ...values, email });
+
+    // const { status };
+    // const ol = await mutateAsync({
+    //   ...values,
+    // });
+    // console.log("🚀 ~ onSubmit ~ ol:", ol);
+    // // signIn("credentials", {
+    //   redirect: false,
+    //   email: email,
+    //   password: data.password,
+    // });
+    // if (status === 201) {
+    //   router.push("/");
+    // } else {
+    //   throw new Error("Échec de l'enregistrement de l'utilisateur");
+    // }
   };
 
   const togglePasswordVisibility = () => {
-    // setShowPassword((prev) => !prev);
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -156,8 +130,8 @@ const SignUp = () => {
                         type="button"
                         aria-label="renvoyer le code"
                         className="css-1qmkbv8 absolute right-3 top-4"
-                        // onClick={handleResendCode}
-                        disabled={/*timer > 0 ||*/ isPending}
+                        onClick={handleResendCode}
+                        // disabled={timer > 0 || isLoading}
                       >
                         <svg
                           aria-hidden="false"
@@ -187,11 +161,11 @@ const SignUp = () => {
                         <p className=" text-red-600">{errors.code.message}</p>
                       )}
                     </p>
-                    {/* {timer > 0 && (
+                    {timer > 0 && (
                       <p className=" text-gray-500">
                         Renvoyer le code dans {timer} s
                       </p>
-                    )} */}
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-4 justify-between">
@@ -200,9 +174,9 @@ const SignUp = () => {
                     label="text"
                     placeholder="FirstName*"
                     type="text"
-                    isLoading={isPending}
+                    isLoading={isLoading}
                     register={register}
-                    errors={errors as FieldErrors<UserFormData>}
+                    errors={errors as FieldErrors<RegisterFormData>}
                     name="firstName"
                   />
 
@@ -211,9 +185,9 @@ const SignUp = () => {
                     label="text"
                     placeholder="LastName*"
                     type="text"
-                    isLoading={isPending}
+                    isLoading={isLoading}
                     register={register}
-                    errors={errors as FieldErrors<UserFormData>}
+                    errors={errors as FieldErrors<RegisterFormData>}
                     name="lastName"
                   />
                 </div>
@@ -224,9 +198,9 @@ const SignUp = () => {
                     label="password"
                     placeholder="Password*"
                     type="password"
-                    isLoading={isPending}
+                    isLoading={isLoading}
                     register={register}
-                    errors={errors as FieldErrors<UserFormData>}
+                    errors={errors as FieldErrors<RegisterFormData>}
                     name="password"
                     className="pr-10"
                   />
@@ -234,7 +208,7 @@ const SignUp = () => {
                     onClick={togglePasswordVisibility}
                     className="absolute right-3 top-4"
                   >
-                    {/* {showPassword ? <CrossedEye /> : <Eye />} */}
+                    {showPassword ? <CrossedEye /> : <Eye />}
                   </button>
                 </div>
 
@@ -247,24 +221,24 @@ const SignUp = () => {
                 <FormCheckbox
                   id="marketing-option"
                   label="marketing-option"
-                  isLoading={isPending}
+                  isLoading={isLoading}
                   type="mailing"
                   register={register}
-                  errors={errors as FieldErrors<UserFormData>}
+                  errors={errors as FieldErrors<RegisterFormData>}
                   name="marketingOption"
                 />
 
                 <FormCheckbox
                   id="terms"
                   label="terms"
-                  isLoading={isPending}
+                  isLoading={isLoading}
                   register={register}
-                  errors={errors as FieldErrors<UserFormData>}
+                  errors={errors as FieldErrors<RegisterFormData>}
                   name="terms"
                 />
 
                 <div className={cn("mt-10 flex justify-end")}>
-                  <Button isLoading={isPending}>Créer un compte</Button>
+                  <Button isLoading={isLoading}>Créer un compte</Button>
                 </div>
               </div>
             </div>
