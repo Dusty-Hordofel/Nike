@@ -28,7 +28,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "@/auth";
 import { signInWithCredentials } from "@/actions/user.actions";
 import { ZodError } from "zod";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCurrentUser } from "@/hooks/user/use-current-user";
 
 const SignUp = () => {
   const router = useRouter();

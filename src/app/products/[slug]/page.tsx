@@ -2,13 +2,13 @@
 import { bannerVideo } from "@/assets/data/banner";
 import ProductImages from "@/components/product/product-details/ProductImages";
 import ProductInformation from "@/components/product/product-details/ProductInformation";
-import { useProduct } from "@/hooks/useProductData";
 import Link from "next/link";
 import React from "react";
 import { Banner as VideoBanner, Banner as ImageBanner } from "@/components/ui";
 import Carousel from "@/components/ui/carousels/carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
+import { useQuery } from "@tanstack/react-query";
 
 interface IProduct {
   params: { slug: string };
@@ -20,15 +20,31 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
   const productStyle = Number(searchParams.style);
   const selectedSize = Number(searchParams.size) || 0;
 
-  const { product, isProductLoading, isProductError } = useProduct(
-    productSlug,
-    productStyle,
-    selectedSize
-  );
+  const productQuery = useQuery({
+    queryKey: ["product", productSlug, productStyle, selectedSize],
+    queryFn: () =>
+      fetch(
+        `/api/products/${productSlug}?style=${productStyle}&size=${selectedSize}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            style: productStyle,
+            size: selectedSize,
+            slug: productSlug,
+          }),
+        }
+      ).then((res) => res.json()),
+  });
 
-  if (isProductLoading) return <p>Loading...</p>;
-  if (isProductError) return <p>Error...</p>;
+  if (productQuery.isLoading) return <p>Loading...</p>;
+  if (productQuery.isError) return <p>Error...</p>;
 
+  const { product } = productQuery.data;
+
+  console.log("🚀 ~ ProductPage ~ productsQuery:", productQuery);
   return (
     <div className="min-h-screen">
       <div className="max-w-[1200px] mx-auto flex">

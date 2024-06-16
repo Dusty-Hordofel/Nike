@@ -6,12 +6,12 @@ import {
 } from "@/lib/validations/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
-const getProducts = async () => {
+export const getProducts = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
   );
-  const data = await response.json();
-  return data;
+  const { products } = await response.json();
+  return products;
 };
 
 export const getProduct = async (slug: string, style: number, size: number) => {

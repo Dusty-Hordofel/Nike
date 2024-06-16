@@ -24,7 +24,7 @@ import { useState } from "react";
 import { CircleAlert } from "lucide-react";
 
 import { signIn, useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCurrentUser } from "@/hooks/user/use-current-user";
 
 const LoginPage = () => {
   const router = useRouter();

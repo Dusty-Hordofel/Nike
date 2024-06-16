@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-if (!process.env.DATABASE_URL) {
+if (!process.env.MONGODB_URI) {
   throw new Error("Please add the databse url in .env file");
 }
-const DATABASE_URL: string = process.env.DATABASE_URL;
+const MONGODB_URI: string = process.env.MONGODB_URI;
 
 let globalWithMongoose = global as typeof globalThis & {
   mongoose: any;
@@ -21,7 +21,7 @@ async function connectDB() {
   }
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(DATABASE_URL)
+      .connect(MONGODB_URI)
       .then((mongoose) => {
         console.log("Connection has been established.");
         return mongoose;
