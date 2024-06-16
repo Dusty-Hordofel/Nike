@@ -121,7 +121,37 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       required: true,
       default: 0,
     },
-    subProducts: [Schema.Types.Mixed],
+    // subProducts: [Schema.Types.Mixed],
+    subProducts: [
+      {
+        sku: String,
+        images: [],
+        description_images: [],
+        color: {
+          color: {
+            type: String,
+          },
+          image: {
+            type: String,
+          },
+        },
+        sizes: [
+          {
+            size: String,
+            qty: Number,
+            price: Number,
+          },
+        ],
+        discount: {
+          type: Number,
+          default: 0,
+        },
+        sold: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

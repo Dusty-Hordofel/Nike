@@ -1,13 +1,7 @@
 "use client";
 import Link from "next/link";
-import React, { use, useEffect, useState } from "react";
-import ProductSize from "./ProductSize";
-// import { accordionData, sneakerSizesEU } from "@/assets/data/data";
-import { FavorisIcon } from "@/assets/icons";
-// import Accordion from "@/components/accordion/Accordion";
-import ProductColors from "@/components/product/product-details/ProductColors";
-import { useSearchParams } from "next/navigation";
-import Image from "next/image";
+import ProductSize from "./product-size";
+import ProductColors from "@/components/product/product-details/product-colors";
 import { IProduct } from "@/models/Product";
 import { Button } from "../../ui/buttons/button/button";
 import Accordion from "../../accordion/Accordion";

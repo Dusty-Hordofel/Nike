@@ -33,7 +33,7 @@ import Carousel from "@/components/ui/carousels/carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useAppSelector } from "@/hooks/useReduxHooks";
+import { useAppSelector } from "@/hooks/use-redux-hooks";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);
