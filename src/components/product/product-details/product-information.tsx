@@ -1,11 +1,14 @@
 "use client";
 import Link from "next/link";
-import ProductSize from "./product-size";
+import ProductSizes from "./product-size";
 import ProductColors from "@/components/product/product-details/product-colors";
 import { IProduct } from "@/models/Product";
 import { Button } from "../../ui/buttons/button/button";
 import Accordion from "../../accordion/Accordion";
 import { accordionData } from "@/assets/data/accordion";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/use-redux-hooks";
+import { addProductToCart, CartItem } from "@/store/cartSlice";
 
 type Props = {
   product: IProduct;
@@ -14,21 +17,56 @@ type Props = {
 };
 
 const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
+  console.log("🚀 ~ ProductInformation ~ selectedSize:", selectedSize);
   const {
     name,
     category,
     subProducts,
     subProduct,
+    _id,
     slug,
     sku, //not in the mode IProd
     discount,
     colors,
     sizes,
+    quantity,
     priceAfterDiscount,
     priceBeforeDiscount,
   } = product;
 
   const sizesInDatabase = sizes.map((size: any) => size.size);
+
+  const [error, setError] = useState("");
+
+  const { cartItems } = useAppSelector((state) => state.cart);
+  console.log("🚀 ~ ProductInformation ~ cartItems:", cartItems);
+  console.log("🚀 ~ ProductInformation ~ SIZE:", sizes[selectedSize]);
+
+  const dispatch = useAppDispatch();
+
+  const cartProduct: CartItem = {
+    cartID: `${_id}_${productStyle}_${selectedSize}`,
+    productID: _id,
+    name,
+    style: productStyle,
+    size: sizes[selectedSize].size,
+    quantity: 1,
+    price: priceAfterDiscount,
+    image: colors[productStyle].image,
+  };
+
+  function addToCartHandler() {
+    if (!selectedSize) {
+      setError("Please Select a size");
+      return;
+    }
+
+    if (quantity < 1) {
+      setError("This Product is out of stock.");
+    } else {
+    }
+    dispatch(addProductToCart(cartProduct));
+  }
 
   return (
     <div className=" w-[456px] flex flex-col gap-2 mt-12 mr-2 pl-6 pt-1 pr-12  font-medium">
@@ -82,7 +120,7 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
             </Link>
           </div>
           <div className="mt-2">
-            <ProductSize
+            <ProductSizes
               selectedSize={selectedSize}
               sizesInDatabase={sizesInDatabase}
               productStyle={productStyle}
@@ -91,7 +129,12 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
           </div>
 
           <div className="space-y-3 mt-2 mb-6">
-            <Button size="large" variant="primary" fullWidth>
+            <Button
+              size="large"
+              variant="primary"
+              fullWidth
+              onClick={addToCartHandler}
+            >
               Ajouter au panier
             </Button>
             <Button size="large" fullWidth>

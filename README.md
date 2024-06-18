@@ -703,6 +703,8 @@ $ npm i react-hook-form @hookform/resolvers zod
 
 ### 16. CartSchema, subCategorySchema, categorySchema and OrderSchema
 
+#### 17.
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)

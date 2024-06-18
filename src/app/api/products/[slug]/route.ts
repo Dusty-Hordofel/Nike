@@ -20,27 +20,35 @@ export async function POST(req: NextRequest) {
       );
     }
     const subProduct = product.subProducts[style] as ISubProduct;
+    const priceAfterDiscount =
+      subProduct.discount > 0
+        ? (
+            subProduct.sizes[size].price -
+            subProduct.sizes[size].price / subProduct.discount
+          ).toFixed(2)
+        : subProduct.sizes[size].price;
+
+    const priceBeforeDiscount = subProduct.sizes[size].price;
+    const quantity = subProduct.sizes[size].qty;
 
     const newProduct = {
-      subProduct,
+      // subProduct,
+      _id: product._id,
       slug: product.slug,
+      style: Number(style),
+      sku: subProduct.sku,
       name: product.name,
+      description: product.description,
       images: subProduct.images,
+      category: product.category,
       sizes: subProduct.sizes,
       discount: subProduct.discount,
-      sku: subProduct.sku,
       colors: product.subProducts.map(
         (subProduct: ISubProduct) => subProduct.color
       ),
-      priceAfterDiscount:
-        subProduct.discount > 0
-          ? (
-              subProduct.sizes[size].price -
-              subProduct.sizes[size].price / subProduct.discount
-            ).toFixed(2)
-          : subProduct.sizes[size].price,
-      priceBeforeDiscount: subProduct.sizes[size].price,
-      quantity: subProduct.sizes[size].qty,
+      priceAfterDiscount: Number(priceAfterDiscount),
+      priceBeforeDiscount: Number(priceBeforeDiscount),
+      quantity,
     };
 
     return new NextResponse(JSON.stringify({ product: newProduct }), {

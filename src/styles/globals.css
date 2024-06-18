@@ -54,3 +54,14 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Masquer la flèche pour les navigateurs basés sur WebKit (comme Chrome et Safari) */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Masquer la flèche pour les autres navigateurs */
+details summary {
+  list-style: none; /* Cela masque la flèche */
+  cursor: pointer; /* Facultatif : Change le curseur pour indiquer que l'élément est cliquable */
+}

@@ -9,30 +9,16 @@ interface ProductsAndSizesProps {
   selectedSize: number;
 }
 
-const ProductSize = ({
+const ProductSizes = ({
   sizesInDatabase,
   productStyle,
   selectedSize,
   slug,
 }: ProductsAndSizesProps) => {
-  const excludedSizes = new Set([
-    "37",
-    "39.5",
-    "41.5",
-    "43.5",
-    "46.5",
-    "48",
-    "49",
-  ]);
-  const sizesArray = Array.from({ length: 31 }, (_, index) =>
-    String(35 + index * 0.5)
-  );
-  const filteredSizes = sizesArray.filter((size) => !excludedSizes.has(size));
-
   return (
     <div className="mt8-lg">
       <ul className="grid grid-cols-3 gap-[6px]">
-        {filteredSizes.map((size, index) => (
+        {sizesInDatabase.map((size, index) => (
           <Link
             aria-label={slug}
             className="product-card__img-link-overlay group"
@@ -73,4 +59,4 @@ const ProductSize = ({
   );
 };
 
-export default ProductSize;
+export default ProductSizes;

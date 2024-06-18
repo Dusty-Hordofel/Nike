@@ -7,6 +7,7 @@ export const iconButtonVariants = cva(ArrowButtonStyle.base, {
   variants: {
     direction: {
       left: "rotate-180",
+      // rotate: "",
       right: "rotate-0",
     },
   },

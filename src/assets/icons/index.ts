@@ -10,3 +10,5 @@ export { default as JordanIcon } from "./jordan/JordanIcon";
 export { default as Eye } from "./eye/Eye";
 export { default as CrossedEye } from "./eye/CrossedEye";
 export { default as Chevron } from "./chevron/Chevron";
+export { default as Gift } from "./gift/Gift";
+export { default as Delete } from "./delete/Delete";

@@ -37,8 +37,9 @@ import { useAppSelector } from "@/hooks/use-redux-hooks";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);
-  console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
-  console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
+  console.log("🚀 ~ Home ~ cartItems:", cartItems);
+  // console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
+  // console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
 
   return (
     <>
