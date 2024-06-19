@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
+import { useAppSelector } from "@/hooks/use-redux-hooks";
 import { cn } from "@/lib/utils";
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
@@ -14,31 +15,40 @@ type PromoCodeSectionProps = {
 };
 
 // Main component props
-type DetailsProps = {};
+type CheckoutProps = {};
 
 // Main Details component
-const Details: React.FC<DetailsProps> = (props) => {
+const CartDetails: React.FC<CheckoutProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { cartItems, cartTotal, orderTotal, shipping } = useAppSelector(
+    (state) => state.cart
+  );
 
   return (
     <div className="px-2 mb-4 max-w-[404px] w-full">
       <aside data-testid="cart-summary" className="px-2 mb-6 bg-blue-400">
         <h2 className="mb-6 text-2xl font-medium">Récapitulatif</h2>
         <PromoCodeSection isOpen={isOpen} setIsOpen={setIsOpen} />
-        <SummaryLine label="Sous-total" value="—" />
+        <SummaryLine label="Sous-total" value={String(cartTotal)} />
         <SummaryLine
           label="Frais estimés de prise en charge et d'expédition"
-          value="Gratuit"
+          value={String(shipping)}
         />
-        <SummaryLine label="Total" value="—" isTotal />
+        <SummaryLine
+          label="Total"
+          value={String(orderTotal.toFixed(2))}
+          isTotal
+        />
         <CheckoutButtons />
       </aside>
     </div>
   );
 };
 
-export default Details;
+export default CartDetails;
 
+// Subcomponent for promo code section
 const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
   isOpen,
   setIsOpen,
@@ -104,7 +114,7 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
     <div
       className={`flex justify-between ${isTotal ? "py-4 my-3 border-t border-b border-[#E5E5E5]" : "mb-2"}`}
     >
-      <span className="w-[387px] inline-block bg-success">{label}</span>
+      <span className="w-[387px] inline-block bg-success">{label} </span>
       <span>{value}</span>
     </div>
   );

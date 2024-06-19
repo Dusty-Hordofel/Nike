@@ -1,20 +1,19 @@
 "use client";
 import { Empty } from "@/components/cart";
-import CardImages from "@/components/cart/CardImages";
-import Details from "@/components/cart/details/Details";
+import CartProductDetails from "@/components/cart/cart-product-details";
+import CartDetails from "@/components/cart/cart-details/cart-details";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
 import Link from "next/link";
 import React from "react";
 
 type Props = {};
 
-const Cart = (props: Props) => {
-  const { cartItems } = useAppSelector((state) => state.cart);
-  console.log("🚀 ~ Cart ~ cartItems:CARDITEM", cartItems);
-  const cart = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  return (
-    // mx-auto px-2
+const CartProductsPage = (props: Props) => {
+  const { cartItems, cartTotal, orderTotal } = useAppSelector(
+    (state) => state.cart
+  );
 
+  return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">
       <div className="flex bg-success w-max mx-auto">
         <div className="px-2 bg-blue-200">
@@ -46,7 +45,7 @@ const Cart = (props: Props) => {
             {cartItems.length > 0 ? (
               <>
                 {cartItems.map((cartItem) => (
-                  <CardImages cartItem={cartItem} />
+                  <CartProductDetails cartItem={cartItem} />
                 ))}
               </>
             ) : (
@@ -55,11 +54,11 @@ const Cart = (props: Props) => {
           </div>
         </div>
         <div className=" bg-warning">
-          <Details />
+          <CartDetails />
         </div>
       </div>
     </main>
   );
 };
 
-export default Cart;
+export default CartProductsPage;
