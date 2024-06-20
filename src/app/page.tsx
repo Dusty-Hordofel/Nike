@@ -34,12 +34,14 @@ import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
+import { useCurrentUser } from "@/hooks/user/use-current-user";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);
   console.log("🚀 ~ Home ~ cartItems:", cartItems);
-  // console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
-  // console.log("🚀 ~ Home ~ cartItems", cartItems.cart.cartItems);
+
+  const user = useCurrentUser();
+  console.log("🚀 ~ Home ~ user:", user);
 
   return (
     <>

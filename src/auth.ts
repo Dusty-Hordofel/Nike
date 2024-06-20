@@ -19,30 +19,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
           const user = await User.findOne({ email });
-          console.log("🚀 ~ authorize: ~ user:", user);
 
           if (!user || !user.password) return null;
 
-          // étape normalement vérifier avec lookup
-          // if (!user) {
-          //   throw new Error("Aucun utilisateur trouvé avec cet email");
-          // }
-
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (passwordMatch) return user;
-          // if (!passwordMatch) {
-          //   throw new Error(
-          //     "Mot de passe incorrect. Veuillez réessayer avec le bon mot de passe"
-          //   );
-          // }
-
-          // return {
-          //   id: user.id,
-          //   name: user.name,
-          //   email: user.email,
-          //   image: user.image,
-          //   role: user.role,
-          // };
         }
 
         return null;
@@ -51,22 +32,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, trigger }) {
-      console.log("🚀 ~ jwt ~ trigger:", trigger);
       return token;
-      // fetch user
-      // if(!token.sub) return token;
-
-      // const exisitingUser = await getUserById(token.sub);
-
-      // if(!exisitingUser) return token;
-
-      // token.role = exisitingUser.role;
-      // return token;
     },
-    session: async ({ session, user, trigger, token }) => {
-      console.log("🚀 ~ session: ~ token:", token);
-      console.log("🚀 ~ session: ~ session:", session);
-      return session;
+    session: async ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          _id: token.sub,
+          email: token.email,
+          name: token.name,
+          image: token.picture,
+          //   role: token.role || "user",
+        },
+      };
     },
   },
   pages: {

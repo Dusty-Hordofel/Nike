@@ -13,7 +13,7 @@ interface ICartProduct {
   //   color: string;
   //   image: string;
   // };
-  qty: number;
+  quantity: number;
   color: {
     color: string;
     image: string;
@@ -40,7 +40,7 @@ const cartProductSchema = new Schema<ICartProduct>({
   //   color: String,
   //   image: String,
   // },
-  qty: { type: Number, required: true },
+  quantity: { type: Number, required: true },
   color: {
     color: { type: String, required: true },
     image: { type: String, required: true },

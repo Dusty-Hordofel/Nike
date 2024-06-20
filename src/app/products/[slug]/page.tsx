@@ -43,8 +43,9 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
   if (productQuery.isError) return <p>Error...</p>;
 
   const { product } = productQuery.data;
+  console.log("🚀 ~ ProductPage ~ product:TEST", product);
 
-  console.log("🚀 ~ ProductPage ~ productsQuery:", productQuery);
+  // console.log("🚀 ~ ProductPage ~ productsQuery:", productQuery);
   return (
     <div className="min-h-screen">
       <div className="max-w-[1200px] mx-auto flex">

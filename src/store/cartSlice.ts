@@ -4,8 +4,10 @@ export type CartItem = {
   cartID: string;
   productID: number;
   image: string;
+  color: string;
   name: string;
   price: string;
+  priceBeforeDiscount: number;
   quantity: number;
   style: string;
   size: string;

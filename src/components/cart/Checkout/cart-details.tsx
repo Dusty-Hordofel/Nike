@@ -1,5 +1,6 @@
 "use client";
 
+import { saveCartItems } from "@/actions/save-cart.action";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,12 @@ const CartDetails: React.FC<CheckoutProps> = (props) => {
   const { cartItems, cartTotal, orderTotal, shipping } = useAppSelector(
     (state) => state.cart
   );
+  console.log("🚀 ~ cartItems:Details", cartItems);
+
+  const saveCartHandler = async () => {
+    const saveCart = await saveCartItems(cartItems);
+    console.log("🚀 ~ saveCartHandler ~ saveCart:", saveCart);
+  };
 
   return (
     <div className="px-2 mb-4 max-w-[404px] w-full">
@@ -40,7 +47,7 @@ const CartDetails: React.FC<CheckoutProps> = (props) => {
           value={String(orderTotal.toFixed(2))}
           isTotal
         />
-        <CheckoutButtons />
+        <CheckoutButtons saveCartHandler={saveCartHandler} />
       </aside>
     </div>
   );
@@ -121,11 +128,14 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
 };
 
 // Subcomponent for checkout buttons
-const CheckoutButtons: React.FC = () => {
+interface CheckoutButtonsProps {
+  saveCartHandler: () => Promise<void>;
+}
+const CheckoutButtons = ({ saveCartHandler }: CheckoutButtonsProps) => {
   return (
     <div className="pt-5 flex flex-col space-y-3">
-      <Link
-        href="https://www.nike.com/fr/checkout/tunnel"
+      {/* <Link
+        href="/checkout"
         tabIndex={-1}
         className={cn(
           buttonVariants({
@@ -135,11 +145,15 @@ const CheckoutButtons: React.FC = () => {
           }),
           "font-medium"
         )}
-      >
+        
+        onClick={() => saveCartHandler()}
+      > */}
+      <div className="cursor-pointer" onClick={() => saveCartHandler()}>
         Paiement
-      </Link>
+      </div>
+      {/* </Link> */}
       <Link
-        href="https://www.nike.com/fr/checkout/tunnel"
+        href="/checkout"
         className="py-[18px] px-6 mb-3 bg-[#f5f5f5] rounded-full border border-[#e4e4e4] font-medium min-h-[60px] flex justify-center items-center"
         aria-label="Checkout with PayPal"
         data-testid="paypal-checkout-button"

@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
       category: product.category,
       sizes: subProduct.sizes,
       discount: subProduct.discount,
+      shipping: product.shipping,
       colors: product.subProducts.map(
         (subProduct: ISubProduct) => subProduct.color
       ),

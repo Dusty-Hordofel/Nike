@@ -1,10 +1,11 @@
 "use client";
 import { Empty } from "@/components/cart";
-import CartProductDetails from "@/components/cart/cart-product-details";
-import CartDetails from "@/components/cart/cart-details/cart-details";
+import CartProductDetails from "@/components/cart/CartProductDetails";
+import CartDetails from "@/components/cart/Checkout/cart-details";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
 import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
@@ -12,6 +13,9 @@ const CartProductsPage = (props: Props) => {
   const { cartItems, cartTotal, orderTotal } = useAppSelector(
     (state) => state.cart
   );
+
+  // const { cart } = useSelector((state) => ({ ...state }));
+  console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
 
   return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">

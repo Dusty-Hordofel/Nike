@@ -30,9 +30,11 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
     colors,
     sizes,
     quantity,
+    shipping,
     priceAfterDiscount,
     priceBeforeDiscount,
   } = product;
+  console.log("🚀 ~ ProductInformation ~ colors:", colors);
 
   const sizesInDatabase = sizes.map((size: any) => size.size);
 
@@ -50,10 +52,14 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
     name,
     style: productStyle,
     size: sizes[selectedSize].size,
-    quantity: 1,
+    color: colors[productStyle].color,
     price: priceAfterDiscount,
+    shipping,
+    priceBeforeDiscount,
     image: colors[productStyle].image,
+    quantity: 1,
   };
+  console.log("🚀 ~ ProductInformation ~ cartProduct: MONA", cartProduct);
 
   function addToCartHandler() {
     if (!selectedSize) {
