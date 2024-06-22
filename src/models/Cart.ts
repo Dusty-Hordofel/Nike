@@ -22,7 +22,7 @@ interface ICartProduct {
 }
 
 // Définir l'interface pour le panier
-interface ICart extends Document {
+export interface ICart extends Document {
   products: ICartProduct[];
   cartTotal: number;
   totalAfterDiscount?: number;

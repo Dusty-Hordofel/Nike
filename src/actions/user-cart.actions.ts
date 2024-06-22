@@ -7,11 +7,10 @@ import mongoose from "mongoose";
 import Cart from "@/models/Cart";
 import Product, { IProduct } from "@/models/Product";
 import { CartItem } from "@/store/cartSlice";
+import { redirect } from "next/navigation";
+import { isValidObjectId } from "@/lib/utils";
 
 // Fonction utilitaire pour vérifier l'ObjectId valide
-const isValidObjectId = (id: string): boolean => {
-  return mongoose.Types.ObjectId.isValid(id);
-};
 
 // Fonction pour sauvegarder les articles du panier
 export async function saveCartItems(cartItems: CartItem[]) {
@@ -116,3 +115,30 @@ export async function saveCartItems(cartItems: CartItem[]) {
     return { error: "An error occurred while saving cart items" };
   }
 }
+
+export const getCart = async () => {
+  try {
+    // Récupérer l'utilisateur actuel
+    const user = await currentUser();
+    if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
+      return { error: "Unauthorized" };
+    }
+
+    // Connexion à la base de données
+    connectDB();
+
+    // Récupérer l'utilisateur depuis la base de données
+    const dbUser = await User.findOne({ email: user.email });
+    if (!dbUser) {
+      return { error: "Unauthorized" };
+    }
+
+    const cart = await Cart.findOne({ user: dbUser._id });
+    if (!cart) redirect("/cart");
+
+    return JSON.parse(JSON.stringify(cart));
+  } catch (error) {
+    console.log("🚀 ~ getCart ~ error:", error);
+    return { error: "An error occurred while loading cart items" };
+  }
+};

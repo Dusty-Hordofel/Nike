@@ -3,7 +3,7 @@ import { CartIcon, FavorisIcon, NikeIcon } from "@/assets/icons";
 import React, { useState } from "react";
 import SearchInput from "./search/SearchInput";
 import NavLinks from "./navigation/NavLinks";
-import { menuLinks } from "@/assets/data/menuLinks";
+import { menuLinks } from "@/assets/data/menu-links";
 import Link from "next/link";
 
 const Nava = () => {

@@ -6,9 +6,9 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 import connectDB from "@/config/database";
 import { currentUser } from "@/utils/auth";
 import User from "@/models/User";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import Cart from "@/models/Cart";
-import Product, { ISubProduct } from "@/models/Product";
+import Product, { IProduct, ISubProduct } from "@/models/Product";
 import { CartItem } from "@/store/cartSlice";
 
 // Fonction utilitaire pour vérifier l'ObjectId valide
@@ -42,7 +42,7 @@ export async function saveCartItems(cartItems: CartItem[]) {
           throw new Error(`Product with ID ${cartItem.productID} not found`);
         }
 
-        const subProduct = dbProduct.subProducts[cartItem.style];
+        const subProduct = dbProduct.subProducts[Number(cartItem.style)];
         console.log("🚀 ~ cartItems.map ~ subProduct:SUBA", subProduct);
         if (!subProduct) {
           throw new Error(
@@ -64,16 +64,16 @@ export async function saveCartItems(cartItems: CartItem[]) {
             subProduct.discount > 0
               ? Number(
                   (
-                    subProduct.sizes.find((p) => p.size === cartItem.size)
+                    subProduct.sizes.find((p: any) => p.size === cartItem.size)
                       .price -
-                    subProduct.sizes.find((p) => p.size === cartItem.size)
+                    subProduct.sizes.find((p: any) => p.size === cartItem.size)
                       .price /
                       Number(subProduct.discount)
                   ).toFixed(2)
                 )
               : Number(
                   subProduct.sizes
-                    .find((p) => p.size === cartItem.size)
+                    .find((p: any) => p.size === cartItem.size)
                     .price.toFixed(2)
                 ),
         };
@@ -108,4 +108,25 @@ export async function saveCartItems(cartItems: CartItem[]) {
     console.error("Error saving cart items:", error);
     return { error: "An error occurred while saving cart items" };
   }
+}
+
+interface supProduct {
+  _id: ObjectId;
+  color: {
+    color: string;
+    image: string;
+  };
+  sold: number;
+  images: {
+    url: string;
+    public_url: string;
+  }[];
+  description_images: any[]; // Adapter le type en fonction des données réelles
+  sizes: {
+    size: string;
+    qty: number;
+    price: number;
+    _id: ObjectId;
+  }[];
+  discount: number;
 }

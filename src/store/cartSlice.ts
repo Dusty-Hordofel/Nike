@@ -9,6 +9,7 @@ export type CartItem = {
   price: string;
   priceBeforeDiscount: number;
   quantity: number;
+  shipping: number;
   style: string;
   size: string;
 };

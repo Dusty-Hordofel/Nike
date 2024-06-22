@@ -1,10 +1,16 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 interface Address {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
   country: string;
-  province: string;
+  address: string;
   city: string;
   postalCode: string;
+  region: string;
+  companyInfo: string;
 }
 
 export interface User extends Document {
@@ -15,9 +21,9 @@ export interface User extends Document {
   password: string;
   shoppingPreference?: "homme" | "femme";
   emailVerified?: boolean;
-  phone?: string;
+  phoneNumber?: string;
   role?: string;
-  address?: Address;
+  addresses?: Address[];
   terms: boolean;
   marketingOption?: boolean;
   createdAt?: Date;
@@ -25,8 +31,14 @@ export interface User extends Document {
 }
 
 const addressSchema = new Schema<Address>({
+  lastName: { type: String, required: true, minlength: 2 },
+  firstName: { type: String, required: true, minlength: 2 },
   country: { type: String, required: true },
-  province: { type: String, required: true },
+  region: { type: String, required: true },
+  address: { type: String, required: true, minlength: 10 },
+  phoneNumber: { type: String, required: true, minlength: 8 },
+  email: { type: String, required: true, match: /^\S+@\S+\.\S+$/ },
+  companyInfo: { type: String },
   city: { type: String, required: true },
   postalCode: { type: String, required: true },
 });
@@ -54,12 +66,9 @@ const userSchema = new Schema<User>(
       // required: true,
     },
     emailVerified: { type: Boolean, default: false },
-    phone: { type: String },
+    phoneNumber: { type: String },
     role: { type: String, default: "user" },
-    address: {
-      type: addressSchema,
-      // required: true
-    },
+    addresses: { type: [addressSchema], default: [] },
     marketingOption: {
       type: Boolean,
       default: false,

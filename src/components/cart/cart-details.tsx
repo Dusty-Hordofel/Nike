@@ -1,6 +1,6 @@
 "use client";
 
-import { saveCartItems } from "@/actions/save-cart.action";
+import { saveCartItems } from "@/actions/user-cart.actions";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
 import { cn } from "@/lib/utils";
