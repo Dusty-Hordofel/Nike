@@ -1,7 +1,7 @@
 "use client";
 import { Empty } from "@/components/cart";
 import CartProductDetails from "@/components/cart/CartProductDetails";
-import CartDetails from "@/components/cart/Checkout/cart-details";
+import CartDetails from "@/components/cart/cart-details";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
 import Link from "next/link";
 import React from "react";

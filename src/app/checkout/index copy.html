@@ -1,1123 +1,125 @@
-<section class="mb5-sm" id="payment">
-  <span class="css-1qgj8yk">Paiement Étape 2 sur 3 Étape en cours</span>
-  <header class="pt3-sm pb7-sm prl5-sm css-1nytozf">
-    <h2 class="css-xkwihi">Paiement</h2>
-  </header>
-  <div>
-    <div class="d-sm-h">
-      <div class="ncss-row">
-        <div class="ncss-col-sm-12 pb12-sm">
-          <div class="ncss-container ta-sm-c u-full-height">
-            <div
-              class="ncss-row u-full-height u-full-width d-sm-t ta-sm-c pt6-sm pb6-sm pt12-lg pb12-lg"
-            >
-              <div class="ncss-col-sm-12 d-sm-tc va-sm-m">
-                <div
-                  class=""
-                  style="height: 32px; margin: 0px auto; width: 32px"
-                >
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 80 80"
-                    preserveAspectRatio="xMidYMid"
-                  >
-                    <rect x="0" y="0" width="80" height="80" fill="none"></rect>
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="32"
-                      stroke-dasharray="160 40"
-                      stroke="#000"
-                      fill="none"
-                      stroke-width="5"
-                    >
-                      <animateTransform
-                        attributeName="transform"
-                        type="rotate"
-                        values="0 40 40;180 40 40;360 40 40;"
-                        keyTimes="0;0.5;1"
-                        dur="1500ms"
-                        repeatCount="indefinite"
-                        begin="0s"
-                      ></animateTransform>
-                    </circle>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="ncss-row mt2-sm">
-      <div class="ncss-col-sm-12">
-        <div class="prl5-sm">
-          <div>
-            <h3 class="css-1qpib4x">
-              Pays/région de facturation<span
-                id="billingCountryTipWrapper"
-                class="css-178g4y"
-                ><button
-                  class="d-sm-ib css-9a7n2d"
-                  id="billingCountryTip"
-                  aria-label="Billing Country/Region info"
-                >
-                  <div class="css-1ou3w6b">
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                      role="img"
-                      width="24px"
-                      height="24px"
-                      fill="none"
-                    >
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        d="M12 20a8 8 0 100-16 8 8 0 000 16zm.75-4.5V17h-1.5v-1.5h1.5zM10.5 10c0-.918.831-1.644 1.764-1.472h.006c.6.106 1.096.603 1.201 1.202v.001a1.502 1.502 0 01-.82 1.63 2.411 2.411 0 00-1.401 2.189V14h1.5v-.45a.91.91 0 01.532-.828l.01-.005a3.002 3.002 0 001.657-3.248 3.008 3.008 0 00-2.416-2.417C10.647 6.706 9 8.179 9 10h1.5z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    class="p4-sm z2 css-17f46hh"
-                    data-attr="test-message"
-                    hidden=""
-                  >
-                    <p class="">
-                      Cela correspond au pays/à la région où ton mode de
-                      paiement est enregistré.
-                    </p>
-                  </div>
-                </button></span
-              >
-            </h3>
-            <div id="editButtonContainer" class="">
-              <span class="mr1-sm css-zjxnbk"
-                >France<button
-                  aria-label="Modifier"
-                  class="nds-btn css-143k399 ex41m6f0 cta-primary-dark underline btn-md"
-                  type="button"
-                  id="billingCountryEditButton"
-                >
-                  Modifier<span class="ripple"></span></button
-              ></span>
-            </div>
-          </div>
-        </div>
-        <div class="pr5-sm pt5-sm pb5-sm pl1-sm">
-          <div class="uikit-checkbox-toggler">
-            <div class="css-a78bb1 eokc0d80 nds-checkbox-container light">
-              <input
-                type="checkbox"
-                class="nds-checkbox"
-                name="prepaidCard"
-                id="prepaidCard"
-                aria-describedby="a11y-label-details-prepaidCard"
-                value=""
-              />
-              <div class="nds-checkbox-icon">
-                <span aria-hidden="true" class="checkbox-box circle"></span
-                ><span aria-hidden="true" class="checkbox-box"></span
-                ><span aria-hidden="true" class="checkbox-box-icon-container"
-                  ><svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    role="img"
-                    width="24px"
-                    height="24px"
-                  >
-                    <g
-                      stroke="none"
-                      stroke-width="1"
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <g transform="translate(2.000000, 2.000000)">
-                        <rect x="0" y="0" width="20" height="20" rx="10"></rect>
-                        <rect
-                          class="checkicon-fill"
-                          x="0"
-                          y="0"
-                          width="20"
-                          height="20"
-                          rx="5"
-                        ></rect>
-                        <path
-                          class="checkicon-check"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M6.00134645 9.81868355 9.12119517 13.003429 14.9964286 7"
-                        ></path>
-                      </g>
-                    </g></svg
-                ></span>
-              </div>
-              <label for="prepaidCard" class="nds-checkbox-label"
-                ><span
-                  >As-tu une carte cadeau, un bon d'achat ou un code
-                  promotionnel&nbsp;?<span
-                    id="GiftCardPromoCodeTooltipWrapper"
-                    class="css-178g4y"
-                    ><button
-                      class="d-sm-ib css-9a7n2d"
-                      id="GiftCardPromoCodeTooltip"
-                      aria-label="Card details"
-                    >
-                      <div class="css-1ou3w6b">
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          role="img"
-                          width="24px"
-                          height="24px"
-                          fill="none"
-                        >
-                          <path
-                            fill="currentColor"
-                            fill-rule="evenodd"
-                            d="M12 20a8 8 0 100-16 8 8 0 000 16zm.75-4.5V17h-1.5v-1.5h1.5zM10.5 10c0-.918.831-1.644 1.764-1.472h.006c.6.106 1.096.603 1.201 1.202v.001a1.502 1.502 0 01-.82 1.63 2.411 2.411 0 00-1.401 2.189V14h1.5v-.45a.91.91 0 01.532-.828l.01-.005a3.002 3.002 0 001.657-3.248 3.008 3.008 0 00-2.416-2.417C10.647 6.706 9 8.179 9 10h1.5z"
-                            clip-rule="evenodd"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div
-                        class="p4-sm z2 css-17f46hh"
-                        data-attr="test-giftcard"
-                        hidden=""
-                      >
-                        <div class="">
-                          <div class="pb2-sm">
-                            <p>Comment localiser le numéro de carte cadeau</p>
-                            <div class="pt2-sm pr4-md">
-                              <p class="pb3-sm">
-                                Numéro de carte à 19 chiffres et code PIN à 6
-                                chiffres
-                              </p>
-                              <div class="css-1099yso"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div></button></span></span
-              ></label>
-            </div>
-            <div class="d-sm-h"></div>
-          </div>
-          <div>
-            <section
-              class="ncss-row ncss-form-group pl3-sm gift-card-container d-sm-h css-1ct3e5u"
-            >
-              <div class="ncss-col-sm-12 ncss-col-md-10 va-sm-t mb4-sm mb0-md">
-                <div class="ncss-row">
-                  <div class="ncss-col-md-8 ncss-col-sm-12 va-sm-t css-p778zd">
-                    <div class="css-5p7ysv e192pr2z0 nds-input-container">
-                      <div class="nds-input-layout-control">
-                        <input
-                          type="tel"
-                          name="prepaidCardNumber"
-                          id="prepaidCardNumber"
-                          class="nds-input-text-field css-wxfak7 e1fiih290"
-                          autocomplete="on"
-                          aria-describedby="prepaidCardNumber-input-aria-description"
-                          aria-required="false"
-                          aria-invalid="false"
-                          value=""
-                        /><span
-                          id="prepaidCardNumber-input-aria-description"
-                          style="
-                            position: absolute;
-                            left: -2000px;
-                            font-size: 0px;
-                            width: 0px;
-                            height: 0px;
-                            overflow: hidden;
-                            visibility: hidden;
-                          "
-                          ><span
-                            >REMARQUE : tu peux utiliser un maximum de 10 cartes
-                            cadeaux pour une seule commande. Pour utiliser plus
-                            de 10 cartes cadeaux, il faut passer une autre
-                            commande.</span
-                          ></span
-                        ><label
-                          for="prepaidCardNumber"
-                          class="nds-input-label css-15zk0wt eyw2uzc0"
-                          data-testid="label-element"
-                          ><span>Numéro de bon d'achat</span></label
-                        >
-                        <fieldset
-                          class="nds-input-fieldset css-1eif5ff e1jmt8s30"
-                          aria-hidden="true"
-                        >
-                          <legend>Numéro de bon d'achat</legend>
-                        </fieldset>
-                      </div>
-                      <div class="textfield-support-container">
-                        <span
-                          class="nds-input-support-text css-15h1hlh e1xmwk8m0"
-                          aria-live="polite"
-                          data-testid="support-text"
-                          >REMARQUE : tu peux utiliser un maximum de 10 cartes
-                          cadeaux pour une seule commande. Pour utiliser plus de
-                          10 cartes cadeaux, il faut passer une autre
-                          commande.</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="css-1bysat3">
-                    <div class="css-5p7ysv e192pr2z0 nds-input-container">
-                      <div class="nds-input-layout-control">
-                        <input
-                          type="tel"
-                          name="pinNumber"
-                          id="pinNumber"
-                          class="nds-input-text-field css-wxfak7 e1fiih290"
-                          autocomplete="on"
-                          aria-describedby="pinNumber-input-aria-description"
-                          aria-required="false"
-                          aria-invalid="false"
-                          value=""
-                        /><span
-                          id="pinNumber-input-aria-description"
-                          style="
-                            position: absolute;
-                            left: -2000px;
-                            font-size: 0px;
-                            width: 0px;
-                            height: 0px;
-                            overflow: hidden;
-                            visibility: hidden;
-                          "
-                        ></span
-                        ><label
-                          for="pinNumber"
-                          class="nds-input-label css-15zk0wt eyw2uzc0"
-                          data-testid="label-element"
-                          ><span>PIN</span></label
-                        >
-                        <fieldset
-                          class="nds-input-fieldset css-1eif5ff e1jmt8s30"
-                          aria-hidden="true"
-                        >
-                          <legend>PIN</legend>
-                        </fieldset>
-                      </div>
-                      <div class="textfield-support-container">
-                        <span
-                          class="nds-input-support-text css-15h1hlh e1xmwk8m0"
-                          aria-live="polite"
-                          data-testid="support-text"
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt0-sm mt5-md va-sm-t fl-sm-r pr2-sm css-vgm4j8">
-                <button
-                  class="nds-btn css-1tkhh7o ex41m6f0 btn-secondary-dark"
-                  type="button"
-                >
-                  Appliquer<span class="ripple"></span>
-                </button>
-              </div>
-            </section>
-            <section
-              class="ncss-row ncss-form-group pl3-sm promo-code-container mt3-sm d-sm-h"
-            >
-              <div class="ncss-col-sm-12 ncss-col-md-10 va-sm-t mb4-sm mb0-md">
-                <div class="ncss-row">
-                  <div
-                    class="ncss-col-sm-12 ncss-input-container va-sm-t css-0"
-                  >
-                    <div class="css-5p7ysv e192pr2z0 nds-input-container">
-                      <div class="nds-input-layout-control">
-                        <input
-                          type="text"
-                          name="promoCode"
-                          id="promoCode"
-                          class="nds-input-text-field css-wxfak7 e1fiih290"
-                          autocomplete="promo-code"
-                          aria-describedby="promoCode-input-aria-description"
-                          aria-required="false"
-                          aria-invalid="false"
-                          value=""
-                        /><span
-                          id="promoCode-input-aria-description"
-                          style="
-                            position: absolute;
-                            left: -2000px;
-                            font-size: 0px;
-                            width: 0px;
-                            height: 0px;
-                            overflow: hidden;
-                            visibility: hidden;
-                          "
-                          ><span
-                            >Si tu rencontres le moindre problème, consulte les
-                            Conditions générales de la promotion. Elles seront
-                            disponibles en cliquant sur « Voir les détails »,
-                            sur la page Web où tu as trouvé la promotion ou au
-                            bas de l'e-mail que tu as reçu. Les codes promo ne
-                            peuvent être utilisés pour l'achat d'articles
-                            personnalisés.</span
-                          ></span
-                        ><label
-                          for="promoCode"
-                          class="nds-input-label css-15zk0wt eyw2uzc0"
-                          data-testid="label-element"
-                          ><span>Code promotionnel</span></label
-                        >
-                        <fieldset
-                          class="nds-input-fieldset css-1eif5ff e1jmt8s30"
-                          aria-hidden="true"
-                        >
-                          <legend>Code promotionnel</legend>
-                        </fieldset>
-                      </div>
-                      <div class="textfield-support-container">
-                        <span
-                          class="nds-input-support-text css-15h1hlh e1xmwk8m0"
-                          aria-live="polite"
-                          data-testid="support-text"
-                          >Si tu rencontres le moindre problème, consulte les
-                          Conditions générales de la promotion. Elles seront
-                          disponibles en cliquant sur « Voir les détails », sur
-                          la page Web où tu as trouvé la promotion ou au bas de
-                          l'e-mail que tu as reçu. Les codes promo ne peuvent
-                          être utilisés pour l'achat d'articles
-                          personnalisés.</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="mt0-sm mt5-md va-sm-t fl-sm-r pr2-sm css-vgm4j8">
-                <button
-                  class="nds-btn css-1tkhh7o ex41m6f0 btn-secondary-dark"
-                  type="button"
-                  data-attr="qa-promocode"
-                >
-                  Appliquer<span class="ripple"></span>
-                </button>
-              </div>
-            </section>
-          </div>
-        </div>
-        <div class="prl5-sm pt5-sm">
-          <h3 class="mb6-sm css-5oevkg">Sélectionner un mode de paiement</h3>
-          <div class="ncss-row css-1oj38by">
-            <div class="ncss-col-sm-12 pb3-sm va-sm-t">
-              <div class="nds-radio css-ecsns2 e1d37qfi0">
-                <input
-                  type="radio"
-                  class=""
-                  id="creditDebit"
-                  value="creditDebit"
-                  checked=""
-                /><span class="radio-circle"></span
-                ><svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  width="24px"
-                  height="24px"
-                >
-                  <g
-                    stroke="none"
-                    stroke-width="1"
-                    fill="none"
-                    fill-rule="evenodd"
-                  >
-                    <g transform="translate(2.000000, 2.000000)">
-                      <circle
-                        class="radio-outline"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        cx="10"
-                        cy="10"
-                        r="9.25"
-                      ></circle>
-                      <circle
-                        class="radio-fill"
-                        fill="currentColor"
-                        cx="10"
-                        cy="10"
-                        r="5"
-                      ></circle>
-                    </g>
-                  </g></svg
-                ><label for="creditDebit"
-                  ><svg
-                    aria-hidden="true"
-                    class="mr1-sm"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    role="img"
-                    width="24px"
-                    height="24px"
-                    fill="none"
-                    style="color: black; position: relative; top: 6px"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      d="M3.75 9.75h16.5m-2.25 9H6a2.25 2.25 0 01-2.25-2.25v-9A2.25 2.25 0 016 5.25h12a2.25 2.25 0 012.25 2.25v9A2.25 2.25 0 0118 18.75z"
-                    ></path></svg
-                  >Carte de paiement</label
-                >
-              </div>
-            </div>
-            <div class="ncss-col-sm-12 pb3-sm va-sm-t">
-              <div class="nds-radio css-11tozkn e1d37qfi0">
-                <input type="radio" class="" id="paypal" value="paypal" /><span
-                  class="radio-circle"
-                ></span
-                ><svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  width="24px"
-                  height="24px"
-                >
-                  <g
-                    stroke="none"
-                    stroke-width="1"
-                    fill="none"
-                    fill-rule="evenodd"
-                  >
-                    <g transform="translate(2.000000, 2.000000)">
-                      <circle
-                        class="radio-outline"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        cx="10"
-                        cy="10"
-                        r="9.25"
-                      ></circle>
-                      <circle
-                        class="radio-fill"
-                        fill="currentColor"
-                        cx="10"
-                        cy="10"
-                        r="5"
-                      ></circle>
-                    </g>
-                  </g></svg
-                ><label for="paypal"
-                  ><span
-                    style="
-                      box-sizing: border-box;
-                      display: inline-block;
-                      overflow: hidden;
-                      width: initial;
-                      height: initial;
-                      background: none;
-                      opacity: 1;
-                      border: 0px;
-                      margin: 0px;
-                      padding: 0px;
-                      position: relative;
-                      max-width: 100%;
-                    "
-                    ><span
-                      style="
-                        box-sizing: border-box;
-                        display: block;
-                        width: initial;
-                        height: initial;
-                        background: none;
-                        opacity: 1;
-                        border: 0px;
-                        margin: 0px;
-                        padding: 0px;
-                        max-width: 100%;
-                      "
-                      ><img
-                        alt=""
-                        aria-hidden="true"
-                        src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2760%27%20height=%2716%27/%3e"
-                        style="
-                          display: block;
-                          max-width: 100%;
-                          width: initial;
-                          height: initial;
-                          background: none;
-                          opacity: 1;
-                          border: 0px;
-                          margin: 0px;
-                          padding: 0px;
-                        " /></span
-                    ><img
-                      alt="PayPal"
-                      src="//www.nike.com/static/checkoutux/checkout/production-2024-06-04--22-27-48/_next/img/payment/logo_paypal2x.png"
-                      decoding="async"
-                      data-nimg="intrinsic"
-                      class="d-sm-ib va-sm-m ta-sm-c css-mo730t"
-                      style="
-                        position: absolute;
-                        inset: 0px;
-                        box-sizing: border-box;
-                        padding: 0px;
-                        border: none;
-                        margin: auto;
-                        display: block;
-                        width: 0px;
-                        height: 0px;
-                        min-width: 100%;
-                        max-width: 100%;
-                        min-height: 100%;
-                        max-height: 100%;
-                      " /></span
-                ></label>
-              </div>
-            </div>
-            <div class="ncss-col-sm-12 pb3-sm va-sm-t">
-              <div class="nds-radio css-11tozkn e1d37qfi0">
-                <input
-                  type="radio"
-                  class=""
-                  id="GooglePay"
-                  value="GooglePay"
-                /><span class="radio-circle"></span
-                ><svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  width="24px"
-                  height="24px"
-                >
-                  <g
-                    stroke="none"
-                    stroke-width="1"
-                    fill="none"
-                    fill-rule="evenodd"
-                  >
-                    <g transform="translate(2.000000, 2.000000)">
-                      <circle
-                        class="radio-outline"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        cx="10"
-                        cy="10"
-                        r="9.25"
-                      ></circle>
-                      <circle
-                        class="radio-fill"
-                        fill="currentColor"
-                        cx="10"
-                        cy="10"
-                        r="5"
-                      ></circle>
-                    </g>
-                  </g></svg
-                ><label for="GooglePay"
-                  ><i
-                    class="d-sm-ib va-sm-m mr2-sm ta-sm-c css-d7bkdx"
-                    aria-label="GooglePay"
-                  ></i
-                  ><span class="d-sm-ib va-sm-m"></span
-                ></label>
-              </div>
-            </div>
-          </div>
-          <input aria-hidden="true" type="tel" class="css-45e9gk" />
-        </div>
-        <div class="p5-sm pb1-sm mb7-sm ml5-sm mr5-sm css-xzeelg">
-          <div class="ncss-row mb4-sm">
-            <div class="ncss-col-sm-6 va-sm-b">
-              <h3 class="css-5oevkg">Ajouter une carte</h3>
-            </div>
-          </div>
-          <div class="ncss-row pt2-sm" data-attr="paymentFrameContainer">
-            <iframe
-              sandbox="allow-scripts allow-same-origin"
-              class="mt1 u-full-width prl2-sm css-oia1h1"
-              data-attr="credit-card-iframe"
-              src="https://paymentcc.nike.com/services/default?id=a6c0f189-f9e4-45ac-bc71-32fa9602d6fa&amp;ctx=checkout&amp;language=fr&amp;maskerEnabled=true"
-              referrerpolicy="no-referrer-when-downgrade"
-              frameborder="0"
-              scrolling="no"
-              title="Formulaire de carte de crédit"
-            ></iframe>
-          </div>
+<aside class="va-sm-t ncss-col-lg-4">
+  <section class="mb5-sm">
+    <header class="pt5-sm pb3-sm prl5-sm pt3-md u-clearfix">
+      <h2 class="fl-sm-l css-1rkogn0">Dans ton panier</h2>
+      <button
+        aria-label="Modifier"
+        class="nds-btn fl-sm-r css-121t4vg ex41m6f0 cta-primary-dark underline btn-md"
+        type="button"
+      >
+        Modifier<span class="ripple"></span>
+      </button>
+    </header>
+    <div class="ncss-container mb5-sm">
+      <div class="ncss-row" data-attr="summaryComponent">
+        <div class="ncss-col-sm-12 p5-lg mb1-sm css-1qpib4x">
           <div class="ncss-row">
-            <div class="ncss-col-sm-12 ncss-col-md-6 ta-sm-l mb2-sm">
-              <div class="d-md-h mb4-sm">
-                <span id="cvv_newCardWrapper" class="css-0"
-                  ><button class="d-sm-ib css-9a7n2d" id="cvv_newCard">
-                    <span class="u-cursor-pointer css-1wc8wxj"
-                      >Where is my CVV?</span
-                    >
+            <div class="ncss-col-sm-8 va-sm-t">
+              <div class="d-sm-ib">
+                <span data-attr="subtotalText">Sous-total</span
+                ><span id="subtotalTooltipWrapper" class="css-178g4y"
+                  ><button
+                    class="d-sm-ib css-9a7n2d"
+                    id="subtotalTooltip"
+                    aria-label="Détails du sous-total"
+                  >
+                    <div class="css-1ou3w6b">
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        role="img"
+                        width="24px"
+                        height="24px"
+                        fill="none"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M12 20a8 8 0 100-16 8 8 0 000 16zm.75-4.5V17h-1.5v-1.5h1.5zM10.5 10c0-.918.831-1.644 1.764-1.472h.006c.6.106 1.096.603 1.201 1.202v.001a1.502 1.502 0 01-.82 1.63 2.411 2.411 0 00-1.401 2.189V14h1.5v-.45a.91.91 0 01.532-.828l.01-.005a3.002 3.002 0 001.657-3.248 3.008 3.008 0 00-2.416-2.417C10.647 6.706 9 8.179 9 10h1.5z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
                     <div
                       class="p4-sm z2 css-17f46hh"
-                      data-attr="test-message-ccv"
+                      data-attr="test-message"
                       hidden=""
                     >
-                      <div class="ncss-container pl4-md">
-                        <div class="css-13w9ksj">
-                          Trouver le cryptogramme visuel
-                        </div>
-                        <div class="ncss-col-sm-12 ncss-col-md-6 pl0-md">
-                          <div class="pt4-md css-1s85rp3">
-                            Mastercard/Visa/Discover
-                          </div>
-                          <p class="css-0">
-                            Code de sécurité à 3 chiffres<span
-                              style="
-                                box-sizing: border-box;
-                                display: inline-block;
-                                overflow: hidden;
-                                width: initial;
-                                height: initial;
-                                background: none;
-                                opacity: 1;
-                                border: 0px;
-                                margin: 0px;
-                                padding: 0px;
-                                position: relative;
-                                max-width: 100%;
-                              "
-                              ><span
-                                style="
-                                  box-sizing: border-box;
-                                  display: block;
-                                  width: initial;
-                                  height: initial;
-                                  background: none;
-                                  opacity: 1;
-                                  border: 0px;
-                                  margin: 0px;
-                                  padding: 0px;
-                                  max-width: 100%;
-                                "
-                                ><img
-                                  alt=""
-                                  aria-hidden="true"
-                                  src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27200%27%20height=%27125%27/%3e"
-                                  style="
-                                    display: block;
-                                    max-width: 100%;
-                                    width: initial;
-                                    height: initial;
-                                    background: none;
-                                    opacity: 1;
-                                    border: 0px;
-                                    margin: 0px;
-                                    padding: 0px;
-                                  " /></span
-                              ><img
-                                alt="Carte Visa"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                decoding="async"
-                                data-nimg="intrinsic"
-                                class="pt4-md"
-                                style="
-                                  position: absolute;
-                                  inset: 0px;
-                                  box-sizing: border-box;
-                                  padding: 0px;
-                                  border: none;
-                                  margin: auto;
-                                  display: block;
-                                  width: 0px;
-                                  height: 0px;
-                                  min-width: 100%;
-                                  max-width: 100%;
-                                  min-height: 100%;
-                                  max-height: 100%;
-                                " /><noscript></noscript
-                            ></span>
-                          </p>
-                        </div>
-                        <div class="ncss-col-sm-12 ncss-col-md-6 pr0-md">
-                          <div class="pt4-md css-1s85rp3">AMEX</div>
-                          <p class="css-0">
-                            Code de sécurité à 4 chiffres<span
-                              style="
-                                box-sizing: border-box;
-                                display: inline-block;
-                                overflow: hidden;
-                                width: initial;
-                                height: initial;
-                                background: none;
-                                opacity: 1;
-                                border: 0px;
-                                margin: 0px;
-                                padding: 0px;
-                                position: relative;
-                                max-width: 100%;
-                              "
-                              ><span
-                                style="
-                                  box-sizing: border-box;
-                                  display: block;
-                                  width: initial;
-                                  height: initial;
-                                  background: none;
-                                  opacity: 1;
-                                  border: 0px;
-                                  margin: 0px;
-                                  padding: 0px;
-                                  max-width: 100%;
-                                "
-                                ><img
-                                  alt=""
-                                  aria-hidden="true"
-                                  src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27200%27%20height=%27125%27/%3e"
-                                  style="
-                                    display: block;
-                                    max-width: 100%;
-                                    width: initial;
-                                    height: initial;
-                                    background: none;
-                                    opacity: 1;
-                                    border: 0px;
-                                    margin: 0px;
-                                    padding: 0px;
-                                  " /></span
-                              ><img
-                                alt="Carte Amex"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                decoding="async"
-                                data-nimg="intrinsic"
-                                class="pt4-md"
-                                style="
-                                  position: absolute;
-                                  inset: 0px;
-                                  box-sizing: border-box;
-                                  padding: 0px;
-                                  border: none;
-                                  margin: auto;
-                                  display: block;
-                                  width: 0px;
-                                  height: 0px;
-                                  min-width: 100%;
-                                  max-width: 100%;
-                                  min-height: 100%;
-                                  max-height: 100%;
-                                " /><noscript></noscript
-                            ></span>
-                          </p>
-                        </div>
-                      </div>
-                    </div></button
-                ></span>
-              </div>
-            </div>
-            <div class="d-sm-h d-md-ib ta-md-r ncss-col-md-6 css-1erhvk4">
-              <span id="cvv_newCardWrapper" class="css-0"
-                ><button class="d-sm-ib css-9a7n2d" id="cvv_newCard">
-                  <span class="u-cursor-pointer css-1wc8wxj"
-                    >Where is my CVV?</span
-                  >
-                  <div
-                    class="p4-sm z2 css-17f46hh"
-                    data-attr="test-message-ccv"
-                    hidden=""
-                  >
-                    <div class="ncss-container pl4-md">
-                      <div class="css-13w9ksj">
-                        Trouver le cryptogramme visuel
-                      </div>
-                      <div class="ncss-col-sm-12 ncss-col-md-6 pl0-md">
-                        <div class="pt4-md css-1s85rp3">
-                          Mastercard/Visa/Discover
-                        </div>
-                        <p class="css-0">
-                          Code de sécurité à 3 chiffres<span
-                            style="
-                              box-sizing: border-box;
-                              display: inline-block;
-                              overflow: hidden;
-                              width: initial;
-                              height: initial;
-                              background: none;
-                              opacity: 1;
-                              border: 0px;
-                              margin: 0px;
-                              padding: 0px;
-                              position: relative;
-                              max-width: 100%;
-                            "
-                            ><span
-                              style="
-                                box-sizing: border-box;
-                                display: block;
-                                width: initial;
-                                height: initial;
-                                background: none;
-                                opacity: 1;
-                                border: 0px;
-                                margin: 0px;
-                                padding: 0px;
-                                max-width: 100%;
-                              "
-                              ><img
-                                alt=""
-                                aria-hidden="true"
-                                src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27200%27%20height=%27125%27/%3e"
-                                style="
-                                  display: block;
-                                  max-width: 100%;
-                                  width: initial;
-                                  height: initial;
-                                  background: none;
-                                  opacity: 1;
-                                  border: 0px;
-                                  margin: 0px;
-                                  padding: 0px;
-                                " /></span
-                            ><img
-                              alt="Carte Visa"
-                              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                              decoding="async"
-                              data-nimg="intrinsic"
-                              class="pt4-md"
-                              style="
-                                position: absolute;
-                                inset: 0px;
-                                box-sizing: border-box;
-                                padding: 0px;
-                                border: none;
-                                margin: auto;
-                                display: block;
-                                width: 0px;
-                                height: 0px;
-                                min-width: 100%;
-                                max-width: 100%;
-                                min-height: 100%;
-                                max-height: 100%;
-                              " /><noscript></noscript
-                          ></span>
-                        </p>
-                      </div>
-                      <div class="ncss-col-sm-12 ncss-col-md-6 pr0-md">
-                        <div class="pt4-md css-1s85rp3">AMEX</div>
-                        <p class="css-0">
-                          Code de sécurité à 4 chiffres<span
-                            style="
-                              box-sizing: border-box;
-                              display: inline-block;
-                              overflow: hidden;
-                              width: initial;
-                              height: initial;
-                              background: none;
-                              opacity: 1;
-                              border: 0px;
-                              margin: 0px;
-                              padding: 0px;
-                              position: relative;
-                              max-width: 100%;
-                            "
-                            ><span
-                              style="
-                                box-sizing: border-box;
-                                display: block;
-                                width: initial;
-                                height: initial;
-                                background: none;
-                                opacity: 1;
-                                border: 0px;
-                                margin: 0px;
-                                padding: 0px;
-                                max-width: 100%;
-                              "
-                              ><img
-                                alt=""
-                                aria-hidden="true"
-                                src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27200%27%20height=%27125%27/%3e"
-                                style="
-                                  display: block;
-                                  max-width: 100%;
-                                  width: initial;
-                                  height: initial;
-                                  background: none;
-                                  opacity: 1;
-                                  border: 0px;
-                                  margin: 0px;
-                                  padding: 0px;
-                                " /></span
-                            ><img
-                              alt="Carte Amex"
-                              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                              decoding="async"
-                              data-nimg="intrinsic"
-                              class="pt4-md"
-                              style="
-                                position: absolute;
-                                inset: 0px;
-                                box-sizing: border-box;
-                                padding: 0px;
-                                border: none;
-                                margin: auto;
-                                display: block;
-                                width: 0px;
-                                height: 0px;
-                                min-width: 100%;
-                                max-width: 100%;
-                                min-height: 100%;
-                                max-height: 100%;
-                              " /><noscript></noscript
-                          ></span>
-                        </p>
-                      </div>
+                      <p class="">
+                        Le sous-total correspond au prix total de la commande,
+                        TVA incluse, avant l'application de réductions. Il
+                        n'inclut pas les frais d'expédition.
+                      </p>
                     </div>
-                  </div></button
-              ></span>
+                  </button></span
+                >
+              </div>
+            </div>
+            <div class="ncss-col-sm-4 va-sm-t ta-sm-r">
+              <div data-attr="subtotal">179,98&nbsp;€</div>
+            </div>
+          </div>
+          <div class="ncss-row">
+            <div class="ncss-col-sm-9 va-sm-t">
+              <div data-attr="shippingText">Frais d'expédition estimés</div>
+            </div>
+            <div class="ncss-col-sm-3 va-sm-t ta-sm-r">
+              <div data-attr="shippingTotal">0,00&nbsp;€</div>
+            </div>
+          </div>
+          <div class="ncss-row mt2-sm">
+            <div class="ncss-col-sm-8 va-sm-t">
+              <div data-attr="totalText" class="css-5oevkg">
+                <span>Total </span>
+              </div>
+            </div>
+            <div class="ncss-col-sm-4 va-sm-t ta-sm-r">
+              <div data-attr="cart-total" class="css-5oevkg">179,98&nbsp;€</div>
             </div>
           </div>
         </div>
-        <div>
-          <div class="pr4-sm pl2-sm pt2-sm">
-            <div class="uikit-checkbox-toggler">
-              <div
-                class="mb3-sm full css-a78bb1 eokc0d80 nds-checkbox-container light"
+      </div>
+      <div class="mb5-sm">
+        <div
+          class="border-top-light-grey mr2-lg ml2-lg pt6-lg"
+          data-attr="cart-details"
+        >
+          <div>
+            <header>
+              <h3 class="css-5oevkg">Livraison d'ici le&nbsp;mar. 25 juin</h3>
+            </header>
+            <div class="d-sm-t bs5">
+              <figure
+                class="d-sm-tr pb5-sm css-u420t4"
+                data-attr="cloud-cart-item"
               >
-                <input
-                  type="checkbox"
-                  class="nds-checkbox"
-                  name="billingAddress"
-                  id="billingAddress"
-                  aria-describedby="a11y-label-details-billingAddress"
-                  value=""
-                  checked=""
-                />
-                <div class="nds-checkbox-icon">
-                  <span aria-hidden="true" class="checkbox-box circle"></span
-                  ><span aria-hidden="true" class="checkbox-box"></span
-                  ><span aria-hidden="true" class="checkbox-box-icon-container"
-                    ><svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                      role="img"
-                      width="24px"
-                      height="24px"
-                    >
-                      <g
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                      >
-                        <g transform="translate(2.000000, 2.000000)">
-                          <rect
-                            x="0"
-                            y="0"
-                            width="20"
-                            height="20"
-                            rx="10"
-                          ></rect>
-                          <rect
-                            class="checkicon-fill"
-                            x="0"
-                            y="0"
-                            width="20"
-                            height="20"
-                            rx="5"
-                          ></rect>
-                          <path
-                            class="checkicon-check"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6.00134645 9.81868355 9.12119517 13.003429 14.9964286 7"
-                          ></path>
-                        </g>
-                      </g></svg
-                  ></span>
+                <div class="d-sm-tc va-sm-t">
+                  <img
+                    alt="Chaussure Nike Cortez Textile pour femme"
+                    data-attr="cloud-cart-image"
+                    src="https://images.nike.com/is/image/DotCom/DZ2795_601_A_PREM?wid=80&amp;hei=80&amp;align=0,1&amp;cropN=0,0,0,0&amp;fmt=png-alpha&amp;resMode=sharp&amp;defaultImage=DotCom/SEARCH_002"
+                    width="60"
+                    class="css-16i8mcp"
+                  />
                 </div>
-                <label for="billingAddress" class="nds-checkbox-label"
-                  >Adresse de facturation identique à l'adresse de
-                  livraison</label
-                >
-              </div>
-              <div class="d-sm-h"></div>
-            </div>
-          </div>
-          <div class="pl5-sm pr0-sm pt1-sm mb5-sm">
-            <h3 class="css-1564wt5">Adresse de livraison</h3>
-            <div class="css-7ym3jb">
-              <p data-attr="address-preview-fullName">
-                Lionelle Berlone BASSOLA MOUKOURI
-              </p>
-              <p>
-                <span data-attr="address-preview-address1">98 Rue Heron</span>
-              </p>
-              <div class="ncss-row">
-                <div class="ncss-col-sm-12">
-                  <p data-attr="address-preview-city">Bordeaux, 33000, FR</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="pb5-sm prl5-sm pr4-md va-sm-t ta-sm-r css-573tu7">
-          <button
-            class="nds-btn css-b4ij8a ex41m6f0 btn-primary-dark btn-md"
-            type="button"
-            data-attr="continueToOrderReviewBtn"
-          >
-            Continuer pour voir le récapitulatif de la commande<span
-              class="ripple"
-            ></span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="d-sm-h">
-      <div class="">
-        <div class="ncss-container ta-sm-c u-full-height">
-          <div
-            class="ncss-row u-full-height u-full-width d-sm-t ta-sm-c pt6-sm pb6-sm pt12-lg pb12-lg"
-          >
-            <div class="ncss-col-sm-12 d-sm-tc va-sm-m">
-              <div class="" style="height: 32px; margin: 0px auto; width: 32px">
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 80 80"
-                  preserveAspectRatio="xMidYMid"
-                >
-                  <rect x="0" y="0" width="80" height="80" fill="none"></rect>
-                  <circle
-                    cx="40"
-                    cy="40"
-                    r="32"
-                    stroke-dasharray="160 40"
-                    stroke="#000"
-                    fill="none"
-                    stroke-width="5"
-                  >
-                    <animateTransform
-                      attributeName="transform"
-                      type="rotate"
-                      values="0 40 40;180 40 40;360 40 40;"
-                      keyTimes="0;0.5;1"
-                      dur="1500ms"
-                      repeatCount="indefinite"
-                      begin="0s"
-                    ></animateTransform>
-                  </circle>
-                </svg>
-              </div>
+                <figcaption class="d-sm-tc va-sm-t pl5-sm">
+                  <div class="css-1qpib4x">
+                    Chaussure Nike Cortez Textile pour femme
+                  </div>
+                  <div>Réf. article : DZ2795-601</div>
+                  <div><span data-attr="itemSize">Taille : 42</span></div>
+                  <div class="css-ydw93h">
+                    Couleur : Picante Red/University Blue/Coconut Milk/Sail
+                  </div>
+                  <div>Quantité : 2 @ 89,99&nbsp;€</div>
+                  <div data-attr="checkout-cart-item-price">179,98&nbsp;€</div>
+                </figcaption>
+              </figure>
             </div>
           </div>
         </div>
       </div>
-      <section id="klarna-container" class="p5-sm d-sm-h"></section>
     </div>
-  </div>
-  <div class="mr5-sm ml5-sm css-10uhelw"></div>
-</section>
+  </section>
+</aside>

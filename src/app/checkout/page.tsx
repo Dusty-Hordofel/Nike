@@ -6,6 +6,7 @@ import { getCart } from "@/actions/user-cart.actions";
 import { Suspense } from "react";
 import { getUserAddresses } from "@/actions/user-address.actions";
 import Payment from "@/components/Checkout/payment/Payment";
+import CheckoutHeader from "@/components/Checkout/checkout-header";
 
 const CheckoutPage = async () => {
   const user = await currentUser();
@@ -19,45 +20,15 @@ const CheckoutPage = async () => {
   console.log("🚀 ~ CheckoutPage ~ addresses:", addresses);
 
   return (
-    <>
+    <div className="w-max bg-green-500 mx-auto">
       <Suspense fallback={<p>Loading.....</p>}>
-        {/* {addresses.length > 0 ? ( */}
-        <>
+        <div>
           <section className="max-w-[703px] w-[66,67%]">
-            <span className="sr-only">
+            {/* sr-only */}
+            <span className="">
               Options de livraison Étape 1 sur 3 Étape terminée
             </span>
-            <header className="flex bg-warning justify-between px-5 pt-3 pb-7">
-              <h2 className="flex text-2xl font-medium ">
-                Options de livraison
-                <span className="flex items-center ml-3">
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    role="img"
-                    width="24px"
-                    height="24px"
-                    fill="none"
-                    color="green"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      d="M5.03 11.69l4.753 4.754 9.186-9.188"
-                    ></path>
-                  </svg>
-                </span>
-              </h2>
-              <button
-                aria-label="Modifier,Options de livraison"
-                className="nds-btn  css-1g4vzc ex41m6f0 cta-primary-dark underline btn-md"
-                type="button"
-                data-attr="editButton"
-              >
-                Modifier<span className="ripple"></span>
-              </button>
-            </header>
+            <CheckoutHeader title="Options de livraison" />
 
             <div className="p-5 text-gray-500  bg-blue-100">
               <div data-attr="shippingPreviewContainer" className="px-2">
@@ -99,11 +70,9 @@ const CheckoutPage = async () => {
             </div>
           </section>
           <DeliveryInfo cart={cart} />
-        </>
-        {/* ) : ( */}
-        {/* )} */}
+        </div>
       </Suspense>
-    </>
+    </div>
   );
 };
 
