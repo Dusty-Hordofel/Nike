@@ -1,6 +1,6 @@
 "use server";
 
-import connectDB from "@/config/database";
+// import connectDB from "@/config/database";
 import { currentUser } from "@/utils/auth";
 import User from "@/models/User";
 import mongoose from "mongoose";
@@ -9,6 +9,7 @@ import Product, { IProduct } from "@/models/Product";
 import { CartItem } from "@/store/cartSlice";
 import { redirect } from "next/navigation";
 import { isValidObjectId } from "@/lib/utils";
+import { connectDB, disconnectDB } from "@/config/database";
 
 // Fonction utilitaire pour vérifier l'ObjectId valide
 
@@ -94,7 +95,8 @@ export async function saveCartItems(cartItems: CartItem[]) {
     }, 0);
 
     // Supprimer le panier existant s'il y en a un
-    const existingCart = await Cart.findOneAndDelete({ user: user._id });
+    // const existingCart =
+    await Cart.findOneAndDelete({ user: user._id });
 
     // Créer un nouveau panier
     await new Cart({
@@ -108,6 +110,8 @@ export async function saveCartItems(cartItems: CartItem[]) {
       cartTotal: cartTotal.toFixed(2),
       user: user._id,
     });
+
+    // disconnectDB();
 
     return { success: "Cart items saved successfully!" };
   } catch (error) {
@@ -135,6 +139,8 @@ export const getCart = async () => {
 
     const cart = await Cart.findOne({ user: dbUser._id });
     if (!cart) redirect("/cart");
+
+    // await disconnectDB();
 
     return JSON.parse(JSON.stringify(cart));
   } catch (error) {

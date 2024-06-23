@@ -830,7 +830,7 @@ export async function saveCartItems(cartItems: CartItem[]) {
 
 ### 19. Checkout Part 2
 
-### 20.
+### 20. Checkout Part 3
 
 ### 21.
 

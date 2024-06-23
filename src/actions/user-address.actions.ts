@@ -1,6 +1,7 @@
 "use server";
 
-import connectDB from "@/config/database";
+import { connectDB, disconnectDB } from "@/config/database";
+// import connectDB from "@/config/database";
 import { isValidObjectId } from "@/lib/utils";
 import { DeliveryInfoFormData } from "@/lib/validations/delivery";
 import User from "@/models/User";
@@ -16,6 +17,7 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
 
     // Connexion à la base de données
     connectDB();
+    // await connectDB();
 
     // Récupérer l'utilisateur depuis la base de données
     const dbUser = await User.findOne({ _id: user._id });
@@ -35,6 +37,8 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
     const updatedUser = await User.findById(dbUser._id);
 
     console.log("🚀 ~ saveAddress ~ dbUser:", updatedUser);
+
+    // await disconnectDB();
     // user.addresses.push(newAddress);
     // await user.save();
     //   db.disconnectDb();
@@ -55,6 +59,7 @@ export const getUserAddresses = async () => {
 
     // Connexion à la base de données
     connectDB();
+    // await connectDB();
 
     // Récupérer l'utilisateur depuis la base de données
     const dbUser = await User.findOne({ _id: user._id });
@@ -62,7 +67,12 @@ export const getUserAddresses = async () => {
       return { error: "Unauthorized" };
     }
 
-    return dbUser.addresses;
+    // await disconnectDB();
+
+    // return { ...dbUser.addresses };
+    return JSON.parse(JSON.stringify(dbUser.addresses));
+
+    // return dbUser.addresses;
   } catch (error) {
     console.log("🚀 ~ getUserAddresses ~ error:", error);
     return { error: "An error occurred while getting your addresses" };

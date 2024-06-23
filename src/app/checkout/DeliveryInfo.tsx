@@ -34,6 +34,7 @@ import OrderSummary from "@/components/Checkout/payment/order-summary";
 import CheckoutHeader from "@/components/Checkout/checkout-header";
 
 const DeliveryInfo = ({ cart }: { cart: ICart }) => {
+  // console.log("🚀 ~ DeliveryInfo ~ addresses:ADRESSE", addresses);
   console.log("🚀 ~ DeliveryInfo ~ Cart:TEST", cart);
 
   const router = useRouter();
@@ -83,40 +84,13 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
   return (
     <div className="flex">
       <main className="max-w-[703px] w-[66,67%]">
-        {/* <section className="mb5-sm d-lg-h">
-          <div className="mr4-sm ml4-sm mb4-sm css-10uhelw"></div>
-          <header className="pt5-sm pb3-sm prl5-sm pt3-md u-clearfix">
-            <h2 className="fl-sm-l css-1rkogn0">Dans ton panier</h2>
-            <button
-              aria-label="Dans ton panier"
-              className="nds-btn fl-sm-r fs12-sm text-color-primary-dark bg-light-grey css-13eg08n ex41m6f0 cta-primary-dark  btn-responsive"
-              type="button"
-              aria-expanded="false"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                role="img"
-                width="24px"
-                height="24px"
-                fill="none"
-                data-attr="caretDown"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  d="M18.966 8.476L12 15.443 5.033 8.476"
-                ></path>
-              </svg>
-              <span className="ripple"></span>
-            </button>
-          </header>
-          <div className="mr4-sm ml4-sm mt4-sm css-10uhelw"></div>
-        </section> */}
-
         <section>
-          {/* <div
+          <span className="">
+            Options de livraison Étape 1 sur 3 Étape terminée
+          </span>
+          <CheckoutHeader title="Options de livraison" />
+          <div>
+            {/* <div
             role="radiogroup"
             className="tab-wrapper ncss-row css-6m6fic flex justify-between gap-x-4"
           >
@@ -182,7 +156,7 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
               </h3>
             </div>
           </div> */}
-          {/* <div className=" bg-blue-200">
+            {/* <div className=" bg-blue-200">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex gap-4 justify-between">
                 <UserAuthInputFieldForm
@@ -299,6 +273,7 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
               </div>
             </form>
           </div> */}
+          </div>
         </section>
 
         <Payment

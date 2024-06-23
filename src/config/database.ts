@@ -34,4 +34,15 @@ async function connectDB() {
 
   return cached.conn;
 }
-export default connectDB;
+
+async function disconnectDB() {
+  if (cached.conn) {
+    await mongoose.disconnect();
+    cached.conn = null;
+    cached.promise = null;
+    console.log("Database connection closed.");
+  }
+}
+
+export { connectDB, disconnectDB };
+// export default connectDB;

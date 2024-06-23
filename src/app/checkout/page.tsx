@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { getUserAddresses } from "@/actions/user-address.actions";
 import Payment from "@/components/Checkout/payment/Payment";
 import CheckoutHeader from "@/components/Checkout/checkout-header";
+import Test from "./Test";
 
 const CheckoutPage = async () => {
   const user = await currentUser();
@@ -17,18 +18,20 @@ const CheckoutPage = async () => {
   if (!cart) redirect("/");
 
   const addresses = await getUserAddresses();
-  console.log("🚀 ~ CheckoutPage ~ addresses:", addresses);
-
+  // if (!addresses) return;
+  // console.log("🚀 ~ CheckoutPage ~ addresses:", addresses);
+  {
+    /* sr-only */
+  }
   return (
     <div className="w-max bg-green-500 mx-auto">
       <Suspense fallback={<p>Loading.....</p>}>
         <div>
           <section className="max-w-[703px] w-[66,67%]">
-            {/* sr-only */}
-            <span className="">
+            {/* <span className="">
               Options de livraison Étape 1 sur 3 Étape terminée
             </span>
-            <CheckoutHeader title="Options de livraison" />
+            <CheckoutHeader title="Options de livraison" /> */}
 
             <div className="p-5 text-gray-500  bg-blue-100">
               <div data-attr="shippingPreviewContainer" className="px-2">
@@ -71,6 +74,9 @@ const CheckoutPage = async () => {
           </section>
           <DeliveryInfo cart={cart} />
         </div>
+      </Suspense>
+      <Suspense fallback={<p>MEKA.....</p>}>
+        <Test addresses={addresses} />
       </Suspense>
     </div>
   );
