@@ -1,38 +1,46 @@
-import User from "@/models/User";
+// import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/database";
 import { UserFormData, UserSchema } from "@/lib/validations/auth";
 import { z } from "zod";
+import User from "@/models/User";
 // import validator from "validator";
 
 // 1. With Zod
 export async function POST(req: Request, res: Response) {
-  const body = await req.json();
-  const validatedFields = UserSchema.parse(body);
-  console.log("🚀 ~ POST ~ validatedField:", validatedFields);
-
   try {
-    await connectDB();
+    const body = await req.json();
 
-    const user = await User.findOne({
-      email: body.email,
+    connectDB();
+    const validatedFields = UserSchema.parse(body);
+    console.log("🚀 ~ POST ~ email:", validatedFields.email);
+    // console.log("🚀 ~ POST ~ validatedField:", validatedFields);
+
+    const existingUser = await User.findOne({
+      email: validatedFields.email,
     });
 
-    if (user) {
+    if (existingUser) {
       return new Response(
-        JSON.stringify({ message: "The email address already exists." }),
+        JSON.stringify({
+          sucess: false,
+          message: "The email address already exists.",
+        }),
         { status: 400 }
       );
     }
 
-    if (body.password.length < 6) {
-      return new Response(
-        JSON.stringify({ message: "Password must be atleast 6 characters." }),
-        { status: 400 }
-      );
-    }
+    // if (validatedFields.password.length < 6) {
+    //   return new Response(
+    //     JSON.stringify({
+    //       sucess: false,
+    //       message: "Password must be atleast 6 characters.",
+    //     }),
+    //     { status: 400 }
+    //   );
+    // }
 
     // Hashage du mot de passe
     const salt = await bcrypt.genSalt(10);
@@ -40,11 +48,10 @@ export async function POST(req: Request, res: Response) {
 
     // Create a new user with the hashed password
     const newUser = new User({
-      ...validatedFields,
+      ...body,
+      // ...validatedFields,
       password: hashedPassword,
     });
-
-    console.log("🚀 ~ POST ~ newUser:", newUser);
 
     await newUser.save();
 
@@ -53,11 +60,14 @@ export async function POST(req: Request, res: Response) {
 
     return new Response(
       JSON.stringify({
+        success: true,
         user: userWithoutPassword,
       }),
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error) {
+    console.error(error);
+
     if (error instanceof z.ZodError) {
       const formattedErrors = error.errors.map((err) => ({
         path: err.path.join("."),
@@ -66,19 +76,35 @@ export async function POST(req: Request, res: Response) {
 
       return new Response(
         JSON.stringify({
-          errors: formattedErrors,
+          success: false,
+          messages: formattedErrors,
+          //  errors: formattedErrors,
         }),
         { status: 400 }
       );
     }
 
-    return new Response(
-      JSON.stringify({
-        message: "Internal Server Error",
-        error: error.message,
-      }),
-      { status: 500 }
-    );
+    if (error instanceof z.ZodError) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: error.message,
+        }),
+        { status: 422 }
+      );
+    }
+
+    if (error instanceof Error) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: error.message,
+        }),
+        { status: 500 }
+      );
+    }
+
+    return new Response("Something went wrong", { status: 500 });
   }
 }
 

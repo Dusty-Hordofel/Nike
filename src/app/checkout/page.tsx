@@ -11,10 +11,11 @@ import Test from "./Test";
 
 const CheckoutPage = async () => {
   const user = await currentUser();
+  console.log("🚀 ~ CheckoutPage ~ user:", user);
   if (!user) redirect("/cart"); //metre le bon endroit
   console.log("🚀 ~ CheckoutPage ~ user:", user);
   const cart = await getCart();
-  console.log("🚀 ~ CheckoutPage ~ cart:", cart);
+  // console.log("🚀 ~ CheckoutPage ~ cart:", cart);
   if (!cart) redirect("/");
 
   const addresses = await getUserAddresses();
@@ -33,7 +34,7 @@ const CheckoutPage = async () => {
             </span>
             <CheckoutHeader title="Options de livraison" /> */}
 
-            <div className="p-5 text-gray-500  bg-blue-100">
+            {/* <div className="p-5 text-gray-500  bg-blue-100">
               <div data-attr="shippingPreviewContainer" className="px-2">
                 <div className="mb-4" data-attr="addressPreview">
                   <h3 className="text-black-200">Adresse de livraison</h3>
@@ -70,14 +71,14 @@ const CheckoutPage = async () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </section>
           <DeliveryInfo cart={cart} />
         </div>
       </Suspense>
-      <Suspense fallback={<p>MEKA.....</p>}>
+      {/* <Suspense fallback={<p>MEKA.....</p>}>
         <Test addresses={addresses} />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 };

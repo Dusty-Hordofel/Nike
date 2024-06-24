@@ -1,10 +1,11 @@
-import User from "@/models/User";
+// import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/config/database";
+import { connectDB } from "@/config/database";
 import { UserFormData, UserSchema } from "@/lib/validations/auth";
 import { z } from "zod";
+import User from "@/models/User";
 // import validator from "validator";
 
 // 1. With Zod
@@ -12,6 +13,7 @@ export async function POST(req: Request, res: Response) {
   try {
     const body = await req.json();
 
+    connectDB();
     const validatedFields = UserSchema.parse(body);
     console.log("🚀 ~ POST ~ email:", validatedFields.email);
     // console.log("🚀 ~ POST ~ validatedField:", validatedFields);
@@ -46,6 +48,7 @@ export async function POST(req: Request, res: Response) {
 
     // Create a new user with the hashed password
     const newUser = new User({
+      // ...body,
       ...validatedFields,
       password: hashedPassword,
     });

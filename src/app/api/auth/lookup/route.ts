@@ -1,5 +1,5 @@
 // import connectDB from "@/config/database";
-import connectDB from "@/config/database";
+import { connectDB } from "@/config/database";
 import { EmailSchema } from "@/lib/validations/auth";
 import Product from "@/models/Product";
 import User from "@/models/User";

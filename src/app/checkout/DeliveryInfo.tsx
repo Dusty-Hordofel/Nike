@@ -27,27 +27,30 @@ import {
   DeliveryInfoSchema,
 } from "@/lib/validations/delivery";
 import { ICart } from "@/models/Cart";
-import { saveUserAddress } from "@/actions/user-address.actions";
-import { useState } from "react";
-import Payment from "@/components/Checkout/payment/Payment";
-import OrderSummary from "@/components/Checkout/payment/order-summary";
+import {
+  getUserActiveAdress,
+  // getUserAddresses,
+  saveUserAddress,
+} from "@/actions/user-address.actions";
+import { useEffect, useState } from "react";
+// import Payment from "@/components/Checkout/payment/Payment";
+// import OrderSummary from "@/components/Checkout/payment/order-summary";
 import CheckoutHeader from "@/components/Checkout/checkout-header";
 
 const DeliveryInfo = ({ cart }: { cart: ICart }) => {
-  // console.log("🚀 ~ DeliveryInfo ~ addresses:ADRESSE", addresses);
-  console.log("🚀 ~ DeliveryInfo ~ Cart:TEST", cart);
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
-  console.log("🚀 ~ SignUp ~ email:", email);
+  // console.log("🚀 ~ SignUp ~ email:", email);
 
   // const [addresses, setAddresses] = useState(user?.address || []);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
-  // const user = useCurrentUser();
+  const user = useCurrentUser();
+  // console.log("🚀 ~ DeliveryInfo ~ user:", user);
   // if (user /*&& userRole !== "user"*/) {
   //   router.push(`${window.location.origin}` || "/");
   // }
@@ -72,13 +75,40 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
     resolver: zodResolver(DeliveryInfoSchema),
   });
 
+  useEffect(() => {
+    const fetchUserAddress = async () => {
+      const response = await getUserActiveAdress();
+      const { success, activeAddress } = response;
+      // console.log("🚀 ~ fetchUserAddress ~ activeAddress:", activeAddress);
+      // console.log("🚀 ~ fetchUserAddress ~ response1:RES", response);
+      if (success) {
+        reset(activeAddress);
+      } else {
+        reset({
+          lastName: "",
+          firstName: "",
+          country: "",
+          address: "",
+          phoneNumber: "",
+          email: "",
+          companyInfo: "",
+          city: "",
+          postalCode: "",
+        });
+      }
+    };
+
+    fetchUserAddress();
+  }, [refresh]);
+
   const onSubmit = async (values: DeliveryInfoFormData) => {
     console.log("🚀 ~ onSubmit ~ values:", values);
     let save = await saveUserAddress(values);
     console.log("🚀 ~ onSubmit ~ save:", save);
-    alert(save);
-    // console.log("🚀 ~ SignUp ~ values:", values);
-    // await mutateAsync({ ...values, email });
+
+    if (save.success) {
+      setRefresh(!refresh); // Changez l'état pour relancer le useEffect
+    }
   };
 
   return (
@@ -156,132 +186,132 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
               </h3>
             </div>
           </div> */}
-            {/* <div className=" bg-blue-200">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex gap-4 justify-between">
+            <div className=" bg-blue-200">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex gap-4 justify-between">
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="FirstName*"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="firstName"
+                  />
+
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="LastName*"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="lastName"
+                  />
+                </div>
                 <UserAuthInputFieldForm
                   id="text"
                   label="text"
-                  placeholder="FirstName*"
+                  placeholder="Adresse(numéro et noom de la rue)*"
                   type="text"
                   isLoading={false}
                   // isLoading={isPending}
                   register={register}
                   errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="firstName"
+                  name="address"
+                />
+                <UserAuthInputFieldForm
+                  id="text"
+                  label="text"
+                  placeholder="Ajouter entreprise, destinataire, appartement, suite, unité"
+                  type="text"
+                  isLoading={false}
+                  // isLoading={isPending}
+                  register={register}
+                  errors={errors as FieldErrors<DeliveryInfoFormData>}
+                  name="companyInfo"
                 />
 
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="LastName*"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="lastName"
-                />
-              </div>
-              <UserAuthInputFieldForm
-                id="text"
-                label="text"
-                placeholder="Adresse(numéro et noom de la rue)*"
-                type="text"
-                isLoading={false}
-                // isLoading={isPending}
-                register={register}
-                errors={errors as FieldErrors<DeliveryInfoFormData>}
-                name="address"
-              />
-              <UserAuthInputFieldForm
-                id="text"
-                label="text"
-                placeholder="Ajouter entreprise, destinataire, appartement, suite, unité"
-                type="text"
-                isLoading={false}
-                // isLoading={isPending}
-                register={register}
-                errors={errors as FieldErrors<DeliveryInfoFormData>}
-                name="companyInfo"
-              />
+                <div className="flex gap-4 justify-between">
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="Code postal*"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="postalCode"
+                  />
 
-              <div className="flex gap-4 justify-between">
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="Code postal*"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="postalCode"
-                />
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="Ville*"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="city"
+                  />
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="France"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="country"
+                  />
+                </div>
 
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="Ville*"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="city"
-                />
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="France"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="region"
-                />
-              </div>
+                <div className="flex gap-4 justify-between">
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="E-mail*"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="email"
+                  />
 
-              <div className="flex gap-4 justify-between">
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="E-mail*"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="email"
-                />
-
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="Numéro de téléphone*"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="phone"
-                />
-              </div>
-              <div className={cn("mt-10 flex justify-end")}>
-                <Button isLoading={false}>Enregistrer et continuer</Button>
-              </div>
-            </form>
-          </div> */}
+                  <UserAuthInputFieldForm
+                    id="text"
+                    label="text"
+                    placeholder="Numéro de téléphone*"
+                    type="text"
+                    isLoading={false}
+                    // isLoading={isPending}
+                    register={register}
+                    errors={errors as FieldErrors<DeliveryInfoFormData>}
+                    name="phoneNumber"
+                  />
+                </div>
+                <div className={cn("mt-10 flex justify-end")}>
+                  <Button isLoading={false}>Enregistrer et continuer</Button>
+                </div>
+              </form>
+            </div>
           </div>
         </section>
 
-        <Payment
+        {/* <Payment
           setPaymentMethod={setPaymentMethod}
           paymentMethod={paymentMethod}
-        />
+        /> */}
 
-        <OrderSummary />
+        {/* <OrderSummary /> */}
       </main>
 
       <aside className="max-w-[352px] w-[33,33%]">

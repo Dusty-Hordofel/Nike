@@ -44,8 +44,8 @@ export const RegisterSchema = z.object({
 
 export const addressSchema = z.object({
   country: z.string({ message: "Le pays est requis." }),
-  province: z.string({ message: "La province est requise." }),
   city: z.string({ message: "La ville est requise." }),
+  province: z.string({ message: "La province est requise." }),
   postalCode: z.string({ message: "Le code postal est requis." }),
 });
 
@@ -64,10 +64,9 @@ export const UserSchema = z.object({
       message: "Required",
     }),
 
-  // emailVerified: z.boolean().default(false),
-  // phone: z.string().optional(),
-  // role: z.string().default("user"),
-  // address: addressSchema,
+  phoneNumber: z.string().optional(),
+  role: z.string().default("user"),
+  // addresses: addressSchema.optional(),
   marketingOption: z.boolean().default(false),
   terms: z.boolean().refine((val) => val === true, {
     message: "Required",

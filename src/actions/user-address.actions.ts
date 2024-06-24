@@ -1,78 +1,126 @@
 "use server";
 
 import { connectDB, disconnectDB } from "@/config/database";
-// import connectDB from "@/config/database";
 import { isValidObjectId } from "@/lib/utils";
 import { DeliveryInfoFormData } from "@/lib/validations/delivery";
 import User from "@/models/User";
 import { currentUser } from "@/utils/auth";
+import { Address } from "cluster";
+import mongoose from "mongoose";
 
 export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
   try {
-    // Récupérer l'utilisateur actuel
     const user = await currentUser();
+    console.log("🚀 ~ saveUserAddress ~ user:", user);
     if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
       return { error: "Unauthorized" };
     }
 
-    // Connexion à la base de données
     connectDB();
-    // await connectDB();
 
-    // Récupérer l'utilisateur depuis la base de données
-    const dbUser = await User.findOne({ _id: user._id });
+    const dbUser = await User.findOne({
+      _id: user._id,
+      // "addresses.active": true,
+    });
+
     if (!dbUser) {
       return { error: "Unauthorized" };
     }
 
-    // update user user adresse
+    // console.log("Addresses:", dbUser.addresses);
+    const activeAddress = dbUser.addresses.find(
+      (address: any) => address.active === true
+    );
 
-    //    const user = User.findById({_id:dbUser._id});
-    await dbUser.updateOne({
-      $push: {
-        addresses: newAddress,
-      },
+    // await dbUser.updateOne({
+    //   $push: {
+    //     addresses: newAddress,
+    //   },
+    // });
+
+    console.log("🚀 ~ saveUserAddress ~ activeAddress:", activeAddress);
+
+    if (activeAddress) {
+      // Désactive l'adresse active actuelle
+      activeAddress.active = false;
+    }
+
+    // Ajoute la nouvelle adresse avec le statut actif
+    dbUser.addresses.push({
+      ...newAddress,
+      active: true,
     });
 
-    const updatedUser = await User.findById(dbUser._id);
+    await dbUser.save();
 
-    console.log("🚀 ~ saveAddress ~ dbUser:", updatedUser);
-
-    // await disconnectDB();
-    // user.addresses.push(newAddress);
-    // await user.save();
-    //   db.disconnectDb();
-    return { addresses: dbUser.addresses };
+    return {
+      success: "Active address updated successfully",
+    };
   } catch (error) {
-    console.log("🚀 ~ saveAddress ~ error:", error);
+    console.log("🚀 ~ saveUserAddress ~ error:", error);
     return { error: "An error occurred while saving your address" };
   }
 };
 
+// await dbUser.updateOne({
+//   $push: {
+//     addresses: newAddress,
+//   },
+// });
+
 export const getUserAddresses = async () => {
   try {
-    // Récupérer l'utilisateur actuel
     const user = await currentUser();
     if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
       return { error: "Unauthorized" };
     }
 
-    // Connexion à la base de données
     connectDB();
-    // await connectDB();
 
-    // Récupérer l'utilisateur depuis la base de données
     const dbUser = await User.findOne({ _id: user._id });
+
     if (!dbUser && !dbUser.addresses) {
       return { error: "Unauthorized" };
     }
 
-    // await disconnectDB();
-
-    // return { ...dbUser.addresses };
     return JSON.parse(JSON.stringify(dbUser.addresses));
+  } catch (error) {
+    console.log("🚀 ~ getUserAddresses ~ error:", error);
+    return { error: "An error occurred while getting your addresses" };
+  }
+};
 
-    // return dbUser.addresses;
+export const getUserActiveAdress = async () => {
+  try {
+    const user = await currentUser();
+    if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
+      return { error: "Unauthorized" };
+    }
+
+    connectDB();
+
+    const dbUser = await User.findOne({
+      _id: user._id,
+      "addresses.active": true,
+    });
+
+    if (!dbUser) {
+      return { error: "Unauthorized" };
+    }
+
+    console.log("Addresses:", dbUser.addresses);
+    const activeAddress = dbUser.addresses.find(
+      (address: any) => address.active === true
+    );
+
+    // console.log("All Addresses:ALL", dbUser.addresses);
+
+    // console.log("Active Address:MOLO", activeAddress);
+
+    return {
+      success: true,
+      activeAddress: JSON.parse(JSON.stringify(activeAddress)),
+    };
   } catch (error) {
     console.log("🚀 ~ getUserAddresses ~ error:", error);
     return { error: "An error occurred while getting your addresses" };
