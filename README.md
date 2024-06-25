@@ -834,7 +834,7 @@ export async function saveCartItems(cartItems: CartItem[]) {
 
 ### 21. Checkout Part 4
 
-### 22.
+### 22. ShippingAdress
 
 ### 23.
 

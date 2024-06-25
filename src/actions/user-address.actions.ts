@@ -94,7 +94,7 @@ export const getUserActiveAdress = async () => {
   try {
     const user = await currentUser();
     if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
-      return { error: "Unauthorized" };
+      return { success: false, error: true, message: "Unauthorized" };
     }
 
     connectDB();
@@ -105,7 +105,7 @@ export const getUserActiveAdress = async () => {
     });
 
     if (!dbUser) {
-      return { error: "Unauthorized" };
+      return { success: false, error: true, message: "Unauthorized" };
     }
 
     console.log("Addresses:", dbUser.addresses);
@@ -113,16 +113,28 @@ export const getUserActiveAdress = async () => {
       (address: any) => address.active === true
     );
 
+    if (!activeAddress)
+      return {
+        success: false,
+        error: true,
+        message: "User has not an active address",
+      };
+
     // console.log("All Addresses:ALL", dbUser.addresses);
 
     // console.log("Active Address:MOLO", activeAddress);
 
     return {
       success: true,
+      error: false,
       activeAddress: JSON.parse(JSON.stringify(activeAddress)),
     };
   } catch (error) {
     console.log("🚀 ~ getUserAddresses ~ error:", error);
-    return { error: "An error occurred while getting your addresses" };
+    return {
+      sucess: false,
+      error: true,
+      message: "An error occurred while getting your addresses",
+    };
   }
 };

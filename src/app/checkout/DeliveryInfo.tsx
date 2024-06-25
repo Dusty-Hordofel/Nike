@@ -32,12 +32,14 @@ import {
   // getUserAddresses,
   saveUserAddress,
 } from "@/actions/user-address.actions";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 // import Payment from "@/components/Checkout/payment/Payment";
 // import OrderSummary from "@/components/Checkout/payment/order-summary";
 import CheckoutHeader from "@/components/Checkout/checkout-header";
+import ShippingAddressSummary from "./ShippingAddressSummary";
 
-const DeliveryInfo = ({ cart }: { cart: ICart }) => {
+const DeliveryInfo = ({ shippingAddress }: any) => {
+  console.log("🚀 ~ DeliveryInfo ~ activeAddresses:", shippingAddress.success);
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
@@ -48,22 +50,14 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
   const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [refresh, setRefresh] = useState(false);
+  // const [showAddressForm, setShowAddressForm] = useState(false);
+  const [formStep, setFormStep] = useState(shippingAddress.success ? 3 : 1);
 
   const user = useCurrentUser();
   // console.log("🚀 ~ DeliveryInfo ~ user:", user);
   // if (user /*&& userRole !== "user"*/) {
   //   router.push(`${window.location.origin}` || "/");
   // }
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors, isSubmitting, dirtyFields, touchedFields },
-  //   reset,
-  //   getValues,
-  // } = useForm<DeliveryInfoFormData>({
-  //   resolver: zodResolver(DeliveryInfoSchema),
-  // });
 
   const {
     register,
@@ -82,8 +76,13 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
       // console.log("🚀 ~ fetchUserAddress ~ activeAddress:", activeAddress);
       // console.log("🚀 ~ fetchUserAddress ~ response1:RES", response);
       if (success) {
+        // setFormStep(2);
+        // setFormStep(3);
+        // setShowAddressForm(false);
         reset(activeAddress);
       } else {
+        // setFormStep(1);
+        // setShowAddressForm(true);
         reset({
           lastName: "",
           firstName: "",
@@ -108,200 +107,304 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
 
     if (save.success) {
       setRefresh(!refresh); // Changez l'état pour relancer le useEffect
+      // setShowAddressForm(false);
+      console.log("STEPS", shippingAddress);
+      shippingAddress.success && setFormStep(2);
+      // shippingAddress.success ? setFormStep(2) : setFormStep(2);
+      // shippingAddress.success === true && formStep === 1
+      //   ? setFormStep(3)
+      //   : setFormStep(2);
     }
   };
 
   return (
     <div className="flex">
-      <main className="max-w-[703px] w-[66,67%]">
-        <section>
-          <span className="">
+      {/* p-5 */}
+      <main className="w-2/3 bg-success px-[6px]">
+        {/* className="p-5" */}
+        <section className="p-5">
+          <span className="sr-only">
             Options de livraison Étape 1 sur 3 Étape terminée
           </span>
-          <CheckoutHeader title="Options de livraison" />
+          {/* <CheckoutHeader
+            title="Options de livraison"
+            done={!showAddressForm && shippingAddress.success ? true : false}
+            setShowAddressForm={setShowAddressForm}
+          /> */}
           <div>
-            {/* <div
-            role="radiogroup"
-            className="tab-wrapper ncss-row css-6m6fic flex justify-between gap-x-4"
-          >
-            <div
-              role="radio"
-              aria-checked="true"
-              className="pr5-sm pl5-sm ta-sm-c ncss-col-sm-6 css-1iacgar bg-blue-400 w-full px-5 py-3"
-              // for="SHIP"
-              data-delivery-type="SHIP"
-              // tabindex="0"
-            >
-              <h3
-              // style="margin-left: 0px"
+            <div role="radiogroup" className="flex gap-x-4 mb-5">
+              <div
+                role="radio"
+                aria-checked="true"
+                className="pr5-sm pl5-sm ta-sm-c ncss-col-sm-6 css-1iacgar bg-blue-400 w-full px-5 py-4"
+                // for="SHIP"
+                data-delivery-type="SHIP"
+                // tabindex="0"
               >
-                <svg
-                  aria-hidden="true"
-                  className="css-19093ix"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  width="24px"
-                  height="24px"
-                  fill="none"
-                  // style="right: 0px"
+                <h3
+                // className="flex items-center justify-center bg-orange"
+                // style="margin-left: 0px"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    d="M15.75 16.565H8.5M.75 11.5V14A2.25 2.25 0 003 16.25h.25m16.25-6.5H3A2.25 2.25 0 01.75 7.5V5.25h17.189c.2 0 .39.079.531.22l4.56 4.56a.75.75 0 01.22.531v3.689A2.25 2.25 0 0121 16.5h-.75m-12 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm12 .033a2.25 2.25 0 11-4.502-.001 2.25 2.25 0 014.502.001z"
-                  ></path>
-                </svg>
-                Expédition
-              </h3>
-            </div>
-            <div
-              role="radio"
-              aria-checked="false"
-              className="pr5-sm pl5-sm ta-sm-c ncss-col-sm-6 u-cursor-pointer css-1kynhgq bg-blue-600 w-full px-5 py-3"
-              // for="PICKUP"
-              data-delivery-type="PICKUP"
-              // tabindex="0"
-            >
-              <h3
-              // style="margin-left: -9px"
+                  <svg
+                    aria-hidden="true"
+                    className="css-19093ix"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    width="24px"
+                    height="24px"
+                    fill="none"
+                    // style="right: 0px"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      d="M15.75 16.565H8.5M.75 11.5V14A2.25 2.25 0 003 16.25h.25m16.25-6.5H3A2.25 2.25 0 01.75 7.5V5.25h17.189c.2 0 .39.079.531.22l4.56 4.56a.75.75 0 01.22.531v3.689A2.25 2.25 0 0121 16.5h-.75m-12 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm12 .033a2.25 2.25 0 11-4.502-.001 2.25 2.25 0 014.502.001z"
+                    ></path>
+                  </svg>
+                  Expédition
+                </h3>
+              </div>
+              <div
+                role="radio"
+                aria-checked="false"
+                className="pr5-sm pl5-sm ta-sm-c ncss-col-sm-6 u-cursor-pointer css-1kynhgq bg-blue-600 w-full px-5 py-3"
+                // for="PICKUP"
+                data-delivery-type="PICKUP"
+                // tabindex="0"
               >
-                <svg
-                  aria-hidden="true"
-                  className="css-19093ix"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  width="24px"
-                  height="24px"
-                  fill="none"
-                  // style="right: -6px"
+                <h3
+                // style="margin-left: -9px"
                 >
-                  <path
-                    fill="currentColor"
-                    d="M12 21.747l-.468.586a.75.75 0 00.936 0L12 21.747zM18 9c0 .92-.303 2.081-.824 3.362-.515 1.269-1.222 2.6-1.974 3.843a38.411 38.411 0 01-2.217 3.274c-.695.914-1.223 1.498-1.453 1.682l.936 1.172c.395-.314 1.023-1.042 1.711-1.947a39.904 39.904 0 002.306-3.404c.78-1.288 1.526-2.691 2.08-4.055.55-1.352.935-2.723.935-3.927H18zm-5.532 12.16c-.23-.183-.758-.767-1.453-1.681a38.41 38.41 0 01-2.217-3.274c-.752-1.243-1.458-2.574-1.974-3.843C6.303 11.081 6 9.921 6 9H4.5c0 1.204.385 2.575.934 3.927.555 1.364 1.302 2.767 2.08 4.055.78 1.288 1.6 2.474 2.307 3.404.688.905 1.316 1.633 1.711 1.947l.936-1.172zM6 9a6 6 0 016-6V1.5A7.5 7.5 0 004.5 9H6zm6-6a6 6 0 016 6h1.5A7.5 7.5 0 0012 1.5V3zm2.5 6a2.5 2.5 0 01-2.5 2.5V13a4 4 0 004-4h-1.5zM12 11.5A2.5 2.5 0 019.5 9H8a4 4 0 004 4v-1.5zM9.5 9A2.5 2.5 0 0112 6.5V5a4 4 0 00-4 4h1.5zM12 6.5A2.5 2.5 0 0114.5 9H16a4 4 0 00-4-4v1.5z"
-                  ></path>
-                </svg>
-                Retrait
-              </h3>
+                  <svg
+                    aria-hidden="true"
+                    className="css-19093ix"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    width="24px"
+                    height="24px"
+                    fill="none"
+                    // style="right: -6px"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 21.747l-.468.586a.75.75 0 00.936 0L12 21.747zM18 9c0 .92-.303 2.081-.824 3.362-.515 1.269-1.222 2.6-1.974 3.843a38.411 38.411 0 01-2.217 3.274c-.695.914-1.223 1.498-1.453 1.682l.936 1.172c.395-.314 1.023-1.042 1.711-1.947a39.904 39.904 0 002.306-3.404c.78-1.288 1.526-2.691 2.08-4.055.55-1.352.935-2.723.935-3.927H18zm-5.532 12.16c-.23-.183-.758-.767-1.453-1.681a38.41 38.41 0 01-2.217-3.274c-.752-1.243-1.458-2.574-1.974-3.843C6.303 11.081 6 9.921 6 9H4.5c0 1.204.385 2.575.934 3.927.555 1.364 1.302 2.767 2.08 4.055.78 1.288 1.6 2.474 2.307 3.404.688.905 1.316 1.633 1.711 1.947l.936-1.172zM6 9a6 6 0 016-6V1.5A7.5 7.5 0 004.5 9H6zm6-6a6 6 0 016 6h1.5A7.5 7.5 0 0012 1.5V3zm2.5 6a2.5 2.5 0 01-2.5 2.5V13a4 4 0 004-4h-1.5zM12 11.5A2.5 2.5 0 019.5 9H8a4 4 0 004 4v-1.5zM9.5 9A2.5 2.5 0 0112 6.5V5a4 4 0 00-4 4h1.5zM12 6.5A2.5 2.5 0 0114.5 9H16a4 4 0 00-4-4v1.5z"
+                    ></path>
+                  </svg>
+                  Retrait
+                </h3>
+              </div>
             </div>
-          </div> */}
-            <div className=" bg-blue-200">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex gap-4 justify-between">
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="FirstName*"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="firstName"
-                  />
+            {/* className="mb-4" */}
+            <div>
+              {(formStep === 2 || formStep === 3) && shippingAddress.success ? (
+                <>
+                  <Suspense fallback={<p>Loading.....</p>}>
+                    <ShippingAddressSummary
+                      shippingAddress={shippingAddress}
+                      formStep={formStep}
+                      setFormStep={setFormStep}
+                    />
+                  </Suspense>
+                </>
+              ) : (
+                <div className=" bg-blue-200">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="flex gap-4 justify-between">
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="FirstName*"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="firstName"
+                      />
 
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="LastName*"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="lastName"
-                  />
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="LastName*"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="lastName"
+                      />
+                    </div>
+                    <UserAuthInputFieldForm
+                      id="text"
+                      label="text"
+                      placeholder="Adresse(numéro et noom de la rue)*"
+                      type="text"
+                      isLoading={false}
+                      // isLoading={isPending}
+                      register={register}
+                      errors={errors as FieldErrors<DeliveryInfoFormData>}
+                      name="address"
+                    />
+                    <UserAuthInputFieldForm
+                      id="text"
+                      label="text"
+                      placeholder="Ajouter entreprise, destinataire, appartement, suite, unité"
+                      type="text"
+                      isLoading={false}
+                      // isLoading={isPending}
+                      register={register}
+                      errors={errors as FieldErrors<DeliveryInfoFormData>}
+                      name="companyInfo"
+                    />
+
+                    <div className="flex gap-4 justify-between">
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="Code postal*"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="postalCode"
+                      />
+
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="Ville*"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="city"
+                      />
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="France"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="country"
+                      />
+                    </div>
+
+                    <div className="flex gap-4 justify-between">
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="E-mail*"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="email"
+                      />
+
+                      <UserAuthInputFieldForm
+                        id="text"
+                        label="text"
+                        placeholder="Numéro de téléphone*"
+                        type="text"
+                        isLoading={false}
+                        // isLoading={isPending}
+                        register={register}
+                        errors={errors as FieldErrors<DeliveryInfoFormData>}
+                        name="phoneNumber"
+                      />
+                    </div>
+                    <div className={cn("mt-10 flex justify-end")}>
+                      <Button isLoading={false}>
+                        Enregistrer et continuer
+                      </Button>
+                    </div>
+                  </form>
                 </div>
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="Adresse(numéro et noom de la rue)*"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="address"
-                />
-                <UserAuthInputFieldForm
-                  id="text"
-                  label="text"
-                  placeholder="Ajouter entreprise, destinataire, appartement, suite, unité"
-                  type="text"
-                  isLoading={false}
-                  // isLoading={isPending}
-                  register={register}
-                  errors={errors as FieldErrors<DeliveryInfoFormData>}
-                  name="companyInfo"
-                />
-
-                <div className="flex gap-4 justify-between">
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="Code postal*"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="postalCode"
-                  />
-
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="Ville*"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="city"
-                  />
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="France"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="country"
-                  />
-                </div>
-
-                <div className="flex gap-4 justify-between">
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="E-mail*"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="email"
-                  />
-
-                  <UserAuthInputFieldForm
-                    id="text"
-                    label="text"
-                    placeholder="Numéro de téléphone*"
-                    type="text"
-                    isLoading={false}
-                    // isLoading={isPending}
-                    register={register}
-                    errors={errors as FieldErrors<DeliveryInfoFormData>}
-                    name="phoneNumber"
-                  />
-                </div>
-                <div className={cn("mt-10 flex justify-end")}>
-                  <Button isLoading={false}>Enregistrer et continuer</Button>
-                </div>
-              </form>
+              )}
+            </div>
+            <div className=" bg-orange">
+              <div className={`flex mr-1 ${formStep === 2 ? "mb-4" : ""}`}>
+                <h3 className="text-black-200">
+                  {formStep === 3
+                    ? "Délai de livraison"
+                    : formStep === 2
+                      ? "Choisis ton délai de livraison"
+                      : ""}
+                </h3>
+                <span
+                  id="shippingMethodTooltipWrapper"
+                  className={`${formStep === 2 ? "block" : "hidden"}`}
+                >
+                  <button
+                    className="d-sm-ib css-9a7n2d"
+                    id="shippingMethodTooltip"
+                    aria-label="Détail des estimations d'expédition"
+                  >
+                    <div className="css-1ou3w6b">
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        role="img"
+                        width="24px"
+                        height="24px"
+                        fill="none"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M12 20a8 8 0 100-16 8 8 0 000 16zm.75-4.5V17h-1.5v-1.5h1.5zM10.5 10c0-.918.831-1.644 1.764-1.472h.006c.6.106 1.096.603 1.201 1.202v.001a1.502 1.502 0 01-.82 1.63 2.411 2.411 0 00-1.401 2.189V14h1.5v-.45a.91.91 0 01.532-.828l.01-.005a3.002 3.002 0 001.657-3.248 3.008 3.008 0 00-2.416-2.417C10.647 6.706 9 8.179 9 10h1.5z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div
+                      className="p4-sm z2 css-17f46hh"
+                      data-attr="test-message-link"
+                      hidden={true}
+                    >
+                      <p className="mb2-sm">
+                        Les estimations d'expédition tiennent compte des
+                        week-ends et des jours fériés.{" "}
+                        <a
+                          href="http://help-en-us.nike.com/app/answer/article/shipping-delivery/a_id/19279/p/3897"
+                          className="text-color-white css-r11el"
+                          aria-label="En savoir plus"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          En savoir plus
+                        </a>
+                      </p>
+                      <p className="">
+                        La livraison sous 24&nbsp;heures n'est pas disponible
+                        pour les sites difficiles d'accès.
+                      </p>
+                    </div>
+                  </button>
+                </span>
+              </div>
+              <div
+                data-attr="shippingContainer"
+                className={`shippingContainer ${formStep === 2 ? "block border-2 rounded-lg border-black-200 text-black-200 p-4 " : formStep === 3 ? "text-gray-500 block" : "hidden"} `}
+              >
+                <p
+                  data-attr="shipping-preview-method"
+                  // className={`${formStep === 2 && "text-black-200"} `}
+                >
+                  Gratuit
+                  <br />
+                  <span>Livraison d'ici le&nbsp;mer. 26 juin</span>
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -314,7 +417,7 @@ const DeliveryInfo = ({ cart }: { cart: ICart }) => {
         {/* <OrderSummary /> */}
       </main>
 
-      <aside className="max-w-[352px] w-[33,33%]">
+      <aside className="w-1/3 px-[6px]">
         <section className="mb5-sm">
           <CheckoutHeader title="Dans ton panier" />
           {/* <header className="pt5-sm pb3-sm prl5-sm pt3-md u-clearfix">
