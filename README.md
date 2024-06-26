@@ -838,9 +838,9 @@ export async function saveCartItems(cartItems: CartItem[]) {
 
 ### 23. Delivery Address
 
-### 24.
+### 24. Clean actions
 
-### 25.
+### 25.Handle different section
 
 ### 26.
 

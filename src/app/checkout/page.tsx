@@ -39,9 +39,6 @@ const CheckoutPage = async () => {
           <OrderSummary />
         </aside>
       </div>
-      {/* <Suspense fallback={<p>MEKA.....</p>}>
-        <Test addresses={addresses} />
-      </Suspense> */}
     </div>
   );
 };
