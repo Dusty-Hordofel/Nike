@@ -3,7 +3,7 @@
 import { signIn } from "@/auth";
 import { LoginFormData, LogInSchema } from "@/lib/validations/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
-import connectDB from "@/config/database";
+import { connectDB } from "@/config/database";
 import { currentUser } from "@/utils/auth";
 import User from "@/models/User";
 import mongoose from "mongoose";

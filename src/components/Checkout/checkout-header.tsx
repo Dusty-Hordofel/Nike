@@ -1,11 +1,17 @@
+import { Dispatch, SetStateAction } from "react";
+
 const CheckoutHeader = ({
   title,
   done,
-  setShowAddressForm,
+  // setShowAddressForm,
+  // formStep,
+  onDeliveryStep,
 }: {
   title: string;
+  // formStep: number;
+  onDeliveryStep: Dispatch<SetStateAction<number>>;
   done: boolean;
-  setShowAddressForm: any;
+  // setShowAddressForm: any;
 }) => {
   return (
     <header className="flex bg-warning justify-between px-5 pt-3 pb-7">
@@ -39,7 +45,7 @@ const CheckoutHeader = ({
           className="underline"
           type="button"
           data-attr="editButton"
-          onClick={() => setShowAddressForm(true)}
+          onClick={() => onDeliveryStep(2)}
         >
           Modifier
         </button>

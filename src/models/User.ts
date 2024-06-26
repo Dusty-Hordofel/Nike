@@ -70,6 +70,7 @@ const userSchema = new Schema<IUser>(
     emailVerified: { type: Boolean, default: false },
     phoneNumber: { type: String, required: true },
     role: { type: String, default: "user" },
+    // addresses: [{ type: Schema.Types.ObjectId, ref: "Address" }],
     addresses: [addressSchema],
     //  addresses: {
     //   type: [addressSchema],

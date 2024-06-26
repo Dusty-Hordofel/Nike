@@ -1,16 +1,18 @@
 "use client";
 import React, { Dispatch, SetStateAction } from "react";
 
-interface ShippingAddressSummaryProps {
-  shippingAddress: any;
-  formStep: number;
-  setFormStep: Dispatch<SetStateAction<number>>;
+interface DeliveryAddressSummaryProps {
+  deliveryAddress: any;
+  deliveryStep: number;
+  onDeliveryStep: Dispatch<SetStateAction<number>>;
+  handleAddNewAddress: () => void;
 }
-const ShippingAddressSummary = async ({
-  shippingAddress,
-  formStep,
-  setFormStep,
-}: ShippingAddressSummaryProps) => {
+const DeliveryAddressSummary = async ({
+  deliveryAddress,
+  deliveryStep,
+  onDeliveryStep,
+  handleAddNewAddress,
+}: DeliveryAddressSummaryProps) => {
   const {
     activeAddress: {
       address,
@@ -23,21 +25,21 @@ const ShippingAddressSummary = async ({
       phoneNumber,
       postalCode,
     },
-  } = shippingAddress;
+  } = deliveryAddress;
   return (
-    <>
+    <div className="p-5 bg-warning">
       <div
         // className="p-5 text-gray-500  bg-blue-100"
-        className={`${formStep === 3 ? "text-gray-500" : "border-2 rounded-lg border-black-200 text-black-200"}  bg-blue-100 relative `}
+        className={`${deliveryStep === 3 ? "text-gray-500" : "border-2 rounded-lg border-black-200 text-black-200 p-4"}  bg-blue-100 relative `}
       >
         {/* className="px-2" */}
         <div data-attr="shippingPreviewContainer">
           <div
-            className={`${formStep === 3 && "mb-4"}`}
+            className={`${deliveryStep === 3 && "mb-4"}`}
             data-attr="addressPreview"
           >
             <h3
-              className={`shippingContainer ${formStep === 3 ? "block text-black-200" : "hidden"}`}
+              className={`shippingContainer ${deliveryStep === 3 ? "block text-black-200" : "hidden"}`}
             >
               Adresse de livraison
             </h3>
@@ -59,35 +61,30 @@ const ShippingAddressSummary = async ({
               <p data-attr="address-preview-phoneNumber">{phoneNumber}</p>
             </div>
           </div>
-          {/* <div
-            data-attr="shippingContainer"
-            className={`shippingContainer ${formStep === 2 ? "block" : "hidden"} border-2 rounded-lg border-black-200 text-black-200 `}
-          >
-            <h3 className="text-black-200">Délai de livraison</h3>
-            <p data-attr="shipping-preview-method">
-              Gratuit
-              <br />
-              <span>Livraison d'ici le&nbsp;mer. 26 juin</span>
-            </p>
-          </div> */}
         </div>
 
         <button
-          // ${formStep === 0 ? "block" : "hidden"}
+          // ${deliveryStep === 0 ? "block" : "hidden"}
           aria-label="Modifier,Adresse de livraison"
           className={`absolute right-5 top-5 underline
           
           `}
           type="button"
           onClick={() => {
-            setFormStep(1);
+            onDeliveryStep(1);
           }}
         >
           Modifier<span className="ripple"></span>
         </button>
       </div>
-    </>
+      <div className="pt-2 px-[6px] flex justify-end bg-warning items-center underline font-medium">
+        <button className="text-xs" type="button" onClick={handleAddNewAddress}>
+          {" "}
+          Ajouter une nouvelle adresse<span className="ripple"></span>
+        </button>
+      </div>
+    </div>
   );
 };
 
-export default ShippingAddressSummary;
+export default DeliveryAddressSummary;

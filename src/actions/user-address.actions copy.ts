@@ -29,129 +29,105 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
       return { error: "Unauthorized" };
     }
 
-    // Désactiver toutes les adresses actives
-    dbUser.addresses.forEach((address: any) => {
-      if (address.active) {
-        address.active = false;
-      }
-    });
+    // console.log("Addresses:", dbUser.addresses);
 
-    // const existingAddress = dbUser.addresses
     if (newAddress._id === undefined || newAddress._id === null) {
-      console.log("NEW ADD", newAddress);
-      // const activeAddress = dbUser.addresses.find(
-      //   (address: any) => address.active === true
-      // );
-      // console.log(
-      //   "🚀 ~ saveUserAddress ~ activeAddress:AC-ACTIVE",
-      //   activeAddress
-      // );
+      const activeAddress = dbUser.addresses.find(
+        (address: any) => address.active === true
+      );
 
-      // if (activeAddress) {
-      //   // Désactive l'adresse active actuelle
-      //   activeAddress.active = false;
-      // }
+      if (activeAddress) {
+        // Désactive l'adresse active actuelle
+        activeAddress.active = false;
+      }
 
-      // await dbUser.save();
-
+      // Ajoute la nouvelle adresse avec le statut actif
       dbUser.addresses.push({
         ...newAddress,
         active: true,
       });
       console.log({ success: "new address successfully added " });
       await dbUser.save();
-
-      console.log("YA SIKA");
-
-      revalidatePath("/checkout");
-
-      return {
-        error: false,
-        success: true,
-        message: "New address successfully added ",
-      };
+      // console.log("🚀 ~ saveUserAddress ~ activeAddress:", activeAddress);
     } else {
-      // 2ieme solution
-      // Adresse existante à mettre à jour
-      const existingAddress = dbUser.addresses.id(newAddress._id);
-      if (existingAddress) {
-        existingAddress.set({
-          ...newAddress,
-          active: true,
-        });
+      // Update existing address based on _id
+      const existingAddress = dbUser.addresses.find(
+        (address: any) => String(address._id) === String(newAddress._id)
+      );
 
-        await dbUser.save();
-
-        console.log("ESSALEMI");
-
-        revalidatePath("/checkout");
-
-        return {
-          error: false,
-          success: true,
-          message: "Active address updated successfully",
-        };
-      } else {
-        return { error: true, success: false, message: "Address not found" };
+      if (!existingAddress) {
+        return { error: "Address not found" };
       }
-      // other solution
-      // const dbUser = await User.findOneAndUpdate(
-      //   { _id: user._id, "addresses._id": updatedAddress._id },
-      //   {
-      //     $set: {
-      //       "addresses.$.lastName": updatedAddress.lastName,
-      //       "addresses.$.firstName": updatedAddress.firstName,
-      //       "addresses.$.region": updatedAddress.region,
-      //       // Ajoutez d'autres champs à mettre à jour ici si nécessaire
-      //     },
-      //   },
-      //   { new: true }
+
+      dbUser.addresses.push({
+        ...newAddress,
+        active: true,
+      });
+
+      // Update address fields
+      // existingAddress.firstName = newAddress.firstName;
+      // existingAddress.lastName = newAddress.lastName;
+      // existingAddress.address = newAddress.address;
+      // existingAddress.companyInfo = newAddress.companyInfo;
+      // existingAddress.city = newAddress.city;
+      // existingAddress.postalCode = newAddress.postalCode;
+      // existingAddress.country = newAddress.country;
+      // existingAddress.email = newAddress.email;
+      // existingAddress.phoneNumber = newAddress.phoneNumber;
+      // existingAddress.active = true; // Ensure the updated address is marked as active
+
+      // Deactivate other active addresses
+      // dbUser.addresses.forEach((address: any) => {
+      //   if (address._id !== newAddress._id) {
+      //     address.active = false;
+      //   }
+      // });
+
+      await dbUser.save();
+      // Update existing address based on _id
+
+      // const existingAddressIndex = dbUser.addresses;
+      // console.log(
+      //   "🚀 ~ saveUserAddress ~ existingAddressIndex:",
+      //   existingAddressIndex
       // );
-
-      // const updatedAddress = {
-      //   _id: "667c677626f4501bccd1d2f3", // ID de l'adresse à mettre à jour
-      //   lastName: "NouveauNomDeFamille", // Nouveau nom de famille
-      // };
-
-      // const dbUser = await User.findOneAndUpdate(
-      //   { _id: user._id, "addresses._id": updatedAddress._id }, // Critère de recherche
-      //   {
-      //     $set: {
-      //       "addresses.$.lastName": updatedAddress.lastName,
-      //     },
-      //   },
-      //   { new: true }
-      // );
-
-      // 1ere solution
-      // console.log("UPDATE ADD", newAddress);
-      // const activeAddressIndex = dbUser.addresses.findIndex(
+      // const existingAddressIndex2 = dbUser.addresses.findIndex(
       //   (address: any) => String(address._id) === String(newAddress._id)
       // );
+      // console.log(
+      //   "🚀 ~ saveUserAddress ~ existingAddressIndex:",
+      //   existingAddressIndex2
+      // );
 
-      // if (activeAddressIndex === -1) {
-      //   return { error: true, success: false, message: "Address not found" };
+      // if (existingAddressIndex === -1) {
+      //   return { error: "Address not found" };
       // }
 
-      // const { _id, ...rest } = newAddress;
-
-      // dbUser.addresses[activeAddressIndex] = {
-      //   ...rest,
-      //   active: true,
+      // dbUser.addresses[existingAddressIndex] = {
+      //   ...newAddress,
+      //   active: true, // Ensure the updated address is marked as active
       // };
 
-      // await dbUser.save();
+      // Optionally, deactivate the previously active address
+      // dbUser.addresses.forEach((address: any) => {
+      //   if (address._id !== newAddress._id) {
+      //     address.active = false;
+      //   }
+      // });
+      // let test = dbUser.addresses[existingAddressIndex];
+      // console.log({ success: "Active address updated successfully", test });
 
-      // console.log("ESSALEMI");
-
-      // revalidatePath("/checkout");
-
-      // return {
-      //   error: false,
-      //   success: true,
-      //   message: "Active address updated successfully",
-      // };
+      // find user and update the active adresse
     }
+
+    // Save the updated user document
+    // await dbUser.save();
+
+    revalidatePath("/checkout");
+
+    return {
+      success: "Active address updated successfully",
+    };
   } catch (error) {
     console.log("🚀 ~ saveUserAddress ~ error:", error);
     return { error: "An error occurred while saving your address" };

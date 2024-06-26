@@ -1,6 +1,6 @@
 "use server";
 
-import connectDB from "@/config/database";
+import { connectDB } from "@/config/database";
 import { currentUser } from "@/utils/auth";
 import User from "@/models/User";
 import mongoose from "mongoose";

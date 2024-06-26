@@ -1,5 +1,5 @@
 import { currentUser } from "@/utils/auth";
-import DeliveryInfo from "./DeliveryInfo";
+import DeliveryInfo from "./components/delivery-section";
 import Cart from "@/models/Cart";
 import { redirect } from "next/navigation";
 import { getCart } from "@/actions/user-cart.actions";
@@ -11,6 +11,8 @@ import {
 import Payment from "@/components/Checkout/payment/Payment";
 import CheckoutHeader from "@/components/Checkout/checkout-header";
 import Test from "./Test";
+import DeliverySection from "./components/delivery-section";
+import OrderSummary from "./components/order-summary";
 
 const CheckoutPage = async () => {
   const user = await currentUser();
@@ -22,18 +24,21 @@ const CheckoutPage = async () => {
   if (!cart) redirect("/");
 
   // const addresses = await getUserAddresses();
-  const shippingAddress = await getUserActiveAdress();
-  console.log("🚀 ~ CheckoutPage ~ activeAddresses:", shippingAddress);
-  // if (!addresses) return;
-  // console.log("🚀 ~ CheckoutPage ~ addresses:", addresses);
-  {
-    /* sr-only */
-  }
+  const deliveryAddress = await getUserActiveAdress();
+  console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
+
   return (
     <div className="max-w-[1090px] px-[6px] bg-green-500 mx-auto">
-      <Suspense fallback={<p>Loading.....</p>}>
-        <DeliveryInfo shippingAddress={shippingAddress} />
-      </Suspense>
+      <div className="flex">
+        <main className="w-2/3 bg-success px-[6px]">
+          <Suspense fallback={<p>Loading.....</p>}>
+            <DeliverySection deliveryAddress={deliveryAddress} />
+          </Suspense>
+        </main>
+        <aside className="w-1/3 px-[6px]">
+          <OrderSummary />
+        </aside>
+      </div>
       {/* <Suspense fallback={<p>MEKA.....</p>}>
         <Test addresses={addresses} />
       </Suspense> */}
