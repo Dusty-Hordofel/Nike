@@ -182,7 +182,7 @@ export default function PaymentSection({
                   id="billingAddress"
                   aria-describedby="a11y-label-details-billingAddress"
                   value=""
-                  checked={false}
+                  checked={deliveryAddress.success}
                 />
                 <div className="nds-checkbox-icon">
                   <span

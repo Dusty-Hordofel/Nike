@@ -18,7 +18,9 @@ const OrderSummary = ({ deliveryStep }: any) => {
   </header> */}
       <span className="sr-only">Paiement Étape 3 sur 3 Étape en cours</span>
       <CheckoutHeader title="Récapitulatif de la commande" />
-      <div className={`mt-2 ${deliveryStep === 4 ? "block" : "hidden"}`}>
+      <div
+      // className={`mt-2 ${deliveryStep === 4 ? "block" : "hidden"}`}
+      >
         {/* PART 1 */}
         <div className="ncss-row" data-attr="summaryComponent">
           <div className="ncss-col-sm-12 p5-lg mb1-sm css-1qpib4x p-5">
