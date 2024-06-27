@@ -10,10 +10,10 @@ import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
 export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
-  console.log("🚀 ~ saveUserAddress ~ newAddress:", newAddress);
+  // console.log("🚀 ~ saveUserAddress ~ newAddress:", newAddress);
   try {
     const user = await currentUser();
-    console.log("🚀 ~ saveUserAddress ~ user:", user);
+    // console.log("🚀 ~ saveUserAddress ~ user:", user);
     if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
       return { error: "Unauthorized" };
     }
@@ -38,7 +38,7 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
 
     // const existingAddress = dbUser.addresses
     if (newAddress._id === undefined || newAddress._id === null) {
-      console.log("NEW ADD", newAddress);
+      // console.log("NEW ADD", newAddress);
       // const activeAddress = dbUser.addresses.find(
       //   (address: any) => address.active === true
       // );
@@ -58,10 +58,10 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
         ...newAddress,
         active: true,
       });
-      console.log({ success: "new address successfully added " });
+      // console.log({ success: "new address successfully added " });
       await dbUser.save();
 
-      console.log("YA SIKA");
+      // console.log("YA SIKA");
 
       revalidatePath("/checkout");
 
@@ -82,7 +82,7 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
 
         await dbUser.save();
 
-        console.log("ESSALEMI");
+        // console.log("ESSALEMI");
 
         revalidatePath("/checkout");
 
@@ -217,27 +217,27 @@ export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
 //   },
 // });
 
-export const getUserAddresses = async () => {
-  try {
-    const user = await currentUser();
-    if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
-      return { error: "Unauthorized" };
-    }
+// export const getUserAddresses = async () => {
+//   try {
+//     const user = await currentUser();
+//     if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
+//       return { error: "Unauthorized" };
+//     }
 
-    connectDB();
+//     connectDB();
 
-    const dbUser = await User.findOne({ _id: user._id });
+//     const dbUser = await User.findOne({ _id: user._id });
 
-    if (!dbUser && !dbUser.addresses) {
-      return { error: "Unauthorized" };
-    }
+//     if (!dbUser && !dbUser.addresses) {
+//       return { error: "Unauthorized" };
+//     }
 
-    return JSON.parse(JSON.stringify(dbUser.addresses));
-  } catch (error) {
-    console.log("🚀 ~ getUserAddresses ~ error:", error);
-    return { error: "An error occurred while getting your addresses" };
-  }
-};
+//     return JSON.parse(JSON.stringify(dbUser.addresses));
+//   } catch (error) {
+//     console.log("🚀 ~ getUserAddresses ~ error:", error);
+//     return { error: "An error occurred while getting your addresses" };
+//   }
+// };
 
 export const getUserActiveAdress = async () => {
   try {
@@ -253,15 +253,16 @@ export const getUserActiveAdress = async () => {
       // "addresses.active": true,
     });
 
-    console.log("🚀 ~ getUserActiveAdress ~ dbUser:AC", dbUser);
+    // console.log("🚀 ~ getUserActiveAdress ~ dbUser:AC", dbUser);
 
     if (!dbUser) {
       return { success: false, error: true, message: "Unauthorized User" };
     }
 
-    console.log("Addresses:ADRESSES AC", dbUser.addresses);
+    // console.log("Addresses:ADRESSES AC", dbUser.addresses);
 
     let activeAddress = undefined;
+
     for (const address of dbUser.addresses) {
       if (address.active === true) {
         activeAddress = address;
@@ -271,15 +272,7 @@ export const getUserActiveAdress = async () => {
       }
     }
 
-    // const activeAddress = dbUser.addresses;
-    // const activeAddress = dbUser.addresses.find(
-    //   (address: any) => address.address === true
-    // );
-    // const activeAddress = dbUser.addresses.find(
-    //   (address: any) => address.active === true
-    // );
     // console.log("🚀 ~ getUserActiveAdress ~ activeAddress:AC", activeAddress);
-    console.log("🚀 ~ getUserActiveAdress ~ activeAddress:AC", activeAddress);
 
     if (!activeAddress) {
       console.log("No active address found"); // Debugging output
@@ -289,10 +282,6 @@ export const getUserActiveAdress = async () => {
         message: "User has not an active address",
       };
     }
-
-    // console.log("All Addresses:ALL", dbUser.addresses);
-
-    // console.log("Active Address:MOLO", activeAddress);
 
     return {
       success: true,

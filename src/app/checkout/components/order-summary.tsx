@@ -1,7 +1,9 @@
+import CheckoutHeader from "@/components/Checkout/checkout-header";
 import React from "react";
 
-const OrderSummary = () => {
+const OrderSummary = ({ deliveryStep }: any) => {
   return (
+    // Récapitulatif de la commande
     <section className="mb5-sm">
       {/* <CheckoutHeader title="Dans ton panier" /> */}
       {/* <header className="pt5-sm pb3-sm prl5-sm pt3-md u-clearfix">
@@ -14,7 +16,9 @@ const OrderSummary = () => {
       Modifier<span className="ripple"></span>
     </button>
   </header> */}
-      <div className="ncss-container mb5-sm">
+      <span className="sr-only">Paiement Étape 3 sur 3 Étape en cours</span>
+      <CheckoutHeader title="Récapitulatif de la commande" />
+      <div className={`mt-2 ${deliveryStep === 4 ? "block" : "hidden"}`}>
         {/* PART 1 */}
         <div className="ncss-row" data-attr="summaryComponent">
           <div className="ncss-col-sm-12 p5-lg mb1-sm css-1qpib4x p-5">

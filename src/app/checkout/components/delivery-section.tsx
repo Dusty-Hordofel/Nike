@@ -27,16 +27,16 @@ import DeliveryAddressSummary from "./delivery-address-summary";
 import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
 
-const DeliverySection = ({ deliveryAddress }: any) => {
+const DeliverySection = ({
+  deliveryAddress,
+  setActiveSection,
+  deliveryStep,
+  setDeliveryStep,
+}: any) => {
   console.log(
     "🚀 ~ DeliverySection ~ deliveryAddress:SECTION",
     deliveryAddress
   );
-  // console.log(
-  //   "🚀 ~ DeliverySection ~ activeAddresses:",
-  //   deliveryAddress?.success,
-  //   deliveryAddress?.activeAddress?._id
-  // );
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -47,21 +47,13 @@ const DeliverySection = ({ deliveryAddress }: any) => {
   const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
     DeliveryMode.Shipping
   );
-  const [deliveryStep, setDeliveryStep] = useState(
-    deliveryAddress.success ? 3 : 1
-  );
-  console.log("🚀 ~ DeliverySection ~ addingNewAddress:ADD", addingNewAddress);
-
-  // const [refresh, setRefresh] = useState(false);
   // const [deliveryStep, setDeliveryStep] = useState(
   //   deliveryAddress.success ? 3 : 1
   // );
-
-  // const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
-  //   DeliveryMode.Shipping
-  // );
+  console.log("🚀 ~ DeliverySection ~ addingNewAddress:ADD", addingNewAddress);
 
   const user = useCurrentUser();
+
   // console.log("🚀 ~ DeliverySection ~ user:", user);
   // if (user /*&& userRole !== "user"*/) {
   //   router.push(`${window.location.origin}` || "/");
@@ -334,6 +326,7 @@ const DeliverySection = ({ deliveryAddress }: any) => {
           isLoading={false}
           onClick={() => {
             setDeliveryStep(3);
+            setActiveSection("payment");
           }}
         >
           Passer au paiement

@@ -842,10 +842,75 @@ export async function saveCartItems(cartItems: CartItem[]) {
 
 ### 25.Handle different section
 
-### 26.
+### 26. Cookie Phase 1
 
-### 27.
+### 27. Payment Method
 
+````tsx
+Les deux morceaux de code que vous avez présentés vérifient l'état de `deliveryAddress` pour déterminer la valeur de `deliveryStep`, mais il y a une différence subtile entre eux dans la manière dont ils traitent les cas où `deliveryAddress` n'est pas défini ou ne contient pas la propriété `success`.
+
+### Premier morceau de code
+
+```javascript
+if (deliveryAddress) {
+  if (deliveryAddress.success) {
+    setDeliveryStep(3);
+  } else {
+    setDeliveryStep(1);
+  }
+}
+````
+
+### Deuxième morceau de code
+
+```javascript
+// if (deliveryAddress && deliveryAddress.success) {
+//   setDeliveryStep(3);
+// } else {
+//   setDeliveryStep(1);
+// }
+```
+
+### Différences
+
+1. **Premier morceau de code :**
+
+   - **Condition initiale** : `if (deliveryAddress)` vérifie si `deliveryAddress` est défini.
+     - Si `deliveryAddress` est défini, il vérifie ensuite `deliveryAddress.success`.
+       - Si `deliveryAddress.success` est vrai, il exécute `setDeliveryStep(3)`.
+       - Si `deliveryAddress.success` est faux, il exécute `setDeliveryStep(1)`.
+     - Si `deliveryAddress` n'est pas défini, rien ne se passe car le bloc `else` est à l'intérieur du premier `if`.
+
+2. **Deuxième morceau de code :**
+
+   - **Condition combinée** : `if (deliveryAddress && deliveryAddress.success)` vérifie à la fois si `deliveryAddress` est défini et si `deliveryAddress.success` est vrai.
+     - Si les deux conditions sont vraies, il exécute `setDeliveryStep(3)`.
+     - Si l'une des deux conditions est fausse (c'est-à-dire si `deliveryAddress` n'est pas défini ou si `deliveryAddress.success` est faux), il exécute `setDeliveryStep(1)`.
+
+### Scénarios
+
+- **Si `deliveryAddress` est indéfini ou null :**
+
+  - **Premier code** : Il ne fait rien.
+  - **Deuxième code** : Il exécute `setDeliveryStep(1)`.
+
+- **Si `deliveryAddress` est défini mais `deliveryAddress.success` est faux :**
+
+  - **Premier code** : Il exécute `setDeliveryStep(1)`.
+  - **Deuxième code** : Il exécute `setDeliveryStep(1)`.
+
+- **Si `deliveryAddress` est défini et `deliveryAddress.success` est vrai :**
+  - **Premier code** : Il exécute `setDeliveryStep(3)`.
+  - **Deuxième code** : Il exécute `setDeliveryStep(3)`.
+
+### Conclusion
+
+- **Premier code** : Plus strict, il ne fait rien si `deliveryAddress` est indéfini.
+- **Deuxième code** : Plus permissif, il exécute `setDeliveryStep(1)` si `deliveryAddress` est indéfini ou si `deliveryAddress.success` est faux.
+
+**Recommandation** : Utilisez la version qui correspond le mieux à votre logique métier. Si vous souhaitez explicitement gérer le cas où `deliveryAddress` est indéfini en définissant `deliveryStep` à 1, utilisez la deuxième version. Sinon, utilisez la première version.
+
+```
 ### 28.
 
 ### 29.
@@ -900,3 +965,4 @@ export async function saveCartItems(cartItems: CartItem[]) {
 - [redux toolkit example](https://dev.to/hossain45/how-to-persist-user-info-using-redux-persist-with-typescript-54g9)
 - 🔗 [redux toolkit example](https://github.com/Mohammad-Faisal/nextjs-app-router-redux-toolkit-persist-integration/blob/main/src/store/index.ts)
 - 🔗 []()
+```
