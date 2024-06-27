@@ -869,9 +869,7 @@ if (deliveryAddress) {
 // } else {
 //   setDeliveryStep(1);
 // }
-```
-
-### Différences
+ Différences
 
 1. **Premier morceau de code :**
 
@@ -911,7 +909,8 @@ if (deliveryAddress) {
 **Recommandation** : Utilisez la version qui correspond le mieux à votre logique métier. Si vous souhaitez explicitement gérer le cas où `deliveryAddress` est indéfini en définissant `deliveryStep` à 1, utilisez la deuxième version. Sinon, utilisez la première version.
 
 ```
-### 28.
+
+### 28. Mise à jour
 
 ### 29.
 
@@ -965,4 +964,7 @@ if (deliveryAddress) {
 - [redux toolkit example](https://dev.to/hossain45/how-to-persist-user-info-using-redux-persist-with-typescript-54g9)
 - 🔗 [redux toolkit example](https://github.com/Mohammad-Faisal/nextjs-app-router-redux-toolkit-persist-integration/blob/main/src/store/index.ts)
 - 🔗 []()
+
+```
+
 ```

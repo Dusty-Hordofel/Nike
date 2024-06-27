@@ -8,13 +8,13 @@ import { ChangeEventHandler, Suspense, useEffect, useState } from "react";
 // import { getUserActiveAdress } from "@/actions/user-address.actions";
 // import CheckoutHeader from "@/components/Checkout/checkout-header";
 // import Test from "./Test";
-import DeliverySection from "./components/delivery-section";
-import OrderSummary from "./components/order-summary";
+import DeliverySection from "./components/delivery/delivery-section";
+import OrderSummary from "./components/order/order-summary";
 import { useQuery } from "@tanstack/react-query";
 // import PaymentSection from "./payment-section";
-import SummarySection from "./summary-section";
+import SummarySection from "./components/summary/summary-section";
 import PaymentSection from "./components/payment/payment-section";
-import { DeliveryMode } from "./components/delivery-mode-selector";
+import { DeliveryMode } from "./components/delivery/delivery-mode-selector";
 // import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 
 const CheckoutPage = () => {
@@ -100,7 +100,7 @@ const CheckoutPage = () => {
               deliveryAddress={deliveryAddress}
               deliveryStep={deliveryStep}
             />
-            <SummarySection />
+            <SummarySection deliveryStep={deliveryStep} />
           </main>
           <aside className="w-1/3 px-[6px]">
             <OrderSummary />

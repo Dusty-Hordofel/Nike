@@ -1,5 +1,5 @@
 import React from "react";
-import OrderSummary from "./components/order-summary";
+import OrderSummary from "../order/order-summary";
 
 const SummarySection = ({ deliveryStep }: any) => {
   return <OrderSummary deliveryStep={deliveryStep} />;
