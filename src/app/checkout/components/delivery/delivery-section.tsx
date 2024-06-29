@@ -154,6 +154,7 @@ const DeliverySection = ({ deliveryAddress }: any) => {
                   deliveryAddress={deliveryAddress}
                   deliveryStep={deliveryStep}
                   onDeliveryStep={setDeliveryStep}
+                  onActiveSection={setActiveSection}
                 />
               </Suspense>
             </>

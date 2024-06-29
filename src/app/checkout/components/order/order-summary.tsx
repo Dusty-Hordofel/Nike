@@ -1,7 +1,8 @@
 import CheckoutHeader from "@/components/Checkout/checkout-header";
 import React from "react";
 
-const OrderSummary = () => {
+const OrderSummary = ({ cart }: any) => {
+  console.log("🚀 ~ OrderSummary ~ cart:", cart);
   return (
     // Récapitulatif de la commande
     <section className="mb5-sm">
@@ -75,7 +76,7 @@ const OrderSummary = () => {
                 </div>
               </div>
               <div className="ncss-col-sm-4 va-sm-t ta-sm-r">
-                <div data-attr="subtotal">179,98&nbsp;€</div>
+                <div data-attr="subtotal">{cart?.cartTotal} €</div>
               </div>
             </div>
             {/* 2 */}
@@ -96,7 +97,7 @@ const OrderSummary = () => {
               </div>
               <div className="ncss-col-sm-4 va-sm-t ta-sm-r">
                 <div data-attr="cart-total" className="css-5oevkg">
-                  179,98&nbsp;€
+                  {cart?.cartTotal} €
                 </div>
               </div>
             </div>
@@ -113,35 +114,44 @@ const OrderSummary = () => {
                   Livraison d'ici le&nbsp;mar. 25 juin
                 </h3>
               </header>
-              <div className="d-sm-t bs5">
-                <figure className="flex" data-attr="cloud-cart-item">
-                  <div className="d-sm-tc va-sm-t">
-                    <img
-                      alt="Chaussure Nike Cortez Textile pour femme"
-                      data-attr="cloud-cart-image"
-                      src="https://images.nike.com/is/image/DotCom/DZ2795_601_A_PREM?wid=80&amp;hei=80&amp;align=0,1&amp;cropN=0,0,0,0&amp;fmt=png-alpha&amp;resMode=sharp&amp;defaultImage=DotCom/SEARCH_002"
-                      width="60"
-                      className="css-16i8mcp"
-                    />
+              {cart?.products?.map((product: any) => {
+                return (
+                  <div className="d-sm-t bs5 py-4">
+                    <figure className="flex" data-attr="cloud-cart-item">
+                      <div className="d-sm-tc va-sm-t">
+                        <img
+                          alt="Chaussure Nike Cortez Textile pour femme"
+                          data-attr="cloud-cart-image"
+                          src={product.image}
+                          width="60"
+                          className="css-16i8mcp"
+                        />
+                      </div>
+                      <figcaption className="d-sm-tc va-sm-t pl5-sm pl-5 text-gray-500">
+                        <div className="css-1qpib4x text-black-200">
+                          Chaussure Nike Cortez Textile pour femme
+                        </div>
+                        <div>Réf. article : DZ2795-601</div>
+                        <div>
+                          <span data-attr="itemSize">
+                            Taille : {product?.size}
+                          </span>
+                        </div>
+                        <div className="css-ydw93h">
+                          Couleur : Picante Red/University Blue/Coconut
+                          Milk/Sail
+                        </div>
+                        <div>
+                          Quantité : {product?.quantity} @ {product?.price} €
+                        </div>
+                        <div data-attr="checkout-cart-item-price">
+                          {product?.price * product?.quantity} €
+                        </div>
+                      </figcaption>
+                    </figure>
                   </div>
-                  <figcaption className="d-sm-tc va-sm-t pl5-sm pl-5 text-gray-500">
-                    <div className="css-1qpib4x text-black-200">
-                      Chaussure Nike Cortez Textile pour femme
-                    </div>
-                    <div>Réf. article : DZ2795-601</div>
-                    <div>
-                      <span data-attr="itemSize">Taille : 42</span>
-                    </div>
-                    <div className="css-ydw93h">
-                      Couleur : Picante Red/University Blue/Coconut Milk/Sail
-                    </div>
-                    <div>Quantité : 2 @ 89,99&nbsp;€</div>
-                    <div data-attr="checkout-cart-item-price">
-                      179,98&nbsp;€
-                    </div>
-                  </figcaption>
-                </figure>
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>

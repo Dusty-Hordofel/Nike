@@ -914,9 +914,9 @@ if (deliveryAddress) {
 
 ### 29. Ajout du context pour gérer les étapes de validation de Checkout
 
-### 30.
+### 30. Mise à jour (checkoutPage, DeliverySection,Summary)
 
-### 31.
+### 31. Summary Order Data
 
 ### 32.
 
