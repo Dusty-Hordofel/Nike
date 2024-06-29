@@ -11,6 +11,7 @@ import {
 import DeliverySection from "./components/delivery/delivery-section";
 import OrderSummary from "./components/order/order-summary";
 import PaymentSection from "./components/payment/payment-section";
+import SummarySection from "./components/summary/summary-section";
 // import OrderSummary from "@/components/Checkout/payment/order-summary";
 // import Payment from "@/components/Checkout/payment/Payment";
 // import CheckoutHeader from "@/components/Checkout/checkout-header";
@@ -41,6 +42,9 @@ const CheckoutPage = async () => {
               // setSelectedPaymentMethod={setSelectedPaymentMethod}
               deliveryAddress={deliveryAddress}
             />
+          </Suspense>
+          <Suspense>
+            <SummarySection />
           </Suspense>
         </main>
         <aside className="w-1/3 px-[6px]">
