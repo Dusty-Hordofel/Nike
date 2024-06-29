@@ -6,6 +6,8 @@ import { helvetica } from "@/assets/fonts/helvetica/helvetica";
 import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/client-only";
 import dynamic from "next/dynamic";
+import { DeliveryProvider } from "@/context/DeliveryContext";
+import { getUserActiveAdress } from "@/actions/user-address.actions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,16 +20,22 @@ export const metadata: Metadata = {
 //   ssr: false,
 // });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const deliveryAddress = await getUserActiveAdress();
+  console.log("🚀 ~ deliveryAddress:ROOOT", deliveryAddress);
   return (
     <html lang="en">
       <body className={`${helvetica.className} max-w-[1924px]`}>
         <Providers>
-          <ClientOnly>{children}</ClientOnly>
+          <ClientOnly>
+            <DeliveryProvider deliveryAddress={deliveryAddress}>
+              {children}
+            </DeliveryProvider>
+          </ClientOnly>
         </Providers>
       </body>
     </html>

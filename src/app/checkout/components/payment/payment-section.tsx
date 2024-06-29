@@ -8,36 +8,50 @@ import "./input.css";
 import CreditCard from "@/assets/icons/credit-card/CreditCard";
 import { Button } from "@/components/ui/buttons/button/button";
 import CheckoutHeader from "@/components/Checkout/checkout-header";
+import { useDeliveryContext } from "@/context/DeliveryContext";
 // import CheckoutHeader from "../checkout-header";
 // import styles from "./styles.module.scss";
 
 interface PaymentProps {
-  handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement>;
-  selectedPaymentMethod: string;
+  // handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement>;
+  // selectedPaymentMethod: string;
   // setSelectedPaymentMethod: Dispatch<SetStateAction<string>>;
   deliveryAddress: any;
-  deliveryStep: number;
+  // deliveryStep: number;
 }
 
 export default function PaymentSection({
   deliveryAddress,
-  handlePaymentMethodChange,
-  selectedPaymentMethod,
-  deliveryStep,
+  // handlePaymentMethodChange,
+  // selectedPaymentMethod,
+  // deliveryStep,
   // setSelectedPaymentMethod,
   // paymentMethod,
   // setPaymentMethod,
   // profile,
 }: PaymentProps) {
   console.log("🚀 ~ deliveryAddress:", deliveryAddress);
-  console.log("🚀 ~ deliveryStep:", deliveryStep);
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    "creditDebit" | "paypal" | "googlePay"
+  >("creditDebit");
+  // console.log("🚀 ~ deliveryStep:", deliveryStep);
+  const { deliveryStep, activeSection } = useDeliveryContext();
+
+  const handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const value = event.target.value as "creditDebit" | "paypal" | "googlePay";
+    setSelectedPaymentMethod(value);
+  };
+
   return (
     <section>
       <span className="sr-only">Paiement Étape 2 sur 3 Étape en cours</span>
       <CheckoutHeader title="Paiement" />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && deliveryAddress.success ? "block" : "hidden"}`}
+        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && deliveryAddress.success ? "block" : "hidden"}`}
       >
         {/* loading 1 à ajouter*/}
         {/* 2 suite*/}

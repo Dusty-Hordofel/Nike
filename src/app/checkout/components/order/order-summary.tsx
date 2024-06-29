@@ -1,7 +1,7 @@
 import CheckoutHeader from "@/components/Checkout/checkout-header";
 import React from "react";
 
-const OrderSummary = ({ deliveryStep }: any) => {
+const OrderSummary = () => {
   return (
     // Récapitulatif de la commande
     <section className="mb5-sm">

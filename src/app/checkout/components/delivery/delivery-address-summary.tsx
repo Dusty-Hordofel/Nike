@@ -6,11 +6,13 @@ interface DeliveryAddressSummaryProps {
   deliveryStep: number;
   onDeliveryStep: Dispatch<SetStateAction<number>>;
   handleAddNewAddress: () => void;
+  onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
 const DeliveryAddressSummary = async ({
   deliveryAddress,
   deliveryStep,
   onDeliveryStep,
+  onActiveSection,
   handleAddNewAddress,
 }: DeliveryAddressSummaryProps) => {
   const {
@@ -72,6 +74,7 @@ const DeliveryAddressSummary = async ({
           type="button"
           onClick={() => {
             onDeliveryStep(1);
+            onActiveSection("address");
           }}
         >
           Modifier<span className="ripple"></span>

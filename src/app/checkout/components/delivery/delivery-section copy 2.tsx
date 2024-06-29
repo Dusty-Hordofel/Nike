@@ -26,7 +26,6 @@ import CheckoutHeader from "@/components/Checkout/checkout-header";
 import DeliveryAddressSummary from "./delivery-address-summary";
 import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
-import { useDeliveryContext } from "@/context/DeliveryContext";
 
 const DeliverySection = ({ deliveryAddress }: any) => {
   console.log(
@@ -43,15 +42,25 @@ const DeliverySection = ({ deliveryAddress }: any) => {
   const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
     DeliveryMode.Shipping
   );
+  const [deliveryStep, setDeliveryStep] = useState(
+    deliveryAddress.success ? 3 : 1
+  );
+  console.log("🚀 ~ DeliverySection ~ addingNewAddress:ADD", addingNewAddress);
+
+  // const [refresh, setRefresh] = useState(false);
   // const [deliveryStep, setDeliveryStep] = useState(
   //   deliveryAddress.success ? 3 : 1
   // );
-  // console.log("🚀 ~ DeliverySection ~ addingNewAddress:ADD", addingNewAddress);
+
+  // const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
+  //   DeliveryMode.Shipping
+  // );
 
   const user = useCurrentUser();
-  const { deliveryStep, setDeliveryStep, setActiveSection } =
-    useDeliveryContext();
-  console.log("🚀 ~ DeliverySection ~ ul:UULLL", deliveryStep);
+  // console.log("🚀 ~ DeliverySection ~ user:", user);
+  // if (user /*&& userRole !== "user"*/) {
+  //   router.push(`${window.location.origin}` || "/");
+  // }
 
   const {
     register,
@@ -103,6 +112,41 @@ const DeliverySection = ({ deliveryAddress }: any) => {
     setAddingNewAddress(true);
     setDeliveryStep(1);
   };
+
+  // useEffect(() => {
+  //   const fetchUserAddress = async () => {
+  //     const response = await getUserActiveAdress();
+  //     const { success, activeAddress } = response;
+  //     if (success) {
+  //       reset(activeAddress);
+  //     } else {
+  //       reset({
+  //         lastName: "",
+  //         firstName: "",
+  //         country: "",
+  //         address: "",
+  //         phoneNumber: "",
+  //         email: "",
+  //         companyInfo: "",
+  //         city: "",
+  //         postalCode: "",
+  //       });
+  //     }
+  //   };
+
+  //   fetchUserAddress();
+  // }, [refresh]);
+
+  // const onSubmit = async (values: DeliveryInfoFormData) => {
+  //   let save = await saveUserAddress(values);
+
+  //   if (save.success) {
+  //     setRefresh(!refresh); // Changez l'état pour relancer le useEffect
+  //     // setShowAddressForm(false);
+  //     console.log("STEPS", deliveryAddress);
+  //     deliveryAddress.success && setDeliveryStep(2);
+  //   }
+  // };
 
   const onSubmit: SubmitHandler<DeliveryInfoFormData> = async (values) => {
     let save;
@@ -285,7 +329,6 @@ const DeliverySection = ({ deliveryAddress }: any) => {
           isLoading={false}
           onClick={() => {
             setDeliveryStep(3);
-            setActiveSection("payment");
           }}
         >
           Passer au paiement

@@ -912,7 +912,7 @@ if (deliveryAddress) {
 
 ### 28. Mise à jour
 
-### 29.
+### 29. Ajout du context pour gérer les étapes de validation de Checkout
 
 ### 30.
 
