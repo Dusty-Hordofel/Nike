@@ -23,7 +23,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = auth(async (req: any) => {
   //   const role = await currentRole();
   // auth
-  console.log(req.auth);
+  console.log(req);
+
   console.log("PESA MAKAMBO", req.auth);
   return new NextResponse(
     JSON.stringify({

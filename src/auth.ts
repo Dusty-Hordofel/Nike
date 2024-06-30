@@ -7,7 +7,12 @@ import bcrypt from "bcryptjs";
 
 import User from "./models/User";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const {
+  handlers: { GET, POST },
+  signIn,
+  signOut,
+  auth,
+} = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     Credentials({

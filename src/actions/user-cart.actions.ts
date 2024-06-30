@@ -6,15 +6,19 @@ import User from "@/models/User";
 import mongoose from "mongoose";
 import Cart from "@/models/Cart";
 import Product, { IProduct } from "@/models/Product";
-import { CartItem } from "@/store/cartSlice";
+import { CartItem, Coupon } from "@/store/cartSlice";
 import { redirect } from "next/navigation";
 import { isValidObjectId } from "@/lib/utils";
 import { connectDB, disconnectDB } from "@/config/database";
+import { applyCouponCode } from "./user-apply-coupon.action";
 
 // Fonction utilitaire pour vérifier l'ObjectId valide
 
 // Fonction pour sauvegarder les articles du panier
-export async function saveCartItems(cartItems: CartItem[]) {
+export async function saveCartItems(
+  cartItems: CartItem[],
+  couponCode: string | undefined
+) {
   try {
     // Récupérer l'utilisateur actuel
     const user = await currentUser();
@@ -105,11 +109,15 @@ export async function saveCartItems(cartItems: CartItem[]) {
       user: user._id,
     }).save();
 
-    console.log("CART AMOUNT", {
-      products,
-      cartTotal: cartTotal.toFixed(2),
-      user: user._id,
-    });
+    if (couponCode === undefined) {
+      console.log("CART AMOUNT", {
+        products,
+        cartTotal: cartTotal.toFixed(2),
+        user: user._id,
+      });
+    } else {
+      await applyCouponCode(couponCode);
+    }
 
     // disconnectDB();
 

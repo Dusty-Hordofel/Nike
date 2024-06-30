@@ -14,6 +14,11 @@ export type CartItem = {
   size: string;
 };
 
+export type Coupon = {
+  code: string;
+  discountPercentage: number;
+};
+
 export type CartState = {
   cartItems: CartItem[];
   numItemsInCart: number;
@@ -21,6 +26,7 @@ export type CartState = {
   shipping: number;
   taxAmount: number;
   orderTotal: number;
+  appliedCoupon?: Coupon;
 };
 
 const initialState: CartState = {
@@ -30,6 +36,7 @@ const initialState: CartState = {
   shipping: 500,
   taxAmount: 0,
   orderTotal: 0,
+  appliedCoupon: undefined,
 };
 
 export const cartSlice = createSlice({
@@ -118,6 +125,21 @@ export const cartSlice = createSlice({
         alert("Item not found in cart");
       }
     },
+    applyCoupon(state, action: PayloadAction<Coupon>) {
+      const { code, discountPercentage } = action.payload;
+
+      // Vérifier si le coupon est déjà appliqué
+      if (state.appliedCoupon && state.appliedCoupon.code === code) {
+        alert("Ce coupon a déjà été appliqué.");
+        return;
+      }
+
+      // Appliquer le coupon
+      state.appliedCoupon = action.payload;
+      const discountAmount = state.cartTotal * (discountPercentage / 100);
+      state.cartTotal -= discountAmount;
+      state.orderTotal = state.cartTotal + state.shipping + state.taxAmount;
+    },
 
     emptyCart(state) {
       state.cartItems = [];
@@ -139,6 +161,7 @@ export const {
   updateQuantity,
   updateSize,
   removeItemFromCart,
+  applyCoupon,
   emptyCart,
 } = cartSlice.actions;
 

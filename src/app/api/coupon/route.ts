@@ -1,4 +1,4 @@
-import connectDB from "@/config/database";
+import { connectDB } from "@/config/database";
 import Coupon from "@/models/Coupon";
 import Product, { ISubProduct } from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";

@@ -20,7 +20,8 @@ const authConfig = {
   },
 } satisfies NextAuthConfig;
 
-export const { auth: middleware } = NextAuth(authConfig);
+export const { auth } = NextAuth(authConfig);
+// export const { auth: middleware } = NextAuth(authConfig);
 
 export const config = {
   matcher: [

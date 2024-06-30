@@ -1,18 +1,25 @@
 "use client";
 
+import {
+  applyCouponCode,
+  getCouponCode,
+} from "@/actions/user-apply-coupon.action";
 import { saveCartItems } from "@/actions/user-cart.actions";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
-import { useAppSelector } from "@/hooks/use-redux-hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/use-redux-hooks";
 import { cn } from "@/lib/utils";
+import { applyCoupon } from "@/store/cartSlice";
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 // Props for PromoCodeSection
 type PromoCodeSectionProps = {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: Dispatch<React.SetStateAction<boolean>>;
+  setCouponCode: Dispatch<SetStateAction<string>>;
+  onApplyCoupon: (e: any) => void;
 };
 
 // Main component props
@@ -21,23 +28,61 @@ type CheckoutProps = {};
 // Main Details component
 const CartDetails: React.FC<CheckoutProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  console.log("🚀 ~ coupon:", couponCode);
 
-  const { cartItems, cartTotal, orderTotal, shipping } = useAppSelector(
-    (state) => state.cart
-  );
-  console.log("🚀 ~ cartItems:Details", cartItems);
+  const { cartItems, cartTotal, orderTotal, shipping, appliedCoupon } =
+    useAppSelector((state) => state.cart);
+  // console.log("🚀 ~ cartItems:Details", cartItems);
+  console.log("🚀 ~ appliedCoupon: APP", appliedCoupon);
 
-  const saveCartHandler = async () => {
-    const saveCart = await saveCartItems(cartItems);
-    console.log("🚀 ~ saveCartHandler ~ saveCart:", saveCart);
+  const handleSaveCart = async () => {
+    const saveCart = await saveCartItems(cartItems, appliedCoupon?.code);
+    console.log("🚀 ~ saveCartHandler ~ saveCart:SAVE CART", saveCart);
+  };
+
+  const dispatch = useAppDispatch();
+
+  console.log("🚀 ~ appliedCoupon:COUPONNNN", appliedCoupon);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Appliquer le coupon avec la fonction onApplyCoupon
+  //   applyCouponCode(couponCode); // Passer le code du coupon à la fonction parent
+  // };
+
+  const handleApplyCoupon = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("first", "COUPON ");
+    const { success, message, coupon } = await getCouponCode("MOYKALR");
+    console.log("🚀 ~ handleApplyCoupon ~ coupon:APPLYCOUPON", coupon?.coupon);
+
+    if (success) {
+      dispatch(
+        applyCoupon({
+          code: String(coupon?.coupon),
+          discountPercentage: Number(coupon?.discount),
+        })
+      );
+    } else {
+      alert(message);
+    }
   };
 
   return (
     <div className="px-2 mb-4 max-w-[404px] w-full">
       <aside data-testid="cart-summary" className="px-2 mb-6 bg-blue-400">
         <h2 className="mb-6 text-2xl font-medium">Récapitulatif</h2>
-        <PromoCodeSection isOpen={isOpen} setIsOpen={setIsOpen} />
-        <SummaryLine label="Sous-total" value={String(cartTotal)} />
+        {/* <div className="" onClick={handleApplyCoupon}>
+          OL
+        </div> */}
+        <PromoCodeSection
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setCouponCode={setCouponCode}
+          onApplyCoupon={handleApplyCoupon}
+        />
+        <SummaryLine label="Sous-total" value={String(cartTotal.toFixed(2))} />
         <SummaryLine
           label="Frais estimés de prise en charge et d'expédition"
           value={String(shipping)}
@@ -47,7 +92,7 @@ const CartDetails: React.FC<CheckoutProps> = (props) => {
           value={String(orderTotal.toFixed(2))}
           isTotal
         />
-        <CheckoutButtons saveCartHandler={saveCartHandler} />
+        <CheckoutButtons onSaveCart={handleSaveCart} />
       </aside>
     </div>
   );
@@ -59,6 +104,8 @@ export default CartDetails;
 const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
   isOpen,
   setIsOpen,
+  setCouponCode,
+  onApplyCoupon,
 }) => {
   return (
     <details
@@ -81,19 +128,22 @@ const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
           isOpen ? "max-h-96" : "max-h-0"
         )}
       >
-        <form>
+        <form onSubmit={onApplyCoupon}>
           <div className="flex my-1 pt-2">
             <input
               type="text"
               name="promotionCode"
               aria-label="Enter a Promo Code"
               className="py-2 border border-[#e4e4e4] px-4 rounded-lg"
+              onChange={(e) => setCouponCode(e.target.value)}
             />
+
             <button
-              disabled
+              disabled={false}
               className="ml-2 px-6 py-2 border-[#e4e4e4] border rounded-full cursor-pointer"
               type="submit"
               data-testid="promo-code-apply-button"
+              // onClick={onApplyCoupon}
             >
               Appliquer
             </button>
@@ -129,9 +179,9 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
 
 // Subcomponent for checkout buttons
 interface CheckoutButtonsProps {
-  saveCartHandler: () => Promise<void>;
+  onSaveCart: () => Promise<void>;
 }
-const CheckoutButtons = ({ saveCartHandler }: CheckoutButtonsProps) => {
+const CheckoutButtons = ({ onSaveCart }: CheckoutButtonsProps) => {
   return (
     <div className="pt-5 flex flex-col space-y-3">
       {/* <Link
@@ -148,7 +198,7 @@ const CheckoutButtons = ({ saveCartHandler }: CheckoutButtonsProps) => {
         
         onClick={() => saveCartHandler()}
       > */}
-      <div className="cursor-pointer" onClick={() => saveCartHandler()}>
+      <div className="cursor-pointer" onClick={() => onSaveCart()}>
         Paiement
       </div>
       {/* </Link> */}
