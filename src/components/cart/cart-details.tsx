@@ -12,7 +12,7 @@ import { applyCoupon } from "@/store/cartSlice";
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 // Props for PromoCodeSection
 type PromoCodeSectionProps = {
@@ -20,6 +20,7 @@ type PromoCodeSectionProps = {
   setIsOpen: Dispatch<React.SetStateAction<boolean>>;
   setCouponCode: Dispatch<SetStateAction<string>>;
   onApplyCoupon: (e: any) => void;
+  couponCode: string;
 };
 
 // Main component props
@@ -29,12 +30,14 @@ type CheckoutProps = {};
 const CartDetails: React.FC<CheckoutProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
-  console.log("🚀 ~ coupon:", couponCode);
 
   const { cartItems, cartTotal, orderTotal, shipping, appliedCoupon } =
     useAppSelector((state) => state.cart);
   // console.log("🚀 ~ cartItems:Details", cartItems);
-  console.log("🚀 ~ appliedCoupon: APP", appliedCoupon);
+  console.log("🚀 ~ cartItems:", cartItems);
+  // console.log("🚀 ~ appliedCoupon: APP", appliedCoupon);
+  // console.log("🚀 ~ couponCode:", couponCode);
+  console.log("🚀 ~ coupon:", couponCode);
 
   const handleSaveCart = async () => {
     const saveCart = await saveCartItems(cartItems, appliedCoupon?.code);
@@ -43,7 +46,12 @@ const CartDetails: React.FC<CheckoutProps> = (props) => {
 
   const dispatch = useAppDispatch();
 
-  console.log("🚀 ~ appliedCoupon:COUPONNNN", appliedCoupon);
+  useEffect(() => {
+    const couponCode = appliedCoupon?.code;
+    if (couponCode) setCouponCode(couponCode);
+  }, [couponCode]);
+
+  // const couponCode =appliedCoupon?.code;
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -81,6 +89,7 @@ const CartDetails: React.FC<CheckoutProps> = (props) => {
           setIsOpen={setIsOpen}
           setCouponCode={setCouponCode}
           onApplyCoupon={handleApplyCoupon}
+          couponCode={couponCode}
         />
         <SummaryLine label="Sous-total" value={String(cartTotal.toFixed(2))} />
         <SummaryLine
@@ -106,6 +115,7 @@ const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
   setIsOpen,
   setCouponCode,
   onApplyCoupon,
+  couponCode,
 }) => {
   return (
     <details
@@ -134,6 +144,7 @@ const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
               type="text"
               name="promotionCode"
               aria-label="Enter a Promo Code"
+              value={couponCode}
               className="py-2 border border-[#e4e4e4] px-4 rounded-lg"
               onChange={(e) => setCouponCode(e.target.value)}
             />
@@ -198,9 +209,13 @@ const CheckoutButtons = ({ onSaveCart }: CheckoutButtonsProps) => {
         
         onClick={() => saveCartHandler()}
       > */}
-      <div className="cursor-pointer" onClick={() => onSaveCart()}>
+      <Link
+        href="/checkout"
+        className="cursor-pointer"
+        onClick={() => onSaveCart()}
+      >
         Paiement
-      </div>
+      </Link>
       {/* </Link> */}
       <Link
         href="/checkout"

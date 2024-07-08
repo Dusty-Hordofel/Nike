@@ -50,20 +50,23 @@ export async function applyCouponCode(couponCode: string) {
 
     console.log("COUPON APPLY", cartTotal);
 
-    revalidatePath("/cart");
-    redirect("/checkout");
+    // revalidatePath("/checkout");
+    // revalidatePath("/cart");
+    // redirect("/checkout");
     // res.json({
     //   totalAfterDiscount: totalAfterDiscount.toFixed(2),
     //   discount: coupon.discount,
     // });
 
+    return { success: "Coupon successfully applied" };
+
     // db.disconnectDb();
     // return { addresses: user.address };
-    return {
-      success: true,
-      error: false,
-      message: "Coupon applyed successfully",
-    };
+    // return {
+    //   success: true,
+    //   error: false,
+    //   message: "Coupon applyed successfully",
+    // };
   } catch (error) {
     return { error: "Coupon not found" };
   }

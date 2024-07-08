@@ -39,29 +39,6 @@ const initialState: CartState = {
   appliedCoupon: undefined,
 };
 
-// Function to recalculate totals
-const recalculateTotals = (state: CartState) => {
-  state.cartTotal = state.cartItems.reduce(
-    (total, item) => total + parseFloat(item.price) * item.quantity,
-    0
-  );
-  state.numItemsInCart = state.cartItems.reduce(
-    (count, item) => count + item.quantity,
-    0
-  );
-  state.shipping = state.cartItems.reduce(
-    (total, item) => total + item.shipping * item.quantity,
-    0
-  );
-
-  const discountAmount = state.appliedCoupon
-    ? state.cartTotal * (state.appliedCoupon.discountPercentage / 100)
-    : 0;
-
-  state.orderTotal =
-    state.cartTotal - discountAmount + state.shipping + state.taxAmount;
-};
-
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -76,7 +53,10 @@ export const cartSlice = createSlice({
       } else {
         state.cartItems.push(newCartItem);
       }
-      recalculateTotals(state);
+      state.numItemsInCart += newCartItem.quantity;
+      state.shipping += newCartItem.shipping * newCartItem.quantity;
+      state.cartTotal += Number(newCartItem.price) * newCartItem.quantity;
+      state.orderTotal = state.cartTotal + state.shipping + state.taxAmount;
     },
     updateQuantity(
       state,
@@ -89,7 +69,21 @@ export const cartSlice = createSlice({
 
       if (existingCartItem) {
         existingCartItem.quantity = quantity;
-        recalculateTotals(state);
+        // Recalculate totals after updating quantity
+        state.cartTotal = state.cartItems.reduce(
+          (total, item) => total + parseFloat(item.price) * item.quantity,
+          0
+        );
+        state.numItemsInCart = state.cartItems.reduce(
+          (count, item) => count + item.quantity,
+          0
+        );
+        state.shipping = state.cartItems.reduce(
+          (total, item) => total + item.shipping * item.quantity,
+          0
+        );
+
+        state.orderTotal = state.cartTotal + state.shipping + state.taxAmount;
       } else {
         alert("Please select a valid item");
       }
@@ -99,7 +93,20 @@ export const cartSlice = createSlice({
         (item) => String(item.cartID) !== String(action.payload)
       );
 
-      recalculateTotals(state);
+      // Update cartTotal, numItemsInCart, and orderTotal after item removal
+      state.cartTotal = state.cartItems.reduce(
+        (total, item) => total + parseFloat(item.price) * item.quantity,
+        0
+      );
+      state.numItemsInCart = state.cartItems.reduce(
+        (count, item) => count + item.quantity,
+        0
+      );
+      state.shipping = state.cartItems.reduce(
+        (total, item) => total + item.shipping * item.quantity,
+        0
+      );
+      state.orderTotal = state.cartTotal + state.shipping + state.taxAmount;
 
       // Clear the applied coupon if the cart is empty
       if (state.cartItems.length === 0) {
@@ -143,7 +150,9 @@ export const cartSlice = createSlice({
 
       // Appliquer le coupon
       state.appliedCoupon = action.payload;
-      recalculateTotals(state);
+      const discountAmount = state.cartTotal * (discountPercentage / 100);
+      state.cartTotal -= discountAmount;
+      state.orderTotal = state.cartTotal + state.shipping + state.taxAmount;
     },
 
     emptyCart(state) {
@@ -155,6 +164,11 @@ export const cartSlice = createSlice({
       state.shipping = 0;
       state.appliedCoupon = undefined;
     },
+    // calculateTotals: (state) => {
+    //   state.taxAmount = 0.1 * state.cartTotal;
+    //   state.orderTotal = state.cartTotal + state.shipping + state.taxAmount;
+    //   // localStorage.setItem("cart", JSON.stringify(state));
+    // },
   },
 });
 

@@ -7,8 +7,10 @@ import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import "./input.css";
 import CreditCard from "@/assets/icons/credit-card/CreditCard";
 import { Button } from "@/components/ui/buttons/button/button";
-import CheckoutHeader from "@/components/Checkout/checkout-header";
+import CheckoutHeader from "@/components/checkout/checkout-header";
 import { useDeliveryContext } from "@/context/DeliveryContext";
+import Loader from "../../loader";
+import { useGetActiveAddress } from "@/hooks/api/use-get-active-address";
 // import CheckoutHeader from "../checkout-header";
 // import styles from "./styles.module.scss";
 
@@ -20,23 +22,41 @@ interface PaymentProps {
   // deliveryStep: number;
 }
 
-export default function PaymentSection({
-  deliveryAddress,
-  // handlePaymentMethodChange,
-  // selectedPaymentMethod,
-  // deliveryStep,
-  // setSelectedPaymentMethod,
-  // paymentMethod,
-  // setPaymentMethod,
-  // profile,
-}: PaymentProps) {
-  console.log("🚀 ~ deliveryAddress:", deliveryAddress);
+export default function PaymentSection() {
+//   {
+//   deliveryAddress,
+//   // handlePaymentMethodChange,
+//   // selectedPaymentMethod,
+//   // deliveryStep,
+//   // setSelectedPaymentMethod,
+//   // paymentMethod,
+//   // setPaymentMethod,
+//   // profile,
+// }: PaymentProps
+  // console.log("🚀 ~ deliveryAddress:", deliveryAddress);
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "creditDebit" | "paypal" | "googlePay"
   >("creditDebit");
   // console.log("🚀 ~ deliveryStep:", deliveryStep);
   const { deliveryStep, activeSection } = useDeliveryContext();
+
+  const { deliveryAddress, isLoading, isError } = useGetActiveAddress();
+
+  if (isLoading)
+    return (
+      <section>
+        <span className="sr-only">
+          Options de livraison Étape 1 sur 3 Étape terminée
+        </span>
+        <CheckoutHeader title="Options de livraison" />
+
+        <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
+          <Loader />
+        </div>
+      </section>
+    );
+  if (isError) return <p>Error...</p>;
 
   const handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement> = (
     event
@@ -318,7 +338,8 @@ export default function PaymentSection({
               </div>
             </div>
           </div>
-          <div className="d-sm-h">
+          {/* <Loader /> */}
+          {/* <div className="d-sm-h">
             <div className="d-sm-h">
               <div className="ncss-container ta-sm-c u-full-height">
                 <div className="ncss-row u-full-height u-full-width d-sm-t ta-sm-c pt6-sm pb6-sm pt12-lg pb12-lg">
@@ -370,7 +391,7 @@ export default function PaymentSection({
               </div>
             </div>
             <section id="klarna-container" className="p5-sm"></section>
-          </div>
+          </div> */}
         </div>
 
         {/* Button de validation de la méthode de payment */}

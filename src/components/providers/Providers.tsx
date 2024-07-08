@@ -1,18 +1,17 @@
-"use client";
-
-import React, { ReactNode } from "react";
-import ReduxProvider from "./redux-provider";
-import TanstackQueryProvider from "./tanstack-query-provider";
+import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import ClientProviders from "./client-providers";
 
-const Providers = ({ children }: { children: ReactNode }) => {
+export default async function Providers({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
+
   return (
-    <SessionProvider>
-      <TanstackQueryProvider>
-        <ReduxProvider>{children}</ReduxProvider>
-      </TanstackQueryProvider>
+    <SessionProvider session={session}>
+      <ClientProviders>{children}</ClientProviders>
     </SessionProvider>
   );
-};
-
-export default Providers;
+}

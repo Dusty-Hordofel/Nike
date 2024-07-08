@@ -918,7 +918,7 @@ if (deliveryAddress) {
 
 ### 31. Summary Order Data
 
-### 32.
+### 32. Mise à jour
 
 ### 33.
 

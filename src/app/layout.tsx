@@ -8,6 +8,8 @@ import ClientOnly from "@/components/client-only";
 import dynamic from "next/dynamic";
 import { DeliveryProvider } from "@/context/DeliveryContext";
 import { getUserActiveAdress } from "@/actions/user-address.actions";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,16 +27,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const deliveryAddress = await getUserActiveAdress();
-  console.log("🚀 ~ deliveryAddress:ROOOT", deliveryAddress);
+  // const deliveryAddress = await getUserActiveAdress();
   return (
     <html lang="en">
       <body className={`${helvetica.className} max-w-[1924px]`}>
         <Providers>
           <ClientOnly>
-            <DeliveryProvider deliveryAddress={deliveryAddress}>
-              {children}
-            </DeliveryProvider>
+            {/* <DeliveryProvider deliveryAddress={deliveryAddress}> */}
+            {children}
+            {/* </DeliveryProvider> */}
           </ClientOnly>
         </Providers>
       </body>

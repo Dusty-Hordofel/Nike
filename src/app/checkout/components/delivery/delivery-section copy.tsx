@@ -21,22 +21,19 @@ import {
   getUserActiveAdress,
   saveUserAddress,
 } from "@/actions/user-address.actions";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import CheckoutHeader from "@/components/checkout/checkout-header";
 import DeliveryAddressSummary from "./delivery-address-summary";
 import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
-import { useQuery } from "@tanstack/react-query";
-import { useGetActiveAddress } from "@/hooks/api/use-get-active-address";
 
-// { deliveryAddress }: any
-const DeliverySection2 = () => {
-  // console.log(
-  //   "🚀 ~ DeliverySection ~ deliveryAddress:SECTION",
-  //   deliveryAddress
-  // );
+const DeliverySection = ({ deliveryAddress }: any) => {
+  console.log(
+    "🚀 ~ DeliverySection ~ deliveryAddress:SECTION",
+    deliveryAddress
+  );
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -103,33 +100,6 @@ const DeliverySection2 = () => {
     setDeliveryStep(1);
   };
 
-  // const {
-  //   data: deliveryAddress,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["active-address"],
-  //   queryFn: () => fetch("/api/user/active-address").then((res) => res.json()),
-  // });
-
-  const { deliveryAddress, isLoading, isError } = useGetActiveAddress();
-
-  if (isLoading)
-    return (
-      <section>
-        <span className="sr-only">
-          Options de livraison Étape 1 sur 3 Étape terminée
-        </span>
-        <CheckoutHeader title="Options de livraison" />
-
-        <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
-          <Loader />
-        </div>
-      </section>
-    );
-  if (isError) return <p>Error...</p>;
-
   const onSubmit: SubmitHandler<DeliveryInfoFormData> = async (values) => {
     let save;
     if (addingNewAddress) {
@@ -146,7 +116,7 @@ const DeliverySection2 = () => {
     if (save.success) {
       setRefresh(!refresh);
       setAddingNewAddress(false); // Reset the adding new address state after saving
-      deliveryAddress?.success && setDeliveryStep(2);
+      deliveryAddress.success && setDeliveryStep(2);
     }
   };
 
@@ -158,7 +128,7 @@ const DeliverySection2 = () => {
       <CheckoutHeader
         title="Options de livraison"
         isComplete={
-          deliveryStep === 3 && deliveryAddress?.success ? true : false
+          deliveryStep === 3 && deliveryAddress.success ? true : false
         }
         onDeliveryStep={setDeliveryStep}
       />
@@ -170,15 +140,25 @@ const DeliverySection2 = () => {
       <div>
         <div>
           {(deliveryStep === 2 || deliveryStep === 3) &&
-          deliveryAddress?.success ? (
+          deliveryAddress.success ? (
             <>
-              <DeliveryAddressSummary
-                handleAddNewAddress={handleAddNewAddress}
-                deliveryAddress={deliveryAddress}
-                deliveryStep={deliveryStep}
-                onDeliveryStep={setDeliveryStep}
-                onActiveSection={setActiveSection}
-              />
+              <Suspense
+                fallback={
+                  <div className="h-[305px] bg-green-100 w-full flex justify-center items-center">
+                    <Loader />
+                  </div>
+                }
+
+                // fallback={<p>Loading.....</p>}
+              >
+                <DeliveryAddressSummary
+                  handleAddNewAddress={handleAddNewAddress}
+                  deliveryAddress={deliveryAddress}
+                  deliveryStep={deliveryStep}
+                  onDeliveryStep={setDeliveryStep}
+                  onActiveSection={setActiveSection}
+                />
+              </Suspense>
             </>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="p-5">
@@ -318,4 +298,4 @@ const DeliverySection2 = () => {
   );
 };
 
-export default DeliverySection2;
+export default DeliverySection;

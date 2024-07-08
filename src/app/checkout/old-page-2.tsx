@@ -7,9 +7,11 @@ import DeliverySection from "./components/delivery/delivery-section";
 import OrderSummary from "./components/order/order-summary";
 import PaymentSection from "./components/payment/payment-section";
 import SummarySection from "./components/summary/summary-section";
+import Order from "./Order";
 import { DeliveryProvider } from "@/context/DeliveryContext";
 import Loader from "./loader";
 import CheckoutHeader from "@/components/checkout/checkout-header";
+// import DeliverySection2 from "./components/delivery/delivery-section2";
 
 const CheckoutPage = async () => {
   const user = await currentUser();
@@ -29,12 +31,11 @@ const CheckoutPage = async () => {
       <div className="max-w-[1090px] px-[6px] bg-green-500 mx-auto">
         <div className="flex">
           <main className="w-2/3 bg-success px-[6px]">
-            <DeliverySection />
             {/* <Suspense
               fallback={
                 <div>
                   <span className="sr-only">
-                    Options de livraison Étape 2 sur 3 Étape terminée
+                    Options de livraison Étape 1 sur 3 Étape terminée
                   </span>
                   <CheckoutHeader title="Options de livraison" />
 
@@ -43,10 +44,28 @@ const CheckoutPage = async () => {
                   </div>
                 </div>
               }
-            > */}
-            <PaymentSection />
-            {/* <PaymentSection deliveryAddress={deliveryAddress} /> */}
-            {/* </Suspense> */}
+            >
+              <DeliverySection deliveryAddress={deliveryAddress} />
+            </Suspense> */}
+            <DeliverySection />
+
+            <Suspense
+              fallback={
+                <div>
+                  <span className="sr-only">
+                    Options de livraison Étape 1 sur 3 Étape terminée
+                  </span>
+                  <CheckoutHeader title="Options de livraison" />
+
+                  <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
+                    <Loader />
+                  </div>
+                </div>
+              }
+            >
+              <PaymentSection deliveryAddress={deliveryAddress} />
+            </Suspense>
+
             <SummarySection />
           </main>
           <aside className="w-1/3 px-[6px]">

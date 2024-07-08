@@ -1,4 +1,5 @@
 "use client";
+
 import React, { Dispatch, SetStateAction } from "react";
 
 interface DeliveryAddressSummaryProps {
@@ -8,7 +9,7 @@ interface DeliveryAddressSummaryProps {
   handleAddNewAddress: () => void;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
-const DeliveryAddressSummary = async ({
+const DeliveryAddressSummary = ({
   deliveryAddress,
   deliveryStep,
   onDeliveryStep,

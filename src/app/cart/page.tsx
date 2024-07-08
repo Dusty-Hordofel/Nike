@@ -4,7 +4,7 @@ import CartProductDetails from "@/components/cart/CartProductDetails";
 import CartDetails from "@/components/cart/cart-details";
 import { useAppSelector } from "@/hooks/use-redux-hooks";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {};
 
@@ -12,6 +12,14 @@ const CartProductsPage = (props: Props) => {
   const { cartItems, cartTotal, orderTotal } = useAppSelector(
     (state) => state.cart
   );
+
+  // const [items, setItems] = useState(cartItems);
+
+  // useEffect(() => {
+  //   setItems(cartItems);
+  // }, [cartItems]);
+
+  console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
 
   return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">
@@ -45,7 +53,10 @@ const CartProductsPage = (props: Props) => {
             {cartItems.length > 0 ? (
               <>
                 {cartItems.map((cartItem) => (
-                  <CartProductDetails cartItem={cartItem} />
+                  <CartProductDetails
+                    key={cartItem.cartID}
+                    cartItem={cartItem}
+                  />
                 ))}
               </>
             ) : (

@@ -15,12 +15,12 @@ export async function POST(req: NextRequest) {
     if (test) {
       return new Response(
         JSON.stringify({
-          message:
-            "This Coupon name already exists, try with a different name.",
+          error: "This Coupon name already exists, try with a different name.",
         }),
         { status: 400 }
       );
     }
+
     await new Coupon({
       coupon,
       startDate,
@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
 
     return new Response(
       JSON.stringify({
-        message: "Coupon created successfully !",
-        coupons: await Coupon.find({}),
+        success: "Coupon created successfully !",
+        // coupons: await Coupon.find({}),
       }),
       { status: 201 }
     );

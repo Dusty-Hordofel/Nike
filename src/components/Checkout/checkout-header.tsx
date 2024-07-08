@@ -1,24 +1,23 @@
+import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 const CheckoutHeader = ({
   title,
-  done,
-  // setShowAddressForm,
-  // formStep,
+  isComplete,
+  showEditLink,
   onDeliveryStep,
 }: {
   title: string;
-  // formStep: number;
-  onDeliveryStep: Dispatch<SetStateAction<number>>;
-  done: boolean;
-  // setShowAddressForm: any;
+  onDeliveryStep?: Dispatch<SetStateAction<number>>;
+  isComplete?: boolean;
+  showEditLink?: boolean;
 }) => {
   return (
     <header className="flex bg-warning justify-between px-5 pt-3 pb-7">
       <h2 className="flex text-2xl font-medium ">
         {title}
 
-        {done && (
+        {isComplete && (
           <span className="flex items-center ml-3">
             <svg
               aria-hidden="true"
@@ -39,7 +38,7 @@ const CheckoutHeader = ({
           </span>
         )}
       </h2>
-      {done && (
+      {isComplete && onDeliveryStep && (
         <button
           aria-label="Modifier,Options de livraison"
           className="underline"
@@ -49,6 +48,18 @@ const CheckoutHeader = ({
         >
           Modifier
         </button>
+      )}
+
+      {showEditLink && (
+        <Link
+          aria-label="Modifier,Options de livraison"
+          className="underline"
+          type="button"
+          data-attr="editButton"
+          href="/cart"
+        >
+          Modifier
+        </Link>
       )}
     </header>
   );
