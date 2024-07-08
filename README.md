@@ -920,7 +920,7 @@ if (deliveryAddress) {
 
 ### 32. Mise à jour
 
-### 33.
+### 33. Delete Pages and Components
 
 ### 34.
 
