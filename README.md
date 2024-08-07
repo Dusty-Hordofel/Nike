@@ -924,7 +924,7 @@ if (deliveryAddress) {
 
 ### 34. Save address API
 
-- create [Save address API](src/app/api/user/address/route.ts)
+- create [Save address API](src/app/api/user/address/route.ts) && [delivery-section](src/app/checkout/components/delivery/delivery-section.tsx)
 
 ```ts
 export const POST = auth(async (req) => {
@@ -1026,7 +1026,87 @@ export const POST = auth(async (req) => {
 });
 ```
 
-### 35.
+### 35. saveAddress hook
+
+- replace
+
+```tsx
+const mutation = useMutation({
+  mutationFn: async (newAddress: DeliveryInfoFormData) => {
+    const address = JSON.stringify(newAddress);
+    console.log("🚀 ~ mutationFn: ~ address:", address);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/address`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          ...newAddress,
+        }),
+      }
+    );
+    return response.json();
+  },
+
+  onSuccess: () => {
+    alert("SUCCESS");
+    // toast.success("Account created.");
+    setSuccess("Address saved successfully");
+    queryClient.invalidateQueries({ queryKey: ["active-address"] });
+  },
+  onError: () => {
+    alert("ERROR");
+    setError("Address not saved");
+    // toast.error("Failed to create account.");
+  },
+});
+```
+
+- by
+
+```tsx
+import React, { Dispatch, SetStateAction } from "react";
+import { DeliveryInfoFormData } from "@/lib/validations/delivery";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+interface useSaveAddressProps {
+  setSuccess: Dispatch<SetStateAction<string>>;
+  setError: Dispatch<SetStateAction<string>>;
+}
+
+export const useSaveAddress = ({
+  setSuccess,
+  setError,
+}: useSaveAddressProps) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (newAddress: DeliveryInfoFormData) => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/address`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ...newAddress,
+          }),
+        }
+      );
+      return response.json();
+    },
+
+    onSuccess: () => {
+      alert("SUCCESS");
+      setSuccess("Address saved successfully");
+      queryClient.invalidateQueries({ queryKey: ["active-address"] });
+    },
+    onError: () => {
+      alert("ERROR");
+      setError("Address not saved");
+    },
+  });
+
+  return mutation;
+};
+```
 
 ### 36.
 

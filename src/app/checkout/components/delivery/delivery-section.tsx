@@ -31,14 +31,9 @@ import Loader from "../../loader";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useGetActiveAddress } from "@/hooks/api/use-get-active-address";
 import { ZodError } from "zod";
+import { useSaveAddress } from "@/hooks/api/use-save-address";
 
-// { deliveryAddress }: any
 const DeliverySection2 = () => {
-  // console.log(
-  //   "🚀 ~ DeliverySection ~ deliveryAddress:SECTION",
-  //   deliveryAddress
-  // );
-
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
@@ -67,6 +62,7 @@ const DeliverySection2 = () => {
   });
 
   const { deliveryAddress, isLoading, isError } = useGetActiveAddress();
+  const saveAddress = useSaveAddress({ setSuccess, setError });
 
   useEffect(() => {
     if (!addingNewAddress) {
@@ -109,67 +105,14 @@ const DeliverySection2 = () => {
     setDeliveryStep(1);
   };
 
-  // const {
-  //   data: deliveryAddress,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["active-address"],
-  //   queryFn: () => fetch("/api/user/active-address").then((res) => res.json()),
-  // });
-
-  // DeliveryInfoFormData
-  const mutation = useMutation({
-    mutationFn: async (newAddress: DeliveryInfoFormData) => {
-      const address = JSON.stringify(newAddress);
-      console.log("🚀 ~ mutationFn: ~ address:", address);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/address`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            ...newAddress,
-          }),
-        }
-      );
-
-      console.log("🚀 ~ mutationFn: ~ response:", response);
-
-      // if (!response.ok) {
-      //   console.log("🚀 ~ mutationFn: ~ response:", response);
-      //   const errorData = await response.json();
-      //   if (errorData.message instanceof ZodError) {
-      //     // setError(errorData.message)
-      //     // console.log("Zod Error olive", errorData.message);
-      //   }
-      //   throw new Error(errorData.message || "Failed to register");
-      // }
-      return response.json();
-    },
-
-    onSuccess: () => {
-      alert("SUCCESS");
-      // toast.success("Account created.");
-      setSuccess("Address saved successfully");
-      queryClient.invalidateQueries({ queryKey: ["active-address"] });
-    },
-    onError: () => {
-      alert("ERROR");
-      setError("Address not saved");
-      // toast.error("Failed to create account.");
-    },
-  });
-
   const onSubmit: SubmitHandler<DeliveryInfoFormData> = async (values) => {
     let save;
     if (addingNewAddress) {
-      save = await mutation.mutateAsync({
+      save = await saveAddress.mutateAsync({
         ...values,
-        // _id: deliveryAddress?.activeAddress?._id,
       });
     } else {
-      save = await mutation.mutateAsync({
+      save = await saveAddress.mutateAsync({
         ...values,
         _id: deliveryAddress?.activeAddress?._id,
       });
