@@ -14,7 +14,7 @@ interface PaymentProps {
   // handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement>;
   // selectedPaymentMethod: string;
   // setSelectedPaymentMethod: Dispatch<SetStateAction<string>>;
-  deliveryAddress: any;
+  userActiveAddress: any;
   // deliveryStep: number;
 }
 
@@ -25,7 +25,7 @@ export default function PaymentSection() {
 
   const { deliveryStep, activeSection } = useDeliveryContext();
 
-  const { deliveryAddress, isLoading, isError } = useGetUserActiveAddress();
+  const { userActiveAddress, isLoading, isError } = useGetUserActiveAddress();
 
   if (isLoading)
     return (
@@ -55,7 +55,7 @@ export default function PaymentSection() {
       <CheckoutHeader title="Paiement" />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && deliveryAddress.success ? "block" : "hidden"}`}
+        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && userActiveAddress.success ? "block" : "hidden"}`}
       >
         {/* loading 1 à ajouter*/}
         {/* 2 suite*/}
@@ -200,7 +200,7 @@ export default function PaymentSection() {
                   id="billingAddress"
                   aria-describedby="a11y-label-details-billingAddress"
                   value=""
-                  checked={deliveryAddress.success}
+                  checked={userActiveAddress.success}
                 />
                 <div className="nds-checkbox-icon">
                   <span

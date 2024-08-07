@@ -26,11 +26,11 @@ export const useSaveUserAddress = ({
       );
       return response.json();
     },
-
     onSuccess: () => {
-      alert("SUCCESS");
+      // alert("SUCCESS");
       setSuccess("Address saved successfully");
       queryClient.invalidateQueries({ queryKey: ["active-address"] });
+      queryClient.invalidateQueries({ queryKey: ["addresses"] });
     },
     onError: () => {
       alert("ERROR");
