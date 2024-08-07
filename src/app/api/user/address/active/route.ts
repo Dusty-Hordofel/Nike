@@ -4,6 +4,7 @@ import User from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = auth(async (req) => {
+  console.log("🚀 ~ GET ~ req:ACTIVE", req.auth);
   if (!req.auth) {
     return Response.json(
       { error: true, message: "unauthorized" },

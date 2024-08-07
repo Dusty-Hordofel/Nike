@@ -28,19 +28,14 @@ import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useGetActiveAddress } from "@/hooks/api/use-get-active-address";
 import { ZodError } from "zod";
 
 // { deliveryAddress }: any
-const DeliverySection2 = () => {
-  // console.log(
-  //   "🚀 ~ DeliverySection ~ deliveryAddress:SECTION",
-  //   deliveryAddress
-  // );
 
+const DeliverySection2 = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
 
@@ -49,8 +44,6 @@ const DeliverySection2 = () => {
   const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
     DeliveryMode.Shipping
   );
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const user = useCurrentUser();
   const { deliveryStep, setDeliveryStep, setActiveSection } =
@@ -109,17 +102,6 @@ const DeliverySection2 = () => {
     setDeliveryStep(1);
   };
 
-  // const {
-  //   data: deliveryAddress,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["active-address"],
-  //   queryFn: () => fetch("/api/user/active-address").then((res) => res.json()),
-  // });
-
-  // DeliveryInfoFormData
   const mutation = useMutation({
     mutationFn: async (newAddress: DeliveryInfoFormData) => {
       const address = JSON.stringify(newAddress);
@@ -138,54 +120,35 @@ const DeliverySection2 = () => {
 
       // if (!response.ok) {
       //   console.log("🚀 ~ mutationFn: ~ response:", response);
-      //   const errorData = await response.json();
-      //   if (errorData.message instanceof ZodError) {
-      //     // setError(errorData.message)
-      //     // console.log("Zod Error olive", errorData.message);
-      //   }
-      //   throw new Error(errorData.message || "Failed to register");
+      //   // const errorData = await response.json();
+      //   // if (errorData.message instanceof ZodError) {
+      //   //   console.log("Zod Error olive", errorData.message);
+      //   // }
+      //   // throw new Error(errorData.message || "Failed to register");
       // }
-      return response.json();
-    },
-
-    onSuccess: () => {
-      alert("SUCCESS");
-      // toast.success("Account created.");
-      setSuccess("Address saved successfully");
-      queryClient.invalidateQueries({ queryKey: ["active-address"] });
-    },
-    onError: () => {
-      alert("ERROR");
-      setError("Address not saved");
-      // toast.error("Failed to create account.");
+      // return response.json();
     },
   });
 
   const onSubmit: SubmitHandler<DeliveryInfoFormData> = async (values) => {
-    let save;
-    if (addingNewAddress) {
-      save = await mutation.mutateAsync({
-        ...values,
-        // _id: deliveryAddress?.activeAddress?._id,
-      });
-    } else {
-      save = await mutation.mutateAsync({
-        ...values,
-        _id: deliveryAddress?.activeAddress?._id,
-      });
-    }
-    if (save.success) {
-      setRefresh(!refresh);
-      setAddingNewAddress(false); // Reset the adding new address state after saving
-      deliveryAddress?.success && setDeliveryStep(2);
-    }
+    // console.log(
+    //   "🚀 ~ constonSubmit:SubmitHandler<DeliveryInfoFormData>= ~ values:",
+    //   values
+    // );
+    // let save;
+    // save = await mutation.mutateAsync({
+    //   ...values,
+    //   // _id: deliveryAddress?.activeAddress?._id,
+    // });
+    // console.log(
+    //   "🚀 ~ constonSubmit:SubmitHandler<DeliveryInfoFormData>= ~ SAVE:",
+    //   save
+    // );
     // let save;
     // if (addingNewAddress) {
-    //   save = await saveUserAddress({
-    //     ...values,
-    //   });
+    //   save = await mutation.mutateAsync({ ...values });
     // } else {
-    //   save = await saveUserAddress({
+    //   save = await mutation.mutateAsync({
     //     ...values,
     //     _id: deliveryAddress?.activeAddress?._id,
     //   });
@@ -197,7 +160,7 @@ const DeliverySection2 = () => {
     // }
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <section>
         <span className="sr-only">
@@ -210,7 +173,11 @@ const DeliverySection2 = () => {
         </div>
       </section>
     );
-  if (isError) return <p>Error...</p>;
+  }
+
+  if (isError) {
+    return <p>Error...</p>;
+  }
 
   return (
     <section>

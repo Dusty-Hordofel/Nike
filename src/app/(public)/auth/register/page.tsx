@@ -34,7 +34,7 @@ const SignUp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
-  console.log("🚀 ~ SignUp ~ email:", email);
+  // console.log("🚀 ~ SignUp ~ email:", email);
 
   // const user = useCurrentUser();
   // if (user /*&& userRole !== "user"*/) {
@@ -49,7 +49,7 @@ const SignUp = () => {
     getValues,
   } = useForm<UserFormData>({ resolver: zodResolver(RegisterSchema) });
 
-  console.log("password", getValues("password"));
+  // console.log("password", getValues("password"));
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (userFormData: UserFormData) => {

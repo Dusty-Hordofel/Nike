@@ -23,7 +23,7 @@ const CheckoutPage = async () => {
 
   // const addresses = await getUserAddresses();
   const deliveryAddress = await getUserActiveAdress();
-  console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
+  // console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
   return (
     <DeliveryProvider deliveryAddress={deliveryAddress}>
       <div className="max-w-[1090px] px-[6px] bg-green-500 mx-auto">

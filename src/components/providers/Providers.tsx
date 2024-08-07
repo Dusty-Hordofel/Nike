@@ -8,6 +8,7 @@ export default async function Providers({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  console.log("🚀 ~ session:", session);
 
   return (
     <SessionProvider session={session}>

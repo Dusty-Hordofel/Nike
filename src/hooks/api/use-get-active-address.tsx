@@ -8,7 +8,7 @@ export const useGetActiveAddress = () => {
     error,
   } = useQuery({
     queryKey: ["active-address"],
-    queryFn: () => fetch("/api/user/active-address").then((res) => res.json()),
+    queryFn: () => fetch("/api/user/address/active").then((res) => res.json()),
   });
 
   return { deliveryAddress, isLoading, isError, error };
