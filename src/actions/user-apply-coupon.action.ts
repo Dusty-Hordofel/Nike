@@ -32,13 +32,13 @@ export async function applyCouponCode(couponCode: string) {
       return { success: false, error: true, message: "Invalid coupon" };
     }
 
-    console.log("🚀 ~ applyCoupon ~ coupon: AC", coupon);
+    // console.log("🚀 ~ applyCoupon ~ coupon: AC", coupon);
 
     const { cartTotal } = (await Cart.findOne({ user: dbUser._id })) as ICart;
-    console.log("🚀 ~ applyCoupon ~ cartTotal:", cartTotal);
+    // console.log("🚀 ~ applyCoupon ~ cartTotal:", cartTotal);
 
     let totalAfterDiscount = cartTotal - (cartTotal * coupon.discount) / 100;
-    console.log("🚀 ~ applyCoupon ~ totalAfterDiscount:", totalAfterDiscount);
+    // console.log("🚀 ~ applyCoupon ~ totalAfterDiscount:", totalAfterDiscount);
 
     await Cart.findOneAndUpdate(
       { user: user._id },

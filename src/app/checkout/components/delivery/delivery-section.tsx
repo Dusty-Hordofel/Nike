@@ -16,11 +16,7 @@ import {
   DeliveryInfoFormData,
   DeliveryInfoSchema,
 } from "@/lib/validations/delivery";
-import { ICart } from "@/models/Cart";
-import {
-  getUserActiveAdress,
-  saveUserAddress,
-} from "@/actions/user-address.actions";
+import { getUserActiveAdress } from "@/actions/user-address.actions";
 import { useEffect, useState } from "react";
 import CheckoutHeader from "@/components/checkout/checkout-header";
 import DeliveryAddressSummary from "./delivery-address-summary";
@@ -28,14 +24,12 @@ import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useGetActiveAddress } from "@/hooks/api/use-get-active-address";
-import { ZodError } from "zod";
-import { useSaveAddress } from "@/hooks/api/use-save-address";
+
+import { useGetUserActiveAddress } from "@/hooks/api/use-get-user-active-address";
+import { useSaveUserAddress } from "@/hooks/api/use-save-user-address";
 
 const DeliverySection2 = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
 
@@ -61,8 +55,8 @@ const DeliverySection2 = () => {
     resolver: zodResolver(DeliveryInfoSchema),
   });
 
-  const { deliveryAddress, isLoading, isError } = useGetActiveAddress();
-  const saveAddress = useSaveAddress({ setSuccess, setError });
+  const { deliveryAddress, isLoading, isError } = useGetUserActiveAddress();
+  const saveAddress = useSaveUserAddress({ setSuccess, setError });
 
   useEffect(() => {
     if (!addingNewAddress) {

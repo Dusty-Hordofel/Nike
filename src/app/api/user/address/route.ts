@@ -99,3 +99,53 @@ export const POST = auth(async (req) => {
     );
   }
 });
+
+export const GET = auth(async (req) => {
+  if (!req.auth) {
+    return Response.json(
+      { error: true, message: "unauthorized" },
+      {
+        status: 401,
+      }
+    );
+  }
+
+  try {
+    await connectDB();
+
+    const dbUser = await User.findOne({
+      _id: req.auth?.user._id,
+    });
+
+    if (!dbUser) {
+      return new NextResponse(
+        JSON.stringify({
+          error: true,
+          message: "Unauthorized User",
+        }),
+        { status: 400 }
+      );
+    }
+
+    const userAddresses = dbUser.addresses;
+    console.log("🚀 ~ GET ~ userAddresses:", userAddresses);
+
+    return Response.json(
+      {
+        error: false,
+        success: true,
+        addresses: userAddresses,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error: any) {
+    return Response.json(
+      { message: error.message },
+      {
+        status: 500,
+      }
+    );
+  }
+});

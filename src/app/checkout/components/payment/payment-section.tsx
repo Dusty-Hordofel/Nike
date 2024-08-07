@@ -1,7 +1,5 @@
 "use client";
-// import { paymentMethods } from "../../../data/paymentMethods";
 
-import { paymentMethods } from "@/assets/data/payment-methods";
 import GooglePay from "@/assets/icons/google-pay/GooglePay";
 import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import "./input.css";
@@ -10,9 +8,7 @@ import { Button } from "@/components/ui/buttons/button/button";
 import CheckoutHeader from "@/components/checkout/checkout-header";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
-import { useGetActiveAddress } from "@/hooks/api/use-get-active-address";
-// import CheckoutHeader from "../checkout-header";
-// import styles from "./styles.module.scss";
+import { useGetUserActiveAddress } from "@/hooks/api/use-get-user-active-address";
 
 interface PaymentProps {
   // handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement>;
@@ -23,25 +19,13 @@ interface PaymentProps {
 }
 
 export default function PaymentSection() {
-//   {
-//   deliveryAddress,
-//   // handlePaymentMethodChange,
-//   // selectedPaymentMethod,
-//   // deliveryStep,
-//   // setSelectedPaymentMethod,
-//   // paymentMethod,
-//   // setPaymentMethod,
-//   // profile,
-// }: PaymentProps
-  // console.log("🚀 ~ deliveryAddress:", deliveryAddress);
-
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "creditDebit" | "paypal" | "googlePay"
   >("creditDebit");
-  // console.log("🚀 ~ deliveryStep:", deliveryStep);
+
   const { deliveryStep, activeSection } = useDeliveryContext();
 
-  const { deliveryAddress, isLoading, isError } = useGetActiveAddress();
+  const { deliveryAddress, isLoading, isError } = useGetUserActiveAddress();
 
   if (isLoading)
     return (

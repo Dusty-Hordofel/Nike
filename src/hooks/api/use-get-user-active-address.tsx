@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetActiveAddress = () => {
+export const useGetUserActiveAddress = () => {
   const {
     data: deliveryAddress,
     isLoading,

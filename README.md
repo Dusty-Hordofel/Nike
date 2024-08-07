@@ -1108,7 +1108,9 @@ export const useSaveAddress = ({
 };
 ```
 
-### 36.
+### 36. Get AllAddress
+
+- [All addresses]("src/app/api/user/address/route.ts")
 
 ### 37.
 

@@ -118,7 +118,7 @@ export async function saveCartItems(
       user: user._id,
     }).save();
 
-    console.log("Cart", await Cart.find());
+    // console.log("Cart", await Cart.find());
 
     if (couponCode === undefined) {
       console.log("CART AMOUNT", {
@@ -157,12 +157,12 @@ export const getCart = async () => {
       return { error: "Unauthorized" };
     }
 
-    console.log("🚀 ~ getCart ~ dbUser:", dbUser);
+    // console.log("🚀 ~ getCart ~ dbUser:", dbUser);
     // we don't want to connect
     const cart = await Cart.findOne({ user: dbUser._id });
     if (!cart) redirect("/cart");
 
-    console.log("🚀 ~ getCart ~ cart:", cart);
+    // console.log("🚀 ~ getCart ~ cart:", cart);
     // await disconnectDB();
 
     return JSON.parse(JSON.stringify(cart));
