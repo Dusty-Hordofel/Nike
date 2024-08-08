@@ -38,10 +38,10 @@ import { useCurrentUser } from "@/hooks/user/use-current-user";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);
-  console.log("🚀 ~ Home ~ cartItems:", cartItems);
+  // console.log("🚀 ~ Home ~ cartItems:", cartItems);
 
   const user = useCurrentUser();
-  console.log("🚀 ~ Home ~ user:", user);
+  // console.log("🚀 ~ Home ~ user:", user);
 
   return (
     <>

@@ -7,24 +7,21 @@ interface DeliveryAddressSummaryProps {
   userDeliveryAddresses: any;
   deliveryStep: number;
   onDeliveryStep: Dispatch<SetStateAction<number>>;
+  setAddressId: Dispatch<SetStateAction<string | undefined>>;
+  handleChangeActiveAddress: any;
   handleAddNewAddress: () => void;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
 const DeliveryAddressSummary = ({
+  setAddressId,
   userDeliveryAddresses,
   userActiveAddress,
   deliveryStep,
   onDeliveryStep,
   onActiveSection,
   handleAddNewAddress,
+  handleChangeActiveAddress,
 }: DeliveryAddressSummaryProps) => {
-  console.log(
-    "🚀 ~ userDeliveryAddresses:",
-    userDeliveryAddresses.data.addresses
-  );
-  // {userAddresses.addresses.map(address =>)}
-  // if (isLoading || !userActiveAddress.activeAddress) return;
-
   const {
     activeAddress: {
       address,
@@ -39,7 +36,12 @@ const DeliveryAddressSummary = ({
     },
   } = userActiveAddress;
 
-  userDeliveryAddresses;
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // pour un scroll fluide
+    });
+  };
 
   return (
     <div className={`${deliveryStep === 2 ? "py-5" : "pt-5"} bg-warning px-5`}>
@@ -55,29 +57,30 @@ const DeliveryAddressSummary = ({
           </h3>
           <div className="space-y-2">
             {deliveryStep === 2 &&
-              userDeliveryAddresses.data.addresses.map((adress: any) => (
+              userDeliveryAddresses.data.addresses.map((address: any) => (
                 <div
-                  className={` ${adress.active ? "border-2 border-black-200" : "border-[1px] border-gray-500"}  rounded-lg  text-black-200 p-4 bg-blue-100 relative hover:border-black-200`}
+                  className={` ${address.active ? "border-2 border-black-200" : "border-[1px] border-gray-500"}  rounded-lg  text-black-200 p-4 bg-blue-100 relative hover:border-black-200`}
+                  onClick={() => handleChangeActiveAddress(address._id)}
                 >
                   <div className="css-7ym3jb">
                     <p data-attr="address-preview-fullName">
-                      {adress.lastName} {adress.firstName}
+                      {address.lastName} {address.firstName}
                     </p>
                     <p>
                       <span data-attr="address-preview-address1">
-                        {adress.address}
+                        {address.address}
                       </span>
                     </p>
                     <div className="ncss-row">
                       <div className="ncss-col-sm-12">
                         <p data-attr="address-preview-city">
-                          {adress.city}, {adress.postalCode}
+                          {address.city}, {address.postalCode}
                         </p>
                       </div>
                     </div>
-                    <p data-attr="address-preview-email">{adress.email}</p>
+                    <p data-attr="address-preview-email">{address.email}</p>
                     <p data-attr="address-preview-phoneNumber">
-                      {adress.phoneNumber}
+                      {address.phoneNumber}
                     </p>
                   </div>
                   <button
@@ -88,9 +91,10 @@ const DeliveryAddressSummary = ({
           `}
                     type="button"
                     onClick={() => {
-                      // onDeliveryStep(1);
                       onDeliveryStep(1);
                       onActiveSection("address");
+                      handleScrollToTop();
+                      setAddressId(address._id);
                     }}
                   >
                     Modifier<span className="ripple"></span>

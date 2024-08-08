@@ -272,14 +272,12 @@ export const getUserActiveAdress = async () => {
       }
     }
 
-    // console.log("🚀 ~ getUserActiveAdress ~ activeAddress:AC", activeAddress);
-
     if (!activeAddress) {
       console.log("No active address found"); // Debugging output
       return {
         success: false,
         error: true,
-        message: "User has not an active address",
+        message: "No address founded",
       };
     }
 
@@ -287,6 +285,60 @@ export const getUserActiveAdress = async () => {
       success: true,
       error: false,
       activeAddress: JSON.parse(JSON.stringify(activeAddress)),
+    };
+  } catch (error) {
+    console.log("🚀 ~ getUserAddresses ~ error:", error);
+    return {
+      sucess: false,
+      error: true,
+      message: "An error occurred while getting your addresses",
+    };
+  }
+};
+export const getUserAdress = async (id?: string) => {
+  try {
+    const user = await currentUser();
+    if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
+      return { success: false, error: true, message: "Unauthorized" };
+    }
+
+    connectDB();
+
+    const dbUser = await User.findOne({
+      _id: user._id,
+    });
+
+    if (!dbUser) {
+      return { success: false, error: true, message: "Unauthorized User" };
+    }
+
+    let foundedAddress = undefined;
+
+    for (const address of dbUser.addresses) {
+      if (address._id.toString() === id) {
+        foundedAddress = address;
+        console.log(`there is an Address with ID ${address._id}.`);
+        break;
+      } else {
+        console.log(`there is not an Address with ID ${address._id}.`);
+      }
+    }
+
+    if (!foundedAddress) {
+      console.log("No address founded"); // Debugging output
+      return {
+        success: false,
+        error: true,
+        message: "No address founded",
+      };
+    }
+
+    console.log("🚀 ~ getUserAdress ~ foundedAddress:FOUND", foundedAddress);
+
+    return {
+      success: true,
+      error: false,
+      address: JSON.parse(JSON.stringify(foundedAddress)),
     };
   } catch (error) {
     console.log("🚀 ~ getUserAddresses ~ error:", error);

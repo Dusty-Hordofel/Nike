@@ -1,9 +1,10 @@
 import User from "@/models/User";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 
+// we can use PUT to update  address  and POST to add address
 export const POST = auth(async (req) => {
   const newAddress = await req.json();
 

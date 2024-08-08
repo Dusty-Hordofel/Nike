@@ -36,7 +36,7 @@ export const GET = auth(async (req) => {
     }
 
     const cart = await Cart.findOne({ user: dbUser._id });
-    console.log("🚀 ~ cart:", cart);
+    // console.log("🚀 ~ cart:", cart);
     if (!cart) {
       return new NextResponse(
         JSON.stringify({
@@ -49,7 +49,7 @@ export const GET = auth(async (req) => {
       );
     }
 
-    console.log("🚀 ~ getCart ~ cart:", cart);
+    // console.log("🚀 ~ getCart ~ cart:", cart);
 
     return new NextResponse(JSON.stringify({ success: true, cart }), {
       status: 200,
@@ -96,7 +96,7 @@ export async function POST(
     }
 
     const cart = await Cart.findOne({ user: dbUser._id });
-    console.log("🚀 ~ cart:", cart);
+    // console.log("🚀 ~ cart:", cart);
     if (!cart) {
       return new NextResponse(
         JSON.stringify({
@@ -110,7 +110,7 @@ export async function POST(
       );
     }
 
-    console.log("🚀 ~ getCart ~ cart:", cart);
+    // console.log("🚀 ~ getCart ~ cart:", cart);
 
     return new NextResponse(
       JSON.stringify({ success: true, error: false, cart }),

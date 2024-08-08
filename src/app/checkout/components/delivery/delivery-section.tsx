@@ -16,7 +16,10 @@ import {
   DeliveryInfoFormData,
   DeliveryInfoSchema,
 } from "@/lib/validations/delivery";
-import { getUserActiveAdress } from "@/actions/user-address.actions";
+import {
+  getUserActiveAdress,
+  getUserAdress,
+} from "@/actions/user-address.actions";
 import { useEffect, useState } from "react";
 import CheckoutHeader from "@/components/checkout/checkout-header";
 import DeliveryAddressSummary from "./delivery-address-summary";
@@ -28,6 +31,8 @@ import Loader from "../../loader";
 import { useGetUserActiveAddress } from "@/hooks/api/use-get-user-active-address";
 import { useSaveUserAddress } from "@/hooks/api/use-save-user-address";
 import { useGetUserAddresses } from "@/hooks/api/use-get-user-adresses";
+import { useGetUserAddress } from "@/hooks/api/use-get-user-address";
+import { useUpdateUserAddressStatus } from "@/hooks/api/use-update-user-address-status";
 
 const DeliverySection2 = () => {
   const router = useRouter();
@@ -36,6 +41,9 @@ const DeliverySection2 = () => {
 
   const [refresh, setRefresh] = useState(false);
   const [addingNewAddress, setAddingNewAddress] = useState(false);
+  const [addressId, setAddressId] = useState<string | undefined>();
+
+  console.log("🚀 ~ DeliverySection2 ~ addressId:ADDRESS ID", addressId);
   const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
     DeliveryMode.Shipping
   );
@@ -58,18 +66,20 @@ const DeliverySection2 = () => {
 
   const { userActiveAddress, isLoading, isPending, isError } =
     useGetUserActiveAddress();
-  console.log("🚀 ~ DeliverySection2 ~ userActiveAddress:", userActiveAddress);
 
+  const userDeliveryAddress = useGetUserAddress(addressId);
+  const updateUserAddressStatus = useUpdateUserAddressStatus();
   const userDeliveryAddresses = useGetUserAddresses();
   const saveUserAddress = useSaveUserAddress({ setSuccess, setError });
 
   useEffect(() => {
-    if (!addingNewAddress) {
+    if (addressId !== undefined) {
       const fetchUserAddress = async () => {
-        const response = await getUserActiveAdress();
-        const { success, activeAddress } = response;
+        const response = await getUserAdress(addressId);
+        console.log("🚀 ~ fetchUserAddress ~ response:VOIR", response);
+        const { success, address } = response;
         if (success) {
-          reset(activeAddress);
+          reset(address);
         } else {
           reset({
             lastName: "",
@@ -86,7 +96,56 @@ const DeliverySection2 = () => {
       };
       fetchUserAddress();
     }
-  }, [refresh, reset, addingNewAddress]);
+  }, [addressId, reset, refresh]);
+
+  // useEffect(() => {
+  //   if (!addingNewAddress) {
+  //     const fetchUserAddress = async () => {
+  //       const response = await getUserActiveAdress();
+  //       const { success, activeAddress } = response;
+  //       if (success) {
+  //         reset(activeAddress);
+  //       } else {
+  //         reset({
+  //           lastName: "",
+  //           firstName: "",
+  //           country: "",
+  //           address: "",
+  //           phoneNumber: "",
+  //           email: "",
+  //           companyInfo: "",
+  //           city: "",
+  //           postalCode: "",
+  //         });
+  //       }
+  //     };
+  //     fetchUserAddress();
+  //   }
+  // }, [refresh, reset, addingNewAddress]);
+  // useEffect(() => {
+  //   if (!addingNewAddress) {
+  //     const fetchUserAddress = async () => {
+  //       const response = await getUserActiveAdress();
+  //       const { success, activeAddress } = response;
+  //       if (success) {
+  //         reset(activeAddress);
+  //       } else {
+  //         reset({
+  //           lastName: "",
+  //           firstName: "",
+  //           country: "",
+  //           address: "",
+  //           phoneNumber: "",
+  //           email: "",
+  //           companyInfo: "",
+  //           city: "",
+  //           postalCode: "",
+  //         });
+  //       }
+  //     };
+  //     fetchUserAddress();
+  //   }
+  // }, [refresh, reset, addingNewAddress]);
 
   const handleAddNewAddress = () => {
     reset({
@@ -104,6 +163,10 @@ const DeliverySection2 = () => {
     setDeliveryStep(1);
   };
 
+  const handleChangeActiveAddress = async (id: string) => {
+    await updateUserAddressStatus.mutateAsync(id);
+  };
+
   const onSubmit: SubmitHandler<DeliveryInfoFormData> = async (values) => {
     let save;
     if (addingNewAddress) {
@@ -113,7 +176,8 @@ const DeliverySection2 = () => {
     } else {
       save = await saveUserAddress.mutateAsync({
         ...values,
-        _id: userActiveAddress?.activeAddress?._id,
+        _id: addressId,
+        // _id: userActiveAddress?.activeAddress?._id,
       });
     }
     console.log(
@@ -145,7 +209,11 @@ const DeliverySection2 = () => {
     // }
   };
 
-  if (isLoading || userDeliveryAddresses.isLoading)
+  if (
+    isLoading ||
+    userDeliveryAddresses.isLoading ||
+    userDeliveryAddress.isLoading
+  )
     return (
       <section>
         <span className="sr-only">
@@ -158,9 +226,10 @@ const DeliverySection2 = () => {
         </div>
       </section>
     );
-  if (isError || userDeliveryAddresses.isError) return <p>Error...</p>;
+  if (isError || userDeliveryAddresses.isError || userDeliveryAddress.isError)
+    return <p>Error...</p>;
 
-  console.log("163", userActiveAddress?.success);
+  // console.log("163", userActiveAddress?.success);
 
   return (
     <section>
@@ -191,6 +260,8 @@ const DeliverySection2 = () => {
                 onDeliveryStep={setDeliveryStep}
                 onActiveSection={setActiveSection}
                 userDeliveryAddresses={userDeliveryAddresses}
+                setAddressId={setAddressId}
+                handleChangeActiveAddress={handleChangeActiveAddress}
               />
             </>
           ) : (

@@ -24,6 +24,7 @@ export const useSaveUserAddress = ({
           }),
         }
       );
+      console.log("SAVE USER", response);
       return response.json();
     },
     onSuccess: () => {
