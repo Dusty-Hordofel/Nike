@@ -19,6 +19,7 @@ export default function PaymentSection() {
 
   const { activeDeliveryAddress, isLoading, isError } =
     useActiveDeliveryAddress();
+  // const activeDeliveryAddress = useActiveDeliveryAddress();
 
   if (isLoading)
     return (
@@ -48,7 +49,7 @@ export default function PaymentSection() {
       <CheckoutHeader title="Paiement" />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && activeDeliveryAddress.success ? "block" : "hidden"}`}
+        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && activeDeliveryAddress?.success ? "block" : "hidden"}`}
       >
         {/* loading 1 à ajouter*/}
         {/* 2 suite*/}
@@ -193,7 +194,7 @@ export default function PaymentSection() {
                   id="billingAddress"
                   aria-describedby="a11y-label-details-billingAddress"
                   value=""
-                  checked={activeDeliveryAddress.success}
+                  checked={activeDeliveryAddress?.success}
                 />
                 <div className="nds-checkbox-icon">
                   <span

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetUserAddress = (id?: string) => {
+export const useGetDeliveryAddress = (id?: string) => {
   const query = useQuery({
     enabled: !!id,
     queryKey: ["address", id],

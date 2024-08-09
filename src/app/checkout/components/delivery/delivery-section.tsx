@@ -30,9 +30,9 @@ import Loader from "../../loader";
 
 import { useActiveDeliveryAddress } from "@/hooks/api/use-active-delivery-address";
 import { useSaveDeliveryAddress } from "@/hooks/api/use-save-delivery-address";
-import { useGetUserAddresses } from "@/hooks/api/use-get-user-adresses";
-import { useGetUserAddress } from "@/hooks/api/use-get-user-address";
 import { useUpdateDeliveryAddressStatus } from "@/hooks/api/use-update-delivery-address-status";
+import { useGetDeliveryAddresses } from "@/hooks/api/use-get-delivery-adresses";
+import { useGetDeliveryAddress } from "@/hooks/api/use-get-delivery-address";
 
 const DeliverySection2 = () => {
   const router = useRouter();
@@ -66,10 +66,11 @@ const DeliverySection2 = () => {
 
   const { activeDeliveryAddress, isLoading, isPending, isError } =
     useActiveDeliveryAddress();
+  // const activeDeliveryAddress = useActiveDeliveryAddress();
 
-  const deliveryAddress = useGetUserAddress(addressId);
+  const deliveryAddress = useGetDeliveryAddress(addressId);
   const updateDeliveryAddressStatus = useUpdateDeliveryAddressStatus();
-  const deliveryAddresses = useGetUserAddresses();
+  const deliveryAddresses = useGetDeliveryAddresses();
   const saveDeliveryAddress = useSaveDeliveryAddress({ setSuccess, setError });
 
   useEffect(() => {

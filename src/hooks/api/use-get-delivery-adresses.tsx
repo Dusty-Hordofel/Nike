@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetUserAddresses = () => {
+export const useGetDeliveryAddresses = () => {
   const query = useQuery({
     queryKey: ["addresses"],
     queryFn: () =>
