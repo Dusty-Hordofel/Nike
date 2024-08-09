@@ -28,11 +28,11 @@ import DeliveryTime from "./delivery-time";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
 
-import { useGetUserActiveAddress } from "@/hooks/api/use-get-user-active-address";
-import { useSaveUserAddress } from "@/hooks/api/use-save-user-address";
+import { useActiveDeliveryAddress } from "@/hooks/api/use-active-delivery-address";
+import { useSaveDeliveryAddress } from "@/hooks/api/use-save-delivery-address";
 import { useGetUserAddresses } from "@/hooks/api/use-get-user-adresses";
 import { useGetUserAddress } from "@/hooks/api/use-get-user-address";
-import { useUpdateUserAddressStatus } from "@/hooks/api/use-update-user-address-status";
+import { useUpdateDeliveryAddressStatus } from "@/hooks/api/use-update-delivery-address-status";
 
 const DeliverySection2 = () => {
   const router = useRouter();
@@ -64,13 +64,13 @@ const DeliverySection2 = () => {
     resolver: zodResolver(DeliveryInfoSchema),
   });
 
-  const { userActiveAddress, isLoading, isPending, isError } =
-    useGetUserActiveAddress();
+  const { activeDeliveryAddress, isLoading, isPending, isError } =
+    useActiveDeliveryAddress();
 
-  const userDeliveryAddress = useGetUserAddress(addressId);
-  const updateUserAddressStatus = useUpdateUserAddressStatus();
-  const userDeliveryAddresses = useGetUserAddresses();
-  const saveUserAddress = useSaveUserAddress({ setSuccess, setError });
+  const deliveryAddress = useGetUserAddress(addressId);
+  const updateDeliveryAddressStatus = useUpdateDeliveryAddressStatus();
+  const deliveryAddresses = useGetUserAddresses();
+  const saveDeliveryAddress = useSaveDeliveryAddress({ setSuccess, setError });
 
   useEffect(() => {
     if (addressId !== undefined) {
@@ -163,21 +163,21 @@ const DeliverySection2 = () => {
     setDeliveryStep(1);
   };
 
-  const handleChangeActiveAddress = async (id: string) => {
-    await updateUserAddressStatus.mutateAsync(id);
+  const handleSetActiveAddress = async (id: string) => {
+    await updateDeliveryAddressStatus.mutateAsync(id);
   };
 
   const onSubmit: SubmitHandler<DeliveryInfoFormData> = async (values) => {
     let save;
     if (addingNewAddress) {
-      save = await saveUserAddress.mutateAsync({
+      save = await saveDeliveryAddress.mutateAsync({
         ...values,
       });
     } else {
-      save = await saveUserAddress.mutateAsync({
+      save = await saveDeliveryAddress.mutateAsync({
         ...values,
         _id: addressId,
-        // _id: userActiveAddress?.activeAddress?._id,
+        // _id: activeDeliveryAddress?.activeAddress?._id,
       });
     }
     console.log(
@@ -187,33 +187,29 @@ const DeliverySection2 = () => {
     if (save.success) {
       setRefresh(!refresh);
       setAddingNewAddress(false); // Reset the adding new address state after saving
-      userActiveAddress?.success && setDeliveryStep(2);
+      activeDeliveryAddress?.success && setDeliveryStep(2);
     }
 
     // revalidatePath("/checkout");
     // let save;
     // if (addingNewAddress) {
-    //   save = await saveUserAddress({
+    //   save = await saveDeliveryAddress({
     //     ...values,
     //   });
     // } else {
-    //   save = await saveUserAddress({
+    //   save = await saveDeliveryAddress({
     //     ...values,
-    //     _id: userActiveAddress?.activeAddress?._id,
+    //     _id: activeDeliveryAddress?.activeAddress?._id,
     //   });
     // }
     // if (save.success) {
     //   setRefresh(!refresh);
     //   setAddingNewAddress(false); // Reset the adding new address state after saving
-    //   userActiveAddress?.success && setDeliveryStep(2);
+    //   activeDeliveryAddress?.success && setDeliveryStep(2);
     // }
   };
 
-  if (
-    isLoading ||
-    userDeliveryAddresses.isLoading ||
-    userDeliveryAddress.isLoading
-  )
+  if (isLoading || deliveryAddresses.isLoading || deliveryAddress.isLoading)
     return (
       <section>
         <span className="sr-only">
@@ -226,10 +222,10 @@ const DeliverySection2 = () => {
         </div>
       </section>
     );
-  if (isError || userDeliveryAddresses.isError || userDeliveryAddress.isError)
+  if (isError || deliveryAddresses.isError || deliveryAddress.isError)
     return <p>Error...</p>;
 
-  // console.log("163", userActiveAddress?.success);
+  // console.log("163", activeDeliveryAddress?.success);
 
   return (
     <section>
@@ -239,7 +235,7 @@ const DeliverySection2 = () => {
       <CheckoutHeader
         title="Options de livraison"
         isComplete={
-          deliveryStep === 3 && userActiveAddress?.success ? true : false
+          deliveryStep === 3 && activeDeliveryAddress?.success ? true : false
         }
         onDeliveryStep={setDeliveryStep}
       />
@@ -251,17 +247,17 @@ const DeliverySection2 = () => {
       <div>
         <div>
           {(deliveryStep === 2 || deliveryStep === 3) &&
-          userActiveAddress?.success ? (
+          activeDeliveryAddress?.success ? (
             <>
               <DeliveryAddressSummary
-                handleAddNewAddress={handleAddNewAddress}
-                userActiveAddress={userActiveAddress}
+                activeDeliveryAddress={activeDeliveryAddress}
                 deliveryStep={deliveryStep}
+                deliveryAddresses={deliveryAddresses}
+                onAddressId={setAddressId}
                 onDeliveryStep={setDeliveryStep}
                 onActiveSection={setActiveSection}
-                userDeliveryAddresses={userDeliveryAddresses}
-                setAddressId={setAddressId}
-                handleChangeActiveAddress={handleChangeActiveAddress}
+                handleAddNewAddress={handleAddNewAddress}
+                handleSetActiveAddress={handleSetActiveAddress}
               />
             </>
           ) : (

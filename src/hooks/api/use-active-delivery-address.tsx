@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetUserActiveAddress = () => {
+export const useActiveDeliveryAddress = () => {
   const {
-    data: userActiveAddress,
+    data: activeDeliveryAddress,
     isLoading,
     isPending,
     isError,
@@ -12,5 +12,5 @@ export const useGetUserActiveAddress = () => {
     queryFn: () => fetch("/api/user/address/active").then((res) => res.json()),
   });
 
-  return { userActiveAddress, isLoading, isError, error, isPending };
+  return { activeDeliveryAddress, isLoading, isError, error, isPending };
 };

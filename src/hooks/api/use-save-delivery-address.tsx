@@ -7,7 +7,7 @@ interface useSaveAddressProps {
   setError: Dispatch<SetStateAction<string>>;
 }
 
-export const useSaveUserAddress = ({
+export const useSaveDeliveryAddress = ({
   setSuccess,
   setError,
 }: useSaveAddressProps) => {

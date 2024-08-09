@@ -3,24 +3,24 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 interface DeliveryAddressSummaryProps {
-  userActiveAddress: any;
-  userDeliveryAddresses: any;
+  activeDeliveryAddress: any;
+  deliveryAddresses: any;
   deliveryStep: number;
   onDeliveryStep: Dispatch<SetStateAction<number>>;
-  setAddressId: Dispatch<SetStateAction<string | undefined>>;
-  handleChangeActiveAddress: any;
+  onAddressId: Dispatch<SetStateAction<string | undefined>>;
+  handleSetActiveAddress: any;
   handleAddNewAddress: () => void;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
 const DeliveryAddressSummary = ({
-  setAddressId,
-  userDeliveryAddresses,
-  userActiveAddress,
+  onAddressId,
+  deliveryAddresses,
+  activeDeliveryAddress,
   deliveryStep,
   onDeliveryStep,
   onActiveSection,
   handleAddNewAddress,
-  handleChangeActiveAddress,
+  handleSetActiveAddress,
 }: DeliveryAddressSummaryProps) => {
   const {
     activeAddress: {
@@ -34,7 +34,7 @@ const DeliveryAddressSummary = ({
       phoneNumber,
       postalCode,
     },
-  } = userActiveAddress;
+  } = activeDeliveryAddress;
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -57,10 +57,10 @@ const DeliveryAddressSummary = ({
           </h3>
           <div className="space-y-2">
             {deliveryStep === 2 &&
-              userDeliveryAddresses.data.addresses.map((address: any) => (
+              deliveryAddresses.data.addresses.map((address: any) => (
                 <div
-                  className={` ${address.active ? "border-2 border-black-200" : "border-[1px] border-gray-500"}  rounded-lg  text-black-200 p-4 bg-blue-100 relative hover:border-black-200`}
-                  onClick={() => handleChangeActiveAddress(address._id)}
+                  className={` ${address.active ? "border-2 border-black-200" : "border-[1px] border-gray-500"}  rounded-lg  text-black-200 p-4 bg-blue-100 relative hover:border-black-200 cursor-pointer`}
+                  onClick={() => handleSetActiveAddress(address._id)}
                 >
                   <div className="css-7ym3jb">
                     <p data-attr="address-preview-fullName">
@@ -94,7 +94,7 @@ const DeliveryAddressSummary = ({
                       onDeliveryStep(1);
                       onActiveSection("address");
                       handleScrollToTop();
-                      setAddressId(address._id);
+                      onAddressId(address._id);
                     }}
                   >
                     Modifier<span className="ripple"></span>

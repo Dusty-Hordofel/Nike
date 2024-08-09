@@ -8,15 +8,7 @@ import { Button } from "@/components/ui/buttons/button/button";
 import CheckoutHeader from "@/components/checkout/checkout-header";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
-import { useGetUserActiveAddress } from "@/hooks/api/use-get-user-active-address";
-
-interface PaymentProps {
-  // handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement>;
-  // selectedPaymentMethod: string;
-  // setSelectedPaymentMethod: Dispatch<SetStateAction<string>>;
-  userActiveAddress: any;
-  // deliveryStep: number;
-}
+import { useActiveDeliveryAddress } from "@/hooks/api/use-active-delivery-address";
 
 export default function PaymentSection() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -25,7 +17,8 @@ export default function PaymentSection() {
 
   const { deliveryStep, activeSection } = useDeliveryContext();
 
-  const { userActiveAddress, isLoading, isError } = useGetUserActiveAddress();
+  const { activeDeliveryAddress, isLoading, isError } =
+    useActiveDeliveryAddress();
 
   if (isLoading)
     return (
@@ -55,7 +48,7 @@ export default function PaymentSection() {
       <CheckoutHeader title="Paiement" />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && userActiveAddress.success ? "block" : "hidden"}`}
+        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && activeDeliveryAddress.success ? "block" : "hidden"}`}
       >
         {/* loading 1 à ajouter*/}
         {/* 2 suite*/}
@@ -200,7 +193,7 @@ export default function PaymentSection() {
                   id="billingAddress"
                   aria-describedby="a11y-label-details-billingAddress"
                   value=""
-                  checked={userActiveAddress.success}
+                  checked={activeDeliveryAddress.success}
                 />
                 <div className="nds-checkbox-icon">
                   <span

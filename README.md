@@ -1116,9 +1116,9 @@ export const useSaveAddress = ({
 
 ### 38. Active Address
 
-### 39.Payment
+### 39. Renommage
 
-### 40.
+### 40. Payment
 
 ### 41.
 

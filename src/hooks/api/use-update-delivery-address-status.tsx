@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useUpdateUserAddressStatus = () => {
+export const useUpdateDeliveryAddressStatus = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
