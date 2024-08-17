@@ -1128,11 +1128,13 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 - go to stripe dashboard, click on develloppeurs and get `API Keys`
 -
 
-### 41.
+### 41. Simplification de la gestion des états (1) clonage
 
-### 42.
+### 42. Order
 
-### 43.
+<!-- Simplification de la gestion des états -->
+
+### 43. Organisation
 
 ### 44.
 

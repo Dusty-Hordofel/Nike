@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetDeliveryAddresses = () => {
+const useGetDeliveryAddresses = () => {
   const query = useQuery({
     queryKey: ["addresses"],
     queryFn: () =>
@@ -11,3 +11,5 @@ export const useGetDeliveryAddresses = () => {
 
   return query;
 };
+
+export default useGetDeliveryAddresses;

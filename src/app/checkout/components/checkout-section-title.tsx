@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
-const CheckoutHeader = ({
+const CheckoutSectionTitle = ({
   title,
   isComplete,
   showEditLink,
@@ -65,4 +65,4 @@ const CheckoutHeader = ({
   );
 };
 
-export default CheckoutHeader;
+export default CheckoutSectionTitle;

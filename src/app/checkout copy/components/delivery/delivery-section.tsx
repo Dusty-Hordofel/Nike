@@ -21,18 +21,18 @@ import {
   getUserAdress,
 } from "@/actions/user-address.actions";
 import { useEffect, useState } from "react";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import DeliveryAddressSummary from "./delivery-address-summary";
 import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
 
-import { useActiveDeliveryAddress } from "@/hooks/api/use-active-delivery-address";
-import { useSaveDeliveryAddress } from "@/hooks/api/use-save-delivery-address";
-import { useUpdateDeliveryAddressStatus } from "@/hooks/api/use-update-delivery-address-status";
-import { useGetDeliveryAddresses } from "@/hooks/api/use-get-delivery-adresses";
-import { useGetDeliveryAddress } from "@/hooks/api/use-get-delivery-address";
+import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section/use-active-delivery-address";
+import { useAddDeliveryAddress } from "@/hooks/api/delivery-section/use-add-delivery-address";
+import { useUpdateDeliveryAddressStatus } from "@/hooks/api/delivery-section/use-update-delivery-address-status";
+import { useGetDeliveryAddresses } from "@/hooks/api/delivery-section/use-get-delivery-adresses";
+import { useGetDeliveryAddress } from "@/hooks/api/delivery-section/use-get-delivery-address";
 
 const DeliverySection2 = () => {
   const router = useRouter();
@@ -71,7 +71,7 @@ const DeliverySection2 = () => {
   const deliveryAddress = useGetDeliveryAddress(addressId);
   const updateDeliveryAddressStatus = useUpdateDeliveryAddressStatus();
   const deliveryAddresses = useGetDeliveryAddresses();
-  const saveDeliveryAddress = useSaveDeliveryAddress({ setSuccess, setError });
+  const saveDeliveryAddress = useAddDeliveryAddress({ setSuccess, setError });
 
   useEffect(() => {
     if (addressId !== undefined) {

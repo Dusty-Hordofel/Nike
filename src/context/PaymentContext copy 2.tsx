@@ -22,8 +22,6 @@ import {
   PaymentMethodResult,
 } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/buttons/button/button";
-import { useAddPaymentMethod } from "@/hooks/api/payment-section";
-// import { useAddPaymentMethod } from "@/hooks/api/payment-section/use-add-payment-method";
 
 type ErrorState = {
   number: string;
@@ -78,12 +76,82 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
 
   const [loading, setLoading] = useState(false);
 
-  // const { mutate: addPaymentMethod, isLoading, isError, isSuccess, error } = useAddPaymentMethod();
-  const addPaymentMethod = useAddPaymentMethod();
+  //   const handleChange = (
+  //     event:
+  //       | StripeCardNumberElementChangeEvent
+  //       | StripeCardExpiryElementChangeEvent
+  //       | StripeCardCvcElementChangeEvent,
+  //     field: keyof ErrorState,
+  //     completeField: keyof CompleteState
+  //   ) => {
+  //     if (event.error) {
+  //       let customErrorMessage = event.error.message;
+
+  //       // Personnalisation des messages d'erreur
+  //       if (event.error.code === "incomplete_number") {
+  //         customErrorMessage = "Veuillez entrer un numéro de carte correct.";
+  //       } else if (event.error.code === "incomplete_expiry") {
+  //         customErrorMessage = "Indique la date de validité.";
+  //       } else if (event.error.code === "incomplete_cvc") {
+  //         customErrorMessage = "Indique le cryptogramme visuel.";
+  //       }
+
+  //       setError((prevState) => ({
+  //         ...prevState,
+  //         [field]: customErrorMessage || "",
+  //       }));
+  //     } else {
+  //       setError((prevState) => ({
+  //         ...prevState,
+  //         [field]: "",
+  //       }));
+  //     }
+
+  //     setComplete((prevState) => ({
+  //       ...prevState,
+  //       [completeField]: event.complete,
+  //     }));
+  //   };
+
+  //   const handleSubmit = async (event: React.FormEvent) => {
+  //     event.preventDefault();
+  //     setLoading(true);
+
+  //     if (!stripe || !elements) {
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     const cardElement = elements.getElement(CardNumberElement);
+
+  //     if (!cardElement) {
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     const { error: paymentMethodError }: PaymentMethodResult =
+  //       await stripe.createPaymentMethod({
+  //         type: "card",
+  //         card: cardElement,
+  //       });
+
+  //     if (paymentMethodError) {
+  //       setError((prevState) => ({
+  //         ...prevState,
+  //         number: paymentMethodError.message || "",
+  //       }));
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     setLoading(false);
+  //   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
+
+    // setActiveSection("summary")
 
     if (!stripe || !elements) {
       setLoading(false);
@@ -112,15 +180,32 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
       return;
     }
-    console.log(
-      "🚀 ~ handleSubmit ~ paymentMethod:METHOD ID",
-      paymentMethod.id
-    );
 
-    const change = await addPaymentMethod.mutateAsync(paymentMethod.id);
-    if (change?.success) alert(change.message);
-    console.log("🚀 ~ handleSubmit ~ change:ID", change);
-    setLoading(false);
+    // if (!paymentMethodError) {
+    try {
+      const { id } = paymentMethod;
+      console.log("🚀 ~ handleSubmit ~ id:", id);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/1234555/pay-with-stripe`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            id,
+            amount: 1000,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("🚀 ~ handleSubmit ~ response:DATA", data);
+    } catch (error: any) {
+      console.log("🚀 ~ handleSubmit ~ error:", error.message);
+      setLoading(false);
+    }
+
+    // setLoading(false);
   };
 
   const isFormValid =
@@ -145,6 +230,8 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
         setError,
         hasCardFieldError,
         handleSubmit,
+        // handleChange,
+        // handleSubmit,
         isFormValid,
       }}
     >

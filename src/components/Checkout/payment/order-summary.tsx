@@ -1,5 +1,5 @@
 import React from "react";
-import CheckoutHeader from "../checkout-header";
+import CheckoutHeader from "../../../app/checkout/components/checkout-section-title";
 import { Button } from "@/components/ui/buttons/button/button";
 import CheckoutLoader from "./loading";
 import CheckoutTerms from "./checkout-terms";

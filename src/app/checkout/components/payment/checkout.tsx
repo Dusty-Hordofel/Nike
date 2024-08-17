@@ -11,7 +11,7 @@ import { getUserActiveAdress } from "@/actions/user-address.actions";
 // import SummarySection from "./components/summary/summary-section";
 // import { DeliveryProvider } from "@/context/DeliveryContext";
 // import Loader from "./loader";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import { PaymentProvider } from "@/context/PaymentContext";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";

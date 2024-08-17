@@ -1,6 +1,9 @@
 "use client";
 
 import React, { Dispatch, SetStateAction } from "react";
+// import DeliveryAddress from "./delivery-address";
+import ActiveDeliveryAddress from "./active-delivery-address";
+import DeliveryAddress from "./delivery-address";
 
 interface DeliveryAddressSummaryProps {
   activeDeliveryAddress: any;
@@ -58,67 +61,25 @@ const DeliveryAddressSummary = ({
           <div className="space-y-2">
             {deliveryStep === 2 &&
               deliveryAddresses.data.addresses.map((address: any) => (
-                <div
-                  className={` ${address.active ? "border-2 border-black-200" : "border-[1px] border-gray-500"}  rounded-lg  text-black-200 p-4 bg-blue-100 relative hover:border-black-200 cursor-pointer`}
-                  onClick={() => handleSetActiveAddress(address._id)}
-                >
-                  <div className="css-7ym3jb">
-                    <p data-attr="address-preview-fullName">
-                      {address.lastName} {address.firstName}
-                    </p>
-                    <p>
-                      <span data-attr="address-preview-address1">
-                        {address.address}
-                      </span>
-                    </p>
-                    <div className="ncss-row">
-                      <div className="ncss-col-sm-12">
-                        <p data-attr="address-preview-city">
-                          {address.city}, {address.postalCode}
-                        </p>
-                      </div>
-                    </div>
-                    <p data-attr="address-preview-email">{address.email}</p>
-                    <p data-attr="address-preview-phoneNumber">
-                      {address.phoneNumber}
-                    </p>
-                  </div>
-                  <button
-                    // ${deliveryStep === 0 ? "block" : "hidden"}
-                    aria-label="Modifier,Adresse de livraison"
-                    className={`absolute right-5 top-5 underline`}
-                    type="button"
-                    onClick={() => {
-                      onDeliveryStep(1);
-                      onActiveSection("address");
-                      handleScrollToTop();
-                      onAddressId(address._id);
-                    }}
-                  >
-                    Modifier<span className="ripple"></span>
-                  </button>
-                </div>
+                <DeliveryAddress
+                  address={address}
+                  handleScrollToTop={handleScrollToTop}
+                  handleSetActiveAddress={handleSetActiveAddress}
+                  onDeliveryStep={onDeliveryStep}
+                  onActiveSection={onActiveSection}
+                  onAddressId={onAddressId}
+                />
               ))}
             {deliveryStep === 3 && (
-              <div className="text-gray-500  border-black-200 py-1  bg-blue-100 relative ">
-                <div className="css-7ym3jb">
-                  <p data-attr="address-preview-fullName">
-                    {lastName} {firstName}
-                  </p>
-                  <p>
-                    <span data-attr="address-preview-address1">{address}</span>
-                  </p>
-                  <div className="ncss-row">
-                    <div className="ncss-col-sm-12">
-                      <p data-attr="address-preview-city">
-                        {city}, {postalCode}
-                      </p>
-                    </div>
-                  </div>
-                  <p data-attr="address-preview-email">{email}</p>
-                  <p data-attr="address-preview-phoneNumber">{phoneNumber}</p>
-                </div>
-              </div>
+              <ActiveDeliveryAddress
+                lastName={lastName}
+                firstName={firstName}
+                address={address}
+                city={city}
+                postalCode={postalCode}
+                email={email}
+                phoneNumber={phoneNumber}
+              />
             )}
           </div>
         </div>

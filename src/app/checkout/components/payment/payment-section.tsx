@@ -1,47 +1,82 @@
 "use client";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import { useDeliveryContext } from "@/context/DeliveryContext";
-import Loader from "../../loader";
-import { useActiveDeliveryAddress } from "@/hooks/api/use-active-delivery-address";
+import Loader from "../loader";
+// import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section/use-active-delivery-address";
 import StripePayment from "./stripe-payment";
-import PaymentMethod from "./payment-method";
+import PaymentMethods from "./payment-methods";
 import BillingAddress from "./billing-address";
 import { usePaymentContext } from "@/context/PaymentContext";
 import BillingCountry from "./billing-country";
 import PaymentAndBillingSummary from "./payment-and-billing-summary";
 import { useGetCart } from "@/hooks/api/use-get-cart";
+// import { useGetPaymentMethods } from "@/hooks/api/payment-section/use-get-payment-method";
+// import { useDeletePaymentMethod } from "@/hooks/api/payment-section/use-delete-payment-method";
+import PaymentCards from "./payment-cards";
+import { useActivePaymentMethod } from "@/hooks/api/payment-section/use-active-payment-method";
+import ActivePaymentCard from "./active-payment-card";
+import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
+import {
+  useDeletePaymentMethod,
+  useGetPaymentMethods,
+} from "@/hooks/api/payment-section";
 
 export default function PaymentSection() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "creditDebit" | "paypal" | "googlePay"
   >("creditDebit");
+  const [paymentStep, setPaymentStep] = useState<null | number>(null);
+  console.log("🚀 ~ PaymentSection ~ paymentStep:PAYMENT STEP", paymentStep);
 
   const { deliveryStep, activeSection, setActiveSection } =
     useDeliveryContext();
-
   const { activeDeliveryAddress, isLoading, isError } =
     useActiveDeliveryAddress();
-
-  console.log(
-    "🚀 ~ PaymentSection ~ activeDeliveryAddress:ADDRESS",
-    activeDeliveryAddress
-  );
-
-  const cart = useGetCart();
-
   const { loading, isFormValid, hasCardFieldError, handleSubmit } =
     usePaymentContext();
-  // const activeDeliveryAddress = useActiveDeliveryAddress();
 
-  if (isLoading || cart.isLoading)
+  const cart = useGetCart();
+  const paymentMethods = useGetPaymentMethods();
+  const deletePaymentMethod = useDeletePaymentMethod();
+  const activePaymentMethod = useActivePaymentMethod();
+  console.log(
+    "🚀 ~ PaymentSection ~ activePaymentMethod:ACTIVE",
+    activePaymentMethod
+  );
+
+  // Mettez à jour l'état uniquement si la requête réussit
+  useEffect(() => {
+    if (activePaymentMethod.isSuccess && activePaymentMethod.data.success) {
+      setPaymentStep(3);
+    }
+  }, [activePaymentMethod.isSuccess, activePaymentMethod.data]);
+
+  // En cas d'erreur, assignez une valeur par défaut
+  useEffect(() => {
+    if (
+      activePaymentMethod.isError ||
+      (activePaymentMethod.isSuccess && !activePaymentMethod.data.success)
+    ) {
+      setPaymentStep(1); // Par exemple: valeur par défaut
+    }
+  }, [
+    activePaymentMethod.isError,
+    activePaymentMethod.isSuccess,
+    activePaymentMethod.data,
+  ]);
+
+  if (
+    isLoading ||
+    cart.isLoading ||
+    paymentMethods.isLoading ||
+    activePaymentMethod.isLoading
+  )
     return (
       <section>
-        <span className="sr-only">
-          Options de livraison Étape 1 sur 3 Étape terminée
-        </span>
-        <CheckoutHeader title="Options de livraison" />
+        <span className="sr-only">Paiement Étape 2 sur 3 Étape terminée</span>
+        <CheckoutHeader title="Paiement" />
 
         <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
           <Loader />
@@ -49,7 +84,13 @@ export default function PaymentSection() {
       </section>
     );
 
-  if (isError || cart.isError) return <p>Error...</p>;
+  if (
+    isError ||
+    cart.isError ||
+    paymentMethods.isError ||
+    activePaymentMethod.isError
+  )
+    return <p>Error...</p>;
 
   console.log("CART", cart.data);
 
@@ -65,24 +106,29 @@ export default function PaymentSection() {
     console.log("Modifier le pays/région");
   };
 
-  const handleCreateOrder = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/address`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          products: cart.data.products,
-          shippingAddress: activeDeliveryAddress.activeAddress,
-          paymentMethod: selectedPaymentMethod,
-          // total: totalAfterDiscount !== "" ? totalAfterDiscount : cart.cartTotal,
-          total: cart.data.cartTotal, //a modifier
-          totalBeforeDiscount: cart.data.cartTotal,
-          couponApplied: "MOYKALR",
-        }),
-      }
-    );
-    return response.json();
-  };
+  // const handleCreateOrder = async () => {
+  //   const response = await fetch(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/order`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         products: cart.data.products,
+  //         shippingAddress: activeDeliveryAddress.activeAddress,
+  //         paymentMethod: selectedPaymentMethod,
+  //         // total: totalAfterDiscount !== "" ? totalAfterDiscount : cart.cartTotal,
+  //         total: cart.data.cartTotal, //a modifier
+  //         totalBeforeDiscount: cart.data.cartTotal,
+  //         couponApplied: "MOYKALR",
+  //       }),
+  //     }
+  //   );
+  //   return response.json();
+  // };
+
+  console.log(
+    "🚀 ~ PaymentSection ~ paymentMethods:PAYMENT",
+    paymentMethods.data
+  );
 
   return (
     <section>
@@ -96,7 +142,7 @@ export default function PaymentSection() {
 
         {/* revoir le mb value */}
         <div className="mb-7 mx-5">
-          <PaymentMethod
+          <PaymentMethods
             selectedPaymentMethod={selectedPaymentMethod}
             onPaymentMethodChange={handlePaymentMethodChange}
           />
@@ -120,13 +166,14 @@ export default function PaymentSection() {
             </div>
           </div>
         )}
-        {/* {orderData.paymentMethod == "credit_card" && (
-          <StripePayment
-            total={orderData.total}
-            order_id={orderData._id}
-            stripe_public_key={stripe_public_key}
-          />
-        )} */}
+
+        <PaymentCards
+          paymentMethods={paymentMethods}
+          deletePaymentMethod={deletePaymentMethod}
+        />
+        <ActivePaymentCard
+          activePaymentMethod={activePaymentMethod.data.activeCardInformation}
+        />
 
         <div className="mb-5 mx-5">
           <BillingAddress activeDeliveryAddress={activeDeliveryAddress} />

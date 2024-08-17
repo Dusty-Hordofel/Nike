@@ -1,13 +1,14 @@
 import GooglePay from "@/assets/icons/google-pay/GooglePay";
 import CreditCard from "@/assets/icons/credit-card/CreditCard";
 import { ChangeEventHandler, Dispatch, SetStateAction } from "react";
+import { paymentMethods } from "@/assets/data/payment-methods";
 
 type PaymentMethodProps = {
   selectedPaymentMethod: "creditDebit" | "paypal" | "googlePay";
   onPaymentMethodChange: ChangeEventHandler<HTMLInputElement>;
 };
 
-const PaymentMethod = ({
+const PaymentMethods = ({
   selectedPaymentMethod,
   onPaymentMethodChange,
 }: PaymentMethodProps) => {
@@ -83,4 +84,4 @@ const PaymentMethod = ({
   );
 };
 
-export default PaymentMethod;
+export default PaymentMethods;

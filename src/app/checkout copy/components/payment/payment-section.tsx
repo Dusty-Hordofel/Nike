@@ -1,10 +1,10 @@
 "use client";
 import { ChangeEventHandler, useState } from "react";
 import "./input.css";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import Loader from "../../loader";
-import { useActiveDeliveryAddress } from "@/hooks/api/use-active-delivery-address";
+// import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section/use-active-delivery-address";
 import StripePayment from "./stripe-payment";
 import PaymentMethod from "./payment-method";
 import BillingAddress from "./billing-address";
@@ -12,6 +12,8 @@ import { usePaymentContext } from "@/context/PaymentContext";
 import BillingCountry from "./billing-country";
 import PaymentAndBillingSummary from "./payment-and-billing-summary";
 import { useGetCart } from "@/hooks/api/use-get-cart";
+import { useActivePaymentMethod } from "@/hooks/api/payment-section/use-active-payment-method";
+import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
 
 export default function PaymentSection() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -30,12 +32,13 @@ export default function PaymentSection() {
   );
 
   const cart = useGetCart();
+  const activePaymentMetod = useActivePaymentMethod();
 
   const { loading, isFormValid, hasCardFieldError, handleSubmit } =
     usePaymentContext();
   // const activeDeliveryAddress = useActiveDeliveryAddress();
 
-  if (isLoading || cart.isLoading)
+  if (isLoading || cart.isLoading || activePaymentMetod.isLoading)
     return (
       <section>
         <span className="sr-only">
@@ -67,7 +70,7 @@ export default function PaymentSection() {
 
   const handleCreateOrder = async () => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/address`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/order`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -141,6 +144,7 @@ export default function PaymentSection() {
             // onClick={() => {
             //   setActiveSection("summary")
             // }}
+            // onClick={handleCreateOrder}
             onClick={handleSubmit}
           >
             {loading

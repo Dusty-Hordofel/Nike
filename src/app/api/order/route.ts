@@ -32,19 +32,15 @@ type Order = {
 
 export const POST =
   // auth(
-  async (...request: any) => {
-    // console.log("🚀 ~ GET ~ req:", req.auth);
-    const [req, { params }] = request;
-    console.log("🚀 ~ POST ~ params:", params);
-
-    // if (!req.auth) {
-    //   return Response.json(
-    //     { error: true, message: "unauthorized" },
-    //     {
-    //       status: 401,
-    //     }
-    //   );
-    // }
+  async (request: any) => {
+    const {
+      products,
+      shippingAddress,
+      paymentMethod,
+      total,
+      totalBeforeDiscount,
+      couponApplied,
+    } = await request.json();
 
     try {
       return Response.json({ success: true, error: false });

@@ -7,11 +7,14 @@ export const ButtonStyle = {
       secondary: "bg-white text-black-200  border-white hover:bg-gray-300",
       outline:
         "border border-gray-200 hover:border-black-200 bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+      ghost: "hover:bg-accent hover:text-accent-foreground",
+      link: "text-primary underline-offset-4 underline text-xs",
     },
     size: {
       small: "h-9 px-4 py-[6px] mr-[6px]",
       medium: "h-12 px-6 py-3",
       large: "h-[58px] px-6 py-[18px]",
+      content: "h-max w-max",
     },
     fullWidth: {
       true: "w-full",

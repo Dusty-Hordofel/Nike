@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetDeliveryAddress = (id?: string) => {
+const useGetDeliveryAddress = (id?: string) => {
   const query = useQuery({
     enabled: !!id,
     queryKey: ["address", id],
@@ -18,3 +18,5 @@ export const useGetDeliveryAddress = (id?: string) => {
   //   console.log("ADDRESS LIBO", query);
   return query;
 };
+
+export default useGetDeliveryAddress;

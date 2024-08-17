@@ -1,5 +1,5 @@
 "use client";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import React from "react";
 

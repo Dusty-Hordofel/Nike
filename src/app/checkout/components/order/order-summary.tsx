@@ -1,5 +1,5 @@
 "use client";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import OrderSummarySkeleton from "./order-summary-skeleton";

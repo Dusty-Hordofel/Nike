@@ -9,8 +9,8 @@ import OrderSummary from "./components/order/order-summary";
 import PaymentSection from "./components/payment/payment-section";
 import SummarySection from "./components/summary/summary-section";
 import { DeliveryProvider } from "@/context/DeliveryContext";
-import Loader from "./loader";
-import CheckoutHeader from "@/components/checkout/checkout-header";
+import Loader from "./components/loader";
+import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import { PaymentProvider } from "@/context/PaymentContext";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -30,9 +30,10 @@ const CheckoutPage = async () => {
 
   // const addresses = await getUserAddresses();
   const deliveryAddress = await getUserActiveAdress();
-  // console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
+  const activePaymentCard =
+    await // console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
 
-  console.log("STRIPE", "MOO", process.env.STRIPE_SECRET_KEY!);
+    console.log("STRIPE", "MOO", process.env.STRIPE_SECRET_KEY!);
   console.log("STRIPE", "MOO", process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
   return <Checkout deliveryAddress={deliveryAddress} />;

@@ -16,6 +16,8 @@ export const buttonVariants = cva(ButtonStyle.base, {
       size: "small",
       fullWidth: false,
     },
+    { variant: "link", size: "small" },
+    { variant: "ghost", size: "small" },
     {
       variant: "secondary",
       size: "small",
