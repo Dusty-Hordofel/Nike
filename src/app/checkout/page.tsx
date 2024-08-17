@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { getUserActiveAdress } from "@/actions/user-address.actions";
 import DeliverySection from "./components/delivery/delivery-section";
 import OrderSummary from "./components/order/order-summary";
-import PaymentSection from "./components/payment/payment-section";
+import PaymentSection from "./components/payment/stripe-payment/payment-section";
 import SummarySection from "./components/summary/summary-section";
 import { DeliveryProvider } from "@/context/DeliveryContext";
 import Loader from "./components/loader";

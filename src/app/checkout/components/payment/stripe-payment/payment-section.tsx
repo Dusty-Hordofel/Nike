@@ -2,26 +2,25 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
 import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
+import Loader from "../../loader";
 import { useDeliveryContext } from "@/context/DeliveryContext";
-import Loader from "../loader";
-// import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section/use-active-delivery-address";
-import StripePayment from "./stripe-payment";
-import PaymentMethods from "./payment-methods";
-import BillingAddress from "./billing-address";
 import { usePaymentContext } from "@/context/PaymentContext";
-import BillingCountry from "./billing-country";
-import PaymentAndBillingSummary from "./payment-and-billing-summary";
 import { useGetCart } from "@/hooks/api/use-get-cart";
-// import { useGetPaymentMethods } from "@/hooks/api/payment-section/use-get-payment-method";
-// import { useDeletePaymentMethod } from "@/hooks/api/payment-section/use-delete-payment-method";
-import PaymentCards from "./payment-cards";
-import { useActivePaymentMethod } from "@/hooks/api/payment-section/use-active-payment-method";
-import ActivePaymentCard from "./active-payment-card";
 import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
 import {
+  useActivePaymentMethod,
   useDeletePaymentMethod,
   useGetPaymentMethods,
 } from "@/hooks/api/payment-section";
+import {
+  StripePayment,
+  PaymentMethods,
+  BillingAddress,
+  PaymentAndBillingSummary,
+  PaymentCards,
+  ActivePaymentCard,
+  BillingCountry,
+} from "./index";
 
 export default function PaymentSection() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<

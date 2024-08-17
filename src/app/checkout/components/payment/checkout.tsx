@@ -17,7 +17,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { DeliveryProvider } from "@/context/DeliveryContext";
 import DeliverySection2 from "../delivery/delivery-section";
-import PaymentSection from "./payment-section";
+import PaymentSection from "./stripe-payment/payment-section";
 import SummarySection from "../summary/summary-section";
 import OrderSummary from "../order/order-summary";
 
