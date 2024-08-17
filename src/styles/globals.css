@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  .absolute-flex-center {
+    @apply absolute inset-0 w-full flex justify-center items-center;
+  }
+  .top-left {
+    @apply absolute top-12 left-12;
+  }
+  .bottom-left {
+    @apply absolute bottom-12 left-12;
+  }
+  .top-right {
+    @apply absolute top-12  right-12;
+  }
+  .bottom-right {
+    @apply absolute bottom-12 right-12;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .link-icon-hover {
+    @apply rounded-full p-[6px] hover:bg-gray-200 mr-3;
+  }
+  /* .focus {
+    @apply focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  } */
+}
+
+/* Container using CSS Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  gap: 16px; /* Adjust the gap between cards as needed */
+}
+
+/* Card styling */
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Masquer la flèche pour les navigateurs basés sur WebKit (comme Chrome et Safari) */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Masquer la flèche pour les autres navigateurs */
+details summary {
+  list-style: none; /* Cela masque la flèche */
+  cursor: pointer; /* Facultatif : Change le curseur pour indiquer que l'élément est cliquable */
+}
+
+.css-mubwpn {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 40px;
+  font-style: normal;
+  text-transform: none;
+  margin-bottom: 24px;
+  word-break: break-word;
+}
+
+/* .css-1n4pc9d.dialog-base {
+  height: 738px;
+}
+
+@media (min-width: 600px) {
+  .css-1n4pc9d {
+    border-radius: 24px;
+    max-width: 560px;
+    max-height: calc(100% - 120px);
+  }
+}
+
+@media (min-width: 600px) {
+  .css-1n4pc9d {
+    bottom: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0px);
+  }
+}
+
+.css-1n4pc9d {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  min-height: 300px;
+  bottom: 0px;
+  transform: translate3d(0px, 0px, 0px);
+  overflow: hidden;
+  max-height: calc(100% - 60px);
+  border-radius: 24px 24px 0px 0px;
+} */
+/* div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+} */
+
+@media (min-width: 600px) {
+  .css-518m28 {
+    max-height: calc(-120px + 100vh);
+  }
+}
+@media (min-width: 600px) {
+  .css-518m28 {
+    height: 100%;
+    padding: 48px 60px 36px;
+  }
+}
+
+.css-518m28 {
+  /* background: rosybrown; */
+  width: 100%;
+  min-height: 300px;
+  height: 100%;
+  padding: 40px 24px 24px;
+  scrollbar-width: none;
+  overflow: auto;
+  max-height: calc(-60px + 100vh);
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.css-15zin7s {
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+css-518m28::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 72px;
+  /* height: 36px; */
+  z-index: 1;
+  background: yellowgreen;
+
+  /* background: linear-gradient(
+    rgb(255, 255, 255) 0%,
+    rgb(255, 255, 255) 33%,
+    rgba(255, 255, 255, 0) 100%
+  ); */
+}
+
+@media (min-width: 600px) {
+  .css-1ncut4k {
+    padding-left: 64px;
+  }
+}
+
+.css-1ncut4k {
+  background: rgb(255, 255, 255);
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  padding: 24px 60px 36px;
+  box-shadow: rgba(17, 17, 17, 0.28) 0px -2px 6px 0px;
+}
+
+css-1ncut4k::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: calc(100% - 18px);
+  left: 0px;
+  width: 100%;
+  height: 36px;
+  background: linear-gradient(
+    to top,
+    rgb(255, 255, 255) 0%,
+    rgb(255, 255, 255) 33%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* css-1n4pc9d .dialog-main {
+  padding: 48px 60px 36px;
+}
+
+ */
+/* div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+} */
