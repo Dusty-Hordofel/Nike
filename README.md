@@ -1120,6 +1120,14 @@ export const useSaveAddress = ({
 
 ### 40. Payment
 
+```bash
+$  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
+
+```
+
+- go to stripe dashboard, click on develloppeurs and get `API Keys`
+-
+
 ### 41.
 
 ### 42.

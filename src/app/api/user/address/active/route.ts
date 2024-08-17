@@ -36,15 +36,15 @@ export const GET = auth(async (req) => {
     for (const address of dbUser.addresses) {
       if (address.active === true) {
         activeAddress = address;
-        console.log(`Address with ID ${address._id} is active.YES!`);
+        // console.log(`Address with ID ${address._id} is active.YES!`);
         break;
       } else {
-        console.log(`Address with ID ${address._id} is not active.`);
+        // console.log(`Address with ID ${address._id} is not active.`);
       }
     }
 
     if (!activeAddress) {
-      console.log("No active address found");
+      // console.log("No active address found");
       return new NextResponse(
         JSON.stringify({
           error: true,
@@ -107,10 +107,10 @@ export const POST = auth(async (req) => {
     for (const address of dbUser.addresses) {
       if (address._id.toString() === id) {
         foundedAddress = address;
-        console.log(`there is an Address with ID ${address._id}.`);
+        // console.log(`there is an Address with ID ${address._id}.`);
         break;
       } else {
-        console.log(`there is not an Address with ID ${address._id}.`);
+        // console.log(`there is not an Address with ID ${address._id}.`);
       }
     }
 

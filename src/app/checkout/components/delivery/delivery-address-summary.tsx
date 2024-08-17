@@ -86,9 +86,7 @@ const DeliveryAddressSummary = ({
                   <button
                     // ${deliveryStep === 0 ? "block" : "hidden"}
                     aria-label="Modifier,Adresse de livraison"
-                    className={`absolute right-5 top-5 underline
-          
-          `}
+                    className={`absolute right-5 top-5 underline`}
                     type="button"
                     onClick={() => {
                       onDeliveryStep(1);

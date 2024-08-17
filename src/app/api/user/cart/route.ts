@@ -51,9 +51,12 @@ export const GET = auth(async (req) => {
 
     // console.log("🚀 ~ getCart ~ cart:", cart);
 
-    return new NextResponse(JSON.stringify({ success: true, cart }), {
-      status: 200,
-    });
+    return new NextResponse(
+      JSON.stringify({ success: true, error: false, cart }),
+      {
+        status: 200,
+      }
+    );
   } catch (error: any) {
     return Response.json(
       { message: error.message },
