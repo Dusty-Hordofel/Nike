@@ -5,12 +5,14 @@ const CheckoutSectionTitle = ({
   title,
   isComplete,
   showEditLink,
-  onDeliveryStep,
+  onChangeStep,
+  // onDeliveryStep,
 }: {
   title: string;
-  onDeliveryStep?: Dispatch<SetStateAction<number>>;
+  // onDeliveryStep?: Dispatch<SetStateAction<number>>;
   isComplete?: boolean;
   showEditLink?: boolean;
+  onChangeStep?: () => void;
 }) => {
   return (
     <header className="flex bg-warning justify-between px-5 pt-3 pb-7">
@@ -38,13 +40,14 @@ const CheckoutSectionTitle = ({
           </span>
         )}
       </h2>
-      {isComplete && onDeliveryStep && (
+      {isComplete && onChangeStep && (
         <button
           aria-label="Modifier,Options de livraison"
           className="underline"
           type="button"
           data-attr="editButton"
-          onClick={() => onDeliveryStep(2)}
+          onClick={onChangeStep}
+          // onClick={() => onDeliveryStep(2)}
         >
           Modifier
         </button>

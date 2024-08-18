@@ -4,23 +4,37 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React from "react";
 
 type PaymentCardProps = {
+  id: string;
   brand: string;
   isActive: boolean;
   last4: string;
   deletePaymentMethod: UseMutationResult<any, Error, string, unknown>;
   paymentMethodId: string;
+  // changeActivePaymentMethod: UseMutationResult<any, Error, string, unknown>;
+  // handleChangeActivePaymentMethod: any;
+  onChangeActivePaymentMethod: (
+    paymentMethodId: string,
+    id: string
+  ) => Promise<void>;
 };
 
 const PaymentCard = ({
+  id,
   brand,
   isActive,
   last4,
   deletePaymentMethod,
   paymentMethodId,
+  // changeActivePaymentMethod,
+  onChangeActivePaymentMethod,
 }: PaymentCardProps) => {
   return (
     <div
-      className={`py-4  border-black-200 flex justify-between px-3 rounded-lg ${isActive ? "border-2" : "border"}`}
+      className={`py-4  border-black-200 flex justify-between px-3 rounded-lg ${isActive ? "border-2" : "border"} cursor-pointer`}
+      onClick={() => onChangeActivePaymentMethod(paymentMethodId, id)}
+      // onClick={async () =>
+      //   changeActivePaymentMethod.mutateAsync(paymentMethodId)
+      // }
     >
       <div className="flex justify-center items-center">
         <img

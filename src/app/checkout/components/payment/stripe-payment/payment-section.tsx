@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
-import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
+import CheckoutSectionTitle from "@/app/checkout/components/checkout-section-title";
 import Loader from "../../loader";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import { usePaymentContext } from "@/context/PaymentContext";
@@ -9,6 +9,7 @@ import { useGetCart } from "@/hooks/api/use-get-cart";
 import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
 import {
   useActivePaymentMethod,
+  useChangeActivePaymentMethod,
   useDeletePaymentMethod,
   useGetPaymentMethods,
 } from "@/hooks/api/payment-section";
@@ -26,39 +27,39 @@ export default function PaymentSection() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "creditDebit" | "paypal" | "googlePay"
   >("creditDebit");
-  const [paymentStep, setPaymentStep] = useState<null | number>(null);
-  console.log("🚀 ~ PaymentSection ~ paymentStep:PAYMENT STEP", paymentStep);
+  // const [paymentStep, setPaymentStep] = useState<null | number>(null);
 
   const { deliveryStep, activeSection, setActiveSection } =
     useDeliveryContext();
   const { activeDeliveryAddress, isLoading, isError } =
     useActiveDeliveryAddress();
-  const { loading, isFormValid, hasCardFieldError, handleSubmit } =
-    usePaymentContext();
+  const {
+    loading,
+    isFormValid,
+    hasCardFieldError,
+    paymentStep,
+    setPaymentStep,
+    handleSubmit,
+  } = usePaymentContext();
 
   const cart = useGetCart();
   const paymentMethods = useGetPaymentMethods();
   const deletePaymentMethod = useDeletePaymentMethod();
   const activePaymentMethod = useActivePaymentMethod();
-  console.log(
-    "🚀 ~ PaymentSection ~ activePaymentMethod:ACTIVE",
-    activePaymentMethod
-  );
+  const changeActivePaymentMethod = useChangeActivePaymentMethod();
 
-  // Mettez à jour l'état uniquement si la requête réussit
   useEffect(() => {
     if (activePaymentMethod.isSuccess && activePaymentMethod.data.success) {
       setPaymentStep(3);
     }
   }, [activePaymentMethod.isSuccess, activePaymentMethod.data]);
 
-  // En cas d'erreur, assignez une valeur par défaut
   useEffect(() => {
     if (
       activePaymentMethod.isError ||
       (activePaymentMethod.isSuccess && !activePaymentMethod.data.success)
     ) {
-      setPaymentStep(1); // Par exemple: valeur par défaut
+      setPaymentStep(1);
     }
   }, [
     activePaymentMethod.isError,
@@ -75,7 +76,13 @@ export default function PaymentSection() {
     return (
       <section>
         <span className="sr-only">Paiement Étape 2 sur 3 Étape terminée</span>
-        <CheckoutHeader title="Paiement" />
+        <CheckoutSectionTitle
+          title="Paiement"
+          isComplete={
+            paymentStep === 3 && activePaymentMethod.data.success ? true : false
+          }
+          onChangeStep={() => setPaymentStep(2)}
+        />
 
         <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
           <Loader />
@@ -91,8 +98,6 @@ export default function PaymentSection() {
   )
     return <p>Error...</p>;
 
-  console.log("CART", cart.data);
-
   const handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -104,6 +109,18 @@ export default function PaymentSection() {
     // Logique pour la modification du pays/région
     console.log("Modifier le pays/région");
   };
+
+  const handleChangeActivePaymentMethod = async (
+    paymentMethodId: string,
+    id: string
+  ) => {
+    await changeActivePaymentMethod.mutateAsync({ paymentMethodId, id });
+    console.log("paymentMethodId,ID", paymentMethodId, id);
+  };
+
+  // const handleChangeActivePaymentMethod = async (id: string) => {
+  //   await changeActivePaymentMethod.mutateAsync(id);
+  // };
 
   // const handleCreateOrder = async () => {
   //   const response = await fetch(
@@ -124,31 +141,43 @@ export default function PaymentSection() {
   //   return response.json();
   // };
 
+  // console.log(
+  //   "🚀 ~ PaymentSection ~ paymentMethods:PAYMENT",
+  //   paymentMethods.data
+  // );
+
   console.log(
-    "🚀 ~ PaymentSection ~ paymentMethods:PAYMENT",
-    paymentMethods.data
+    "🚀 ~ PaymentSection ~ activeDeliveryAddress:ACTIVE DELIVERY AD",
+    activeDeliveryAddress
   );
 
   return (
     <section>
       <span className="sr-only">Paiement Étape 2 sur 3 Étape en cours</span>
-      <CheckoutHeader title="Paiement" />
+      <CheckoutSectionTitle
+        title="Paiement"
+        isComplete={
+          paymentStep === 3 && activePaymentMethod.data.success ? true : false
+        }
+        onChangeStep={() => setPaymentStep(2)}
+      />
+
       <div
         className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && activeDeliveryAddress?.success ? "block" : "hidden"}`}
       >
-        {/* loading 1 à ajouter*/}
-        <BillingCountry country="France" onEdit={handleEditClick} />
+        {(paymentStep === 1 || paymentStep === 2) && (
+          <>
+            <BillingCountry country="France" onEdit={handleEditClick} />
+            <div className="mb-7 mx-5">
+              <PaymentMethods
+                selectedPaymentMethod={selectedPaymentMethod}
+                onPaymentMethodChange={handlePaymentMethodChange}
+              />
+            </div>
+          </>
+        )}
 
-        {/* revoir le mb value */}
-        <div className="mb-7 mx-5">
-          <PaymentMethods
-            selectedPaymentMethod={selectedPaymentMethod}
-            onPaymentMethodChange={handlePaymentMethodChange}
-          />
-        </div>
-
-        {/* ETAPE 2 */}
-        {selectedPaymentMethod == "creditDebit" && (
+        {selectedPaymentMethod == "creditDebit" && paymentStep === 1 && (
           <div className="mb-7 mx-5">
             <div
               className={`px-5 pt-5 pb-[1.5px] border ${hasCardFieldError ? "border-red" : "border-black-200"} rounded-md`}
@@ -166,37 +195,60 @@ export default function PaymentSection() {
           </div>
         )}
 
-        <PaymentCards
-          paymentMethods={paymentMethods}
-          deletePaymentMethod={deletePaymentMethod}
-        />
-        <ActivePaymentCard
-          activePaymentMethod={activePaymentMethod.data.activeCardInformation}
-        />
+        {paymentStep === 2 && (
+          <PaymentCards
+            paymentMethods={paymentMethods}
+            deletePaymentMethod={deletePaymentMethod}
+            onChangeActivePaymentMethod={handleChangeActivePaymentMethod}
+          />
+        )}
 
-        <div className="mb-5 mx-5">
-          <BillingAddress activeDeliveryAddress={activeDeliveryAddress} />
-        </div>
-
-        {/* Button de validation de la méthode de payment */}
-        <div className="mt-6 bg-warning flex justify-end pb-5 px-5">
-          <button
-            // type="submit"
-            disabled={!isFormValid || loading}
-            className={`${isFormValid ? "bg-black-200 text-white" : "bg-gray-300 text-black-200/30"} w-max py-3 px-6 rounded-full font-medium`}
-            // onClick={() => {
-            //   setActiveSection("summary")
-            // }}
-            onClick={handleSubmit}
+        {paymentStep === 3 && (
+          <div
+            className={`${paymentStep === 3 ? "py-5" : "pt-5"} bg-warning px-5`}
           >
-            {loading
-              ? "Processing..."
-              : "Continuer pour voir le récapitulatif de la commande"}
-          </button>
-        </div>
+            <div data-attr="shippingPreviewContainer">
+              <div
+                className={`${paymentStep === 3 && "mb-4"}`}
+                data-attr="addressPreview"
+              >
+                {activePaymentMethod.data.success && (
+                  <ActivePaymentCard
+                    activePaymentMethod={
+                      activePaymentMethod.data.activeCardInformation
+                    }
+                  />
+                )}
+                <h3
+                  className={`shippingContainer ${paymentStep === 3 ? "block text-black-200" : "hidden"}`}
+                >
+                  Informations de facturation
+                </h3>
+                <BillingAddress
+                  paymentStep={paymentStep}
+                  activeDeliveryAddress={activeDeliveryAddress}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        {/* && !paymentMethods?.data?.success)|| paymentMethods?.data?.error  */}
+        {(paymentStep === 1 || paymentStep === 2) && (
+          <div className="mt-6 bg-warning flex justify-end pb-5 px-5">
+            <button
+              disabled={(paymentStep === 1 && !isFormValid) || loading}
+              className={`${isFormValid || paymentStep === 2 ? "bg-black-200 text-white" : "bg-gray-300 text-black-200/30"} w-max py-3 px-6 rounded-full font-medium`}
+              onClick={
+                paymentStep === 2 ? () => setPaymentStep(3) : handleSubmit
+              }
+            >
+              {loading
+                ? "Processing..."
+                : "Continuer pour voir le récapitulatif de la commande"}
+            </button>
+          </div>
+        )}
       </div>
-
-      {activeSection === "summary" && <PaymentAndBillingSummary />}
     </section>
   );
 }

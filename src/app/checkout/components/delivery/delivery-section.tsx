@@ -151,7 +151,8 @@ const DeliverySection2 = () => {
         isComplete={
           deliveryStep === 3 && activeDeliveryAddress?.success ? true : false
         }
-        onDeliveryStep={setDeliveryStep}
+        onChangeStep={() => setDeliveryStep(2)}
+        // () => onDeliveryStep(2)
       />
 
       <DeliveryModeSelector

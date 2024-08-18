@@ -156,6 +156,7 @@ export const GET = auth(async (req) => {
         const brand = paymentMethod.card?.brand || "Unknown";
 
         return {
+          id: savedPaymentMethodId._id,
           paymentMethodId,
           isActive: savedPaymentMethodId.isActive,
           last4,

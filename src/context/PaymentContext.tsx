@@ -45,6 +45,8 @@ interface PaymentContextProps {
   error: ErrorState;
   setError: Dispatch<SetStateAction<ErrorState>>;
   hasCardFieldError: boolean;
+  paymentStep: number | null;
+  setPaymentStep: Dispatch<SetStateAction<number | null>>;
   //   handleChange: (
   //     event:
   //       | StripeCardNumberElementChangeEvent
@@ -57,9 +59,7 @@ interface PaymentContextProps {
   isFormValid: boolean;
 }
 
-const PaymentContext = createContext<PaymentContextProps | undefined>(
-  undefined
-);
+const PaymentContext = createContext<PaymentContextProps | null>(null);
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -77,6 +77,7 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [paymentStep, setPaymentStep] = useState<null | number>(null);
 
   // const { mutate: addPaymentMethod, isLoading, isError, isSuccess, error } = useAddPaymentMethod();
   const addPaymentMethod = useAddPaymentMethod();
@@ -121,6 +122,7 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
     if (change?.success) alert(change.message);
     console.log("🚀 ~ handleSubmit ~ change:ID", change);
     setLoading(false);
+    setPaymentStep(3);
   };
 
   const isFormValid =
@@ -146,6 +148,8 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
         hasCardFieldError,
         handleSubmit,
         isFormValid,
+        paymentStep,
+        setPaymentStep,
       }}
     >
       {children}

@@ -14,7 +14,7 @@ const ActivePaymentCard = ({
   activePaymentMethod: { brand, last4, expMonth, expYear },
 }: ActivePaymentCardProps) => {
   return (
-    <section className="mb-4 px-5 pt-5">
+    <section className="mb-4">
       <h3 className="pb-3">Mode de paiement</h3>
       <div className="mt-2 flex gap-x-4 text-gray-500">
         <img
