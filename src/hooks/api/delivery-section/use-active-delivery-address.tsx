@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 const useActiveDeliveryAddress = () => {
   const {
     data: activeDeliveryAddress,
+    isSuccess,
     isLoading,
     isPending,
     isError,
@@ -12,7 +13,14 @@ const useActiveDeliveryAddress = () => {
     queryFn: () => fetch("/api/user/address/active").then((res) => res.json()),
   });
 
-  return { activeDeliveryAddress, isLoading, isError, error, isPending };
+  return {
+    activeDeliveryAddress,
+    isLoading,
+    isError,
+    error,
+    isPending,
+    isSuccess,
+  };
 };
 
 export default useActiveDeliveryAddress;

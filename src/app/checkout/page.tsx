@@ -24,18 +24,18 @@ const CheckoutPage = async () => {
   if (!user) redirect("/cart"); //metre le bon endroit
   // console.log("🚀 ~ CheckoutPage ~ user:", user);
 
-  const cart = await getCart();
-  // console.log("🚀 ~ CheckoutPage ~ cart:", cart);
-  if (!cart) redirect("/");
+  // const cart = await getCart();
+  // // console.log("🚀 ~ CheckoutPage ~ cart:", cart);
+  // if (!cart) redirect("/");
 
   // const addresses = await getUserAddresses();
-  const deliveryAddress = await getUserActiveAdress();
-  const activePaymentCard =
-    await // console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
+  // const deliveryAddress = await getUserActiveAdress();
+  // const activePaymentCard =
+  //   await // console.log("🚀 ~ CheckoutPage ~ activeAddresses:PAGE", deliveryAddress);
 
-    console.log("STRIPE", "MOO", process.env.STRIPE_SECRET_KEY!);
-  console.log("STRIPE", "MOO", process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+  // console.log("STRIPE", "MOO", process.env.STRIPE_SECRET_KEY!);
+  // console.log("STRIPE", "MOO", process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
-  return <Checkout deliveryAddress={deliveryAddress} />;
+  return <Checkout />;
 };
 export default CheckoutPage;

@@ -4,7 +4,7 @@ import Loader from "./loader";
 
 type CheckoutSectionHeaderProps = {
   title: string;
-  step: number;
+  step: number | null;
 };
 
 const CheckoutSectionHeader = ({ title, step }: CheckoutSectionHeaderProps) => {

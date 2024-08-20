@@ -30,7 +30,19 @@ import {
   useUpdateDeliveryAddressStatus,
 } from "@/hooks/api/delivery-section";
 
-const DeliverySection2 = () => {
+const DeliverySection2 = ({ deliveryAddress }: any) => {
+  console.log(
+    "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE",
+    deliveryAddress.activeDeliveryAddress.activeAddress
+  );
+  console.log(
+    "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS",
+    deliveryAddress.activeDeliveryAddress.success
+  );
+  console.log(
+    "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS TSQ",
+    deliveryAddress.isSuccess
+  );
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
@@ -39,7 +51,6 @@ const DeliverySection2 = () => {
   const [addingNewAddress, setAddingNewAddress] = useState(false);
   const [addressId, setAddressId] = useState<string | undefined>();
 
-  console.log("🚀 ~ DeliverySection2 ~ addressId:ADDRESS ID", addressId);
   const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
     DeliveryMode.Shipping
   );
@@ -59,39 +70,75 @@ const DeliverySection2 = () => {
     resolver: zodResolver(DeliveryInfoSchema),
   });
 
-  const { activeDeliveryAddress, isLoading, isPending, isError } =
-    useActiveDeliveryAddress();
+  // const { activeDeliveryAddress, isLoading, isPending, isError } =
+  //   useActiveDeliveryAddress();
 
-  const deliveryAddress = useGetDeliveryAddress(addressId);
+  // const deliveryAddress = useGetDeliveryAddress(addressId);
   const updateDeliveryAddressStatus = useUpdateDeliveryAddressStatus();
   const deliveryAddresses = useGetDeliveryAddresses();
   const saveDeliveryAddress = useAddDeliveryAddress({ setSuccess, setError });
 
   useEffect(() => {
-    if (addressId !== undefined) {
-      const fetchUserAddress = async () => {
-        const response = await getUserAdress(addressId);
-        console.log("🚀 ~ fetchUserAddress ~ response:VOIR", response);
-        const { success, address } = response;
-        if (success) {
-          reset(address);
-        } else {
-          reset({
-            lastName: "",
-            firstName: "",
-            country: "",
-            address: "",
-            phoneNumber: "",
-            email: "",
-            companyInfo: "",
-            city: "",
-            postalCode: "",
-          });
-        }
-      };
-      fetchUserAddress();
+    if (
+      deliveryAddress.isSuccess &&
+      deliveryAddress.activeDeliveryAddress.success
+    ) {
+      setDeliveryStep(3);
+      setActiveSection("payment");
+      reset(deliveryAddress.activeDeliveryAddress.activeAddress);
     }
-  }, [addressId, reset, refresh]);
+  }, [deliveryAddress.isSuccess, deliveryAddress.activeDeliveryAddress]);
+
+  useEffect(() => {
+    if (
+      deliveryAddress.isError ||
+      (deliveryAddress.isSuccess &&
+        !deliveryAddress.activeDeliveryAddress.success)
+    ) {
+      setDeliveryStep(1);
+      reset({
+        lastName: "",
+        firstName: "",
+        country: "",
+        address: "",
+        phoneNumber: "",
+        email: "",
+        companyInfo: "",
+        city: "",
+        postalCode: "",
+      });
+    }
+  }, [
+    deliveryAddress.isError,
+    deliveryAddress.isSuccess,
+    deliveryAddress.data,
+  ]);
+
+  // useEffect(() => {
+  //   if (addressId !== undefined) {
+  //     const fetchUserAddress = async () => {
+  //       const response = await getUserAdress(addressId);
+  //       console.log("🚀 ~ fetchUserAddress ~ response:VOIR", response);
+  //       const { success, address } = response;
+  //       if (success) {
+  //         reset(address);
+  //       } else {
+  //         reset({
+  //           lastName: "",
+  //           firstName: "",
+  //           country: "",
+  //           address: "",
+  //           phoneNumber: "",
+  //           email: "",
+  //           companyInfo: "",
+  //           city: "",
+  //           postalCode: "",
+  //         });
+  //       }
+  //     };
+  //     fetchUserAddress();
+  //   }
+  // }, [addressId, reset, refresh]);
 
   const handleAddNewAddress = () => {
     reset({
@@ -129,17 +176,27 @@ const DeliverySection2 = () => {
     if (save.success) {
       setRefresh(!refresh);
       setAddingNewAddress(false); // Reset the adding new address state after saving
-      activeDeliveryAddress?.success && setDeliveryStep(2);
+      deliveryAddress.activeDeliveryAddress?.success && setDeliveryStep(2);
     }
   };
 
-  if (isLoading || deliveryAddresses.isLoading || deliveryAddress.isLoading)
+  if (
+    deliveryAddress.isLoading ||
+    deliveryAddresses.isLoading
+    // || deliveryAddress.isLoading
+  )
     return (
       <CheckoutSectionHeader title="Options de livraison" step={deliveryStep} />
     );
 
-  if (isError || deliveryAddresses.isError || deliveryAddress.isError)
+  if (
+    deliveryAddress.isError ||
+    deliveryAddresses.isError
+    // || deliveryAddress.isError
+  )
     return <p>Error...</p>;
+
+  console.log("🚀 ~ DeliverySection2 ~ setDeliveryStep:DEV STEP", deliveryStep);
 
   return (
     <section>
@@ -149,10 +206,11 @@ const DeliverySection2 = () => {
       <CheckoutHeader
         title="Options de livraison"
         isComplete={
-          deliveryStep === 3 && activeDeliveryAddress?.success ? true : false
+          deliveryStep === 3 && deliveryAddress.activeDeliveryAddress?.success
+            ? true
+            : false
         }
         onChangeStep={() => setDeliveryStep(2)}
-        // () => onDeliveryStep(2)
       />
 
       <DeliveryModeSelector
@@ -162,10 +220,10 @@ const DeliverySection2 = () => {
       <div>
         <div>
           {(deliveryStep === 2 || deliveryStep === 3) &&
-          activeDeliveryAddress?.success ? (
+          deliveryAddress.activeDeliveryAddress?.success ? (
             <>
               <DeliveryAddressSummary
-                activeDeliveryAddress={activeDeliveryAddress}
+                activeDeliveryAddress={deliveryAddress.activeDeliveryAddress}
                 deliveryStep={deliveryStep}
                 deliveryAddresses={deliveryAddresses}
                 onAddressId={setAddressId}

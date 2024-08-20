@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-const DeliveryTime = ({ deliveryStep }: { deliveryStep: number }) => {
+const DeliveryTime = ({ deliveryStep }: { deliveryStep: number | null }) => {
   return (
     <div className=" bg-orange  pt-2 px-5 mb-5">
       <div className={`flex mr-1 ${deliveryStep === 2 ? "mb-4" : ""} `}>

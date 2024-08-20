@@ -23,7 +23,7 @@ import {
   BillingCountry,
 } from "./index";
 
-export default function PaymentSection() {
+export default function PaymentSection({ deliveryAddress, cart }: any) {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "creditDebit" | "paypal" | "googlePay"
   >("creditDebit");
@@ -31,8 +31,12 @@ export default function PaymentSection() {
 
   const { deliveryStep, activeSection, setActiveSection } =
     useDeliveryContext();
-  const { activeDeliveryAddress, isLoading, isError } =
-    useActiveDeliveryAddress();
+  // const { activeDeliveryAddress, isLoading, isError } =
+  //   useActiveDeliveryAddress();
+  console.log(
+    "🚀 ~ PaymentSection ~ activeSection:ACTIVE SECTION ",
+    activeSection
+  );
   const {
     loading,
     isFormValid,
@@ -41,8 +45,10 @@ export default function PaymentSection() {
     setPaymentStep,
     handleSubmit,
   } = usePaymentContext();
+  console.log("🚀 ~ PaymentSection ~ paymentStep:PAY STEP", paymentStep);
 
-  const cart = useGetCart();
+  // const cart = useGetCart();
+  console.log("🚀 ~ PaymentSection ~ cart:CART", cart);
   const paymentMethods = useGetPaymentMethods();
   const deletePaymentMethod = useDeletePaymentMethod();
   const activePaymentMethod = useActivePaymentMethod();
@@ -68,7 +74,7 @@ export default function PaymentSection() {
   ]);
 
   if (
-    isLoading ||
+    deliveryAddress.isLoading ||
     cart.isLoading ||
     paymentMethods.isLoading ||
     activePaymentMethod.isLoading
@@ -91,7 +97,7 @@ export default function PaymentSection() {
     );
 
   if (
-    isError ||
+    deliveryAddress.isError ||
     cart.isError ||
     paymentMethods.isError ||
     activePaymentMethod.isError
@@ -148,7 +154,7 @@ export default function PaymentSection() {
 
   console.log(
     "🚀 ~ PaymentSection ~ activeDeliveryAddress:ACTIVE DELIVERY AD",
-    activeDeliveryAddress
+    deliveryAddress.activeDeliveryAddress
   );
 
   return (
@@ -163,7 +169,7 @@ export default function PaymentSection() {
       />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && activeDeliveryAddress?.success ? "block" : "hidden"}`}
+        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && deliveryAddress.activeDeliveryAddress?.success ? "block" : "hidden"}`}
       >
         {(paymentStep === 1 || paymentStep === 2) && (
           <>
@@ -226,13 +232,13 @@ export default function PaymentSection() {
                 </h3>
                 <BillingAddress
                   paymentStep={paymentStep}
-                  activeDeliveryAddress={activeDeliveryAddress}
+                  activeDeliveryAddress={deliveryAddress.activeDeliveryAddress}
                 />
               </div>
             </div>
           </div>
         )}
-        {/* && !paymentMethods?.data?.success)|| paymentMethods?.data?.error  */}
+
         {(paymentStep === 1 || paymentStep === 2) && (
           <div className="mt-6 bg-warning flex justify-end pb-5 px-5">
             <button

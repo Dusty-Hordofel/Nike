@@ -6,19 +6,26 @@ import OrderSummarySkeleton from "./order-summary-skeleton";
 import { useDeliveryContext } from "@/context/DeliveryContext";
 import { Button } from "@/components/ui/buttons/button/button";
 
-const OrderSummary = () => {
+// ={cartData} cartData, isCartLoading, hasCartError
+const OrderSummary = ({ cart, deliveryAddress }: any) => {
+  console.log("🚀 ~ OrderSummary ~ cartData:CART", cart);
+  // console.log("🚀 ~ OrderSummary ~ cartData:CART", cartl);
   const { deliveryStep, setDeliveryStep } = useDeliveryContext();
 
-  console.log("🚀 ~ DeliverySection ~ ul:UULLL", deliveryStep);
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => fetch("/api/user/cart").then((res) => res.json()),
-  });
+  // console.log("🚀 ~ DeliverySection ~ ul:UULLL", deliveryStep);
+  // const { data, isLoading, isError, error } = useQuery({
+  //   queryKey: ["cart"],
+  //   queryFn: () => fetch("/api/user/cart").then((res) => res.json()),
+  // });
 
-  if (isLoading) return <OrderSummarySkeleton />;
-  if (isError) return <p>Error...</p>;
+  // if (isCartLoading) return <OrderSummarySkeleton />;
+  // if (hasCartError) return <p>Error...</p>;
 
-  const { cart } = data;
+  // const { cart } = data;
+
+  if (deliveryAddress.isLoading || cart.isLoading) return <div>Loading...</div>;
+  if (deliveryAddress.isError || cart.isError)
+    return <div>Error: {deliveryAddress.error?.message}</div>;
 
   return (
     <>
@@ -29,7 +36,8 @@ const OrderSummary = () => {
           showEditLink
           // onChangeStep={setDeliveryStep}
         />
-        <div>
+        {cart.data}
+        {/* <div>
           <div className="summary-section p-5">
             <div className="summary-item flex justify-between items-center">
               <div className="flex items-center">
@@ -65,7 +73,9 @@ const OrderSummary = () => {
                   </button>
                 </span>
               </div>
-              <div className="subtotal-amount">{cart.cartTotal} €</div>
+              <div className="subtotal-amount">
+                {cartData?.cart.cartTotal} €
+              </div>
             </div>
 
             <div className="summary-item flex justify-between items-center">
@@ -77,7 +87,7 @@ const OrderSummary = () => {
               <div className="total-label">
                 <span>Total </span>
               </div>
-              <div className="total-amount">{cart?.cartTotal} €</div>
+              <div className="total-amount">{cartData?.cart.cartTotal} €</div>
             </div>
           </div>
 
@@ -87,7 +97,7 @@ const OrderSummary = () => {
                 Livraison d'ici le&nbsp;mar. 25 juin
               </h3>
             </header>
-            {cart?.products?.map((product: any) => {
+            {cartData?.cart.products.map((product: any) => {
               return (
                 <div className=" cart-item py-4">
                   <figure className="cart-item-figure flex">
@@ -126,10 +136,10 @@ const OrderSummary = () => {
               );
             })}
           </div>
-        </div>
+        </div> */}
       </section>
 
-      <section id="place-order" className="px-2 py-6">
+      {/* <section id="place-order" className="px-2 py-6">
         <div
           className="ncss-col-sm-12 pt6-sm pb6-sm prl2-sm css-k8kbo5"
           data-attr="test-mobile-button"
@@ -142,7 +152,7 @@ const OrderSummary = () => {
             Soumettre le paiement<span className="ripple"></span>
           </Button>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

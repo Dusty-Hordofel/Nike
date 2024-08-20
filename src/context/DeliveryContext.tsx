@@ -10,8 +10,8 @@ import {
 } from "react";
 
 interface DeliveryContextProps {
-  deliveryStep: number;
-  setDeliveryStep: Dispatch<SetStateAction<number>>;
+  deliveryStep: number | null;
+  setDeliveryStep: Dispatch<SetStateAction<number | null>>;
   activeSection: "address" | "payment" | "summary";
   setActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
@@ -24,19 +24,42 @@ const DeliveryContext = createContext<DeliveryContextProps | undefined>(
 
 export const DeliveryProvider = ({
   children,
-  deliveryAddress,
+  // deliveryAddress,
 }: {
   children: ReactNode;
   deliveryAddress: any;
 }) => {
-  const [deliveryStep, setDeliveryStep] = useState(
-    deliveryAddress.success ? 3 : 1
+  const [deliveryStep, setDeliveryStep] = useState<number | null>(
+    // deliveryAddress.success ? 3 : 1
+    null
   );
   const [activeSection, setActiveSection] = useState<
     "address" | "payment" | "summary"
   >(deliveryStep === 3 ? "payment" : "address");
 
-  console.log("TOTO", deliveryAddress);
+  // const activePaymentMethod = useActivePaymentMethod();
+  // const changeActivePaymentMethod = useChangeActivePaymentMethod();
+
+  // useEffect(() => {
+  //   if (activePaymentMethod.isSuccess && activePaymentMethod.data.success) {
+  //     setPaymentStep(3);
+  //   }
+  // }, [activePaymentMethod.isSuccess, activePaymentMethod.data]);
+
+  // useEffect(() => {
+  //   if (
+  //     activePaymentMethod.isError ||
+  //     (activePaymentMethod.isSuccess && !activePaymentMethod.data.success)
+  //   ) {
+  //     setPaymentStep(1);
+  //   }
+  // }, [
+  //   activePaymentMethod.isError,
+  //   activePaymentMethod.isSuccess,
+  //   activePaymentMethod.data,
+  // ]);
+
+  // console.log("TOTO", deliveryAddress);
   return (
     <DeliveryContext.Provider
       value={{ deliveryStep, setDeliveryStep, activeSection, setActiveSection }}

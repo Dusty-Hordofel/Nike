@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 
 type DeliveryAddressProps = {
   address: any;
-  onDeliveryStep: Dispatch<SetStateAction<number>>;
+  onDeliveryStep: Dispatch<SetStateAction<number | null>>;
   onAddressId: Dispatch<SetStateAction<string | undefined>>;
   handleSetActiveAddress: any;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
