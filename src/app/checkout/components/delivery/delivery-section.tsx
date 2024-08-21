@@ -31,18 +31,18 @@ import {
 } from "@/hooks/api/delivery-section";
 
 const DeliverySection2 = ({ deliveryAddress }: any) => {
-  console.log(
-    "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE",
-    deliveryAddress.activeDeliveryAddress.activeAddress
-  );
-  console.log(
-    "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS",
-    deliveryAddress.activeDeliveryAddress.success
-  );
-  console.log(
-    "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS TSQ",
-    deliveryAddress.isSuccess
-  );
+  // console.log(
+  //   "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE",
+  //   deliveryAddress.activeDeliveryAddress.activeAddress
+  // );
+  // console.log(
+  //   "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS",
+  //   deliveryAddress.activeDeliveryAddress.success
+  // );
+  // console.log(
+  //   "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS TSQ",
+  //   deliveryAddress.isSuccess
+  // );
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
@@ -181,7 +181,7 @@ const DeliverySection2 = ({ deliveryAddress }: any) => {
   };
 
   if (
-    deliveryAddress.isLoading ||
+    // deliveryAddress.isLoading ||
     deliveryAddresses.isLoading
     // || deliveryAddress.isLoading
   )
@@ -190,13 +190,13 @@ const DeliverySection2 = ({ deliveryAddress }: any) => {
     );
 
   if (
-    deliveryAddress.isError ||
+    // deliveryAddress.isError ||
     deliveryAddresses.isError
     // || deliveryAddress.isError
   )
     return <p>Error...</p>;
 
-  console.log("🚀 ~ DeliverySection2 ~ setDeliveryStep:DEV STEP", deliveryStep);
+  // console.log("🚀 ~ DeliverySection2 ~ setDeliveryStep:DEV STEP", deliveryStep);
 
   return (
     <section>

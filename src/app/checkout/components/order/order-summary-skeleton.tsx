@@ -9,9 +9,9 @@ const OrderSummarySkeleton = () => {
     <section className="order-summary">
       <span className="sr-only">Paiement Étape 3 sur 3 Étape en cours</span>
       <CheckoutHeader
-        title="Dans ton panier"
-        showEditLink
-        onDeliveryStep={setDeliveryStep}
+        title="Récapitulatif de la commande"
+        // showEditLink
+        // onDeliveryStep={setDeliveryStep}
       />
       <div>
         <div className="summary-section p-5">

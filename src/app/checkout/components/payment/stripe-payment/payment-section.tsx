@@ -45,7 +45,7 @@ export default function PaymentSection({ deliveryAddress, cart }: any) {
     setPaymentStep,
     handleSubmit,
   } = usePaymentContext();
-  console.log("🚀 ~ PaymentSection ~ paymentStep:PAY STEP", paymentStep);
+  // console.log("🚀 ~ PaymentSection ~ paymentStep:PAY STEP", paymentStep);
 
   // const cart = useGetCart();
   console.log("🚀 ~ PaymentSection ~ cart:CART", cart);

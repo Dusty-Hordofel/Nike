@@ -27,7 +27,6 @@ export const DeliveryProvider = ({
   // deliveryAddress,
 }: {
   children: ReactNode;
-  deliveryAddress: any;
 }) => {
   const [deliveryStep, setDeliveryStep] = useState<number | null>(
     // deliveryAddress.success ? 3 : 1
