@@ -33,8 +33,6 @@ const useChangeActivePaymentMethod = () => {
         );
       }
 
-      console.log("CHANGE PAYMENT", data);
-
       return data;
     },
     onSuccess: () => {

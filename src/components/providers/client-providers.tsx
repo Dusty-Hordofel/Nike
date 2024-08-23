@@ -1,3 +1,5 @@
+"use client";
+import ModalProvider from "./modal-provider";
 import ReduxProvider from "./redux-provider";
 import TanstackQueryProvider from "./tanstack-query-provider";
 
@@ -8,7 +10,9 @@ export default function ClientProviders({
 }) {
   return (
     <TanstackQueryProvider>
-      <ReduxProvider>{children}</ReduxProvider>
+      <ReduxProvider>
+        <ModalProvider>{children}</ModalProvider>
+      </ReduxProvider>
     </TanstackQueryProvider>
   );
 }

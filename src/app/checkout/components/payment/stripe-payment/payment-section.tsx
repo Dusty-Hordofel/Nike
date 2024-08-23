@@ -3,9 +3,9 @@ import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
 import CheckoutSectionTitle from "@/app/checkout/components/checkout-section-title";
 import Loader from "../../loader";
-import { useDeliveryContext } from "@/context/DeliveryContext";
-import { usePaymentContext } from "@/context/PaymentContext";
-import { useGetCart } from "@/hooks/api/use-get-cart";
+import { useDeliveryContext } from "@/context/delivery-context";
+import { usePaymentContext } from "@/context/payment-context";
+import { useGetCart } from "@/hooks/api/cart/use-get-cart";
 import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
 import {
   useActivePaymentMethod,
@@ -159,23 +159,23 @@ export default function PaymentSection({ deliveryAddress, cart }: any) {
           </>
         )}
 
-        {/* {selectedPaymentMethod == "creditDebit" && paymentStep === 1 && ( */}
-        <div className="mb-7 mx-5">
-          <div
-            className={`px-5 pt-5 pb-[1.5px] border ${hasCardFieldError ? "border-red" : "border-black-200"} rounded-md`}
-          >
-            <div className="ncss-col-sm-6 va-sm-b mb-4 px-2">
-              <h3 className="css-5oevkg font-medium">Ajouter une carte</h3>
+        {selectedPaymentMethod == "creditDebit" && paymentStep === 1 && (
+          <div className="mb-7 mx-5">
+            <div
+              className={`px-5 pt-5 pb-[1.5px] border ${hasCardFieldError ? "border-red" : "border-black-200"} rounded-md`}
+            >
+              <div className="ncss-col-sm-6 va-sm-b mb-4 px-2">
+                <h3 className="css-5oevkg font-medium">Ajouter une carte</h3>
+              </div>
+              <StripePayment
+                total="33"
+                order_id="123456789"
+                stripe_public_key={process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}
+                // stripe_public_key={stripe_public_key}
+              />
             </div>
-            <StripePayment
-              total="33"
-              order_id="123456789"
-              stripe_public_key={process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}
-              // stripe_public_key={stripe_public_key}
-            />
           </div>
-        </div>
-        {/* )} */}
+        )}
 
         {paymentStep === 2 && (
           <PaymentCards
@@ -215,20 +215,22 @@ export default function PaymentSection({ deliveryAddress, cart }: any) {
           </div>
         )}
 
-        {/* {(paymentStep === 1 || paymentStep === 2) && ( */}
-        <div className="mt-6 bg-warning flex justify-end pb-5 px-5">
-          <button
-            disabled={(paymentStep === 1 && !isFormValid) || loading}
-            className={`${isFormValid || paymentStep === 2 ? "bg-black-200 text-white" : "bg-gray-300 text-black-200/30"} w-max py-3 px-6 rounded-full font-medium`}
-            // onClick={paymentStep === 2 ? () => setPaymentStep(3) : handleSubmit}
-            onClick={handleSubmit}
-          >
-            {loading
-              ? "Processing..."
-              : "Continuer pour voir le récapitulatif de la commande"}
-          </button>
-        </div>
-        {/* )} */}
+        {(paymentStep === 1 || paymentStep === 2) && (
+          <div className="mt-6 bg-warning flex justify-end pb-5 px-5">
+            <button
+              disabled={(paymentStep === 1 && !isFormValid) || loading}
+              className={`${isFormValid || paymentStep === 2 ? "bg-black-200 text-white" : "bg-gray-300 text-black-200/30"} w-max py-3 px-6 rounded-full font-medium`}
+              onClick={
+                paymentStep === 2 ? () => setPaymentStep(3) : handleSubmit
+              }
+              // onClick={handleSubmit}
+            >
+              {loading
+                ? "Processing..."
+                : "Continuer pour voir le récapitulatif de la commande"}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

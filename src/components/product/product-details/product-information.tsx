@@ -7,7 +7,7 @@ import { Button } from "../../ui/buttons/button/button";
 import Accordion from "../../accordion/Accordion";
 import { accordionData } from "@/assets/data/accordion";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/use-redux-hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { addProductToCart, CartItem } from "@/store/cartSlice";
 
 type Props = {

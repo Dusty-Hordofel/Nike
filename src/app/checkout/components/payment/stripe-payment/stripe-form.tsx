@@ -13,7 +13,7 @@ import {
   PaymentMethodResult,
 } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/buttons/button/button";
-import { usePaymentContext } from "@/context/PaymentContext";
+import { usePaymentContext } from "@/context/payment-context";
 
 type ErrorState = {
   number: string;

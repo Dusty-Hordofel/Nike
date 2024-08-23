@@ -20,8 +20,8 @@ const useUpdateDeliveryAddressStatus = () => {
     onSuccess: () => {
       // alert("SUCCESS");
       console.log("SUCCESS");
-      queryClient.invalidateQueries({ queryKey: ["active-address"] });
       queryClient.invalidateQueries({ queryKey: ["addresses"] });
+      // queryClient.invalidateQueries({ queryKey: ["active-address"] });
     },
     onError: () => {
       console.log("ERROR");

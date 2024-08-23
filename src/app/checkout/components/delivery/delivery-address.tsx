@@ -30,7 +30,10 @@ const DeliveryAddress = ({
   return (
     <div
       className={` ${active ? "border-2 border-black-200" : "border-[1px] border-gray-500"}  rounded-lg  text-black-200 p-4 bg-blue-100 relative hover:border-black-200 cursor-pointer`}
-      onClick={() => handleSetActiveAddress(_id)}
+      onClick={(e) => {
+        // e.stopPropagation();
+        handleSetActiveAddress(_id);
+      }}
     >
       <div className="css-7ym3jb">
         <p data-attr="address-preview-fullName">
@@ -54,7 +57,8 @@ const DeliveryAddress = ({
         aria-label="Modifier,Adresse de livraison"
         className={`absolute right-5 top-5 underline`}
         type="button"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           onDeliveryStep(1);
           onActiveSection("address");
           handleScrollToTop();

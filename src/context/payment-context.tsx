@@ -21,9 +21,9 @@ import {
   StripeCardCvcElementChangeEvent,
   PaymentMethodResult,
 } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/buttons/button/button";
+import { useAddPaymentMethod } from "@/hooks/api/payment-section";
+// import { useAddPaymentMethod } from "@/hooks/api/payment-section/use-add-payment-method";
 
 type ErrorState = {
   number: string;
@@ -45,28 +45,24 @@ interface PaymentContextProps {
   error: ErrorState;
   setError: Dispatch<SetStateAction<ErrorState>>;
   hasCardFieldError: boolean;
-  handleChange: (
-    event:
-      | StripeCardNumberElementChangeEvent
-      | StripeCardExpiryElementChangeEvent
-      | StripeCardCvcElementChangeEvent,
-    field: keyof ErrorState,
-    completeField: keyof CompleteState
-  ) => void;
+  paymentStep: number | null;
+  setPaymentStep: Dispatch<SetStateAction<number | null>>;
+  //   handleChange: (
+  //     event:
+  //       | StripeCardNumberElementChangeEvent
+  //       | StripeCardExpiryElementChangeEvent
+  //       | StripeCardCvcElementChangeEvent,
+  //     field: keyof ErrorState,
+  //     completeField: keyof CompleteState
+  //   ) => void;
   handleSubmit: (event: React.FormEvent) => void;
   isFormValid: boolean;
 }
 
-const PaymentContext = createContext<PaymentContextProps | undefined>(
-  undefined
-);
+const PaymentContext = createContext<PaymentContextProps | null>(null);
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const stripe = useStripe();
   const elements = useElements();
-  console.log("🚀 ~ PaymentProvider ~ elements:", elements);
-  //   const stripePromise = loadStripe(
-  //     process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
-  //   );
 
   const [error, setError] = useState<ErrorState>({
     number: "",
@@ -81,43 +77,11 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [paymentStep, setPaymentStep] = useState<null | number>(null);
+  console.log("🚀 ~ PaymentProvider ~ paymentStep:PAYMENT STEP", paymentStep);
 
-  const handleChange = (
-    event:
-      | StripeCardNumberElementChangeEvent
-      | StripeCardExpiryElementChangeEvent
-      | StripeCardCvcElementChangeEvent,
-    field: keyof ErrorState,
-    completeField: keyof CompleteState
-  ) => {
-    if (event.error) {
-      let customErrorMessage = event.error.message;
-
-      // Personnalisation des messages d'erreur
-      if (event.error.code === "incomplete_number") {
-        customErrorMessage = "Veuillez entrer un numéro de carte correct.";
-      } else if (event.error.code === "incomplete_expiry") {
-        customErrorMessage = "Indique la date de validité.";
-      } else if (event.error.code === "incomplete_cvc") {
-        customErrorMessage = "Indique le cryptogramme visuel.";
-      }
-
-      setError((prevState) => ({
-        ...prevState,
-        [field]: customErrorMessage || "",
-      }));
-    } else {
-      setError((prevState) => ({
-        ...prevState,
-        [field]: "",
-      }));
-    }
-
-    setComplete((prevState) => ({
-      ...prevState,
-      [completeField]: event.complete,
-    }));
-  };
+  // const { mutate: addPaymentMethod, isLoading, isError, isSuccess, error } = useAddPaymentMethod();
+  const addPaymentMethod = useAddPaymentMethod();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -129,14 +93,14 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const cardElement = elements.getElement(CardNumberElement);
-    console.log("🚀 ~ handleSubmit ~ cardElement:", cardElement);
+    // console.log("🚀 ~ handleSubmit ~ cardElement:", cardElement);
 
     if (!cardElement) {
       setLoading(false);
       return;
     }
 
-    const { error: paymentMethodError }: PaymentMethodResult =
+    const { error: paymentMethodError, paymentMethod }: PaymentMethodResult =
       await stripe.createPaymentMethod({
         type: "card",
         card: cardElement,
@@ -150,10 +114,16 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
       return;
     }
+    // console.log(
+    //   "🚀 ~ handleSubmit ~ paymentMethod:METHOD ID",
+    //   paymentMethod.id
+    // );
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const change = await addPaymentMethod.mutateAsync(paymentMethod.id);
+    if (change?.success) alert(change.message);
+    // console.log("🚀 ~ handleSubmit ~ change:ID", change);
+    setLoading(false);
+    setPaymentStep(3);
   };
 
   const isFormValid =
@@ -165,8 +135,8 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
     !error.cvc;
 
   const hasCardFieldError = !!error.number || !!error.expiry || !!error.cvc;
-  //   console.log("🚀 ~ PaymentProvider ~ hasCardFieldError:", hasCardFieldError);
-  //   console.log(!!error.number);
+  // console.log("🚀 ~ PaymentProvider ~ hasCardFieldError:", hasCardFieldError);
+  console.log(!!error.number);
   return (
     <PaymentContext.Provider
       value={{
@@ -177,9 +147,10 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
         error,
         setError,
         hasCardFieldError,
-        handleChange,
         handleSubmit,
         isFormValid,
+        paymentStep,
+        setPaymentStep,
       }}
     >
       {children}

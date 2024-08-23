@@ -6,7 +6,7 @@ import {
 } from "@/actions/user-apply-coupon.action";
 import { saveCartItems } from "@/actions/user-cart.actions";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
-import { useAppDispatch, useAppSelector } from "@/hooks/use-redux-hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { cn } from "@/lib/utils";
 import { applyCoupon } from "@/store/cartSlice";
 import { ChevronUp } from "lucide-react";

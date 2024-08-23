@@ -51,7 +51,10 @@ const PaymentCard = ({
         variant="link"
         size="content"
         className="cursor-pointer"
-        onClick={async () => deletePaymentMethod.mutateAsync(paymentMethodId)}
+        onClick={async (e) => {
+          e.stopPropagation();
+          deletePaymentMethod.mutateAsync(paymentMethodId);
+        }}
       >
         Supprimer
       </Button>

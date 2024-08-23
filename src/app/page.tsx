@@ -33,7 +33,7 @@ import Carousel from "@/components/ui/carousels/carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useAppSelector } from "@/hooks/use-redux-hooks";
+import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
 
 export default function Home() {

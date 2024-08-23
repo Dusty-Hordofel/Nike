@@ -3,8 +3,8 @@
 import React, { ReactNode } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
-import { PaymentProvider } from "@/context/PaymentContext";
-import { DeliveryProvider } from "@/context/DeliveryContext";
+import { PaymentProvider } from "@/context/payment-context";
+import { DeliveryProvider } from "@/context/delivery-context";
 
 type CheckoutProvidersProps = {
   children: ReactNode;

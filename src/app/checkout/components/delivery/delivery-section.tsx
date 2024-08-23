@@ -19,7 +19,7 @@ import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import DeliveryAddressSummary from "./delivery-address-summary";
 import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
-import { useDeliveryContext } from "@/context/DeliveryContext";
+import { useDeliveryContext } from "@/context/delivery-context";
 import CheckoutSectionHeader from "../checkout-section-header";
 import DeliveryFormElements from "./delivery-form-elements";
 import {
@@ -29,6 +29,7 @@ import {
   useGetDeliveryAddresses,
   useUpdateDeliveryAddressStatus,
 } from "@/hooks/api/delivery-section";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DeliverySection2 = ({ deliveryAddress }: any) => {
   // console.log(
@@ -46,6 +47,7 @@ const DeliverySection2 = ({ deliveryAddress }: any) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
+  const queryClient = useQueryClient();
 
   const [refresh, setRefresh] = useState(false);
   const [addingNewAddress, setAddingNewAddress] = useState(false);
@@ -253,6 +255,11 @@ const DeliverySection2 = ({ deliveryAddress }: any) => {
           onClick={() => {
             setDeliveryStep(3);
             setActiveSection("payment");
+            queryClient.invalidateQueries({ queryKey: ["active-address"] });
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth", // pour un scroll fluide
+            });
           }}
         >
           Passer au paiement

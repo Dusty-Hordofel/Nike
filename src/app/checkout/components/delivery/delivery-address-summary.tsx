@@ -4,6 +4,7 @@ import React, { Dispatch, SetStateAction } from "react";
 // import DeliveryAddress from "./delivery-address";
 import ActiveDeliveryAddress from "./active-delivery-address";
 import DeliveryAddress from "./delivery-address";
+import DeliveryAddresses from "./delivery-addresses";
 
 interface DeliveryAddressSummaryProps {
   activeDeliveryAddress: any;
@@ -15,6 +16,7 @@ interface DeliveryAddressSummaryProps {
   handleAddNewAddress: () => void;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
+
 const DeliveryAddressSummary = ({
   onAddressId,
   deliveryAddresses,
@@ -59,17 +61,16 @@ const DeliveryAddressSummary = ({
             Adresse de livraison
           </h3>
           <div className="space-y-2">
-            {deliveryStep === 2 &&
-              deliveryAddresses.data.addresses.map((address: any) => (
-                <DeliveryAddress
-                  address={address}
-                  handleScrollToTop={handleScrollToTop}
-                  handleSetActiveAddress={handleSetActiveAddress}
-                  onDeliveryStep={onDeliveryStep}
-                  onActiveSection={onActiveSection}
-                  onAddressId={onAddressId}
-                />
-              ))}
+            {deliveryStep === 2 && (
+              <DeliveryAddresses
+                deliveryAddresses={deliveryAddresses.data.addresses}
+                handleScrollToTop={handleScrollToTop}
+                handleSetActiveAddress={handleSetActiveAddress}
+                onDeliveryStep={onDeliveryStep}
+                onActiveSection={onActiveSection}
+                onAddressId={onAddressId}
+              />
+            )}
             {deliveryStep === 3 && (
               <ActiveDeliveryAddress
                 lastName={lastName}

@@ -31,7 +31,6 @@ const useDeletePaymentMethod = () =>
         // alert("SUCCESS");
         // setSuccess("Address saved successfully");
         queryClient.invalidateQueries({ queryKey: ["payment-method"] });
-        //   queryClient.invalidateQueries({ queryKey: ["addresses"] });
       },
       onError: () => {
         alert("ERROR");

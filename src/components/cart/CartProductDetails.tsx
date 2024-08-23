@@ -1,7 +1,7 @@
 "use client";
 import { shoeSizes } from "@/assets/data/sizes";
 import { Delete, FavorisIcon, Gift } from "@/assets/icons";
-import { useAppDispatch, useAppSelector } from "@/hooks/use-redux-hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import {
   CartItem,
   emptyCart,

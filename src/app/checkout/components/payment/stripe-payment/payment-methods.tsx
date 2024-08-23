@@ -45,6 +45,7 @@ const PaymentMethods = ({
             checked={selectedPaymentMethod === "paypal"}
             onChange={onPaymentMethodChange}
             className="custom-radio"
+            disabled
           />
           <label htmlFor="paypal">
             <span>
@@ -68,6 +69,7 @@ const PaymentMethods = ({
             checked={selectedPaymentMethod === "googlePay"}
             onChange={onPaymentMethodChange}
             className="custom-radio"
+            disabled
           />
           <label
             htmlFor="googlePay"
@@ -75,9 +77,6 @@ const PaymentMethods = ({
           >
             <GooglePay />
           </label>
-        </div>
-        <div className="mt-4">
-          <p>Selected Option: {selectedPaymentMethod}</p>
         </div>
       </div>
     </div>

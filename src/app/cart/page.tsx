@@ -2,7 +2,7 @@
 import { Empty } from "@/components/cart";
 import CartProductDetails from "@/components/cart/CartProductDetails";
 import CartDetails from "@/components/cart/cart-details";
-import { useAppSelector } from "@/hooks/use-redux-hooks";
+import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
