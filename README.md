@@ -1136,9 +1136,9 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 43. Organisation
 
-### 44.
+### 44. Organisation des étapes de payment
 
-### 45.
+### 45. Mise à jour de la logique (UseEffect , React Query)
 
 ### 46.
 

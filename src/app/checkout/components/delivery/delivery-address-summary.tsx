@@ -10,7 +10,7 @@ interface DeliveryAddressSummaryProps {
   deliveryAddresses: any;
   deliveryStep: number;
   onDeliveryStep: Dispatch<SetStateAction<number | null>>;
-  onAddressId: Dispatch<SetStateAction<string | null>>;
+  onAddressId: Dispatch<SetStateAction<string | undefined>>;
   handleSetActiveAddress: any;
   handleAddNewAddress: () => void;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;

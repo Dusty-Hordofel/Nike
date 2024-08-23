@@ -50,7 +50,7 @@ const OrderSummary = ({ cart }: any) => {
               </button>
             </span>
           </div>
-          <div className="subtotal-amount">{cart?.data.cart.cartTotal} €</div>
+          <div className="subtotal-amount">{cart?.data?.cart?.cartTotal} €</div>
         </div>
 
         <div className="summary-item flex justify-between items-center">
@@ -62,7 +62,7 @@ const OrderSummary = ({ cart }: any) => {
           <div className="total-label">
             <span>Total </span>
           </div>
-          <div className="total-amount">{cart?.data.cart.cartTotal} €</div>
+          <div className="total-amount">{cart?.data?.cart?.cartTotal} €</div>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ const OrderSummary = ({ cart }: any) => {
             Livraison d'ici le&nbsp;mar. 25 juin
           </h3>
         </header>
-        {cart?.data.cart.products.map((product: any) => {
+        {cart?.data?.cart?.products.map((product: any) => {
           return (
             <div className=" cart-item py-4">
               <figure className="cart-item-figure flex">
@@ -93,17 +93,17 @@ const OrderSummary = ({ cart }: any) => {
                   </div>
                   <div>
                     <span className="cart-item-size">
-                      Taille : {product?.size}
+                      Taille : {product.size}
                     </span>
                   </div>
                   <div className="cart-item-color">
                     Couleur : Picante Red/University Blue/Coconut Milk/Sail
                   </div>
                   <div className="cart-item-quantity">
-                    Quantité : {product?.quantity} @ {product?.price} €
+                    Quantité : {product.quantity} @ {product?.price} €
                   </div>
                   <div className="cart-item-price">
-                    {product?.price * product?.quantity} €
+                    {product?.price * product.quantity} €
                   </div>
                 </figcaption>
               </figure>

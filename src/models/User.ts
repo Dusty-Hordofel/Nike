@@ -24,6 +24,7 @@ export interface IUser extends Document {
   emailVerified?: boolean;
   phoneNumber?: string;
   role?: string;
+  stripeCustomerId?: string;
   addresses?: IAddress[];
   terms: boolean;
   marketingOption?: boolean;
@@ -60,6 +61,11 @@ const userSchema = new Schema<IUser>(
       type: String,
       default:
         "https://res.cloudinary.com/dgsc66scx/image/upload/v1712483523/Asset_5_icflwx.png",
+    },
+    stripeCustomerId: {
+      type: String, // Définir le type approprié
+      unique: true, // Assurez-vous que customId est unique si nécessaire
+      // sparse: true, // Permettre des valeurs uniques tout en permettant que ce champ puisse être vide
     },
     password: { type: String, required: true, minlength: 6 },
     shoppingPreference: {

@@ -30,7 +30,7 @@ interface IOrder extends Document {
   paymentResult: {
     id: string;
     status: string;
-    email: string;
+    email?: string;
   };
   total: number;
   totalBeforeDiscount?: number;
