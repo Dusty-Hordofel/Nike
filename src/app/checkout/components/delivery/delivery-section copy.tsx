@@ -10,6 +10,10 @@ import {
   DeliveryInfoFormData,
   DeliveryInfoSchema,
 } from "@/lib/validations/delivery";
+import {
+  getUserActiveAdress,
+  getUserAdress,
+} from "@/actions/user-address.actions";
 import { useEffect, useState } from "react";
 import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
 import DeliveryAddressSummary from "./delivery-address-summary";
@@ -27,12 +31,19 @@ import {
 } from "@/hooks/api/delivery-section";
 import { useQueryClient } from "@tanstack/react-query";
 
-// currentCheckoutSection={currentCheckoutSection}
-//               setCurrentCheckoutSection={setCurrentCheckoutSection}
-const DeliverySection = ({
-  deliveryAddress,
-  setCurrentCheckoutSection,
-}: any) => {
+const DeliverySection2 = ({ deliveryAddress }: any) => {
+  // console.log(
+  //   "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE",
+  //   deliveryAddress.activeDeliveryAddress.activeAddress
+  // );
+  // console.log(
+  //   "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS",
+  //   deliveryAddress.activeDeliveryAddress.success
+  // );
+  // console.log(
+  //   "🚀 ~ DeliverySection2 ~ deliveryAddress:ACTIVE SUCCESS TSQ",
+  //   deliveryAddress.isSuccess
+  // );
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
@@ -49,7 +60,8 @@ const DeliverySection = ({
   const [success, setSuccess] = useState("");
 
   const user = useCurrentUser();
-  const { deliveryStep, setDeliveryStep } = useDeliveryContext();
+  const { deliveryStep, setDeliveryStep, setActiveSection } =
+    useDeliveryContext();
 
   const {
     register,
@@ -60,6 +72,10 @@ const DeliverySection = ({
     resolver: zodResolver(DeliveryInfoSchema),
   });
 
+  // const { activeDeliveryAddress, isLoading, isPending, isError } =
+  //   useActiveDeliveryAddress();
+
+  // const deliveryAddress = useGetDeliveryAddress(addressId);
   const updateDeliveryAddressStatus = useUpdateDeliveryAddressStatus();
   const deliveryAddresses = useGetDeliveryAddresses();
   const saveDeliveryAddress = useAddDeliveryAddress({ setSuccess, setError });
@@ -70,7 +86,7 @@ const DeliverySection = ({
       deliveryAddress.activeDeliveryAddress.success
     ) {
       setDeliveryStep(3);
-      setCurrentCheckoutSection("payment");
+      setActiveSection("payment");
       reset(deliveryAddress.activeDeliveryAddress.activeAddress);
     }
   }, [deliveryAddress.isSuccess, deliveryAddress.activeDeliveryAddress]);
@@ -99,6 +115,32 @@ const DeliverySection = ({
     deliveryAddress.isSuccess,
     deliveryAddress.data,
   ]);
+
+  // useEffect(() => {
+  //   if (addressId !== undefined) {
+  //     const fetchUserAddress = async () => {
+  //       const response = await getUserAdress(addressId);
+  //       console.log("🚀 ~ fetchUserAddress ~ response:VOIR", response);
+  //       const { success, address } = response;
+  //       if (success) {
+  //         reset(address);
+  //       } else {
+  //         reset({
+  //           lastName: "",
+  //           firstName: "",
+  //           country: "",
+  //           address: "",
+  //           phoneNumber: "",
+  //           email: "",
+  //           companyInfo: "",
+  //           city: "",
+  //           postalCode: "",
+  //         });
+  //       }
+  //     };
+  //     fetchUserAddress();
+  //   }
+  // }, [addressId, reset, refresh]);
 
   const handleAddNewAddress = () => {
     reset({
@@ -188,7 +230,7 @@ const DeliverySection = ({
                 deliveryAddresses={deliveryAddresses}
                 onAddressId={setAddressId}
                 onDeliveryStep={setDeliveryStep}
-                onActiveSection={setCurrentCheckoutSection}
+                onActiveSection={setActiveSection}
                 handleAddNewAddress={handleAddNewAddress}
                 handleSetActiveAddress={handleSetActiveAddress}
               />
@@ -212,7 +254,7 @@ const DeliverySection = ({
           isLoading={false}
           onClick={() => {
             setDeliveryStep(3);
-            setCurrentCheckoutSection("payment");
+            setActiveSection("payment");
             queryClient.invalidateQueries({ queryKey: ["active-address"] });
             window.scrollTo({
               top: 0,
@@ -227,4 +269,4 @@ const DeliverySection = ({
   );
 };
 
-export default DeliverySection;
+export default DeliverySection2;
