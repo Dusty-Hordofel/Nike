@@ -1,10 +1,10 @@
 "use client";
-import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
+import CheckoutHeader from "@/components/checkout/checkout-section-title";
 import { Button } from "@/components/ui/buttons/button/button";
 import LegalNotice from "../payment/legal-notice";
 import OrderSummary from "./order-summary";
 import { useModal } from "@/hooks/modal/use-modal-provider";
-import ResultModal from "../../result-modal";
+import ResultModal from "../../modals/result-modal";
 import { redirect } from "next/navigation";
 
 const OrderSection = ({ cart, deliveryAddress }: any) => {

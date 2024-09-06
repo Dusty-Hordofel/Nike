@@ -1,10 +1,12 @@
 "use client";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
-import CheckoutSectionTitle from "@/app/checkout/components/checkout-section-title";
-import Loader from "../../loader";
-import { useDeliveryContext } from "@/context/delivery-context";
-import { usePaymentContext } from "@/context/payment-context";
+import CheckoutSectionTitle from "@/components/checkout/checkout-section-title";
+import Loader from "../../../loader";
+import { useDeliveryContext } from "@/context/checkout/delivery-context";
+import { usePaymentContext } from "@/context/checkout/payment-context";
+import { useGetCart } from "@/hooks/api/cart/use-get-cart";
+import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
 import {
   useActivePaymentMethod,
   useChangeActivePaymentMethod,
@@ -15,6 +17,7 @@ import {
   StripePayment,
   PaymentMethods,
   BillingAddress,
+  PaymentAndBillingSummary,
   PaymentCards,
   ActivePaymentCard,
   BillingCountry,
@@ -24,12 +27,15 @@ export default function PaymentSection({
   deliveryAddress,
   cart,
   currentCheckoutSection,
+  setCurrentCheckoutSection,
 }: any) {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     "creditDebit" | "paypal" | "googlePay"
   >("creditDebit");
+  // const [paymentStep, setPaymentStep] = useState<null | number>(null);
 
-  const { deliveryStep } = useDeliveryContext();
+  const { deliveryStep, activeSection, setActiveSection } =
+    useDeliveryContext();
 
   const {
     loading,
@@ -39,7 +45,10 @@ export default function PaymentSection({
     setPaymentStep,
     handleSubmit,
   } = usePaymentContext();
+  // console.log("🚀 ~ PaymentSection ~ paymentStep:PAY STEP", paymentStep);
 
+  // const cart = useGetCart();
+  console.log("🚀 ~ PaymentSection ~ cart:CART", cart);
   const paymentMethods = useGetPaymentMethods();
   const deletePaymentMethod = useDeletePaymentMethod();
   const activePaymentMethod = useActivePaymentMethod();
@@ -65,6 +74,7 @@ export default function PaymentSection({
   ]);
 
   if (
+    // deliveryAddress.isLoading ||
     cart.isLoading ||
     paymentMethods.isLoading ||
     activePaymentMethod.isLoading
@@ -86,7 +96,12 @@ export default function PaymentSection({
       </section>
     );
 
-  if (cart.isError || paymentMethods.isError || activePaymentMethod.isError)
+  if (
+    // deliveryAddress.isError ||
+    cart.isError ||
+    paymentMethods.isError ||
+    activePaymentMethod.isError
+  )
     return <p>Error...</p>;
 
   const handlePaymentMethodChange: ChangeEventHandler<HTMLInputElement> = (
@@ -109,6 +124,10 @@ export default function PaymentSection({
     console.log("paymentMethodId,ID", paymentMethodId, id);
   };
 
+  // const handleChangeActivePaymentMethod = async (id: string) => {
+  //   await changeActivePaymentMethod.mutateAsync(id);
+  // };
+
   console.log(
     "🚀 ~ PaymentSection ~ activeDeliveryAddress:ACTIVE DELIVERY AD",
     deliveryAddress.activeDeliveryAddress
@@ -126,7 +145,7 @@ export default function PaymentSection({
       />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && currentCheckoutSection === "payment" && deliveryAddress.activeDeliveryAddress?.success ? "block" : "hidden"}`}
+        className={`mt-2 ${deliveryStep === 3 && activeSection === "payment" && deliveryAddress.activeDeliveryAddress?.success ? "block" : "hidden"}`}
       >
         {(paymentStep === 1 || paymentStep === 2) && (
           <>
@@ -152,6 +171,7 @@ export default function PaymentSection({
                 total="33"
                 order_id="123456789"
                 stripe_public_key={process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}
+                // stripe_public_key={stripe_public_key}
               />
             </div>
           </div>
@@ -203,6 +223,7 @@ export default function PaymentSection({
               onClick={
                 paymentStep === 2 ? () => setPaymentStep(3) : handleSubmit
               }
+              // onClick={handleSubmit}
             >
               {loading
                 ? "Processing..."

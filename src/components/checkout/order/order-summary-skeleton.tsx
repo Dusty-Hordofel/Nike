@@ -1,6 +1,6 @@
 "use client";
-import CheckoutHeader from "@/app/checkout/components/checkout-section-title";
-import { useDeliveryContext } from "@/context/delivery-context";
+import CheckoutHeader from "@/components/checkout/checkout-section-title";
+import { useDeliveryContext } from "@/context/checkout/delivery-context";
 import React from "react";
 
 const OrderSummarySkeleton = () => {

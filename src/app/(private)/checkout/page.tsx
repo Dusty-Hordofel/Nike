@@ -2,15 +2,15 @@
 
 import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
 import { useGetCart } from "@/hooks/api/cart/use-get-cart";
-import { DeliverySection } from "./components/delivery";
-import PaymentSection from "./components/payment/stripe-payment/payment-section";
-import OrderSection from "./components/order/order-section";
-import OrderSummary from "./components/order/order-summary";
-import Loader from "./components/loader";
-import Modal from "./result-modal";
+import { DeliverySection } from "../../../components/checkout/delivery";
+import PaymentSection from "../../../components/checkout/payment/stripe-payment/payment-section";
+import OrderSection from "../../../components/checkout/order/order-section";
+import OrderSummary from "../../../components/checkout/order/order-summary";
+import Loader from "../../../components/loader";
+import Modal from "../../../components/modals/result-modal";
 import { useModal } from "@/hooks/modal/use-modal-provider";
 import { useState } from "react";
-import { useDeliveryContext } from "@/context/delivery-context";
+import { useDeliveryContext } from "@/hooks/checkout/use-delivery-context";
 
 type Props = {};
 

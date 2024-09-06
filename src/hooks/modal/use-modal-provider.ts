@@ -1,4 +1,4 @@
-import { ModalContext } from "@/components/providers/modal-provider";
+import { ModalContext } from "@/context/modal/modal-context";
 import { ReactNode, useContext } from "react";
 
 interface ModalContextProps {

@@ -16,7 +16,7 @@ interface DeliveryContextProps {
   setActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
 }
 
-const DeliveryContext = createContext<DeliveryContextProps | undefined>(
+export const DeliveryContext = createContext<DeliveryContextProps | undefined>(
   undefined
 );
 
@@ -33,14 +33,4 @@ export const DeliveryProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </DeliveryContext.Provider>
   );
-};
-
-export const useDeliveryContext = () => {
-  const context = useContext(DeliveryContext);
-  if (!context)
-    throw new Error(
-      "throw new Error('useDeliveryContext must be used within a DeliveryProvider');"
-    );
-
-  return context;
 };

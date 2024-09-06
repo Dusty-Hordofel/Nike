@@ -47,19 +47,11 @@ interface PaymentContextProps {
   hasCardFieldError: boolean;
   paymentStep: number | null;
   setPaymentStep: Dispatch<SetStateAction<number | null>>;
-  //   handleChange: (
-  //     event:
-  //       | StripeCardNumberElementChangeEvent
-  //       | StripeCardExpiryElementChangeEvent
-  //       | StripeCardCvcElementChangeEvent,
-  //     field: keyof ErrorState,
-  //     completeField: keyof CompleteState
-  //   ) => void;
   handleSubmit: (event: React.FormEvent) => void;
   isFormValid: boolean;
 }
 
-const PaymentContext = createContext<PaymentContextProps | null>(null);
+export const PaymentContext = createContext<PaymentContextProps | null>(null);
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -156,14 +148,4 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </PaymentContext.Provider>
   );
-};
-
-export const usePaymentContext = () => {
-  const context = useContext(PaymentContext);
-  if (!context)
-    throw new Error(
-      "throw new Error('usePaymentContext must be used within a PaymentProvider');"
-    );
-
-  return context;
 };

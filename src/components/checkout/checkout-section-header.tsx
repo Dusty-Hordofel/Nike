@@ -1,6 +1,6 @@
-import CheckoutSectionTitle from "@/app/checkout/components/checkout-section-title";
+import CheckoutSectionTitle from "@/components/checkout/checkout-section-title";
 import React from "react";
-import Loader from "./loader";
+import Loader from "../loader";
 
 type CheckoutSectionHeaderProps = {
   title: string;

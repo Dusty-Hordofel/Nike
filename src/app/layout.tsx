@@ -6,7 +6,7 @@ import { helvetica } from "@/assets/fonts/helvetica/helvetica";
 import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/client-only";
 import dynamic from "next/dynamic";
-import { DeliveryProvider } from "@/context/delivery-context";
+import { DeliveryProvider } from "@/context/checkout/delivery-context";
 import { getUserActiveAdress } from "@/actions/user-address.actions";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";

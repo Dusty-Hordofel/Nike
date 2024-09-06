@@ -1,5 +1,5 @@
 "use client";
-import ModalProvider from "./modal-provider";
+import ModalProvider from "../../context/modal/modal-context";
 import ReduxProvider from "./redux-provider";
 import TanstackQueryProvider from "./tanstack-query-provider";
 

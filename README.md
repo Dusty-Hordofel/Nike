@@ -1142,7 +1142,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 46. Gestion du payment Stripe
 
-### 47.
+### 47. Ajout du Modal
 
 ### 48.
 
