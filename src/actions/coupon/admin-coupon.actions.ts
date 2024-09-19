@@ -1,10 +1,10 @@
 "use server";
 
-import connectDB from "@/config/database";
 import { currentUser } from "@/utils/auth";
 import User from "@/models/User";
 import { isValidObjectId } from "@/lib/utils";
 import Coupon, { ICoupon } from "@/models/Coupon";
+import { connectDB } from "@/config/database";
 
 export async function applyCoupon(couponInfos: ICoupon) {
   try {

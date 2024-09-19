@@ -3,8 +3,8 @@
 import {
   applyCouponCode,
   getCouponCode,
-} from "@/actions/user-apply-coupon.action";
-import { saveCartItems } from "@/actions/user-cart.actions";
+} from "@/actions/coupon/user-apply-coupon.action";
+import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { cn } from "@/lib/utils";

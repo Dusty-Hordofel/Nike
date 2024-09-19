@@ -5,3 +5,4 @@ export { default as PaymentAndBillingSummary } from "./payment-and-billing-summa
 export { default as PaymentCards } from "./payment-cards";
 export { default as ActivePaymentCard } from "./active-payment-card";
 export { default as BillingCountry } from "./billing-country";
+export { default as PaymentSection } from "./payment-section";

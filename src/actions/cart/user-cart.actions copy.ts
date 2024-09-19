@@ -10,7 +10,7 @@ import { CartItem, Coupon } from "@/store/cartSlice";
 import { redirect } from "next/navigation";
 import { isValidObjectId } from "@/lib/utils";
 import { connectDB, disconnectDB } from "@/config/database";
-import { applyCouponCode } from "./user-apply-coupon.action";
+import { applyCouponCode } from "../coupon/user-apply-coupon.action";
 import { revalidatePath } from "next/cache";
 
 // Fonction utilitaire pour vérifier l'ObjectId valide
@@ -44,11 +44,15 @@ export async function saveCartItems(
         )) as IProduct;
 
         if (!dbProduct) {
+          // return { error: `Product with ID ${cartItem.productID} not found` };
           throw new Error(`Product with ID ${cartItem.productID} not found`);
         }
 
         const subProduct = dbProduct.subProducts[Number(cartItem.style)];
         if (!subProduct) {
+          // return {
+          //   error: `SubProduct with style ${cartItem.style} not found for product ${dbProduct.name}`,
+          // };
           throw new Error(
             `SubProduct with style ${cartItem.style} not found for product ${dbProduct.name}`
           );
@@ -61,6 +65,9 @@ export async function saveCartItems(
 
         // Vérifier que la taille du produit a été trouvée et que son prix est défini
         if (!productSize || typeof productSize.price !== "number") {
+          // return {
+          //   error: `Price for size ${cartItem.size} not found in subProduct`,
+          // };
           throw new Error(
             `Price for size ${cartItem.size} not found in subProduct`
           );
@@ -151,9 +158,6 @@ export const getCart = async () => {
     }
 
     // console.log("🚀 ~ getCart ~ dbUser:", dbUser);
-
-    // revalidatePath("/checkout");
-
     // we don't want to connect
     const cart = await Cart.findOne({ user: dbUser._id });
     if (!cart) redirect("/cart");
@@ -163,7 +167,7 @@ export const getCart = async () => {
 
     return JSON.parse(JSON.stringify(cart));
   } catch (error) {
-    // console.log("🚀 ~ getCart ~ error:", error);
+    console.log("🚀 ~ getCart ~ error:", error);
     return { error: "An error occurred while loading cart items" };
   }
 };

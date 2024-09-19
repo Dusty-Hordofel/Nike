@@ -10,7 +10,7 @@ import { CartItem, Coupon } from "@/store/cartSlice";
 import { redirect } from "next/navigation";
 import { isValidObjectId } from "@/lib/utils";
 import { connectDB, disconnectDB } from "@/config/database";
-import { applyCouponCode } from "./user-apply-coupon.action";
+import { applyCouponCode } from "../coupon/user-apply-coupon.action";
 import { revalidatePath } from "next/cache";
 
 // Fonction utilitaire pour vérifier l'ObjectId valide

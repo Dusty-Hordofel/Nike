@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CarouselControls from "./carousel-controls";
 import CarouselSlides from "./carousel-slides";
-import { TrendSlidesProps } from "@/types/types";
+import { TrendSlidesProps } from "@/@types/types";
 
 interface CarousselProps {
   title?: string;
