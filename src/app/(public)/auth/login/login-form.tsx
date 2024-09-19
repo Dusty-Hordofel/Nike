@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  UserLoginFooterForm,
-  UserLoginForgotPasswordLink,
-  UserLoginTerms,
-} from "@/components/auth/login";
-import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
+import { UserLoginFooterForm } from "@/components/auth/login";
+
 import {
   FieldErrors,
   UseFormHandleSubmit,
@@ -14,51 +10,12 @@ import { CircleAlert } from "lucide-react";
 import LoginFormStep from "./login-step";
 import { EmailFormData, PasswordFormData } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
+import { EmailProps, PasswordProps } from "./formProps";
 
-type Props = {
+type LoginFormProps = {
   formCurrentStep: number;
-  emailProps: {
-    register: UseFormRegister<{ email: string }>;
-    errors: FieldErrors<{ email: string }>;
-    isLoading: boolean;
-    handleSubmit: UseFormHandleSubmit<{ email: string }, undefined>;
-    onSubmit: ({ email }: EmailFormData) => Promise<void>;
-  };
-  passwordProps: {
-    register: UseFormRegister<{ password: string }>;
-    errors: FieldErrors<{ password: string }>;
-    isLoading: boolean;
-    handleSubmit: UseFormHandleSubmit<{ password: string }, undefined>;
-    onSubmit: ({ password }: PasswordFormData) => Promise<void>;
-  };
-  //   registerEmail: UseFormRegister<{
-  //     email: string;
-  //   }>;
-  //   errorsEmail: FieldErrors<{
-  //     email: string;
-  //   }>;
-  //   isEmailLoading: boolean;
-  //   registerPassword: UseFormRegister<{
-  //     password: string;
-  //   }>;
-  //   errorsPassword: FieldErrors<{
-  //     password: string;
-  //   }>;
-  //   isPasswordLoading: boolean;
-  //   handleSubmitEmail: UseFormHandleSubmit<
-  //     {
-  //       email: string;
-  //     },
-  //     undefined
-  //   >;
-  //   handleSubmitPassword: UseFormHandleSubmit<
-  //     {
-  //       password: string;
-  //     },
-  //     undefined
-  //   >;
-  //   onSubmitStep1: ({ email }: EmailFormData) => Promise<void>;
-  //   onSubmitStep2: ({ password }: PasswordFormData) => Promise<void>;
+  emailProps: EmailProps;
+  passwordProps: PasswordProps;
   error: string;
 };
 
@@ -66,26 +23,18 @@ const LoginForm = ({
   formCurrentStep,
   emailProps,
   passwordProps,
-  //   registerEmail,
-  //   errorsEmail,
-  //   isEmailLoading,
-  //   registerPassword,
-  //   errorsPassword,
-  //   isPasswordLoading,
-  //   handleSubmitEmail,
-  //   handleSubmitPassword,
-  //   onSubmitStep1,
-  //   onSubmitStep2,
   error,
-}: Props) => {
+}: LoginFormProps) => {
+  const { handleSubmitEmail, onSubmitStep1, ...restEmailProps } = emailProps;
+  const { handleSubmitPassword, onSubmitStep2, ...restPasswordProps } =
+    passwordProps;
+
   return (
     <form
       onSubmit={
         formCurrentStep === 1
-          ? emailProps.handleSubmit(emailProps.onSubmit)
-          : passwordProps.handleSubmit(passwordProps.onSubmit)
-        //   ? handleSubmitEmail(onSubmitStep1)
-        //   : handleSubmitPassword(onSubmitStep2)
+          ? emailProps.handleSubmitEmail(onSubmitStep1)
+          : passwordProps.handleSubmitPassword(onSubmitStep2)
       }
     >
       <div
@@ -99,28 +48,14 @@ const LoginForm = ({
 
       <LoginFormStep
         formCurrentStep={formCurrentStep}
-        registerEmail={emailProps.register}
-        errorsEmail={emailProps.errors}
-        isEmailLoading={emailProps.isLoading}
-        registerPassword={passwordProps.register}
-        errorsPassword={passwordProps.errors}
-        isPasswordLoading={passwordProps.isLoading}
-        // formCurrentStep={formCurrentStep}
-        // registerEmail={registerEmail}
-        // errorsEmail={errorsEmail}
-        // isEmailLoading={isEmailLoading}
-        // registerPassword={registerPassword}
-        // errorsPassword={errorsPassword}
-        // isPasswordLoading={isPasswordLoading}
+        simplifiedEmailProps={{ ...restEmailProps }}
+        simplifiedPasswordProps={{ ...restPasswordProps }}
       />
 
       <UserLoginFooterForm
         formCurrentStep={formCurrentStep}
-        isEmailLoading={emailProps.isLoading}
-        isPasswordLoading={passwordProps.isLoading}
-        // formCurrentStep={formCurrentStep}
-        // isEmailLoading={isEmailLoading}
-        // isPasswordLoading={isPasswordLoading}
+        isEmailLoading={restEmailProps.isEmailLoading}
+        isPasswordLoading={restPasswordProps.isPasswordLoading}
       />
     </form>
   );

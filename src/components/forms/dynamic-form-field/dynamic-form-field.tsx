@@ -8,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { ErrorMessage } from "@hookform/error-message";
+// import { ErrorMessage } from "@hookform/error-message";
 import FileUpload from "./file-upload";
 // import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 
@@ -109,7 +109,7 @@ const DynamicFormField = ({
           />
           {/* h-14 */}
 
-          <ErrorMessage
+          {/* <ErrorMessage
             errors={errors}
             name={name}
             render={({ message }) => (
@@ -117,8 +117,8 @@ const DynamicFormField = ({
                 {message === "Required" ? "" : message}
               </p>
             )}
-          />
-          {/* <ErrorMessage type={type} error={error} errorMessage={errorMessage} /> */}
+          /> */}
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
 
@@ -155,7 +155,7 @@ const DynamicFormField = ({
             </select>
           </div>
 
-          <ErrorMessage
+          {/* <ErrorMessage
             errors={errors}
             name={name}
             render={({ message }) => (
@@ -163,13 +163,9 @@ const DynamicFormField = ({
                 {message === "Required" ? "" : message}
               </p>
             )}
-          />
-
-          {/* <ErrorMessage
-            type="text"
-            error={error}
-            errorMessage={errorMessage}
           /> */}
+
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
 
@@ -209,7 +205,7 @@ const DynamicFormField = ({
             />
           )} */}
           </div>
-          <ErrorMessage
+          {/* <ErrorMessage
             errors={errors}
             name={name}
             render={({ message }) => (
@@ -217,7 +213,8 @@ const DynamicFormField = ({
                 {message === "Required" ? "" : message}
               </p>
             )}
-          />
+          /> */}
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
 
@@ -238,7 +235,7 @@ const DynamicFormField = ({
               className
             )}
           />
-          <ErrorMessage
+          {/* <ErrorMessage
             errors={errors}
             name={name}
             render={({ message }) => (
@@ -246,12 +243,8 @@ const DynamicFormField = ({
                 {message === "Required" ? "" : message}
               </p>
             )}
-          />
-          {/* <ErrorMessage
-            type="text"
-            error={error}
-            errorMessage={errorMessage}
           /> */}
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
   }
@@ -259,22 +252,22 @@ const DynamicFormField = ({
 
 export default DynamicFormField;
 
-// interface ErrorMessageProps<T extends FieldValues> {
-//   error: FieldErrors<T>[Path<T>];
-//   type?: "text" | "email" | "password" | "number" | "checkbox";
-//   errorMessage: string;
-// }
+interface ErrorMessageProps<T extends FieldValues> {
+  error: FieldErrors<T>[Path<T>];
+  type?: "text" | "email" | "password" | "number" | "checkbox" | "file";
+  errorMessage: string;
+}
 
-// const ErrorMessage  = <T extends FieldValues>({
-//   type,
-//   error,
-//   errorMessage,
-// }: ErrorMessageProps<T>) => {
-//   return (
-//     <div className="h-6">
-//       {error && type !== "checkbox" && (
-//         <p className="px-4 pt-[6px] text-xs text-red-600">{errorMessage}</p>
-//       )}
-//     </div>
-//   );
-// };
+const ErrorMessage = <T extends FieldValues>({
+  type,
+  error,
+  errorMessage,
+}: ErrorMessageProps<T>) => {
+  return (
+    <div className="h-6">
+      {error && type !== "checkbox" && (
+        <p className="px-4 pt-[6px] text-xs text-red-600">{errorMessage}</p>
+      )}
+    </div>
+  );
+};

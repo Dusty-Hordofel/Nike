@@ -9,9 +9,9 @@ import {
   PasswordSchema,
 } from "@/lib/validations/auth";
 import { UserSelectCountry } from "@/components/auth/login";
-import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
+import { UserAuthHeaderForm } from "@/components/auth";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { signIn, useSession } from "next-auth/react";
@@ -149,29 +149,19 @@ const LoginPage = () => {
         <LoginForm
           formCurrentStep={formCurrentStep}
           emailProps={{
-            register: registerEmail,
-            errors: errorsEmail,
-            isLoading: isEmailLoading,
-            handleSubmit: handleSubmitEmail,
-            onSubmit: onSubmitStep1,
+            registerEmail,
+            errorsEmail,
+            isEmailLoading,
+            handleSubmitEmail,
+            onSubmitStep1,
           }}
           passwordProps={{
-            register: registerPassword,
-            errors: errorsPassword,
-            isLoading: isPasswordLoading,
-            handleSubmit: handleSubmitPassword,
-            onSubmit: onSubmitStep2,
+            registerPassword,
+            errorsPassword,
+            isPasswordLoading,
+            handleSubmitPassword,
+            onSubmitStep2,
           }}
-          // registerEmail={registerEmail}
-          // errorsEmail={errorsEmail}
-          // isEmailLoading={isEmailLoading}
-          // registerPassword={registerPassword}
-          // errorsPassword={errorsPassword}
-          // isPasswordLoading={isPasswordLoading}
-          // handleSubmitEmail={handleSubmitEmail}
-          // handleSubmitPassword={handleSubmitPassword}
-          // onSubmitStep1={onSubmitStep1}
-          // onSubmitStep2={onSubmitStep2}
           error={error}
         />
       </div>

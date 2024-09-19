@@ -30,7 +30,7 @@ import { CircleAlert } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
 import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
-import ShoppingPreference from "../(public)/auth/register/ShoppingPreference";
+import ShoppingPreference from "../(public)/auth/register/shopping-preference";
 import * as z from "zod";
 import { Button } from "@/components/ui/buttons/button/button";
 import { FileIcon } from "lucide-react";

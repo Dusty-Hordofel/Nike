@@ -4,34 +4,21 @@ import {
 } from "@/components/auth/login";
 import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import React from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { EmailProps, PasswordProps } from "./formProps";
 
 type LoginFormStepProps = {
   formCurrentStep: number;
-  registerEmail: UseFormRegister<{
-    email: string;
-  }>;
-  errorsEmail: FieldErrors<{
-    email: string;
-  }>;
-  isEmailLoading: boolean;
-  registerPassword: UseFormRegister<{
-    password: string;
-  }>;
-  errorsPassword: FieldErrors<{
-    password: string;
-  }>;
-  isPasswordLoading: boolean;
+  simplifiedEmailProps: Omit<EmailProps, "handleSubmitEmail" | "onSubmitStep1">;
+  simplifiedPasswordProps: Omit<
+    PasswordProps,
+    "handleSubmitPassword" | "onSubmitStep2"
+  >;
 };
 
 const LoginFormStep = ({
   formCurrentStep,
-  registerEmail,
-  errorsEmail,
-  isEmailLoading,
-  registerPassword,
-  errorsPassword,
-  isPasswordLoading,
+  simplifiedEmailProps,
+  simplifiedPasswordProps,
 }: LoginFormStepProps) => {
   switch (formCurrentStep) {
     case 1:
@@ -41,12 +28,12 @@ const LoginFormStep = ({
             inputType="input"
             label="Email"
             name="email"
-            register={registerEmail}
-            errors={errorsEmail}
+            register={simplifiedEmailProps.registerEmail}
+            errors={simplifiedEmailProps.errorsEmail}
             inputProps={{
               type: "text",
               placeholder: "Email*",
-              disabled: isEmailLoading,
+              disabled: simplifiedEmailProps.isEmailLoading,
             }}
           />
           <UserLoginTerms />
@@ -59,12 +46,12 @@ const LoginFormStep = ({
             inputType="input"
             label="Password"
             name="password"
-            register={registerPassword}
-            errors={errorsPassword}
+            register={simplifiedPasswordProps.registerPassword}
+            errors={simplifiedPasswordProps.errorsPassword}
             inputProps={{
               type: "password",
               placeholder: "Password*",
-              disabled: isPasswordLoading,
+              disabled: simplifiedPasswordProps.isPasswordLoading,
             }}
           />
           <UserLoginForgotPasswordLink />
