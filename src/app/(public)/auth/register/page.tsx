@@ -26,7 +26,7 @@ import FormCheckbox from "./form-checkbox";
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "@/auth";
-import { signInWithCredentials } from "@/actions/user-auth.actions";
+import { signInWithCredentials } from "@/actions/auth/user-auth.actions";
 import { ZodError } from "zod";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
 

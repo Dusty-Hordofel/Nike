@@ -104,6 +104,45 @@ export const UserSchema = z.object({
 // Création d'un schéma partiel pour l'email
 export const EmailSchema = LogInSchema.pick({ email: true });
 export const PasswordSchema = LogInSchema.pick({ password: true });
+export const OptionSchema = UserSchema.pick({ shoppingPreference: true });
+
+export const TestSchema = z.object({
+  lastName: z
+    .string({ message: "Le nom est requis." })
+    .min(1, "Le nom est requis."), // Ajoutez .min(1, "Le nom est requis.") pour rendre le champ obligatoire
+  email: z.string().email({ message: "L'adresse email est invalide." }),
+  shoppingPreference: z
+    .string()
+    .refine((value) => ["homme", "femme"].includes(value), {
+      message: "Required.",
+    }),
+
+  description: z.string().min(6, {
+    message: "Le mot de passe doit contenir au moins 6 caractères.",
+  }),
+  file: z
+    .any()
+    .refine((files) => files && files.length > 0, {
+      message: "File is required",
+    })
+    .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
+      message: "File size must be less than 5MB",
+    })
+    .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
+      message: "Only JPEG and PNG files are allowed",
+    }),
+  // file: z
+  //   .any()
+  //   .refine((files) => files && files.length > 0, {
+  //     message: "File is required",
+  //   }) // Check if a file is uploaded
+  //   .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
+  //     message: "File size must be less than 5MB",
+  //   }) // File size validation
+  //   .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
+  //     message: "Only JPEG and PNG files are allowed",
+  //   }), // File type validation
+});
 
 // Extraction du type TypeScript pour l'email & password
 export type EmailFormData = z.infer<typeof EmailSchema>;
@@ -111,6 +150,8 @@ export type PasswordFormData = z.infer<typeof PasswordSchema>;
 export type LoginFormData = z.infer<typeof LogInSchema>;
 export type RegisterFormData = z.infer<typeof RegisterSchema>;
 export type UserFormData = z.infer<typeof UserSchema>;
+export type OptionFormData = z.infer<typeof OptionSchema>;
+export type TestFormData = z.infer<typeof TestSchema>;
 
 export const userResetPasswordSchema = z.object({
   code: z.string().min(5, "Obligatoire"),

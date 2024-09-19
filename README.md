@@ -1144,7 +1144,9 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 47. Ajout du Modal
 
-### 48.
+## Section 3: Admin Dashboard(Products Categories SubCategories Coupons)
+
+### 48. DynamicFormField
 
 ### 49.
 

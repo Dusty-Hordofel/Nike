@@ -7,7 +7,7 @@ import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/client-only";
 import dynamic from "next/dynamic";
 import { DeliveryProvider } from "@/context/checkout/delivery-context";
-import { getUserActiveAdress } from "@/actions/user-address.actions";
+import { getUserActiveAdress } from "@/actions/address/user-address.actions";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 
