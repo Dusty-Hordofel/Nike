@@ -3,21 +3,26 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 interface UserAuthFooterProps {
-  formStep: number;
+  formCurrentStep: number;
   isEmailLoading: boolean;
   isPasswordLoading: boolean;
 }
 const UserLoginFooterForm = ({
-  formStep,
+  formCurrentStep,
   isEmailLoading,
   isPasswordLoading,
 }: UserAuthFooterProps) => {
   return (
     <div
-      className={cn("flex justify-end", formStep === 0 ? "pt-4" : "pt-[30px]")}
+      className={cn(
+        "flex justify-end",
+        formCurrentStep === 0 ? "pt-4" : "pt-[30px]"
+      )}
     >
-      <Button isLoading={formStep === 0 ? isEmailLoading : isPasswordLoading}>
-        {formStep === 0 ? "Continuer" : "Password"}
+      <Button
+        isLoading={formCurrentStep === 0 ? isEmailLoading : isPasswordLoading}
+      >
+        {formCurrentStep === 0 ? "Continuer" : "Password"}
       </Button>
     </div>
   );

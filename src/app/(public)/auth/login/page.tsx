@@ -1,44 +1,37 @@
 "use client";
 
-// import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   EmailFormData,
   PasswordFormData,
   EmailSchema,
   PasswordSchema,
 } from "@/lib/validations/auth";
-import { cn } from "@/lib/utils";
-import {
-  UserSelectCountry,
-  UserLoginFooterForm,
-  UserLoginForgotPasswordLink,
-  UserLoginTerms,
-} from "@/components/auth/login";
+import { UserSelectCountry } from "@/components/auth/login";
 import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { CircleAlert } from "lucide-react";
-
 import { signIn, useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
+import EditEmail from "./edit-email";
+import LoginForm from "./login-form";
 
 const LoginPage = () => {
   const router = useRouter();
-  const user = useCurrentUser();
+  // const user = useCurrentUser();
 
-  if (user /*&& userRole !== "user"*/) {
-    router.push(`${window.location.origin}` || "/");
-  }
+  // if (user /*&& userRole !== "user"*/) {
+  //   router.push(`${window.location.origin}` || "/");
+  // }
 
   const [email, setEmail] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [error, setError] = useState("");
-  const [formStep, setFormStep] = useState(0);
+  const [formCurrentStep, setFormCurrentStep] = useState(1);
 
   const {
     register: registerEmail,
@@ -104,7 +97,7 @@ const LoginPage = () => {
 
     if (sucess) {
       setEmail(email);
-      setFormStep(1);
+      setFormCurrentStep(2);
     } else {
       setIsEmailLoading(false);
       router.push(`/auth/register?email=${encodeURIComponent(email)}`);
@@ -132,91 +125,55 @@ const LoginPage = () => {
       <div className="flex flex-col justify-center max-w-[532px] w-full px-9 max-h-[569px] h-full">
         <UserAuthHeaderForm
           ariaLabel={
-            formStep === 0
+            formCurrentStep === 1
               ? "Enter your email to join us or sign in."
               : "Enter your email to password us or sign in."
           }
           title={
-            formStep === 0
+            formCurrentStep === 1
               ? "Enter your email to join us or sign in."
               : "What's your password?"
           }
         />
 
         {/* Selectionner un pays */}
-        {formStep === 0 ? (
+        {formCurrentStep === 1 ? (
           <UserSelectCountry />
         ) : (
-          <div
-            className={cn(
-              "text-black-100 pb-6",
-              {
-                hidden: formStep === 0,
-              },
-              "min-h-[40px] pb-8"
-            )}
-          >
-            <span className="pr-[5px]">{email}</span>
-            <button
-              className="text-gray-500 underline"
-              onClick={() => setFormStep(0)}
-            >
-              Modifier
-            </button>
-          </div>
-        )}
-
-        <form
-          onSubmit={
-            formStep === 0
-              ? handleSubmitEmail(onSubmitStep1)
-              : handleSubmitPassword(onSubmitStep2)
-          }
-        >
-          <div
-            className={cn(
-              ` h-11 bg-gray-100 py-3 px-4 mb-5 items-center gap-x-4 rounded-md ${formStep === 1 && error.length > 0 ? "flex" : "hidden"}`
-            )}
-          >
-            <CircleAlert color="#ee0005" />
-            <p>{error.length > 0 && error}</p>
-          </div>
-
-          {formStep === 0 ? (
-            <UserAuthInputFieldForm
-              id="email"
-              label="email"
-              placeholder="Email*"
-              type="email"
-              isLoading={isEmailLoading}
-              register={registerEmail}
-              errors={errorsEmail as FieldErrors<EmailFormData>}
-              name="email"
-            />
-          ) : (
-            <UserAuthInputFieldForm
-              id="password"
-              label="password"
-              placeholder="Password*"
-              type="password"
-              isLoading={isPasswordLoading}
-              register={registerPassword}
-              errors={errorsPassword as FieldErrors<PasswordFormData>}
-              name="password"
-            />
-          )}
-          {formStep === 0 ? (
-            <UserLoginTerms />
-          ) : (
-            <UserLoginForgotPasswordLink />
-          )}
-
-          <UserLoginFooterForm
-            formStep={formStep}
-            isEmailLoading={isEmailLoading}
-            isPasswordLoading={isPasswordLoading}
+          <EditEmail
+            formCurrentStep={formCurrentStep}
+            setFormCurrentStep={setFormCurrentStep}
+            email={email}
           />
-        </form>
+        )}
+        <LoginForm
+          formCurrentStep={formCurrentStep}
+          emailProps={{
+            register: registerEmail,
+            errors: errorsEmail,
+            isLoading: isEmailLoading,
+            handleSubmit: handleSubmitEmail,
+            onSubmit: onSubmitStep1,
+          }}
+          passwordProps={{
+            register: registerPassword,
+            errors: errorsPassword,
+            isLoading: isPasswordLoading,
+            handleSubmit: handleSubmitPassword,
+            onSubmit: onSubmitStep2,
+          }}
+          // registerEmail={registerEmail}
+          // errorsEmail={errorsEmail}
+          // isEmailLoading={isEmailLoading}
+          // registerPassword={registerPassword}
+          // errorsPassword={errorsPassword}
+          // isPasswordLoading={isPasswordLoading}
+          // handleSubmitEmail={handleSubmitEmail}
+          // handleSubmitPassword={handleSubmitPassword}
+          // onSubmitStep1={onSubmitStep1}
+          // onSubmitStep2={onSubmitStep2}
+          error={error}
+        />
       </div>
     </div>
   );

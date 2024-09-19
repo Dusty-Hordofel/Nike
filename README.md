@@ -1148,7 +1148,47 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 48. DynamicFormField
 
-### 49.
+### 49. Mise à jour des input
+
+### 50.
+
+### 51.
+
+### 52.
+
+### 53.
+
+### 54.
+
+### 55.
+
+### 56.
+
+### 57.
+
+### 58.
+
+### 59.
+
+### 61.
+
+### 62.
+
+### 63.
+
+### 64.
+
+### 65.
+
+### 66.
+
+### 67.
+
+### 68.
+
+### 69.
+
+### 70.
 
 ## External Links
 

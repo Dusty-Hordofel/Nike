@@ -187,8 +187,8 @@ const MekaPage = () => {
             name="file"
             register={register}
             errors={errors}
-            onChange={handleFileChange}
-            onClick={handleButtonClick}
+            onFileChange={handleFileChange}
+            onButtonClick={handleButtonClick}
             fileProps={{
               previewUrl,
               fileInputRef: fileInputRef,
@@ -202,11 +202,11 @@ const MekaPage = () => {
             <UserLoginForgotPasswordLink />
           )}
 
-          <UserLoginFooterForm
+          {/* <UserLoginFooterForm
             formStep={formStep}
             isEmailLoading={isEmailLoading}
             isPasswordLoading={isPasswordLoading}
-          />
+          /> */}
         </form>
       </div>
     </div>

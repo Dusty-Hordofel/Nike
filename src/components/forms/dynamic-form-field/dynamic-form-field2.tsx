@@ -8,24 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-// import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
-
-// export interface FormInputFieldProps<T extends FieldValues>
-//   extends React.InputHTMLAttributes<HTMLInputElement> {
-//   inputType: "select" | "input" | "textarea" | "file";
-//   type?: "text" | "email" | "password" | "number" | "checkbox";
-//   //   inputType:string,
-//   label: string;
-//   placeholder?: string;
-//   //   type?: string;
-//   isLoading: boolean;
-//   //   register: UseFormRegister<T>;
-//   //   errors: FieldErrors<T>;
-//   register: UseFormRegister<any>;
-//   errors: FieldErrors<FieldValues>;
-//   name: Path<T>;
-//   className?: string;
-// }
+import FileUpload from "./file-upload";
 
 interface Option {
   value: string;
@@ -35,42 +18,37 @@ interface Option {
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+
 type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   options?: Option[];
 };
 type FileProps = React.InputHTMLAttributes<HTMLInputElement> & {
   fileInputRef?: React.RefObject<HTMLInputElement>;
-  previewUrl?: string;
+  previewUrl?: string | null;
 };
 
 // / Définir le type pour les propriétés de champ dynamique
 interface DynamicFormFieldProps<T extends FieldValues> {
   inputType: "select" | "input" | "textarea" | "file";
-  type?: "text" | "email" | "password" | "number" | "checkbox";
-  placeholder?: string;
   name: Path<T>;
   label?: string;
   disabled?: boolean;
   options?: Option[];
-  //   lines?: number;
-  fileInputRef?: any;
   previewUrl?: any;
-  isLoading: boolean;
   className?: string;
-  register: UseFormRegister<T>;
-  errors: FieldErrors<T>;
   inputProps?: InputProps;
   textareaProps?: TextareaProps;
   selectProps?: SelectProps;
   fileProps?: FileProps;
+  onFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onButtonClick?: () => void;
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
 }
 
-const DynamicFormField = <T extends FieldValues>({
+const DynamicFormField2 = <T extends FieldValues>({
   inputType,
   label,
-  //   placeholder,
-  type,
-  isLoading,
   register,
   errors,
   name,
@@ -80,8 +58,8 @@ const DynamicFormField = <T extends FieldValues>({
   textareaProps,
   selectProps,
   fileProps,
-  //   lines,
-  //   ...props
+  onFileChange,
+  onButtonClick,
 }: DynamicFormFieldProps<T>) => {
   const error = errors[name];
   const errorMessage = error ? (error.message as string) : "";
@@ -95,25 +73,29 @@ const DynamicFormField = <T extends FieldValues>({
           </label>
           <Textarea
             id={`input-${label}`}
-            // placeholder={placeholder}
-            // autoCapitalize="none"
-            // autoComplete={type}
-            // autoCorrect="off"
-            // rows={lines}
-            // disabled={isLoading}
             {...register(name)}
             {...textareaProps}
-            className={cn("p-4 rounded-lg h-14 focus:outline-none", className)}
+            // rows={lines}
+            className={cn(
+              "p-4 rounded-lg focus:outline-none",
+              error ? "text-red-600" : "text-black-200",
+              className
+            )}
           />
 
-          <ErrorMessage type={type} error={error} errorMessage={errorMessage} />
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
 
     case "select":
       return (
         <div className="flex flex-col">
-          <div className="w-full py-4 pr-4 pl-3 rounded-lg border-default border focus:outline-none transition-all flex justify-between relative ">
+          <div
+            className={cn(
+              "w-full py-4 pr-4 pl-3 rounded-lg border-default border focus:outline-none transition-all flex justify-between relative ",
+              error ? "text-red-600" : "text-black-200"
+            )}
+          >
             <label className="sr-only" htmlFor={`select-${label}`}>
               {label}
             </label>
@@ -121,12 +103,8 @@ const DynamicFormField = <T extends FieldValues>({
               {...register(name)}
               id={`select-${label}`}
               name={name}
-              //   autoComplete="off"
               style={{ appearance: "none" }}
               className="w-full bg-clear z-10 focus:outline-none "
-              //   aria-invalid="true"
-              //   aria-required="false"
-              //   aria-describedby="shopping-preference-select-aria-description"
               {...selectProps}
             >
               <option value="preference" style={{ display: "none" }}>
@@ -142,7 +120,47 @@ const DynamicFormField = <T extends FieldValues>({
             </select>
           </div>
 
-          <ErrorMessage type={type} error={error} errorMessage={errorMessage} />
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
+        </div>
+      );
+
+    case "file": // Gestion du type file
+      return (
+        <div className="flex flex-col">
+          <div
+            className={cn(
+              "w-full py-4 pr-4 pl-3 rounded-lg border-default border focus:outline-none transition-all flex justify-between relative gap-x-2 bg-green-400 cursor-pointer",
+              error ? "text-red-600" : "text-black-200"
+            )}
+            onClick={onButtonClick}
+          >
+            <label className="sr-only" htmlFor={`file-${label}`}>
+              {label}
+            </label>
+            <input
+              id={`file-${label}`}
+              type="file"
+              {...register(name)}
+              ref={fileProps?.fileInputRef}
+              {...fileProps}
+              className={cn(
+                "p-4 rounded-lg focus:outline-none",
+                error ? "text-red-600" : "text-black-200",
+                className
+              )}
+              onChange={onFileChange}
+              style={{ display: "none" }} // Cache le champ de fichier
+            />
+            <FileUpload previewUrl={fileProps?.previewUrl} />
+            {/* {fileProps?.previewUrl && (
+            <img
+              src={fileProps.previewUrl}
+              alt="preview"
+              className="mt-4 w-40 h-40 object-cover"
+            />
+          )} */}
+          </div>
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
 
@@ -155,23 +173,22 @@ const DynamicFormField = <T extends FieldValues>({
           </label>
           <Input
             id={`input-${label}`}
-            // placeholder={placeholder}
-            // type={type}
-            // autoCapitalize="none"
-            // autoComplete={type}
-            // autoCorrect="off"
-            // disabled={isLoading}
             {...register(name)}
             {...inputProps}
-            className={cn("p-4 rounded-lg h-14 focus:outline-none", className)}
+            className={cn(
+              "p-4 rounded-lg h-14 focus:outline-none",
+              error ? "text-red-600" : "text-black-200",
+              className
+            )}
           />
-          <ErrorMessage type={type} error={error} errorMessage={errorMessage} />
+
+          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
   }
 };
 
-export default DynamicFormField;
+export default DynamicFormField2;
 
 interface ErrorMessageProps<T extends FieldValues> {
   error: FieldErrors<T>[Path<T>];
