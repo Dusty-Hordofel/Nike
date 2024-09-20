@@ -3,12 +3,18 @@ import CheckoutHeader from "@/components/checkout/checkout-section-title";
 import { Button } from "@/components/ui/buttons/button/button";
 import LegalNotice from "../payment/legal-notice";
 import OrderSummary from "./order-summary";
-import { useModal } from "@/hooks/modal/use-modal-provider";
-import ResultModal from "../../modals/result-modal";
-import { redirect } from "next/navigation";
+// import { useModal } from "@/hooks/modal/use-modal-provider";
+import Modal from "@/components/modals/modal";
+import { useModal } from "@/context/modal/modal-context";
 
 const OrderSection = ({ cart, deliveryAddress }: any) => {
-  const { showModal, closeModal } = useModal();
+  const {
+    showResultModal,
+    closeResultModal,
+    resultModalContent,
+    setResultModalContent,
+    isResultModalOpen,
+  } = useModal();
 
   const handleCreateOrder = async () => {
     try {
@@ -35,26 +41,26 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
 
       const result = await response.json();
 
-      displayResultModal(result.success, result.message);
+      setResultModalContent({ success: true, message: result.message });
+      showResultModal();
     } catch (error: any) {
-      displayResultModal(
-        false,
-        `An unexpected error occurred: ${error.message}`
-      );
+      setResultModalContent({
+        success: false,
+        message: `An error occurred: ${error.message}`,
+      });
     }
   };
 
-  const displayResultModal = (success: boolean, message: string) => {
-    showModal(
-      <ResultModal
-        title={success ? "Success" : "Error"}
-        content={message}
-        closeModal={closeModal}
-        onConfirm
-        // onConfirm={success ? () => (window.location.href = "/") : undefined}
-      />
-    );
-  };
+  // const displayResultModal = (success: boolean, message: string) => {
+  //   showModal(
+  //     <Modal
+  //       title={success ? "Success" : "Error"}
+
+  //       // closeModal={closeModal}
+  //       onCloseModal={closeResultModal}
+  //     />
+  //   );
+  // };
 
   return (
     <>
@@ -88,6 +94,15 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
           </Button>
         </div>
       </section>
+
+      {isResultModalOpen && resultModalContent && (
+        <Modal
+          title={resultModalContent.success ? "Success" : "Error"}
+          onCloseModal={closeResultModal}
+        >
+          <p className="mb-4">{resultModalContent.message}</p>
+        </Modal>
+      )}
     </>
   );
 };

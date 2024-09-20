@@ -170,6 +170,10 @@ css-518m28::before {
   ); */
 }
 
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 @media (min-width: 600px) {
   .css-1ncut4k {
     padding-left: 64px;

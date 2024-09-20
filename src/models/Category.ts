@@ -4,6 +4,7 @@ import mongoose, { Document, Schema, Model, model } from "mongoose";
 interface ICategory extends Document {
   name: string;
   slug: string;
+  image: string;
 }
 
 // Définition du schéma Mongoose pour une catégorie
@@ -14,10 +15,18 @@ const categorySchema = new Schema<ICategory>(
       required: true,
       minlength: [2, "Must be at least 2 characters"],
       maxlength: [32, "Must be at most 32 characters"],
+      index: true,
     },
     slug: {
       type: String,
       unique: true,
+      lowercase: true,
+      index: true,
+    },
+    image: {
+      type: String,
+      required: true,
+      // unique: true,
       lowercase: true,
       index: true,
     },

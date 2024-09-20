@@ -144,6 +144,23 @@ export const TestSchema = z.object({
   //   }), // File type validation
 });
 
+export const CategorySchema = z.object({
+  category: z
+    .string({ message: "Category name is required." })
+    .min(1, "Category name is required."),
+  file: z
+    .any()
+    .refine((files) => files && files.length > 0, {
+      message: "File is required",
+    })
+    .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
+      message: "File size must be less than 5MB",
+    })
+    .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
+      message: "Only JPEG and PNG files are allowed",
+    }),
+});
+
 // Extraction du type TypeScript pour l'email & password
 export type EmailFormData = z.infer<typeof EmailSchema>;
 export type PasswordFormData = z.infer<typeof PasswordSchema>;
@@ -152,6 +169,7 @@ export type RegisterFormData = z.infer<typeof RegisterSchema>;
 export type UserFormData = z.infer<typeof UserSchema>;
 export type OptionFormData = z.infer<typeof OptionSchema>;
 export type TestFormData = z.infer<typeof TestSchema>;
+export type CategoryFormData = z.infer<typeof CategorySchema>;
 
 export const userResetPasswordSchema = z.object({
   code: z.string().min(5, "Obligatoire"),

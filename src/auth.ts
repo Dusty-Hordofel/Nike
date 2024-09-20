@@ -37,6 +37,7 @@ export const {
   ],
   callbacks: {
     async jwt({ token, trigger }) {
+      console.log("🚀 ~ jwt ~ token:", token);
       return token;
     },
     session: async ({ session, token }) => {

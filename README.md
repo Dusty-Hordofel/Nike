@@ -1150,7 +1150,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 49. Mise à jour des inputs
 
-### 50.
+### 50. Categories
 
 ### 51.
 

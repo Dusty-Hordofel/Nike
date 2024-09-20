@@ -2,17 +2,30 @@
 import { Button } from "@/components/ui/buttons/button/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { ReactNode } from "react";
+import { UseFormReset } from "react-hook-form";
 // import "./modal.css";
 
 type ModalProps = {
   title: string;
-  content: string;
-  closeModal: () => void;
-  onConfirm?: boolean;
+  // content: string;
+  // closeModal: (
+  //   reset?: UseFormReset<{
+  //     category: string;
+  //   }>
+  // ) => void;
+  onCloseModal: () => void;
+  // onConfirm?: boolean;
+  children: ReactNode;
 };
 
-const ResultModal = ({ title, content, closeModal, onConfirm }: ModalProps) => {
+const Modal = ({
+  title,
+  // content,
+  onCloseModal,
+  // onConfirm,
+  children,
+}: ModalProps) => {
   return (
     <div
       id="modal-root"
@@ -27,10 +40,7 @@ const ResultModal = ({ title, content, closeModal, onConfirm }: ModalProps) => {
                 <button
                   aria-label="Close Modal"
                   type="button"
-                  onClick={() => {
-                    closeModal();
-                    if (onConfirm) window.location.href = "/";
-                  }}
+                  onClick={onCloseModal}
                 >
                   <svg
                     aria-hidden="true"
@@ -53,7 +63,7 @@ const ResultModal = ({ title, content, closeModal, onConfirm }: ModalProps) => {
 
               <header className="pr-12 pb-6 pt-1">
                 <h1
-                  className="text-2xl"
+                  className="text-2xl font-medium"
                   id="modal-erreur"
                   data-testid="modal-header-title"
                 >
@@ -61,26 +71,38 @@ const ResultModal = ({ title, content, closeModal, onConfirm }: ModalProps) => {
                 </h1>
               </header>
 
-              <p className="mb-4">
+              {children}
+
+              {/* <p className="mb-4">
                 {content}
                 <br />
                 <span className="error-code ncss-base mb8-sm u-bold">
                   [Code : 8E49F73C ]
                 </span>
-              </p>
+              </p> */}
             </div>
-            <div className="pt-6 pl-16 flex justify-end">
+            {/* <div className="pt-6 pl-16 flex justify-end gap-x-4">
+              <Button
+                aria-label="OK"
+                // type="submit"
+                variant="outline"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                Cancel
+              </Button>
               <Button
                 aria-label="OK"
                 type="submit"
-                onClick={() => {
-                  closeModal();
-                  if (onConfirm) window.location.href = "/";
-                }}
+                // onClick={() => {
+                //   // closeModal();
+                //   // if (onConfirm) window.location.href = "/";
+                // }}
               >
-                OK<span></span>
+                Create
               </Button>
-            </div>
+            </div> */}
           </section>
         </div>
       </div>
@@ -88,4 +110,4 @@ const ResultModal = ({ title, content, closeModal, onConfirm }: ModalProps) => {
   );
 };
 
-export default ResultModal;
+export default Modal;

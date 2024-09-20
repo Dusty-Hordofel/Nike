@@ -28,7 +28,6 @@ const useAddDeliveryAddress = ({
       return response.json();
     },
     onSuccess: () => {
-      // alert("SUCCESS");
       setSuccess("Address saved successfully");
       queryClient.invalidateQueries({ queryKey: ["active-address"] });
       queryClient.invalidateQueries({ queryKey: ["addresses"] });

@@ -34,6 +34,7 @@ import ShoppingPreference from "../(public)/auth/register/shopping-preference";
 import * as z from "zod";
 import { Button } from "@/components/ui/buttons/button/button";
 import { FileIcon } from "lucide-react";
+import { useFileContext } from "@/context/file/file-context";
 
 const countries = [
   { id: "1", label: "France", value: "fr" },
@@ -68,29 +69,32 @@ const MekaPage = () => {
   const [error, setError] = useState("");
   const [formStep, setFormStep] = useState(0);
 
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  // const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  // const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
+  // const handleButtonClick = () => {
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.click();
+  //   }
+  // };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
 
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewUrl(imageUrl);
-      setValue("file", event.target.files);
-      clearErrors("file");
-    } else {
-      setPreviewUrl(null);
-      setValue("file", null);
-      clearErrors("file");
-    }
-  };
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setPreviewUrl(imageUrl);
+  //     setValue("file", event.target.files);
+  //     clearErrors("file");
+  //   } else {
+  //     setPreviewUrl(null);
+  //     setValue("file", null);
+  //     clearErrors("file");
+  //   }
+  // };
+
+  const { handleFileChange, handleButtonClick, previewUrl, fileInputRef } =
+    useFileContext();
 
   const {
     register,
@@ -202,11 +206,11 @@ const MekaPage = () => {
             <UserLoginForgotPasswordLink />
           )}
 
-          {/* <UserLoginFooterForm
-            formStep={formStep}
+          <UserLoginFooterForm
+            formCurrentStep={formStep}
             isEmailLoading={isEmailLoading}
             isPasswordLoading={isPasswordLoading}
-          /> */}
+          />
         </form>
       </div>
     </div>

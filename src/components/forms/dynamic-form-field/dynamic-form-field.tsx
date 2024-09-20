@@ -8,39 +8,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-// import { ErrorMessage } from "@hookform/error-message";
 import FileUpload from "./file-upload";
-// import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
-
-// export interface FormInputFieldProps<T extends FieldValues>
-//   extends React.InputHTMLAttributes<HTMLInputElement> {
-//   inputType: "select" | "input" | "textarea" | "file";
-//   type?: "text" | "email" | "password" | "number" | "checkbox";
-//   //   inputType:string,
-//   label: string;
-//   placeholder?: string;
-//   //   type?: string;
-//   isLoading: boolean;
-//   //   register: UseFormRegister<T>;
-//   //   errors: FieldErrors<T>;
-//   register: UseFormRegister<any>;
-//   errors: FieldErrors<FieldValues>;
-//   name: Path<T>;
-//   className?: string;
-// }
 
 interface Option {
-  value: string;
-  label: string;
   id: string;
+  label: string;
+  value: string;
 }
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-
-// & {
-//     lines?: number;
-// };
 type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   options?: Option[];
 };
@@ -52,13 +29,10 @@ type FileProps = React.InputHTMLAttributes<HTMLInputElement> & {
 // / Définir le type pour les propriétés de champ dynamique
 interface DynamicFormFieldProps {
   inputType: "select" | "input" | "textarea" | "file";
-  //   type?: "text" | "email" | "password" | "number" | "checkbox";
-  //   placeholder?: string;
   name: string;
   label?: string;
   disabled?: boolean;
   options?: Option[];
-  //   fileInputRef?: any;
   previewUrl?: any;
   className?: string;
   register: UseFormRegister<any>;
@@ -100,24 +74,12 @@ const DynamicFormField = ({
             id={`input-${label}`}
             {...register(name)}
             {...textareaProps}
-            // rows={lines}
             className={cn(
               "p-4 rounded-lg focus:outline-none",
               error ? "text-red-600" : "text-black-200",
               className
             )}
           />
-          {/* h-14 */}
-
-          {/* <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }) => (
-              <p className="px-4 pt-[6px] text-xs text-red-600">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          /> */}
           <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
@@ -155,21 +117,11 @@ const DynamicFormField = ({
             </select>
           </div>
 
-          {/* <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }) => (
-              <p className="px-4 pt-[6px] text-xs text-red-600">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          /> */}
-
           <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
 
-    case "file": // Gestion du type file
+    case "file":
       return (
         <div className="flex flex-col">
           <div
@@ -194,26 +146,11 @@ const DynamicFormField = ({
                 className
               )}
               onChange={onFileChange}
-              style={{ display: "none" }} // Cache le champ de fichier
+              style={{ display: "none" }}
             />
             <FileUpload previewUrl={fileProps?.previewUrl} />
-            {/* {fileProps?.previewUrl && (
-            <img
-              src={fileProps.previewUrl}
-              alt="preview"
-              className="mt-4 w-40 h-40 object-cover"
-            />
-          )} */}
           </div>
-          {/* <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }) => (
-              <p className="px-4 pt-[6px] text-xs text-red-600">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          /> */}
+
           <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );
@@ -235,15 +172,6 @@ const DynamicFormField = ({
               className
             )}
           />
-          {/* <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }) => (
-              <p className="px-4 pt-[6px] text-xs text-red-600">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          /> */}
           <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
         </div>
       );

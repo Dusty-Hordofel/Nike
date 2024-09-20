@@ -1,10 +1,22 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
 interface ModalContextProps {
-  isOpen: boolean;
-  showModal: (content: ReactNode) => void;
-  closeModal: () => void;
-  modalContent: ReactNode | null;
+  isCreateModalOpen: boolean;
+  isResultModalOpen: boolean;
+  showCreateModal: () => void;
+  closeCreateModal: () => void;
+  showResultModal: () => void;
+  closeResultModal: () => void;
+  resultModalContent: {
+    success: boolean;
+    message: string;
+  } | null;
+  setResultModalContent: React.Dispatch<
+    React.SetStateAction<{
+      success: boolean;
+      message: string;
+    } | null>
+  >;
 }
 
 export const ModalContext = createContext<ModalContextProps | undefined>(
@@ -24,25 +36,33 @@ interface ModalProviderProps {
 }
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<ReactNode | null>(null);
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [isResultModalOpen, setResultModalOpen] = useState(false);
+  const [resultModalContent, setResultModalContent] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
 
-  const showModal = (content: ReactNode) => {
-    setModalContent(content);
-    setIsOpen(true);
-  };
+  const showCreateModal = () => setCreateModalOpen(true);
+  const closeCreateModal = () => setCreateModalOpen(false);
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setModalContent(null);
-  };
+  const showResultModal = () => setResultModalOpen(true);
+  const closeResultModal = () => setResultModalOpen(false);
 
   return (
     <ModalContext.Provider
-      value={{ isOpen, showModal, closeModal, modalContent }}
+      value={{
+        isCreateModalOpen,
+        isResultModalOpen,
+        showCreateModal,
+        closeCreateModal,
+        showResultModal,
+        closeResultModal,
+        resultModalContent,
+        setResultModalContent,
+      }}
     >
       {children}
-      {isOpen && modalContent}
     </ModalContext.Provider>
   );
 };
