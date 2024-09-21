@@ -14,6 +14,8 @@ import useAdminCreateCategory from "@/hooks/api/admin/categories/use-admin-creat
 import { useFileContext } from "@/context/file/file-context";
 import { useAdminGetCategories } from "@/hooks/api/admin/categories/use-admin-get-categories";
 import Loader from "@/components/loader";
+import ItemCard from "../item-card";
+import AddItemButton from "../add-Item-button";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -57,7 +59,6 @@ const CategoriesPage = () => {
 
   const createCategory = useAdminCreateCategory();
   const categories = useAdminGetCategories();
-  console.log("🚀 ~ CategoriesPage ~ categories:", categories);
 
   const onSubmit = async ({ category }: CategoryFormData) => {
     const uploadedImage = await uploadImageToCloudinary();
@@ -170,46 +171,10 @@ const CategoriesPage = () => {
       )}
 
       <div data-testid="interests-layout" className="grid grid-cols-3 gap-4">
-        <button
-          onClick={showCreateModal}
-          type="button"
-          className=" w-full aspect-square bg-gray-200 flex justify-center items-center flex-col gap-y-4 group"
-        >
-          <svg
-            className="group-hover:scale-125 transition-all"
-            aria-hidden="true"
-            focusable="false"
-            viewBox="0 0 24 24"
-            role="img"
-            width="24px"
-            height="24px"
-            fill="none"
-          >
-            <path
-              stroke="currentColor"
-              stroke-width="1.5"
-              d="M12 6v12m6-6H6m15.75 0c0 5.39-4.36 9.75-9.75 9.75S2.25 17.39 2.25 12 6.61 2.25 12 2.25s9.75 4.36 9.75 9.75z"
-            ></path>
-          </svg>
-          <span className="text-2xl font-medium group-hover:scale-125 transition-all">
-            Ajouter des produits
-          </span>
-        </button>
+        <AddItemButton onClick={showCreateModal} label="Ajouter des produits" />
+
         {categories.data.map((category: any) => (
-          <div
-            className="bg-gray-200 w-full aspect-square flex justify-center items-center group cursor-pointer"
-            style={{
-              width: "100%",
-              height: "100%",
-              backgroundImage: `url(${category.image})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <h1 className="text-2xl text-white  font-medium group-hover:scale-125 text-shadow">
-              {category.name}
-            </h1>
-          </div>
+          <ItemCard image={category.image} name={category.name} />
         ))}
       </div>
     </div>

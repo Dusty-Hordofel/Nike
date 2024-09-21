@@ -1152,7 +1152,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 50. Categories
 
-### 51.
+### 51. SubCategories
 
 ### 52.
 
