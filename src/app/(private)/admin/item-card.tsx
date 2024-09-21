@@ -1,14 +1,10 @@
-import { Button } from "@/components/ui/buttons/button/button";
-import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
-import React from "react";
-
 interface ItemCardProps {
   category: { _id: string; name: string; image: string };
   onClick?: () => void;
+  onDeleteCategory: () => void;
 }
 
-const ItemCard = ({ category, onClick }: ItemCardProps) => {
-  const deleteCategory = useAdminDeleteCategory();
+const ItemCard = ({ category, onClick, onDeleteCategory }: ItemCardProps) => {
   return (
     <div
       className="bg-gray-200 w-full aspect-square flex justify-center items-center group/card cursor-pointer relative hover:scale-90 transition-all shadow-lg"
@@ -32,7 +28,7 @@ const ItemCard = ({ category, onClick }: ItemCardProps) => {
         name="remove-item-button"
         onClick={async (e) => {
           e.stopPropagation();
-          await deleteCategory.mutateAsync({ id: category._id });
+          onDeleteCategory();
         }}
       >
         <svg

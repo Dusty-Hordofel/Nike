@@ -4,12 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CategoryFormData, CategorySchema } from "@/lib/validations/auth";
 import { usePathname, useRouter } from "next/navigation";
-
 import { useCurrentUser } from "@/hooks/user/use-current-user";
 import { useModal } from "@/context/modal/modal-context";
 import Modal from "@/components/modals/modal";
-import { Button } from "@/components/ui/buttons/button/button";
-import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import useAdminCreateCategory from "@/hooks/api/admin/categories/use-admin-create-category";
 import { useFileContext } from "@/context/file/file-context";
 import { useAdminGetCategories } from "@/hooks/api/admin/categories/use-admin-get-categories";
@@ -18,8 +15,7 @@ import ItemCard from "../item-card";
 import AddItemButton from "../add-Item-button";
 import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-// import ItemForm from "./entity-form";
-import EntityForm from "./entity-form";
+import CategoryForm from "./category-form";
 import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
 
 const CategoriesPage = () => {
@@ -85,8 +81,8 @@ const CategoriesPage = () => {
 
   useEffect(() => {
     if (entityToEdit) {
-      setValue("category", entityToEdit.name); // Mettre à jour le champ 'category' avec la nouvelle valeur
-      setPreviewUrl(entityToEdit.image); // Mettre à jour l'image de prévisualisation si nécessaire
+      setValue("category", entityToEdit.name);
+      setPreviewUrl(entityToEdit.image);
     }
   }, [entityToEdit, setValue, setPreviewUrl]);
 
@@ -95,6 +91,7 @@ const CategoriesPage = () => {
   const createCategory = useAdminCreateCategory();
   const updateCategory = useAdminUpdateCategory();
   const categories = useAdminGetCategories();
+  const deleteCategory = useAdminDeleteCategory();
 
   const handleModalClose = (isUpdate = false) => {
     reset();
@@ -127,6 +124,10 @@ const CategoriesPage = () => {
       return uploadedImage.secure_url;
     }
     return "";
+  };
+
+  const handleDeleteCategory = async (id: string) => {
+    await deleteCategory.mutateAsync({ id });
   };
 
   const onSubmit = async ({ category, file }: CategoryFormData) => {
@@ -175,9 +176,8 @@ const CategoriesPage = () => {
           onCloseModal={() => handleModalClose()}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
-            <EntityForm
-              entityTypeForm="Create"
-              entityType="Category"
+            <CategoryForm
+              categoryTypeForm="Create"
               register={register}
               errors={errors}
               onUpdateSubmit={onUpdateSubmit}
@@ -199,9 +199,8 @@ const CategoriesPage = () => {
           onCloseModal={() => setUpdateModalOpen(false)}
         >
           <form onSubmit={handleSubmit(onUpdateSubmit)}>
-            <EntityForm
-              entityTypeForm="Update"
-              entityType="Category"
+            <CategoryForm
+              categoryTypeForm="Update"
               register={register}
               errors={errors}
               onUpdateSubmit={onUpdateSubmit}
@@ -227,13 +226,14 @@ const CategoriesPage = () => {
       )}
 
       <div data-testid="interests-layout" className="grid grid-cols-3 gap-4">
-        <AddItemButton onClick={showCreateModal} label="Add un category" />
+        <AddItemButton onClick={showCreateModal} label="Add a category" />
 
         {categories.data.map(
           (category: { _id: string; name: string; image: string }) => (
             <ItemCard
               key={category._id}
               category={category}
+              onDeleteCategory={() => handleDeleteCategory(category._id)}
               onClick={() =>
                 openUpdateModal({
                   id: category._id,
