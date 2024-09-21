@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
 // import ItemForm from "./entity-form";
 import EntityForm from "./entity-form";
+import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -175,7 +176,7 @@ const CategoriesPage = () => {
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <EntityForm
-              entityFormType="Create"
+              entityTypeForm="Create"
               entityType="Category"
               register={register}
               errors={errors}
@@ -199,7 +200,7 @@ const CategoriesPage = () => {
         >
           <form onSubmit={handleSubmit(onUpdateSubmit)}>
             <EntityForm
-              entityFormType="Update"
+              entityTypeForm="Update"
               entityType="Category"
               register={register}
               errors={errors}
@@ -232,8 +233,7 @@ const CategoriesPage = () => {
           (category: { _id: string; name: string; image: string }) => (
             <ItemCard
               key={category._id}
-              image={category.image}
-              name={category.name}
+              category={category}
               onClick={() =>
                 openUpdateModal({
                   id: category._id,

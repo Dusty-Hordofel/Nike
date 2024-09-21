@@ -33,7 +33,7 @@ interface EntityFormProps {
     file?: any;
   }>;
   handleButtonClick: () => void;
-  entityFormType: "Create" | "Update";
+  entityTypeForm: "Create" | "Update";
   entityType: "Product" | "Category" | "SubCategory";
 }
 
@@ -47,10 +47,10 @@ const EntityForm = ({
   previewUrl,
   fileInputRef,
   onClose,
-  entityFormType,
+  entityTypeForm,
   entityType,
 }: EntityFormProps) => {
-  switch (entityFormType) {
+  switch (entityTypeForm) {
     case "Update":
       switch (entityType) {
         case "Category":
