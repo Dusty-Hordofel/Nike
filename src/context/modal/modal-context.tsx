@@ -1,4 +1,11 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 interface ModalContextProps {
   isCreateModalOpen: boolean;
@@ -11,12 +18,31 @@ interface ModalContextProps {
     success: boolean;
     message: string;
   } | null;
-  setResultModalContent: React.Dispatch<
-    React.SetStateAction<{
+  setResultModalContent: Dispatch<
+    SetStateAction<{
       success: boolean;
       message: string;
     } | null>
   >;
+  isUpdateModalOpen: boolean;
+  setUpdateModalOpen: Dispatch<SetStateAction<boolean>>;
+  entityToEdit: {
+    id: string;
+    name: string;
+    image: string;
+  } | null;
+  setEntityToEdit: Dispatch<
+    SetStateAction<{
+      id: string;
+      name: string;
+      image: string;
+    } | null>
+  >;
+  openUpdateModal: (entity: {
+    id: string;
+    name: string;
+    image: string;
+  }) => void;
 }
 
 export const ModalContext = createContext<ModalContextProps | undefined>(
@@ -37,11 +63,23 @@ interface ModalProviderProps {
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isResultModalOpen, setResultModalOpen] = useState(false);
   const [resultModalContent, setResultModalContent] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
+  const [entityToEdit, setEntityToEdit] = useState<{
+    id: string;
+    name: string;
+    image: string;
+  } | null>(null);
+  // const [entityToEdit, setEntityToEdit] = useState<{
+  //   id: string;
+  //   type: "category" | "product" | "subproduct";
+  //   data:
+  //   { id: string; name: string; image: string };
+  // } | null>(null);
 
   const showCreateModal = () => setCreateModalOpen(true);
   const closeCreateModal = () => setCreateModalOpen(false);
@@ -49,17 +87,31 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const showResultModal = () => setResultModalOpen(true);
   const closeResultModal = () => setResultModalOpen(false);
 
+  const openUpdateModal = (entity: {
+    id: string;
+    name: string;
+    image: string;
+  }) => {
+    setEntityToEdit(entity);
+    setUpdateModalOpen(true); // Ouvre la modale pour l'édition
+  };
+
   return (
     <ModalContext.Provider
       value={{
         isCreateModalOpen,
         isResultModalOpen,
+        isUpdateModalOpen,
         showCreateModal,
         closeCreateModal,
         showResultModal,
         closeResultModal,
         resultModalContent,
         setResultModalContent,
+        setUpdateModalOpen,
+        entityToEdit,
+        setEntityToEdit,
+        openUpdateModal,
       }}
     >
       {children}

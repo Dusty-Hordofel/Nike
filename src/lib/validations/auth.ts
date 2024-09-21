@@ -6,17 +6,6 @@ export const LogInSchema = z.object({
   }),
   password: z.string().min(3, "Obligatoire"),
 });
-// export const logInSchema = z.object({
-//   email: z
-//     .string({ required_error: "Email is required" })
-//     .min(1, "Email is required")
-//     .email("Invalid email"),
-//   password: z
-//     .string({ required_error: "Password is required" })
-//     .min(1, "Password is required")
-//     .min(8, "Password must be more than 8 characters")
-//     .max(32, "Password must be less than 32 characters"),
-// });
 
 export const RegisterSchema = z.object({
   code: z.string().min(5, "Required"),
@@ -73,34 +62,6 @@ export const UserSchema = z.object({
   }),
 });
 
-// const addressSchema = z.object({
-//   country: z.string().min(1, "Country is required"),
-//   province: z.string().min(1, "Province is required"),
-//   city: z.string().min(1, "City is required"),
-//   postalCode: z.string().min(1, "Postal Code is required"),
-// });
-
-// export const UserSchema = z.object({
-//   name: z.string().optional(),
-//   // email: z.string().email("Invalid email format"),
-//   email: z.string().email({ message: "L'adresse email est invalide." }),
-//   image: z
-//     .string()
-//     .url()
-//     .default(
-//       "https://res.cloudinary.com/dgsc66scx/image/upload/v1712483523/Asset_5_icflwx.png"
-//     ),
-//   password: z.string().min(6, "Password must be at least 6 characters long"),
-//   genderPreference: z.enum(["homme", "femme"]).optional(),
-//   emailVerified: z.boolean().default(false),
-//   phone: z.string().optional(),
-//   role: z.string().default("user"),
-//   address: addressSchema.optional(),
-//   wantsNewsletter: z.boolean().optional(),
-//   createdAt: z.date().optional(),
-//   updatedAt: z.date().optional(),
-// });
-
 // Création d'un schéma partiel pour l'email
 export const EmailSchema = LogInSchema.pick({ email: true });
 export const PasswordSchema = LogInSchema.pick({ password: true });
@@ -131,34 +92,42 @@ export const TestSchema = z.object({
     .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
       message: "Only JPEG and PNG files are allowed",
     }),
-  // file: z
-  //   .any()
-  //   .refine((files) => files && files.length > 0, {
-  //     message: "File is required",
-  //   }) // Check if a file is uploaded
-  //   .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
-  //     message: "File size must be less than 5MB",
-  //   }) // File size validation
-  //   .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
-  //     message: "Only JPEG and PNG files are allowed",
-  //   }), // File type validation
 });
 
 export const CategorySchema = z.object({
   category: z
     .string({ message: "Category name is required." })
     .min(1, "Category name is required."),
+
   file: z
     .any()
-    .refine((files) => files && files.length > 0, {
-      message: "File is required",
-    })
-    .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
-      message: "File size must be less than 5MB",
-    })
-    .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
-      message: "Only JPEG and PNG files are allowed",
-    }),
+    .optional() // Rendre le champ optionnel
+    .refine(
+      (files) =>
+        !files || (files.length > 0 && files[0]?.size < 5 * 1024 * 1024),
+      {
+        message: "File must be less than 5MB or required.",
+      }
+    )
+    .refine(
+      (files) =>
+        !files || ["image/jpeg", "image/png"].includes(files?.[0]?.type),
+      {
+        message: "Only JPEG and PNG files are allowed",
+      }
+    ),
+
+  // file: z
+  //   .any()
+  //   .refine((files) => files && files.length > 0, {
+  //     message: "File is required",
+  //   })
+  //   .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
+  //     message: "File size must be less than 5MB",
+  //   })
+  //   .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
+  //     message: "Only JPEG and PNG files are allowed",
+  //   }),
 });
 
 // Extraction du type TypeScript pour l'email & password

@@ -24,7 +24,11 @@ export const POST =
         );
       }
 
-      const newCategory = new Category({ name, image, slug: slugify(name) });
+      const newCategory = new Category({
+        name,
+        image: image || undefined,
+        slug: slugify(name),
+      });
       await newCategory.save();
 
       return Response.json(
@@ -78,7 +82,8 @@ export const GET = auth(async () => {
 
 export const PUT = auth(async (request: any) => {
   try {
-    const { id, name } = await request.json();
+    const { id, name, image } = await request.json();
+    console.log("🚀 ~ PUT ~ id:ID", id);
 
     if (!ObjectId.isValid(id)) {
       return new Response(
@@ -93,7 +98,7 @@ export const PUT = auth(async (request: any) => {
 
     connectDB();
 
-    await Category.findByIdAndUpdate(id, { name });
+    await Category.findByIdAndUpdate(id, { name, image });
 
     return Response.json(
       {

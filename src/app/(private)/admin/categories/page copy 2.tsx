@@ -18,7 +18,6 @@ import ItemCard from "../item-card";
 import AddItemButton from "../add-Item-button";
 import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-import ItemForm from "./item-form";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -27,6 +26,7 @@ const CategoriesPage = () => {
 
   const activePage = pathname.split("/")[2] || "";
   const entity = activeEntity(activePage);
+  // console.log("🚀 ~ CategoriesPage ~ entity:ENTITY", entity);
 
   function activeEntity(activePage: string) {
     switch (activePage) {
@@ -40,6 +40,8 @@ const CategoriesPage = () => {
         return "";
     }
   }
+
+  // console.log("🚀 ~ CategoriesPage ~ activePage:", activePage);
 
   if (!user /*&& userRole !== "user"*/) {
     router.push(`${window.location.origin}` || "/");
@@ -109,14 +111,12 @@ const CategoriesPage = () => {
     if (response.success) {
       handleModalClose(isUpdate);
       setResultModalContent({ success: true, message: response.message });
-      showResultModal();
     } else {
       setResultModalContent({
         success: false,
         message: `An error occurred: ${response.message}`,
       });
       handleModalClose(isUpdate);
-      showResultModal();
     }
   };
 
@@ -227,20 +227,48 @@ const CategoriesPage = () => {
           onCloseModal={() => setUpdateModalOpen(false)}
         >
           <form onSubmit={handleSubmit(onUpdateSubmit)}>
-            <ItemForm
-              formType="Update"
-              entityType="Category"
+            <DynamicFormField
+              inputType="input"
+              label="Category"
+              name="category"
               register={register}
               errors={errors}
-              onUpdateSubmit={onUpdateSubmit}
-              onClose={() => setUpdateModalOpen(false)}
-              handleFileChange={handleFileChange}
-              clearErrors={clearErrors}
-              setValue={setValue}
-              handleButtonClick={handleButtonClick}
-              previewUrl={previewUrl}
-              fileInputRef={fileInputRef}
+              inputProps={{
+                type: "text",
+                placeholder: "Category*",
+                disabled: createCategory.isPending,
+              }}
             />
+
+            <DynamicFormField
+              inputType="file"
+              label="Profile Picture"
+              name="file"
+              register={register}
+              errors={errors}
+              onFileChange={(event) =>
+                handleFileChange(event, setValue, clearErrors)
+              }
+              onButtonClick={handleButtonClick}
+              fileProps={{
+                previewUrl,
+                fileInputRef: fileInputRef,
+                disabled: false,
+              }}
+            />
+
+            <div className="flex gap-x-3 justify-end mt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setUpdateModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button aria-label="OK" type="submit">
+                Save
+              </Button>
+            </div>
           </form>
         </Modal>
       )}

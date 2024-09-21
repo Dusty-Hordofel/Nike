@@ -69,32 +69,32 @@ const MekaPage = () => {
   const [error, setError] = useState("");
   const [formStep, setFormStep] = useState(0);
 
-  // const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  // const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // const handleButtonClick = () => {
-  //   if (fileInputRef.current) {
-  //     fileInputRef.current.click();
-  //   }
-  // };
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setPreviewUrl(imageUrl);
-  //     setValue("file", event.target.files);
-  //     clearErrors("file");
-  //   } else {
-  //     setPreviewUrl(null);
-  //     setValue("file", null);
-  //     clearErrors("file");
-  //   }
-  // };
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewUrl(imageUrl);
+      setValue("file", event.target.files);
+      clearErrors("file");
+    } else {
+      setPreviewUrl(null);
+      setValue("file", null);
+      clearErrors("file");
+    }
+  };
 
-  const { handleFileChange, handleButtonClick, previewUrl, fileInputRef } =
-    useFileContext();
+  // const { handleFileChange, handleButtonClick, previewUrl, fileInputRef } =
+  //   useFileContext();
 
   const {
     register,

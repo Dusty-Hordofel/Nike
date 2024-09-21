@@ -18,7 +18,7 @@ import ItemCard from "../item-card";
 import AddItemButton from "../add-Item-button";
 import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-import ItemForm from "./item-form";
+// import { ObjectId } from "mongodb";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -27,6 +27,7 @@ const CategoriesPage = () => {
 
   const activePage = pathname.split("/")[2] || "";
   const entity = activeEntity(activePage);
+  // console.log("🚀 ~ CategoriesPage ~ entity:ENTITY", entity);
 
   function activeEntity(activePage: string) {
     switch (activePage) {
@@ -40,6 +41,8 @@ const CategoriesPage = () => {
         return "";
     }
   }
+
+  // console.log("🚀 ~ CategoriesPage ~ activePage:", activePage);
 
   if (!user /*&& userRole !== "user"*/) {
     router.push(`${window.location.origin}` || "/");
@@ -109,23 +112,21 @@ const CategoriesPage = () => {
     if (response.success) {
       handleModalClose(isUpdate);
       setResultModalContent({ success: true, message: response.message });
-      showResultModal();
     } else {
       setResultModalContent({
         success: false,
         message: `An error occurred: ${response.message}`,
       });
       handleModalClose(isUpdate);
-      showResultModal();
     }
   };
 
   const handleImageUpload = async (file: any) => {
     if (file && file.length > 0) {
       const uploadedImage = await uploadImageToCloudinary();
-      return uploadedImage.secure_url;
+      return uploadedImage.secure_url; // Retourne l'URL de l'image
     }
-    return "";
+    return ""; // Retourne une chaîne vide si aucune image n'est fournie
   };
 
   const onSubmit = async ({ category, file }: CategoryFormData) => {
@@ -138,8 +139,8 @@ const CategoriesPage = () => {
   };
 
   const onUpdateSubmit = async ({ category, file }: CategoryFormData) => {
-    // console.log("🚀 ~ onUpdateSubmit ~ category:", category,file)
     if (!entityToEdit) return;
+
     const imageUrl = (await handleImageUpload(file)) || entityToEdit.image;
     const updatedCategory = await updateCategory.mutateAsync({
       id: entityToEdit.id,
@@ -148,6 +149,88 @@ const CategoriesPage = () => {
     });
     handleResponse(updatedCategory, true);
   };
+
+  // const onSubmit = async ({ category, file }: CategoryFormData) => {
+  //   // const uploadedImage = await uploadImageToCloudinary();
+
+  //   let imageUrl = "";
+
+  //   // const uploadedImage = await uploadImageToCloudinary();
+
+  //   if (file && file.length > 0) {
+  //     const uploadedImage = await uploadImageToCloudinary();
+  //     imageUrl = uploadedImage.secure_url; // Mettez à jour avec la nouvelle image
+  //   }
+
+  //   const newCategory = await createCategory.mutateAsync({
+  //     name: category,
+  //     image: imageUrl,
+  //   });
+
+  //   if (newCategory.success) {
+  //     handleCloseModal();
+  //     setResultModalContent({ success: true, message: newCategory.message });
+  //     showResultModal();
+  //   } else {
+  //     setResultModalContent({
+  //       success: false,
+  //       message: `An error occurred: ${newCategory.message}`,
+  //     });
+  //     handleCloseModal();
+  //     showResultModal();
+  //   }
+  // };
+
+  // const onUpdateSubmit = async ({ category, file }: CategoryFormData) => {
+  //   if (!entityToEdit) return;
+  //   let imageUrl = entityToEdit.image;
+
+  //   if (file && file.length > 0) {
+  //     const uploadedImage = await uploadImageToCloudinary();
+  //     imageUrl = uploadedImage.secure_url; // Mettez à jour avec la nouvelle image
+  //   }
+
+  //   const updatedCategory = await updateCategory.mutateAsync({
+  //     id: entityToEdit.id,
+  //     name: category,
+  //     image: imageUrl,
+  //   });
+
+  //   if (updatedCategory.success) {
+  //     handleCloseUpdateModal();
+  //     setResultModalContent({
+  //       success: true,
+  //       message: updatedCategory.message,
+  //     });
+  //     showResultModal();
+  //   } else {
+  //     setResultModalContent({
+  //       success: false,
+  //       message: `An error occurred: ${updatedCategory.message}`,
+  //     });
+  //     handleCloseUpdateModal();
+  //     showResultModal();
+  //   }
+  // };
+
+  // const handleCloseModal = () => {
+  //   reset();
+  //   setPreviewUrl(null);
+  //   setPicture(null);
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.value = "";
+  //   }
+  //   closeCreateModal();
+  // };
+  // const handleCloseUpdateModal = () => {
+  //   reset();
+  //   setPreviewUrl(null);
+  //   setPicture(null);
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.value = "";
+  //   }
+  //   setUpdateModalOpen(false);
+  // };
 
   if (categories.isLoading)
     return (
@@ -170,10 +253,7 @@ const CategoriesPage = () => {
   return (
     <div>
       {isCreateModalOpen && (
-        <Modal
-          title={`Create your ${entity}`}
-          onCloseModal={() => handleModalClose()}
-        >
+        <Modal title={`Create your ${entity}`} onCloseModal={handleModalClose}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DynamicFormField
               inputType="input"
@@ -209,7 +289,8 @@ const CategoriesPage = () => {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => handleModalClose()}
+                onClick={handleModalClose}
+                // handleModalClose
               >
                 Cancel
               </Button>
@@ -227,20 +308,49 @@ const CategoriesPage = () => {
           onCloseModal={() => setUpdateModalOpen(false)}
         >
           <form onSubmit={handleSubmit(onUpdateSubmit)}>
-            <ItemForm
-              formType="Update"
-              entityType="Category"
+            <DynamicFormField
+              inputType="input"
+              label="Category"
+              name="category"
               register={register}
               errors={errors}
-              onUpdateSubmit={onUpdateSubmit}
-              onClose={() => setUpdateModalOpen(false)}
-              handleFileChange={handleFileChange}
-              clearErrors={clearErrors}
-              setValue={setValue}
-              handleButtonClick={handleButtonClick}
-              previewUrl={previewUrl}
-              fileInputRef={fileInputRef}
+              inputProps={{
+                type: "text",
+                placeholder: "Category*",
+                disabled: createCategory.isPending,
+                // value: entityToEdit?.name,
+              }}
             />
+
+            <DynamicFormField
+              inputType="file"
+              label="Profile Picture"
+              name="file"
+              register={register}
+              errors={errors}
+              onFileChange={(event) =>
+                handleFileChange(event, setValue, clearErrors)
+              }
+              onButtonClick={handleButtonClick}
+              fileProps={{
+                previewUrl,
+                fileInputRef: fileInputRef,
+                disabled: false,
+              }}
+            />
+
+            <div className="flex gap-x-3 justify-end mt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setUpdateModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button aria-label="OK" type="submit">
+                Save
+              </Button>
+            </div>
           </form>
         </Modal>
       )}

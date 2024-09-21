@@ -1,13 +1,3 @@
-// import React from "react";
-
-// type Props = {};
-
-// const ThumbnailCard = (props: Props) => {
-//   return <div>ThumbnailCard</div>;
-// };
-
-// export default ThumbnailCard;
-
 import React from "react";
 
 interface ItemCardProps {

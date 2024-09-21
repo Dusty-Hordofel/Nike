@@ -26,7 +26,8 @@ const categorySchema = new Schema<ICategory>(
     image: {
       type: String,
       required: true,
-      // unique: true,
+      default:
+        "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps", // Remplacez par l'URL de votre image par défaut
       lowercase: true,
       index: true,
     },
