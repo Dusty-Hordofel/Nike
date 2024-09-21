@@ -38,7 +38,7 @@ interface ModalContextProps {
       image: string;
     } | null>
   >;
-  openUpdateModal: (entity: {
+  showUpdateModal: (entity: {
     id: string;
     name: string;
     image: string;
@@ -87,12 +87,12 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const showResultModal = () => setResultModalOpen(true);
   const closeResultModal = () => setResultModalOpen(false);
 
-  const openUpdateModal = (entity: {
+  const showUpdateModal = (item: {
     id: string;
     name: string;
     image: string;
   }) => {
-    setEntityToEdit(entity);
+    setEntityToEdit(item);
     setUpdateModalOpen(true); // Ouvre la modale pour l'édition
   };
 
@@ -111,7 +111,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         setUpdateModalOpen,
         entityToEdit,
         setEntityToEdit,
-        openUpdateModal,
+        showUpdateModal,
       }}
     >
       {children}

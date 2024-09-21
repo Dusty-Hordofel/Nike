@@ -17,6 +17,9 @@ import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
 import CategoryForm from "./category-form";
 import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
+import ItemList from "./item-list";
+import UpdateCategory from "./update-category";
+import CreateCategory from "./create-category";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -55,19 +58,20 @@ const CategoriesPage = () => {
   });
 
   const {
-    showCreateModal,
-    closeCreateModal,
-    showResultModal,
-    closeResultModal,
-    resultModalContent,
-    setResultModalContent,
+    entityToEdit,
     isCreateModalOpen,
     isResultModalOpen,
     isUpdateModalOpen,
+    showCreateModal,
+    showResultModal,
+    showUpdateModal,
+    closeCreateModal,
+    closeResultModal,
     setUpdateModalOpen,
-    entityToEdit,
-    openUpdateModal,
+    setResultModalContent,
+    resultModalContent,
   } = useModal();
+  console.log("🚀 ~ CategoriesPage ~ isCreateModalOpen:", isCreateModalOpen);
 
   const {
     handleFileChange,
@@ -85,8 +89,6 @@ const CategoriesPage = () => {
       setPreviewUrl(entityToEdit.image);
     }
   }, [entityToEdit, setValue, setPreviewUrl]);
-
-  console.log("🚀 ~ CategoriesPage ~ entityToEdit:CONTENT", entityToEdit);
 
   const createCategory = useAdminCreateCategory();
   const updateCategory = useAdminUpdateCategory();
@@ -130,7 +132,7 @@ const CategoriesPage = () => {
     await deleteCategory.mutateAsync({ id });
   };
 
-  const onSubmit = async ({ category, file }: CategoryFormData) => {
+  const handleCreateSubmit = async ({ category, file }: CategoryFormData) => {
     const imageUrl = await handleImageUpload(file);
     const newCategory = await createCategory.mutateAsync({
       name: category,
@@ -139,7 +141,7 @@ const CategoriesPage = () => {
     handleResponse(newCategory);
   };
 
-  const onUpdateSubmit = async ({ category, file }: CategoryFormData) => {
+  const handleUpdateSubmit = async ({ category, file }: CategoryFormData) => {
     if (!entityToEdit) return;
     const imageUrl = (await handleImageUpload(file)) || entityToEdit.image;
     const updatedCategory = await updateCategory.mutateAsync({
@@ -171,49 +173,37 @@ const CategoriesPage = () => {
   return (
     <div>
       {isCreateModalOpen && (
-        <Modal
-          title={`Create your ${entity}`}
+        <CreateCategory
+          categoryTypeForm="Create"
+          register={register}
+          errors={errors}
+          onSubmit={handleCreateSubmit}
           onCloseModal={() => handleModalClose()}
-        >
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <CategoryForm
-              categoryTypeForm="Create"
-              register={register}
-              errors={errors}
-              onUpdateSubmit={onUpdateSubmit}
-              onClose={() => handleModalClose()}
-              handleFileChange={handleFileChange}
-              clearErrors={clearErrors}
-              setValue={setValue}
-              handleButtonClick={handleButtonClick}
-              previewUrl={previewUrl}
-              fileInputRef={fileInputRef}
-            />
-          </form>
-        </Modal>
+          handleFileChange={handleFileChange}
+          clearErrors={clearErrors}
+          setValue={setValue}
+          handleButtonClick={handleButtonClick}
+          previewUrl={previewUrl}
+          fileInputRef={fileInputRef}
+          handleSubmit={handleSubmit}
+        />
       )}
 
       {isUpdateModalOpen && (
-        <Modal
-          title={`Update your ${entity}`}
-          onCloseModal={() => setUpdateModalOpen(false)}
-        >
-          <form onSubmit={handleSubmit(onUpdateSubmit)}>
-            <CategoryForm
-              categoryTypeForm="Update"
-              register={register}
-              errors={errors}
-              onUpdateSubmit={onUpdateSubmit}
-              onClose={() => setUpdateModalOpen(false)}
-              handleFileChange={handleFileChange}
-              clearErrors={clearErrors}
-              setValue={setValue}
-              handleButtonClick={handleButtonClick}
-              previewUrl={previewUrl}
-              fileInputRef={fileInputRef}
-            />
-          </form>
-        </Modal>
+        <UpdateCategory
+          register={register}
+          errors={errors}
+          onSubmit={handleUpdateSubmit}
+          handleFileChange={handleFileChange}
+          clearErrors={clearErrors}
+          setValue={setValue}
+          handleButtonClick={handleButtonClick}
+          previewUrl={previewUrl}
+          fileInputRef={fileInputRef}
+          onCloseModal={() => handleModalClose(true)}
+          handleSubmit={handleSubmit}
+          categoryTypeForm="Update"
+        />
       )}
 
       {isResultModalOpen && resultModalContent && (
@@ -228,22 +218,11 @@ const CategoriesPage = () => {
       <div data-testid="interests-layout" className="grid grid-cols-3 gap-4">
         <AddItemButton onClick={showCreateModal} label="Add a category" />
 
-        {categories.data.map(
-          (category: { _id: string; name: string; image: string }) => (
-            <ItemCard
-              key={category._id}
-              category={category}
-              onDeleteCategory={() => handleDeleteCategory(category._id)}
-              onClick={() =>
-                openUpdateModal({
-                  id: category._id,
-                  name: category.name,
-                  image: category.image,
-                })
-              }
-            />
-          )
-        )}
+        <ItemList
+          items={categories.data}
+          onDeleteItem={handleDeleteCategory}
+          showUpdateModal={showUpdateModal}
+        />
       </div>
     </div>
   );

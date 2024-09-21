@@ -9,34 +9,38 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
+import { CategoryFormProps } from "@/@types/admin/admin.interface";
 
-interface EntityFormProps {
-  onUpdateSubmit: ({ category, file }: CategoryFormData) => Promise<void>;
-  onClose: () => void;
-  fileInputRef?: RefObject<HTMLInputElement> | undefined;
-  previewUrl?: any;
-  className?: string;
-  register: UseFormRegister<any>;
-  errors: FieldErrors<FieldValues>;
-  fileProps?: any;
-  handleFileChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setValue: UseFormSetValue<any>,
-    clearErrors: UseFormClearErrors<any>
-  ) => void;
-  clearErrors: UseFormClearErrors<{
-    category: string;
-    file?: any;
-  }>;
-  setValue: UseFormSetValue<{
-    category: string;
-    file?: any;
-  }>;
-  handleButtonClick: () => void;
-  categoryTypeForm: "Create" | "Update";
-  // entityType: "Product" | "Category" | "SubCategory";
-}
+// interface CategoryFormProps {
+//   onUpdateSubmit: ({ category, file }: CategoryFormData) => Promise<void>;
+//   onClose: () => void;
+//   fileInputRef?: RefObject<HTMLInputElement> | undefined;
+//   previewUrl?: any;
+//   className?: string;
+//   register: UseFormRegister<any>;
+//   errors: FieldErrors<FieldValues>;
+//   fileProps?: any;
+//   handleFileChange: (
+//     event: React.ChangeEvent<HTMLInputElement>,
+//     setValue: UseFormSetValue<any>,
+//     clearErrors: UseFormClearErrors<any>
+//   ) => void;
+//   clearErrors: UseFormClearErrors<{
+//     category: string;
+//     file?: any;
+//   }>;
+//   setValue: UseFormSetValue<{
+//     category: string;
+//     file?: any;
+//   }>;
+//   handleButtonClick: () => void;
+//   categoryTypeForm: "Create" | "Update";
+// }
 
+// export interface ItemWithId extends Omit<Item, "_id"> {
+//   id: string;
+// }
+// Omit<CategoryFormProps, "handleSubmit onUpdateSubmit">
 const CategoryForm = ({
   register,
   errors,
@@ -46,14 +50,11 @@ const CategoryForm = ({
   setValue,
   previewUrl,
   fileInputRef,
-  onClose,
+  onCloseModal,
   categoryTypeForm,
-}: EntityFormProps) => {
+}: Omit<CategoryFormProps, "handleSubmit" | "onSubmit">) => {
   switch (categoryTypeForm) {
     case "Update":
-      // switch (entityType) {
-      //   case "Category":
-      //   case "SubCategory":
       return (
         <>
           <DynamicFormField
@@ -67,16 +68,6 @@ const CategoryForm = ({
               placeholder: "Category*",
               disabled: false,
             }}
-            // inputType="input"
-            // label={entityType}
-            // name={entityType.toLocaleLowerCase()}
-            // register={register}
-            // errors={errors}
-            // inputProps={{
-            //   type: "text",
-            //   placeholder: `${entityType}*`,
-            //   disabled: false,
-            // }}
           />
 
           <DynamicFormField
@@ -97,7 +88,7 @@ const CategoryForm = ({
           />
 
           <div className="flex gap-x-3 justify-end mt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={onCloseModal}>
               Cancel
             </Button>
             <Button aria-label="OK" type="submit">
@@ -106,13 +97,8 @@ const CategoryForm = ({
           </div>
         </>
       );
-    //   default:
-    //     console.log("Unknown entity for update");
-    // }
+
     case "Create":
-      // switch (entityType) {
-      //   case "Category":
-      //   case "SubCategory":
       return (
         <>
           <DynamicFormField
@@ -126,16 +112,6 @@ const CategoryForm = ({
               placeholder: "Category*",
               disabled: false,
             }}
-            // inputType="input"
-            // label={entityType}
-            // name={entityType.toLocaleLowerCase()}
-            // register={register}
-            // errors={errors}
-            // inputProps={{
-            //   type: "text",
-            //   placeholder: `${entityType}*`,
-            //   disabled: false,
-            // }}
           />
 
           <DynamicFormField
@@ -156,7 +132,7 @@ const CategoryForm = ({
           />
 
           <div className="flex gap-x-3 justify-end mt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={onCloseModal}>
               Cancel
             </Button>
             <Button aria-label="OK" type="submit">
@@ -165,7 +141,7 @@ const CategoryForm = ({
           </div>
         </>
       );
-    // }
+
     default:
       console.log("Unknown form type");
   }

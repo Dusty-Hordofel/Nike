@@ -1,24 +1,30 @@
-interface ItemCardProps {
-  category: { _id: string; name: string; image: string };
-  onClick?: () => void;
-  onDeleteCategory: () => void;
-}
+import { ItemCardProps } from "@/@types/admin/admin.interface";
 
-const ItemCard = ({ category, onClick, onDeleteCategory }: ItemCardProps) => {
+const ItemCard = ({
+  item,
+  onshowUpdateItemModal,
+  onDeleteItem,
+}: ItemCardProps) => {
   return (
     <div
       className="bg-gray-200 w-full aspect-square flex justify-center items-center group/card cursor-pointer relative hover:scale-90 transition-all shadow-lg"
       style={{
         width: "100%",
         height: "100%",
-        backgroundImage: `url(${category.image})`,
+        backgroundImage: `url(${item.image})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      onClick={onClick}
+      onClick={() =>
+        onshowUpdateItemModal({
+          id: item._id,
+          name: item.name,
+          image: item.image,
+        })
+      }
     >
       <h1 className="text-2xl text-white font-medium group-hover/card:scale-125 text-shadow transition-all">
-        {category.name}
+        {item.name}
       </h1>
 
       <button
@@ -28,7 +34,7 @@ const ItemCard = ({ category, onClick, onDeleteCategory }: ItemCardProps) => {
         name="remove-item-button"
         onClick={async (e) => {
           e.stopPropagation();
-          onDeleteCategory();
+          onDeleteItem(item._id);
         }}
       >
         <svg
