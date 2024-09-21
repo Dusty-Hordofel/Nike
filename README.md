@@ -1152,6 +1152,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 50. Categories
 
+### 50.1. Nettoyage Categories
+
 ### 51. SubCategories
 
 ### 52.
