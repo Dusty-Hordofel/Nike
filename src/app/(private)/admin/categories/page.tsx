@@ -18,7 +18,8 @@ import ItemCard from "../item-card";
 import AddItemButton from "../add-Item-button";
 import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-import ItemForm from "./item-form";
+// import ItemForm from "./entity-form";
+import EntityForm from "./entity-form";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -68,7 +69,6 @@ const CategoriesPage = () => {
     isUpdateModalOpen,
     setUpdateModalOpen,
     entityToEdit,
-    setEntityToEdit,
     openUpdateModal,
   } = useModal();
 
@@ -138,7 +138,6 @@ const CategoriesPage = () => {
   };
 
   const onUpdateSubmit = async ({ category, file }: CategoryFormData) => {
-    // console.log("🚀 ~ onUpdateSubmit ~ category:", category,file)
     if (!entityToEdit) return;
     const imageUrl = (await handleImageUpload(file)) || entityToEdit.image;
     const updatedCategory = await updateCategory.mutateAsync({
@@ -175,48 +174,20 @@ const CategoriesPage = () => {
           onCloseModal={() => handleModalClose()}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
-            <DynamicFormField
-              inputType="input"
-              label="Category"
-              name="category"
+            <EntityForm
+              entityFormType="Create"
+              entityType="Category"
               register={register}
               errors={errors}
-              inputProps={{
-                type: "text",
-                placeholder: "Category*",
-                disabled: createCategory.isPending,
-              }}
+              onUpdateSubmit={onUpdateSubmit}
+              onClose={() => handleModalClose()}
+              handleFileChange={handleFileChange}
+              clearErrors={clearErrors}
+              setValue={setValue}
+              handleButtonClick={handleButtonClick}
+              previewUrl={previewUrl}
+              fileInputRef={fileInputRef}
             />
-
-            <DynamicFormField
-              inputType="file"
-              label="Profile Picture"
-              name="file"
-              register={register}
-              errors={errors}
-              onFileChange={(event) =>
-                handleFileChange(event, setValue, clearErrors)
-              }
-              onButtonClick={handleButtonClick}
-              fileProps={{
-                previewUrl,
-                fileInputRef: fileInputRef,
-                disabled: false,
-              }}
-            />
-
-            <div className="flex gap-x-3 justify-end mt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleModalClose()}
-              >
-                Cancel
-              </Button>
-              <Button aria-label="OK" type="submit">
-                Create
-              </Button>
-            </div>
           </form>
         </Modal>
       )}
@@ -227,8 +198,8 @@ const CategoriesPage = () => {
           onCloseModal={() => setUpdateModalOpen(false)}
         >
           <form onSubmit={handleSubmit(onUpdateSubmit)}>
-            <ItemForm
-              formType="Update"
+            <EntityForm
+              entityFormType="Update"
               entityType="Category"
               register={register}
               errors={errors}

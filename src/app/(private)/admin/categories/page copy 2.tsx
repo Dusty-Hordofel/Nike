@@ -26,7 +26,6 @@ const CategoriesPage = () => {
 
   const activePage = pathname.split("/")[2] || "";
   const entity = activeEntity(activePage);
-  // console.log("🚀 ~ CategoriesPage ~ entity:ENTITY", entity);
 
   function activeEntity(activePage: string) {
     switch (activePage) {

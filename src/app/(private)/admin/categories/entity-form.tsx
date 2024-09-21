@@ -10,59 +10,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 
-// const CategoryForm = ({
-//   register,
-//   handleSubmit,
-//   onSubmit,
-//   errors,
-//   previewUrl,
-//   fileInputRef,
-//   handleFileChange,
-//   clearErrors,
-//   handleButtonClick,
-//   onClose,
-// }: any) => (
-//   <form onSubmit={handleSubmit(onSubmit)}>
-//     <DynamicFormField
-//       inputType="input"
-//       label="Category"
-//       name="category"
-//       register={register}
-//       errors={errors}
-//       inputProps={{
-//         type: "text",
-//         placeholder: "Category*",
-//         disabled: false,
-//       }}
-//     />
-
-//     <DynamicFormField
-//       inputType="file"
-//       label="Profile Picture"
-//       name="file"
-//       register={register}
-//       errors={errors}
-//       onFileChange={(event) => handleFileChange(event, setValue, clearErrors)}
-//       onButtonClick={handleButtonClick}
-//       fileProps={{
-//         previewUrl,
-//         fileInputRef: fileInputRef,
-//         disabled: false,
-//       }}
-//     />
-
-//     <div className="flex gap-x-3 justify-end mt-4">
-//       <Button type="button" variant="outline" onClick={onClose}>
-//         Cancel
-//       </Button>
-//       <Button aria-label="OK" type="submit">
-//         Submit
-//       </Button>
-//     </div>
-//   </form>
-// );
-
-interface ItemFormProps {
+interface EntityFormProps {
   onUpdateSubmit: ({ category, file }: CategoryFormData) => Promise<void>;
   onClose: () => void;
   fileInputRef?: RefObject<HTMLInputElement> | undefined;
@@ -85,11 +33,11 @@ interface ItemFormProps {
     file?: any;
   }>;
   handleButtonClick: () => void;
-  formType: "Create" | "Update";
+  entityFormType: "Create" | "Update";
   entityType: "Product" | "Category" | "SubCategory";
 }
 
-const ItemForm = ({
+const EntityForm = ({
   register,
   errors,
   handleFileChange,
@@ -99,10 +47,10 @@ const ItemForm = ({
   previewUrl,
   fileInputRef,
   onClose,
-  formType,
+  entityFormType,
   entityType,
-}: ItemFormProps) => {
-  switch (formType) {
+}: EntityFormProps) => {
+  switch (entityFormType) {
     case "Update":
       switch (entityType) {
         case "Category":
@@ -158,9 +106,56 @@ const ItemForm = ({
         default:
           console.log("Unknown entity for update");
       }
+    case "Create":
+      switch (entityType) {
+        case "Category":
+        case "SubCategory":
+          return (
+            <>
+              <DynamicFormField
+                inputType="input"
+                label={entityType}
+                name={entityType.toLocaleLowerCase()}
+                register={register}
+                errors={errors}
+                inputProps={{
+                  type: "text",
+                  placeholder: `${entityType}*`,
+                  disabled: false,
+                }}
+              />
+
+              <DynamicFormField
+                inputType="file"
+                label="Profile Picture"
+                name="file"
+                register={register}
+                errors={errors}
+                onFileChange={(event) =>
+                  handleFileChange(event, setValue, clearErrors)
+                }
+                onButtonClick={handleButtonClick}
+                fileProps={{
+                  previewUrl,
+                  fileInputRef: fileInputRef,
+                  disabled: false,
+                }}
+              />
+
+              <div className="flex gap-x-3 justify-end mt-4">
+                <Button type="button" variant="outline" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button aria-label="OK" type="submit">
+                  Create
+                </Button>
+              </div>
+            </>
+          );
+      }
     default:
       console.log("Unknown form type");
   }
 };
 
-export default ItemForm;
+export default EntityForm;
