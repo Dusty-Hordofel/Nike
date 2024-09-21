@@ -171,7 +171,7 @@ const CategoriesPage = () => {
       )}
 
       <div data-testid="interests-layout" className="grid grid-cols-3 gap-4">
-        <AddItemButton onClick={showCreateModal} label="Ajouter des produits" />
+        <AddItemButton onClick={showCreateModal} label="Add un category" />
 
         {categories.data.map((category: any) => (
           <ItemCard image={category.image} name={category.name} />
