@@ -19,7 +19,7 @@ interface ItemCardProps {
 const ItemCard = ({ image, name, onClick }: ItemCardProps) => {
   return (
     <div
-      className="bg-gray-200 w-full aspect-square flex justify-center items-center group cursor-pointer"
+      className="bg-gray-200 w-full aspect-square flex justify-center items-center group cursor-pointer "
       style={{
         width: "100%",
         height: "100%",
@@ -29,7 +29,7 @@ const ItemCard = ({ image, name, onClick }: ItemCardProps) => {
       }}
       onClick={onClick}
     >
-      <h1 className="text-2xl text-white font-medium group-hover:scale-125 text-shadow">
+      <h1 className="text-2xl text-white font-medium group-hover:scale-125 text-shadow transition-all">
         {name}
       </h1>
     </div>
