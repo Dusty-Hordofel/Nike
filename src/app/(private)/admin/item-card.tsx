@@ -11,7 +11,7 @@ const ItemCard = ({ category, onClick }: ItemCardProps) => {
   const deleteCategory = useAdminDeleteCategory();
   return (
     <div
-      className="bg-gray-200 w-full aspect-square flex justify-center items-center group/card cursor-pointer relative"
+      className="bg-gray-200 w-full aspect-square flex justify-center items-center group/card cursor-pointer relative hover:scale-90 transition-all shadow-lg"
       style={{
         width: "100%",
         height: "100%",
