@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCategory } from "@/services/admin/categoryService";
+import { createCategory } from "@/services/admin/category.service";
 
 const useAdminCreateCategory = () => {
   const queryClient = useQueryClient();

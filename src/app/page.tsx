@@ -34,7 +34,7 @@ import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
-import { useCurrentUser } from "@/hooks/user/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);

@@ -11,7 +11,7 @@
 //   const mutation = useMutation({
 //     mutationFn: async (categoryInformation: { id: string }) => {
 //       const response = await fetch(
-import { deleteCategory } from "@/services/admin/categoryService";
+import { deleteCategory } from "@/services/admin/category.service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useAdminDeleteCategory = () => {

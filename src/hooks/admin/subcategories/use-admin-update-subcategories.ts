@@ -1,4 +1,4 @@
-import { updateSubCategory } from "@/services/admin/subCategoryService";
+import { updateSubCategory } from "@/services/admin/subcategory.service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useAdminUpdateSubCategory = () => {

@@ -1,4 +1,4 @@
-import { getCategories } from "@/services/admin/categoryService";
+import { getCategories } from "@/services/admin/category.service";
 import { useQuery } from "@tanstack/react-query";
 
 const useAdminGetCategories = () => {

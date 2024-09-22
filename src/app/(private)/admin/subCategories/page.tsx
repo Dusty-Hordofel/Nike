@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SubCategorySchema, { SubCategoryFormData } from "@/lib/validations/auth";
 import { usePathname, useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/user/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 import { useModal } from "@/context/modal/modal-context";
 import Modal from "@/components/ui/modals/modal";
 import { useFileContext } from "@/context/file/file-context";

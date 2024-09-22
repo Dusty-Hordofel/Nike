@@ -1,4 +1,4 @@
-import { getSubCategories } from "@/services/admin/subCategoryService";
+import { getSubCategories } from "@/services/admin/subcategory.service";
 import { useQuery } from "@tanstack/react-query";
 
 const useAdminGetSubCategories = () => {

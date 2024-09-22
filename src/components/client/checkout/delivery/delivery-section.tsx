@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/buttons/button/button";
-import { useCurrentUser } from "@/hooks/user/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 import {
   DeliveryInfoFormData,
   DeliveryInfoSchema,
@@ -23,9 +23,9 @@ import {
   useGetDeliveryAddress,
   useGetDeliveryAddresses,
   useUpdateDeliveryAddressStatus,
-} from "@/hooks/client/delivery-section";
+} from "@/hooks/user/delivery-section";
 import { useQueryClient } from "@tanstack/react-query";
-import { useDeliveryContext } from "@/hooks/checkout/use-delivery-context";
+import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
 
 // currentCheckoutSection={currentCheckoutSection}
 //               setCurrentCheckoutSection={setCurrentCheckoutSection}

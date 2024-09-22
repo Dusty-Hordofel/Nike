@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteSubCategory } from "@/services/admin/subCategoryService";
+import { deleteSubCategory } from "@/services/admin/subcategory.service";
 
 interface useSaveAddressProps {
   setPaymentStatus: Dispatch<SetStateAction<string>>;

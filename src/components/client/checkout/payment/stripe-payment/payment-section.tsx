@@ -8,7 +8,7 @@ import {
   useChangeActivePaymentMethod,
   useDeletePaymentMethod,
   useGetPaymentMethods,
-} from "@/hooks/client/payment-section";
+} from "@/hooks/user/payment-section";
 
 import {
   StripePayment,
@@ -18,8 +18,8 @@ import {
   ActivePaymentCard,
   BillingCountry,
 } from "./index";
-import { useDeliveryContext } from "@/hooks/checkout/use-delivery-context";
-import { usePaymentContext } from "@/hooks/checkout/use-payment-context";
+import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
+import { usePaymentContext } from "@/hooks/user/checkout/use-payment-context";
 
 export default function PaymentSection({
   deliveryAddress,

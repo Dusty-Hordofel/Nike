@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { signIn, useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/user/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 import EditEmail from "./edit-email";
 import LoginForm from "./login-form";
 

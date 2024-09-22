@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { DeliveryInfoFormData } from "@/lib/validations/delivery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createSubCategory } from "@/services/admin/subCategoryService";
+import { createSubCategory } from "@/services/admin/subcategory.service";
 
 const useAdminCreateSubCategory = () => {
   const queryClient = useQueryClient();
