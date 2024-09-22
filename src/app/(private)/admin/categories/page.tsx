@@ -11,11 +11,9 @@ import useAdminCreateCategory from "@/hooks/api/admin/categories/use-admin-creat
 import { useFileContext } from "@/context/file/file-context";
 import { useAdminGetCategories } from "@/hooks/api/admin/categories/use-admin-get-categories";
 import Loader from "@/components/loader";
-import ItemCard from "../item-card";
 import AddItemButton from "../add-Item-button";
 import { useEffect } from "react";
 import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-import CategoryForm from "./category-form";
 import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
 import ItemList from "./item-list";
 import UpdateCategory from "./update-category";

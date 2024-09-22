@@ -1,12 +1,11 @@
 import React from "react";
 import ItemCard from "../item-card";
-import { ItemListProps } from "@/@types/admin/admin.interface";
+import { ItemListProps } from "@/@types/admin/admin.categories.interface";
 
 const ItemList = ({ items, onDeleteItem, showUpdateModal }: ItemListProps) => {
-  console.log("🚀 ~ ItemList ~ items:ITEMS", items);
   return (
     <>
-      {items.map((item) => (
+      {items?.map((item) => (
         <ItemCard
           key={item._id}
           item={item}

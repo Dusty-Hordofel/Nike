@@ -1,8 +1,8 @@
-import CategoryForm from "./category-form";
+import React from "react";
 import Modal from "@/components/modals/modal";
-import { CategoryFormProps } from "@/@types/admin/admin.categories.interface";
+import SubCategoryForm from "./subcategory-form";
 
-const UpdateCategory = ({
+const UpdateSubCategory = ({
   register,
   errors,
   handleFileChange,
@@ -14,16 +14,16 @@ const UpdateCategory = ({
   onSubmit,
   onCloseModal,
   handleSubmit,
-  categoryTypeForm,
-}: CategoryFormProps) => {
+  subCategoryTypeForm,
+  options,
+}: any) => {
   return (
-    <Modal title="Update your Category" onCloseModal={onCloseModal}>
+    <Modal title="Update your subcategory" onCloseModal={onCloseModal}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CategoryForm
-          categoryTypeForm={categoryTypeForm}
+        <SubCategoryForm
+          subCategoryTypeForm={subCategoryTypeForm}
           register={register}
           errors={errors}
-          //   onUpdateSubmit={onUpdateSubmit}
           onCloseModal={onCloseModal}
           handleFileChange={handleFileChange}
           clearErrors={clearErrors}
@@ -31,10 +31,11 @@ const UpdateCategory = ({
           handleButtonClick={handleButtonClick}
           previewUrl={previewUrl}
           fileInputRef={fileInputRef}
+          options={options}
         />
       </form>
     </Modal>
   );
 };
 
-export default UpdateCategory;
+export default UpdateSubCategory;

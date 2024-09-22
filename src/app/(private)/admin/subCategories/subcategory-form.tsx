@@ -1,47 +1,8 @@
-import React, { RefObject } from "react";
+import { SubCategoryFormProps } from "@/@types/admin/admin.subcategories.interface";
 import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { Button } from "@/components/ui/buttons/button/button";
-import { CategoryFormData } from "@/lib/validations/auth";
-import {
-  FieldErrors,
-  FieldValues,
-  UseFormClearErrors,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
-import { CategoryFormProps } from "@/@types/admin/admin.categories.interface";
 
-// interface CategoryFormProps {
-//   onUpdateSubmit: ({ category, file }: CategoryFormData) => Promise<void>;
-//   onClose: () => void;
-//   fileInputRef?: RefObject<HTMLInputElement> | undefined;
-//   previewUrl?: any;
-//   className?: string;
-//   register: UseFormRegister<any>;
-//   errors: FieldErrors<FieldValues>;
-//   fileProps?: any;
-//   handleFileChange: (
-//     event: React.ChangeEvent<HTMLInputElement>,
-//     setValue: UseFormSetValue<any>,
-//     clearErrors: UseFormClearErrors<any>
-//   ) => void;
-//   clearErrors: UseFormClearErrors<{
-//     category: string;
-//     file?: any;
-//   }>;
-//   setValue: UseFormSetValue<{
-//     category: string;
-//     file?: any;
-//   }>;
-//   handleButtonClick: () => void;
-//   categoryTypeForm: "Create" | "Update";
-// }
-
-// export interface ItemWithId extends Omit<Item, "_id"> {
-//   id: string;
-// }
-// Omit<CategoryFormProps, "handleSubmit onUpdateSubmit">
-const CategoryForm = ({
+const SubCategoryForm = ({
   register,
   errors,
   handleFileChange,
@@ -51,23 +12,36 @@ const CategoryForm = ({
   previewUrl,
   fileInputRef,
   onCloseModal,
-  categoryTypeForm,
-}: Omit<CategoryFormProps, "handleSubmit" | "onSubmit">) => {
-  switch (categoryTypeForm) {
+  subCategoryTypeForm,
+  options,
+}: Omit<SubCategoryFormProps, "handleSubmit" | "onSubmit">) => {
+  switch (subCategoryTypeForm) {
     case "Update":
       return (
         <>
           <DynamicFormField
             inputType="input"
-            label="Category"
-            name="category"
+            label="Subcategory"
+            name="subcategory"
             register={register}
             errors={errors}
             inputProps={{
               type: "text",
-              placeholder: "Category*",
+              placeholder: "Subcategory*",
               disabled: false,
             }}
+          />
+
+          <DynamicFormField
+            inputType="select"
+            label="Category"
+            register={register}
+            errors={errors}
+            name="parent"
+            selectProps={{
+              disabled: false,
+            }}
+            options={options}
           />
 
           <DynamicFormField
@@ -103,15 +77,27 @@ const CategoryForm = ({
         <>
           <DynamicFormField
             inputType="input"
-            label="Category"
-            name="category"
+            label="Subcategory"
+            name="subcategory"
             register={register}
             errors={errors}
             inputProps={{
               type: "text",
-              placeholder: "Category*",
+              placeholder: "Subcategory*",
               disabled: false,
             }}
+          />
+
+          <DynamicFormField
+            inputType="select"
+            label="Category"
+            register={register}
+            errors={errors}
+            name="parent"
+            selectProps={{
+              disabled: false,
+            }}
+            options={options}
           />
 
           <DynamicFormField
@@ -147,4 +133,4 @@ const CategoryForm = ({
   }
 };
 
-export default CategoryForm;
+export default SubCategoryForm;

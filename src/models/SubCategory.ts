@@ -5,6 +5,7 @@ interface ISubCategory extends Document {
   name: string;
   slug: string;
   parent: mongoose.Types.ObjectId;
+  image: string;
 }
 
 // Mongoose schema definition for a sub-category
@@ -19,6 +20,14 @@ const subCategorySchema = new Schema<ISubCategory>(
     slug: {
       type: String,
       unique: true,
+      lowercase: true,
+      index: true,
+    },
+    image: {
+      type: String,
+      required: true,
+      default:
+        "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps", // Remplacez par l'URL de votre image par défaut
       lowercase: true,
       index: true,
     },

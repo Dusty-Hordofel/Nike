@@ -30,12 +30,14 @@ interface ModalContextProps {
     id: string;
     name: string;
     image: string;
+    parent?: string;
   } | null;
   setEntityToEdit: Dispatch<
     SetStateAction<{
       id: string;
       name: string;
       image: string;
+      parent?: string;
     } | null>
   >;
   showUpdateModal: (entity: {
@@ -73,6 +75,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     id: string;
     name: string;
     image: string;
+    parent?: string;
   } | null>(null);
   // const [entityToEdit, setEntityToEdit] = useState<{
   //   id: string;
@@ -91,6 +94,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     id: string;
     name: string;
     image: string;
+    parent?: string;
   }) => {
     setEntityToEdit(item);
     setUpdateModalOpen(true); // Ouvre la modale pour l'édition

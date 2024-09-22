@@ -241,7 +241,7 @@ const SignUp = () => {
                   </button>
                 </div>
 
-                <DynamicFormField
+                {/* <DynamicFormField
                   inputType="select"
                   label="Préférence d'achat"
                   register={register}
@@ -251,7 +251,7 @@ const SignUp = () => {
                     disabled: false,
                   }}
                   options={options}
-                />
+                /> */}
 
                 <FormCheckbox
                   id="marketing-option"

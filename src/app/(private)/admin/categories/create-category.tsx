@@ -1,6 +1,6 @@
 import React from "react";
 import CategoryForm from "./category-form";
-import { CategoryFormProps } from "@/@types/admin/admin.interface";
+import { CategoryFormProps } from "@/@types/admin/admin.categories.interface";
 import Modal from "@/components/modals/modal";
 
 type Props = {};

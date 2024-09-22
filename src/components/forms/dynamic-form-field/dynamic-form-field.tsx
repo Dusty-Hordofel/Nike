@@ -11,9 +11,13 @@ import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "./file-upload";
 
 interface Option {
-  id: string;
-  label: string;
-  value: string;
+  createdAt: string;
+  image: string;
+  name: string;
+  slug: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
 }
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
@@ -110,8 +114,8 @@ const DynamicFormField = ({
 
               {options?.length &&
                 options.map((option) => (
-                  <option value={option.value} key={option.id}>
-                    {option.label}
+                  <option value={option._id} key={option._id}>
+                    {option.name}
                   </option>
                 ))}
             </select>

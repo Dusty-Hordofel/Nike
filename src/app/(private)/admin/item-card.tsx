@@ -1,4 +1,4 @@
-import { ItemCardProps } from "@/@types/admin/admin.interface";
+import { ItemCardProps } from "@/@types/admin/admin.categories.interface";
 
 const ItemCard = ({
   item,
@@ -20,12 +20,14 @@ const ItemCard = ({
           id: item._id,
           name: item.name,
           image: item.image,
+          parent: item.parent,
         })
       }
     >
-      <h1 className="text-2xl text-white font-medium group-hover/card:scale-125 text-shadow transition-all">
-        {item.name}
-      </h1>
+      <div className="flex flex-col text-white group-hover/card:scale-125 transition-all text-shadow">
+        <h1 className="text-2xl font-medium ">{item.name}</h1>
+        <p>{item.parent}</p>
+      </div>
 
       <button
         className="absolute top-5 right-5 rounded-full size-12 bg-black-200 flex justify-center items-center hover:bg-gray-300 group/button"

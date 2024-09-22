@@ -15,6 +15,7 @@ export interface Item {
   _id: string;
   name: string;
   image: string;
+  parent?: string;
 }
 
 export interface ItemWithId extends Omit<Item, "_id"> {
@@ -62,7 +63,6 @@ export interface CategoryFormProps extends FileProps, FormHandlers {
         }>
       | undefined
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  //   onClose: () => void;
   register: UseFormRegister<any>;
   errors: FieldErrors<FieldValues>;
   clearErrors: UseFormClearErrors<{
