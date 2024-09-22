@@ -11,7 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
-import { UserAuthHeaderForm, UserAuthInputFieldForm } from "@/components/auth";
+import {
+  UserAuthHeaderForm,
+  UserAuthInputFieldForm,
+} from "@/components/client/auth";
 import {
   RegisterFormData,
   RegisterSchema,
@@ -29,7 +32,7 @@ import { signIn } from "@/auth";
 import { signInWithCredentials } from "@/actions/auth/user-auth.actions";
 import { ZodError } from "zod";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
-import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
+import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-form-field";
 
 const options = [
   { id: "1", label: "Homme", value: "homme" },

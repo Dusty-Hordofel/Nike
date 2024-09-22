@@ -8,8 +8,8 @@ import {
   EmailSchema,
   PasswordSchema,
 } from "@/lib/validations/auth";
-import { UserSelectCountry } from "@/components/auth/login";
-import { UserAuthHeaderForm } from "@/components/auth";
+import { UserSelectCountry } from "@/components/client/auth/login";
+import { UserAuthHeaderForm } from "@/components/client/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

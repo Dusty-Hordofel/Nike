@@ -2,35 +2,28 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import SubCategorySchema, {
-  CategoryFormData,
-  CategorySchema,
-  SubCategoryFormData,
-} from "@/lib/validations/auth";
+import SubCategorySchema, { SubCategoryFormData } from "@/lib/validations/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
 import { useModal } from "@/context/modal/modal-context";
-import Modal from "@/components/modals/modal";
-import useAdminCreateCategory from "@/hooks/api/admin/categories/use-admin-create-category";
+import Modal from "@/components/ui/modals/modal";
 import { useFileContext } from "@/context/file/file-context";
-import { useAdminGetCategories } from "@/hooks/api/admin/categories/use-admin-get-categories";
-import Loader from "@/components/loader";
-import AddItemButton from "../add-Item-button";
+
+import Loader from "@/components/ui/loader";
 import { useEffect } from "react";
-import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
-import CreateCategory from "../categories/create-category";
-import UpdateCategory from "../categories/update-category";
-import ItemList from "../categories/item-list";
-import CreateSubCategory from "./create-subcategory";
-import useAdminCreateSubCategory from "@/hooks/api/admin/subcategories/use-admin-create-category";
-import useAdminUpdateSubCategory from "@/hooks/api/admin/subcategories/use-admin-update-category";
-import useAdminDeleteSubCategory from "@/hooks/api/admin/subcategories/use-admin-delete-category";
-import { useAdminGetSubCategories } from "@/hooks/api/admin/subcategories/use-admin-get-categories";
-import UpdateSubCategory from "./update-subcategory";
-// import ItemList from "./item-list";
-// import UpdateCategory from "../update-category";
-// import CreateCategory from "../create-category";
+
+import {
+  useAdminCreateSubCategory,
+  useAdminDeleteSubCategory,
+  useAdminGetSubCategories,
+  useAdminUpdateSubCategory,
+} from "@/hooks/api/admin/subcategories";
+import { useAdminGetCategories } from "@/hooks/api/admin/categories";
+import {
+  CreateSubCategory,
+  UpdateSubCategory,
+} from "@/components/admin/subcategories";
+import { AddItemButton, ItemList } from "@/components/ui/item";
 
 const SubCategoriesPage = () => {
   const router = useRouter();
@@ -240,7 +233,10 @@ const SubCategoriesPage = () => {
         </Modal>
       )}
 
-      <div data-testid="interests-layout" className="grid grid-cols-3 gap-4">
+      <div
+        data-testid="interests-layout"
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+      >
         <AddItemButton onClick={showCreateModal} label="Add a SubCategory" />
 
         <ItemList

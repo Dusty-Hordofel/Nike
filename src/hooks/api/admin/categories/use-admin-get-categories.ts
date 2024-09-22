@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useAdminGetCategories = () => {
+const useAdminGetCategories = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -16,10 +16,4 @@ export const useAdminGetCategories = () => {
   });
 };
 
-// export const useProducts = () => {
-//   const categoriesQuery = useQuery({
-//     queryKey: ["products"],
-//     queryFn: () => fetch(`/api/products`).then((res) => res.json()),
-//   });
-//   return categoriesQuery;
-// };
+export default useAdminGetCategories;

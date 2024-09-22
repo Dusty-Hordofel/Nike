@@ -1,5 +1,5 @@
 import React from "react";
-import { UserLoginFooterForm } from "@/components/auth/login";
+import { UserLoginFooterForm } from "@/components/client/auth/login";
 
 import {
   FieldErrors,

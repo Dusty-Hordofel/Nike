@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useAdminGetSubCategories = () => {
+const useAdminGetSubCategories = () => {
   return useQuery({
     queryKey: ["subCategories"],
     queryFn: async () => {
@@ -15,3 +15,4 @@ export const useAdminGetSubCategories = () => {
     },
   });
 };
+export default useAdminGetSubCategories;

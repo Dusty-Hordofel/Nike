@@ -1,7 +1,7 @@
 "use client";
 import { bannerVideo } from "@/assets/data/banner";
-import ProductImages from "@/components/product/product-details/product-images";
-import ProductInformation from "@/components/product/product-details/product-information";
+import ProductImages from "@/components/client/product/product-details/product-images";
+import ProductInformation from "@/components/client/product/product-details/product-information";
 import Link from "next/link";
 import React from "react";
 import { Banner as VideoBanner, Banner as ImageBanner } from "@/components/ui";

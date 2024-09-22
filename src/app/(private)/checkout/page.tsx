@@ -1,13 +1,13 @@
 "use client";
 
-import { useActiveDeliveryAddress } from "@/hooks/api/delivery-section";
-import { useGetCart } from "@/hooks/api/cart/use-get-cart";
+import { useActiveDeliveryAddress } from "@/hooks/api/client/delivery-section";
 import { useState } from "react";
 import { useDeliveryContext } from "@/hooks/checkout/use-delivery-context";
-import { OrderSection, OrderSummary } from "@/components/checkout/order";
-import { PaymentSection } from "@/components/checkout/payment/stripe-payment";
-import { DeliverySection } from "@/components/checkout/delivery";
-import Loader from "@/components/loader";
+import { OrderSection, OrderSummary } from "@/components/client/checkout/order";
+import { PaymentSection } from "@/components/client/checkout/payment/stripe-payment";
+import { DeliverySection } from "@/components/client/checkout/delivery";
+import Loader from "@/components/ui/loader";
+import { useGetCart } from "@/hooks/api/client/cart";
 
 const CheckoutPage = () => {
   const { deliveryStep } = useDeliveryContext();

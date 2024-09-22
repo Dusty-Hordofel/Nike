@@ -15,7 +15,7 @@ export interface Item {
   _id: string;
   name: string;
   image: string;
-  parent?: string;
+  parent?: { _id: string; name: string };
 }
 
 export interface ItemWithId extends Omit<Item, "_id"> {

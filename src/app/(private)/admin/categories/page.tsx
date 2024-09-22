@@ -1,23 +1,23 @@
 "use client";
 
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CategoryFormData, CategorySchema } from "@/lib/validations/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/user/use-current-user";
 import { useModal } from "@/context/modal/modal-context";
-import Modal from "@/components/modals/modal";
-import useAdminCreateCategory from "@/hooks/api/admin/categories/use-admin-create-category";
+import Modal from "@/components/ui/modals/modal";
 import { useFileContext } from "@/context/file/file-context";
-import { useAdminGetCategories } from "@/hooks/api/admin/categories/use-admin-get-categories";
-import Loader from "@/components/loader";
-import AddItemButton from "../add-Item-button";
-import { useEffect } from "react";
-import useAdminUpdateCategory from "@/hooks/api/admin/categories/use-admin-update-category";
-import useAdminDeleteCategory from "@/hooks/api/admin/categories/use-admin-delete-category";
-import ItemList from "./item-list";
-import UpdateCategory from "./update-category";
-import CreateCategory from "./create-category";
+import Loader from "@/components/ui/loader";
+import {
+  useAdminCreateCategory,
+  useAdminDeleteCategory,
+  useAdminGetCategories,
+  useAdminUpdateCategory,
+} from "@/hooks/api/admin/categories";
+import { CreateCategory, UpdateCategory } from "@/components/admin/categories";
+import { AddItemButton, ItemList } from "@/components/ui/item";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -69,7 +69,6 @@ const CategoriesPage = () => {
     setResultModalContent,
     resultModalContent,
   } = useModal();
-  console.log("🚀 ~ CategoriesPage ~ isCreateModalOpen:", isCreateModalOpen);
 
   const {
     handleFileChange,
@@ -213,7 +212,10 @@ const CategoriesPage = () => {
         </Modal>
       )}
 
-      <div data-testid="interests-layout" className="grid grid-cols-3 gap-4">
+      <div
+        data-testid="interests-layout"
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+      >
         <AddItemButton onClick={showCreateModal} label="Add a category" />
 
         <ItemList

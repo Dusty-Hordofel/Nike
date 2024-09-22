@@ -32,8 +32,8 @@ export const AdminDesktopNavbar = ({ navLinks }: { navLinks: NavLink[] }) => {
             <ArrowButton direction="left" />
             <ArrowButton />
           </div>
-          <div className="flex bg-success h-16 items-center">
-            <div className="w-1/4">
+          <div className="flex bg-success h-16 items-center gap-x-4">
+            <div className="w-1/4 mr-4">
               <h1 className="text-2xl font-medium">
                 {activePage.slice(0, 1).toUpperCase() + activePage.slice(1)}
               </h1>

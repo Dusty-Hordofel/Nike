@@ -52,7 +52,16 @@ export const POST =
 export const GET = auth(async () => {
   try {
     connectDB();
-    const subCategories = await SubCategory.find({}).sort({ updatedAt: -1 });
+    // const subCategories = await SubCategory.find({}).sort({ updatedAt: -1 });
+
+    const subCategories = await SubCategory.find({})
+      .sort({ updatedAt: -1 })
+      .populate("parent", "name") // Populate avec seulement le champ 'name' de la catégorie parente
+      .select("-__v -createdAt -updatedAt");
+
+    // const subCategories = await SubCategory.find({})
+    //   .populate({ path: "parent", model: "Category" })
+    //   .sort({ updatedAt: -1 });
 
     if (!subCategories) {
       return Response.json(

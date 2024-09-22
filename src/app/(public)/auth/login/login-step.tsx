@@ -1,8 +1,8 @@
 import {
   UserLoginForgotPasswordLink,
   UserLoginTerms,
-} from "@/components/auth/login";
-import DynamicFormField from "@/components/forms/dynamic-form-field/dynamic-form-field";
+} from "@/components/client/auth/login";
+import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-form-field";
 import React from "react";
 import { EmailProps, PasswordProps } from "./formProps";
 

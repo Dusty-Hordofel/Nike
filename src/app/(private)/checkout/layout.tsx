@@ -1,4 +1,4 @@
-import CheckoutProviders from "../../../components/checkout/checkout-providers";
+import CheckoutProviders from "../../../components/client/checkout/checkout-providers";
 
 export default async function CheckoutLayout({
   children,

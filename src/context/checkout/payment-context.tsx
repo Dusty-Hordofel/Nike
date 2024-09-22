@@ -22,7 +22,7 @@ import {
   PaymentMethodResult,
 } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/buttons/button/button";
-import { useAddPaymentMethod } from "@/hooks/api/payment-section";
+import { useAddPaymentMethod } from "@/hooks/api/client/payment-section";
 // import { useAddPaymentMethod } from "@/hooks/api/payment-section/use-add-payment-method";
 
 type ErrorState = {
