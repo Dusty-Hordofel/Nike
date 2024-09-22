@@ -17,8 +17,8 @@ import {
   useAdminDeleteSubCategory,
   useAdminGetSubCategories,
   useAdminUpdateSubCategory,
-} from "@/hooks/api/admin/subcategories";
-import { useAdminGetCategories } from "@/hooks/api/admin/categories";
+} from "@/hooks/admin/subcategories";
+import { useAdminGetCategories } from "@/hooks/admin/categories";
 import {
   CreateSubCategory,
   UpdateSubCategory,

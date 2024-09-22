@@ -23,7 +23,7 @@ export const adminNavLinksData = [
   },
   {
     name: "Subcategories",
-    href: "/admin/subCategories",
+    href: "/admin/subcategories",
   },
   {
     name: "Orders",

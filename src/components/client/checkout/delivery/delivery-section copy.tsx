@@ -24,7 +24,7 @@ import {
   useGetDeliveryAddress,
   useGetDeliveryAddresses,
   useUpdateDeliveryAddressStatus,
-} from "@/hooks/api/client/delivery-section";
+} from "@/hooks/client/delivery-section";
 import { useQueryClient } from "@tanstack/react-query";
 
 const DeliverySection2 = ({

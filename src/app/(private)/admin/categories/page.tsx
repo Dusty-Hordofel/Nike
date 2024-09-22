@@ -15,7 +15,7 @@ import {
   useAdminDeleteCategory,
   useAdminGetCategories,
   useAdminUpdateCategory,
-} from "@/hooks/api/admin/categories";
+} from "@/hooks/admin/categories";
 import { CreateCategory, UpdateCategory } from "@/components/admin/categories";
 import { AddItemButton, ItemList } from "@/components/ui/item";
 

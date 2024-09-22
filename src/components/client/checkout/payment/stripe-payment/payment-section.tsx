@@ -8,7 +8,7 @@ import {
   useChangeActivePaymentMethod,
   useDeletePaymentMethod,
   useGetPaymentMethods,
-} from "@/hooks/api/client/payment-section";
+} from "@/hooks/client/payment-section";
 
 import {
   StripePayment,
