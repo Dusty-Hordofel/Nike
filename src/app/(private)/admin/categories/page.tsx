@@ -10,14 +10,20 @@ import { useModal } from "@/context/modal/modal-context";
 import Modal from "@/components/ui/modals/modal";
 import { useFileContext } from "@/context/file/file-context";
 import Loader from "@/components/ui/loader";
+// import {
+//   useAdminCreateCategory,
+//   useAdminDeleteCategory,
+//   useAdminGetCategories,
+//   useAdminUpdateCategory,
+// } from "@/hooks/admin/categories";
+import { CreateCategory, UpdateCategory } from "@/components/admin/categories";
+import { AddItemButton, ItemList } from "@/components/ui/item";
 import {
   useAdminCreateCategory,
   useAdminDeleteCategory,
   useAdminGetCategories,
   useAdminUpdateCategory,
-} from "@/hooks/admin/categories";
-import { CreateCategory, UpdateCategory } from "@/components/admin/categories";
-import { AddItemButton, ItemList } from "@/components/ui/item";
+} from "@/hooks/admin/use-admin-categories.hook";
 
 const CategoriesPage = () => {
   const router = useRouter();

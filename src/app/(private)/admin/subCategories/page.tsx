@@ -13,17 +13,17 @@ import Loader from "@/components/ui/loader";
 import { useEffect } from "react";
 
 import {
-  useAdminCreateSubCategory,
-  useAdminDeleteSubCategory,
-  useAdminGetSubCategories,
-  useAdminUpdateSubCategory,
-} from "@/hooks/admin/subcategories";
-import { useAdminGetCategories } from "@/hooks/admin/categories";
-import {
   CreateSubCategory,
   UpdateSubCategory,
 } from "@/components/admin/subcategories";
 import { AddItemButton, ItemList } from "@/components/ui/item";
+import {
+  useAdminCreateSubCategory,
+  useAdminDeleteSubCategory,
+  useAdminGetSubCategories,
+  useAdminUpdateSubCategory,
+} from "@/hooks/admin/use-admin-subcategories.hook";
+import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
 
 const SubCategoriesPage = () => {
   const router = useRouter();
