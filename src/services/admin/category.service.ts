@@ -12,6 +12,9 @@
 //   return response.json();
 // };
 
+import { FetchCategoriesResponse } from "@/@types/admin/admin.categories.interface";
+import { Item } from "@/@types/admin/admin.item.interface";
+
 // services/categoryService.ts
 
 const createCategory = async (categoryInformation: {
@@ -28,14 +31,18 @@ const createCategory = async (categoryInformation: {
   return response.json();
 };
 
-const getCategories = async () => {
+const getCategories = async (): Promise<[] | Item[]> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/categories`
   );
   if (!response.ok) throw new Error("Failed to fetch categories.");
 
-  const { categories } = await response.json();
-  return categories;
+  // const { categories } = await response.json();
+  // return categories;
+
+  const data: FetchCategoriesResponse = await response.json();
+
+  return data.categories;
 };
 
 const updateCategory = async (categoryInformation: {

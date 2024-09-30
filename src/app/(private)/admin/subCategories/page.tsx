@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import SubCategorySchema, { SubCategoryFormData } from "@/lib/validations/auth";
+import { SubCategorySchema, SubCategoryFormData } from "@/lib/validations/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 import { useModal } from "@/context/modal/modal-context";
@@ -22,6 +22,7 @@ import {
   useAdminDeleteSubCategory,
   useAdminGetSubCategories,
   useAdminUpdateSubCategory,
+  useGetSubCategoriesByParent,
 } from "@/hooks/admin/use-admin-subcategories.hook";
 import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
 
@@ -53,7 +54,8 @@ const SubCategoriesPage = () => {
   const createSubCategory = useAdminCreateSubCategory();
   const updateSubCategory = useAdminUpdateSubCategory();
   const categories = useAdminGetCategories();
-  const subCategories = useAdminGetSubCategories();
+  const subCategories = useGetSubCategoriesByParent();
+  console.log("🚀 ~ SubCategoriesPage ~ subCategories:", subCategories.data);
   const deleteSubCategory = useAdminDeleteSubCategory();
 
   const {
@@ -63,6 +65,7 @@ const SubCategoriesPage = () => {
     reset,
     clearErrors,
     setValue,
+    getValues,
   } = useForm<SubCategoryFormData>({
     resolver: zodResolver(SubCategorySchema(categories.data)),
   });
@@ -82,6 +85,8 @@ const SubCategoriesPage = () => {
     resultModalContent,
   } = useModal();
 
+  console.log("🚀 ~ SubCategoriesPage ~ entityToEdit:ENTITY", entityToEdit);
+
   const {
     handleFileChange,
     handleButtonClick,
@@ -95,7 +100,7 @@ const SubCategoriesPage = () => {
   useEffect(() => {
     if (entityToEdit) {
       setValue("subcategory", entityToEdit.name);
-      setValue("parent", entityToEdit.parent as string);
+      setValue("parent", entityToEdit.parent?._id as string);
       setPreviewUrl(entityToEdit.image);
     }
   }, [entityToEdit, setValue, setPreviewUrl]);
@@ -239,11 +244,13 @@ const SubCategoriesPage = () => {
       >
         <AddItemButton onClick={showCreateModal} label="Add a SubCategory" />
 
-        <ItemList
-          items={subCategories.data}
-          onDeleteItem={handleDeleteCategory}
-          showUpdateModal={showUpdateModal}
-        />
+        {subCategories.data?.length && (
+          <ItemList
+            items={subCategories.data}
+            onDeleteItem={handleDeleteCategory}
+            showUpdateModal={showUpdateModal}
+          />
+        )}
       </div>
     </div>
   );

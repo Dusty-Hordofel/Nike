@@ -1,4 +1,6 @@
-import { ItemCardProps } from "@/@types/admin/admin.categories.interface";
+// import { ItemCardProps } from "@/@types/admin/admin.categories.interface";
+
+import { ItemCardProps } from "@/@types/admin/admin.item.interface";
 
 const ItemCard = ({
   item,

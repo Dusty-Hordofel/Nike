@@ -22,54 +22,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 type Props = {};
 
-const initialState = {
-  name: "",
-  description: "",
-  brand: "",
-  sku: "",
-  discount: 0,
-  images: [],
-  description_images: [],
-  parent: "",
-  category: "",
-  subCategories: [],
-  color: {
-    color: "",
-    image: "",
-  },
-  sizes: [
-    {
-      size: "",
-      qty: "",
-      price: "",
-    },
-  ],
-  details: [
-    {
-      name: "",
-      value: "",
-    },
-  ],
-  questions: [
-    {
-      question: "",
-      answer: "",
-    },
-  ],
-  shippingFee: "",
-};
-
 const PageProducts = (props: Props) => {
-  const [product, setProduct] = useState(initialState);
-  const [subs, setSubs] = useState([]);
-  const [colorImage, setColorImage] = useState("");
-  const [images, setImages] = useState([]);
-  const [description_images, setDescription_images] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSubCategories, setSelectedSubCategories] = useState<
     Item[] | [] | undefined
   >([]);
-
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrls, setPreviewUrls] = useState<string[] | null>(null); // État pour
@@ -375,7 +332,34 @@ const PageProducts = (props: Props) => {
                 </p>
               )}
             </div>
+            {/* <div className="h-6">
+              {errors.images && (
+                <p className="px-4 pt-[6px] text-xs text-red-600">
+                  {errors.images.message}
+                </p>
+              )}
+            </div> */}
           </div>
+
+          {/* {previewUrls && previewUrls.length > 0 && (
+          <div className="image-previews">
+            <h3>Image Previews:</h3>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {previewUrls.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Preview ${index + 1}`}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        )} */}
 
           <DynamicFormField
             inputType="input"

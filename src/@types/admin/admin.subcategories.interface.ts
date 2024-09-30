@@ -9,8 +9,19 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
+import { Item } from "./admin.item.interface";
 
-// FORM TYPES
+// Fetch SubCategories
+
+export interface FetchSubCategoriesResponse {
+  success: boolean;
+  error: boolean;
+  subCategories: Item[] | [];
+  message?: string;
+}
+
+// Form Types
+
 export interface FileProps {
   previewUrl?: any;
   fileInputRef?: RefObject<HTMLInputElement>;

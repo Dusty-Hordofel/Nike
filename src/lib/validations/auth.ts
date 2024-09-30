@@ -1,3 +1,4 @@
+import { Item } from "@/@types/admin/admin.item.interface";
 import * as z from "zod";
 
 export const LogInSchema = z.object({
@@ -107,17 +108,7 @@ export const CategorySchema = z.object({
   //   }),
 });
 
-export const SubCategorySchema = (
-  validCategories: {
-    createdAt: string;
-    image: string;
-    name: string;
-    slug: string;
-    updatedAt: string;
-    __v: number;
-    _id: string;
-  }[]
-) =>
+export const SubCategorySchema = (validCategories: Item[] | [] | undefined) =>
   z.object({
     subcategory: z.string().min(1, { message: "Le nom est requis" }), // Champ obligatoire
     file: z
@@ -141,12 +132,85 @@ export const SubCategorySchema = (
     parent: z
       .string()
       .min(1, { message: "Le parent est requis" }) // Champ parent obligatoire
-      .refine((val) => validCategories.some((cat) => cat._id === val), {
+      .refine((val) => validCategories?.some((cat) => cat._id === val), {
         message: "Le parent sélectionné est invalide.",
       }), // Validation basée sur les catégories récupérées dynamiquement
   });
 
-export default SubCategorySchema;
+// export const ProductSchema = (
+//   validCategories: Item[],
+//   validSubCategories: Item[]
+//   // validCategories: {
+//   //   createdAt: string;
+//   //   image: string;
+//   //   name: string;
+//   //   slug: string;
+//   //   updatedAt: string;
+//   //   __v: number;
+//   //   _id: string;
+//   // }[]
+// ) =>
+//   z.object({
+//     category: z
+//       .string()
+//       .min(1, { message: "La catégorie est requise" }) // Champ parent obligatoire
+//       .refine((val) => validCategories.some((cat) => cat._id === val), {
+//         message: "Le catégorie sélectionnée est invalide.",
+//       }), // Validation basée sur les catégories récupérées dynamiquement
+//     subcategory: z
+//       .string()
+//       .min(1, { message: "La catégorie est requise" }) // Champ parent obligatoire
+//       .refine((val) => validSubCategories.some((sub) => sub._id === val), {
+//         message: "Le sous-catégorie sélectionnée est invalide.",
+//       }), // Validation basée sur les catégories récupérées dynamiquement
+//   });
+
+export const ProductSchema = z.object({
+  name: z.string().min(1, { message: "Product name is required." }),
+  category: z.string().min(1, { message: "Please select a category." }), // Validation pour la catégorie
+  description: z
+    .string()
+    .min(10, { message: "Product description is required." }), // Validation pour la catégorie
+  brand: z.string().min(10, { message: "Product description is required." }), // Validation pour la catégorie
+  sku: z.string().min(10, { message: "Product description is required." }), // Validation pour la catégorie
+  discount: z.string().min(10, { message: "Product description is required." }), // Validation pour la catégorie
+  color: z.string({ message: "Please add a color." }),
+  // category: z
+  //   .string()
+  //   .min(1, { message: "Please select a category." })
+  //   .refine((val) => val !== "preference", {
+  //     message: "You must select a valid category.",
+  //   }),
+  // subcategory: z.string().min(1, { message: "Please select a subcategory." }),
+  subcategories: z
+    .array(z.string())
+    .min(1, "Please select at least one subcategory."),
+  images: z
+    .any()
+    .refine(
+      (files) => files && Array.from(files).length > 0, // Vérifier qu'au moins un fichier est sélectionné
+      { message: "Please select at least one image." }
+    )
+    .refine(
+      (files) =>
+        Array.from(files as File[]).every(
+          (file) => file.size <= 5 * 1024 * 1024
+        ), // Taille maximale de 5MB par image
+      { message: "Each image must be smaller than 5MB." }
+    )
+    .refine(
+      (files) =>
+        Array.from(files as File[]).every((file) =>
+          ["image/jpeg", "image/png", "image/gif", "image/webp"].includes(
+            file.type
+          )
+        ), // Vérifie que l'extension est soit jpeg, png ou gif
+      { message: "Only .jpg, .png,.webp and .gif formats are allowed." }
+    ),
+  // images: z
+  //   .array(z.instanceof(File))
+  //   .min(1, "Please select at least one image."),
+});
 
 // Extraction du type TypeScript pour l'email & password
 export type EmailFormData = z.infer<typeof EmailSchema>;
@@ -158,3 +222,5 @@ export type ResetPasswordFormData = z.infer<typeof userResetPasswordSchema>;
 export type OptionFormData = z.infer<typeof OptionSchema>;
 export type CategoryFormData = z.infer<typeof CategorySchema>;
 export type SubCategoryFormData = z.infer<ReturnType<typeof SubCategorySchema>>;
+export type ProductFormData = z.infer<typeof ProductSchema>;
+// export type ProductFormData = z.infer<ReturnType<typeof ProductSchema>>;

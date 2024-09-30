@@ -51,16 +51,19 @@ export const POST =
 export const GET = auth(async () => {
   try {
     connectDB();
-    const categories = await Category.find({}).sort({ updatedAt: -1 });
+    const categories = await Category.find({})
+      .sort({ updatedAt: -1 })
+      .select("-__v -createdAt -updatedAt");
 
     if (!categories) {
       return Response.json(
         {
-          success: false,
-          error: true,
+          success: true,
+          error: false,
           message: `No Categories found`,
+          categories: [],
         },
-        { status: 400 }
+        { status: 200 }
       );
     }
 

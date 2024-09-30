@@ -58,10 +58,23 @@ const useAdminDeleteSubCategory = () => {
   return mutation;
 };
 
-const useAdminGetSubCategories = () => {
+const useAdminGetSubCategories = (parent?: string) => {
   return useQuery({
-    queryKey: ["subCategories"],
-    queryFn: getSubCategories,
+    enabled: !!parent || parent === undefined,
+    // staleTime: 5 * 60 * 1000,
+    queryKey: ["subCategories", parent],
+    queryFn: () => getSubCategories(parent),
+  });
+};
+
+const useGetSubCategoriesByParent = (
+  parent?: string,
+  isParentRequired: boolean = false
+) => {
+  return useQuery({
+    queryKey: ["subCategories", parent || "all"],
+    queryFn: () => getSubCategories(parent),
+    enabled: isParentRequired ? !!parent : true, // Si parent est requis, évalue la présence de parent, sinon toujours enabled
   });
 };
 
@@ -86,4 +99,5 @@ export {
   useAdminGetSubCategories,
   useAdminDeleteSubCategory,
   useAdminUpdateSubCategory,
+  useGetSubCategoriesByParent,
 };

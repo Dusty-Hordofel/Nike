@@ -9,29 +9,15 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
+import { Item } from "./admin.item.interface";
 
 // ITEMS LIST AND CARD
-export interface Item {
-  _id: string;
-  name: string;
-  image: string;
-  parent?: { _id: string; name: string };
-}
 
-export interface ItemWithId extends Omit<Item, "_id"> {
-  id: string;
-}
-
-export type ItemListProps = {
-  items: Item[];
-  onDeleteItem: (id: string) => void;
-  showUpdateModal: (item: ItemWithId) => void;
-};
-
-export interface ItemCardProps {
-  item: Item;
-  onshowUpdateItemModal: (item: ItemWithId) => void;
-  onDeleteItem: (id: string) => void;
+export interface FetchCategoriesResponse {
+  success: boolean;
+  error: boolean;
+  categories: Item[] | [];
+  message: string;
 }
 
 // FORM TYPES

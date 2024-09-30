@@ -121,7 +121,6 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       required: true,
       default: 0,
     },
-    // subProducts: [Schema.Types.Mixed],
     subProducts: [
       {
         sku: String,

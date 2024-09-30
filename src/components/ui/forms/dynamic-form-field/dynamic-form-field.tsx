@@ -9,21 +9,27 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "./file-upload";
+import { Item } from "@/@types/admin/admin.item.interface";
 
-interface Option {
-  createdAt: string;
-  image: string;
-  name: string;
-  slug: string;
-  updatedAt: string;
-  __v: number;
-  _id: string;
-}
+// interface Option {
+//   // createdAt: string;
+//   image: string;
+//   name: string;
+//   slug: string;
+//   parent?: {
+//     _id: string;
+//     name: string;
+//   };
+//   // parent?:any
+//   // updatedAt: string;
+//   // __v: number;
+//   _id: string;
+// }
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
-  options?: Option[];
+  options?: [] | Item[] | undefined;
 };
 type FileProps = React.InputHTMLAttributes<HTMLInputElement> & {
   fileInputRef?: React.RefObject<HTMLInputElement>;
@@ -36,7 +42,7 @@ interface DynamicFormFieldProps {
   name: string;
   label?: string;
   disabled?: boolean;
-  options?: Option[];
+  options?: Item[] | [];
   previewUrl?: any;
   className?: string;
   register: UseFormRegister<any>;
@@ -108,9 +114,8 @@ const DynamicFormField = ({
               className="w-full bg-clear z-10 focus:outline-none "
               {...selectProps}
             >
-              <option value="preference" style={{ display: "none" }}>
-                {label}
-              </option>
+              {/* value="preference" */}
+              <option style={{ display: "none" }}>{label}</option>
 
               {options?.length &&
                 options.map((option) => (
