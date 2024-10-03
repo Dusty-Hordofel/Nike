@@ -19,12 +19,22 @@ export const buttonVariants = cva(ButtonStyle.base, {
     { variant: "link", size: "small" },
     { variant: "ghost", size: "small" },
     {
+      variant: "destructive",
+      size: "small",
+      fullWidth: false,
+    },
+    {
       variant: "secondary",
       size: "small",
       fullWidth: false,
     },
     {
       variant: "primary",
+      size: "medium",
+      fullWidth: false,
+    },
+    {
+      variant: "destructive",
       size: "medium",
       fullWidth: false,
     },
@@ -45,6 +55,11 @@ export const buttonVariants = cva(ButtonStyle.base, {
     },
     {
       variant: "secondary",
+      size: "large",
+      fullWidth: true,
+    },
+    {
+      variant: "destructive",
       size: "large",
       fullWidth: true,
     },
