@@ -15,17 +15,16 @@ export interface IReview extends Document {
 }
 
 export interface ISubProduct {
-  sku: string;
   images: [{ public_url: string; url: string }];
   description_images: string[];
   color: {
     color: string;
     image: string;
   };
+  price: number;
   sizes: {
     size: string;
     qty: number;
-    price: number;
   }[];
   discount: number;
   sold: number;
@@ -34,17 +33,18 @@ export interface ISubProduct {
 export interface IProduct extends Document {
   name: string;
   description: string;
-  brand?: string;
+  // brand?: string;
   slug: string;
   category: Types.ObjectId;
   subCategories: Types.ObjectId[];
-  details: { name: string; value: string }[];
-  questions: { question: string; answer: string }[];
-  reviews: IReview[];
+  details?: { name: string; value: string }[];
+  questions?: { question: string; answer: string }[];
+  reviews?: IReview[];
   refundPolicy: string;
-  rating: number;
-  numReviews: number;
+  rating?: number;
+  numReviews?: number;
   shipping: number;
+  productType: string;
   subProducts: ISubProduct[];
 }
 
@@ -83,11 +83,11 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       type: String,
       required: true,
     },
+
     description: {
       type: String,
       required: true,
     },
-    brand: String,
     slug: {
       type: String,
       required: true,
@@ -97,6 +97,11 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Category",
+    },
+    productType: {
+      type: String,
+      enum: ["clothing", "shoes", "accessories"],
+      required: [true, "Le type de produit est requis."],
     },
     subCategories: [{ type: Schema.Types.ObjectId, ref: "subCategory" }],
     details: [{ name: String, value: String }],
@@ -123,7 +128,6 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
     },
     subProducts: [
       {
-        sku: String,
         images: [],
         description_images: [],
         color: {
@@ -134,11 +138,14 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
             type: String,
           },
         },
+        price: {
+          type: Number,
+          default: 0,
+        },
         sizes: [
           {
             size: String,
             qty: Number,
-            price: Number,
           },
         ],
         discount: {

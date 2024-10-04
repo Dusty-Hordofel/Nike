@@ -37,6 +37,10 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
   console.log("🚀 ~ ProductInformation ~ colors:", colors);
 
   const sizesInDatabase = sizes.map((size: any) => size.size);
+  console.log(
+    "🚀 ~ ProductInformation ~ sizesInDatabase:DB SIZES",
+    sizesInDatabase
+  );
 
   const [error, setError] = useState("");
 

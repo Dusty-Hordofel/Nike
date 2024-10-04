@@ -6,7 +6,7 @@ import {
   deleteSubCategory,
   getSubCategories,
   updateSubCategory,
-} from "@/services/admin/subcategory.service";
+} from "@/services/admin/subcategories.service";
 
 const useAdminCreateSubCategory = () => {
   const queryClient = useQueryClient();

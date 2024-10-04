@@ -9,18 +9,20 @@ import ProductCardDescription from "./product-card-description";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { name, subProducts, slug } = product;
+  console.log("🚀 ~ ProductCard ~ slug:SLUG", slug);
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
-  const [prices, setPrices] = useState(
-    subProducts[active]?.sizes
-      .map((s) => {
-        return s.price;
-      })
-      .sort((a, b) => {
-        return a - b;
-      })
-  );
+  const [prices, setPrices] = useState([]);
+  // const [prices, setPrices] = useState(
+  //   subProducts[active]?.sizes
+  //     .map((s) => {
+  //       return s.price;
+  //     })
+  //     .sort((a, b) => {
+  //       return a - b;
+  //     })
+  // );
 
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => {
@@ -33,15 +35,15 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
   useEffect(() => {
     setImages(subProducts[active].images);
-    setPrices(
-      subProducts[active]?.sizes
-        .map((s) => {
-          return s.price;
-        })
-        .sort((a, b) => {
-          return a - b;
-        })
-    );
+    // setPrices(
+    //   subProducts[active]?.sizes
+    //     .map((s) => {
+    //       return s.price;
+    //     })
+    //     .sort((a, b) => {
+    //       return a - b;
+    //     })
+    // );
   }, [active, product, subProducts]);
 
   return (

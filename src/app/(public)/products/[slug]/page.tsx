@@ -16,34 +16,40 @@ interface IProduct {
 }
 
 const ProductPage = ({ params, searchParams }: IProduct) => {
+  // const [selectedSizes, setSelectedSizes] = useState(null);
+  // const [productStyle, setProductStyle] = useState(null);
+
   const { slug: productSlug } = params;
+
   const productStyle = Number(searchParams.style);
   const selectedSize = Number(searchParams.size) || 0;
 
+  console.log("🚀 ~ ProductPage ~ slug:SLUG", productSlug);
+
   const productQuery = useQuery({
-    queryKey: ["product", productSlug, productStyle, selectedSize],
+    queryKey: ["products", productSlug, productStyle],
     queryFn: () =>
       fetch(
-        `/api/products/${productSlug}?style=${productStyle}&size=${selectedSize}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            style: productStyle,
-            size: selectedSize,
-            slug: productSlug,
-          }),
-        }
+        `/api/products/${productSlug}?style=${encodeURIComponent(productStyle)}`
       ).then((res) => res.json()),
   });
+  // const productQuery = useQuery({
+  //   queryKey: ["products", productSlug, productStyle, selectedSize],
+  //   queryFn: () =>
+  //     fetch(
+  //       `/api/products/${productSlug}?style=${encodeURIComponent(productStyle)}&size=${encodeURIComponent(selectedSize)}`
+  //     ).then((res) => res.json()),
+  // });
 
   if (productQuery.isLoading) return <p>Loading...</p>;
   if (productQuery.isError) return <p>Error...</p>;
 
   const { product } = productQuery.data;
   console.log("🚀 ~ ProductPage ~ product:TEST", product);
+  console.log(
+    "🚀 ~ ProductPage ~ product:TESTO",
+    decodeURIComponent(productSlug)
+  );
 
   // console.log("🚀 ~ ProductPage ~ productsQuery:", productQuery);
   return (

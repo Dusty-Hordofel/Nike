@@ -36,7 +36,7 @@ const SizeFields = ({
   const sizesValues = watch(`subProducts.${subProductIndex}.sizes`);
 
   const selectedSizes = sizesValues
-    .map((field: any) => field.size)
+    ?.map((field: any) => field.size)
     .filter((size: any) => size);
 
   return (
@@ -68,11 +68,6 @@ const SizeFields = ({
                   {sizeOption}
                 </option>
               ))}
-              {/* {availableSizeOptions.map((sizeOption, index) => (
-                  <option key={index} value={sizeOption}>
-                    {sizeOption}
-                  </option>
-                ))} */}
             </select>
 
             {/* Affichage des erreurs pour la taille */}
@@ -110,7 +105,7 @@ const SizeFields = ({
             )}
           </div>
           {/* Champ pour le prix */}
-          <div
+          {/* <div
             className={`${errors.name ? "text-red-600" : "text-black-200"}  flex flex-col`}
           >
             <label className="sr-only">Prix</label>
@@ -130,10 +125,7 @@ const SizeFields = ({
                 }
               </p>
             )}
-          </div>
-
-          {/* Afficher l'erreur de taille si elle existe */}
-          {/* {sizeError && <span className="text-red-500">{sizeError}</span>} */}
+          </div> */}
 
           {/* Bouton pour supprimer la taille */}
 
