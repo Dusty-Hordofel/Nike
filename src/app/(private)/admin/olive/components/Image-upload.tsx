@@ -44,7 +44,7 @@ const ImageUpload = ({
       )}
 
       {/* Afficher les aperçus des images */}
-      <div className="image-preview-container flex gap-x-4 mt-4">
+      <div className="image-preview-container flex gap-x-4 mt-4 overflow-x-auto">
         {imagePreviews.map((image, index) => (
           <img
             key={index}
