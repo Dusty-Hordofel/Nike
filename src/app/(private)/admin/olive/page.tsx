@@ -5,17 +5,17 @@ import { useGetSubCategoriesByParent } from "@/hooks/admin/use-admin-subcategori
 import Modal from "@/components/ui/modals/modal";
 import { useModal } from "@/context/modal/modal-context";
 import { AddItemButton } from "@/components/ui/item";
-import CreatePoductForm from "./create-product-form";
+import ProductForm from "./product-form";
 import QueryStatus from "./query-status";
 import ProductFormProvider from "./form-provider";
 import {
   useAdminDeleteProduct,
   useAdminGetProducts,
 } from "@/hooks/admin/use-admin-products.hook";
-import { Divide } from "lucide-react";
 
-const ProductForm = () => {
+const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  console.log("🚀 ~ ProductForm ~ selectedCategory:SOSO", selectedCategory);
 
   const categories = useAdminGetCategories();
   const products = useAdminGetProducts();
@@ -29,17 +29,15 @@ const ProductForm = () => {
   const allSubCategories = useGetSubCategoriesByParent(selectedCategory, true);
 
   const {
-    entityToEdit,
-    isCreateModalOpen,
+    // entityToEdit,
+    // isCreateModalOpen,
     isResultModalOpen,
-    isUpdateModalOpen,
-    showCreateModal,
-    showResultModal,
-    showUpdateModal,
-    closeCreateModal,
+    // isUpdateModalOpen,
+    // showCreateModal,
+    // showResultModal,
+    // showUpdateModal,
+    // closeCreateModal,
     closeResultModal,
-    setUpdateModalOpen,
-    setResultModalContent,
     resultModalContent,
     openModal,
     closeModal,
@@ -56,13 +54,18 @@ const ProductForm = () => {
       {isModalOpen && (
         <ProductFormProvider>
           {({ createProduct, entityToEdit }) => {
+            console.log("🚀 ~ ProductForm ~ entityToEdit:LOLO", entityToEdit);
             useEffect(() => {
-              setSelectedCategory(entityToEdit.category);
+              if (entityToEdit) {
+                setSelectedCategory(entityToEdit.category);
+              } else {
+                setSelectedCategory("");
+              }
             }, [entityToEdit]);
 
             return (
               <Modal title="Create your Product" onCloseModal={closeModal}>
-                <CreatePoductForm
+                <ProductForm
                   setSelectedCategory={setSelectedCategory}
                   categories={categories}
                   allSubCategories={allSubCategories}
@@ -156,4 +159,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default ProductPage;

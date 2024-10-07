@@ -329,7 +329,7 @@ const CreatePoductForm = ({
                 append({
                   images: [],
                   color: "",
-                  sizes: [{ size: "", qty: "" }],
+                  sizes: [{ size: "", qty: 0 }],
                   price: 0,
                   discount: 0,
                   sold: 0,

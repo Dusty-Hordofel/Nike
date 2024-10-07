@@ -10,7 +10,7 @@ import { ProductFormData, productSchema } from "./product-schema";
 import { uploadImageToCloudinary } from "./components/upload-image-to-cloudinary";
 import { useAdminCreateProduct } from "@/hooks/admin/use-admin-products.hook";
 import { AddItemButton } from "@/components/ui/item";
-import CreatePoductForm from "./create-product-form";
+import CreatePoductForm from "./product-form";
 import QueryStatus from "./query-status";
 
 const ProductForm = () => {
