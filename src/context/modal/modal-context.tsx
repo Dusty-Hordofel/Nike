@@ -1,3 +1,4 @@
+import { IProduct } from "@/models/Product";
 import React, {
   createContext,
   useState,
@@ -26,25 +27,13 @@ interface ModalContextProps {
   >;
   isUpdateModalOpen: boolean;
   setUpdateModalOpen: Dispatch<SetStateAction<boolean>>;
-  entityToEdit: {
-    id: string;
-    name: string;
-    image: string;
-    parent?: { _id: string; name: string };
-  } | null;
-  setEntityToEdit: Dispatch<
-    SetStateAction<{
-      id: string;
-      name: string;
-      image: string;
-      parent?: { _id: string; name: string };
-    } | null>
-  >;
-  showUpdateModal: (entity: {
-    id: string;
-    name: string;
-    image: string;
-  }) => void;
+  entityToEdit: any | null;
+  setEntityToEdit: Dispatch<SetStateAction<any | null>>;
+  showUpdateModal: (entity: any) => void;
+  openModal: (mode: "create" | "update", item?: EntityToEdit) => void;
+  closeModal: () => void;
+  isModalOpen: boolean;
+  formMode: "create" | "update";
 }
 
 export const ModalContext = createContext<ModalContextProps | undefined>(
@@ -63,7 +52,19 @@ interface ModalProviderProps {
   children: ReactNode;
 }
 
+interface IItem {
+  id: string;
+  name: string;
+  image: string;
+  parent?: { _id: string; name: string };
+}
+
+type EntityToEdit = IItem | IProduct;
+
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
+  const [entityToEdit, setEntityToEdit] = useState<any | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formMode, setFormMode] = useState<"create" | "update">("create");
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isResultModalOpen, setResultModalOpen] = useState(false);
@@ -71,18 +72,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     success: boolean;
     message: string;
   } | null>(null);
-  const [entityToEdit, setEntityToEdit] = useState<{
-    id: string;
-    name: string;
-    image: string;
-    parent?: { _id: string; name: string };
-  } | null>(null);
-  // const [entityToEdit, setEntityToEdit] = useState<{
-  //   id: string;
-  //   type: "category" | "product" | "subproduct";
-  //   data:
-  //   { id: string; name: string; image: string };
-  // } | null>(null);
+
+  // console.log("🚀 ~ entityToEdit:ENTITY", entityToEdit);
 
   const showCreateModal = () => setCreateModalOpen(true);
   const closeCreateModal = () => setCreateModalOpen(false);
@@ -90,14 +81,26 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const showResultModal = () => setResultModalOpen(true);
   const closeResultModal = () => setResultModalOpen(false);
 
-  const showUpdateModal = (item: {
-    id: string;
-    name: string;
-    image: string;
-    parent?: { _id: string; name: string };
-  }) => {
+  const showUpdateModal = (item: EntityToEdit) => {
+    console.log("RECEIVE ENTITY", item);
     setEntityToEdit(item);
-    setUpdateModalOpen(true); // Ouvre la modale pour l'édition
+    // setUpdateModalOpen(true); // Ouvre la modale pour l'édition
+    setCreateModalOpen(true); // Ouvre la modale pour l'édition
+  };
+
+  const openModal = (mode: "create" | "update", item?: EntityToEdit) => {
+    setFormMode(mode);
+    if (mode === "update" && item) {
+      setEntityToEdit(item);
+    } else {
+      setEntityToEdit(null); // Réinitialiser en mode création
+      // form.reset(); // Réinitialiser le formulaire pour la création
+    }
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Fermer la modale
   };
 
   return (
@@ -116,6 +119,10 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         entityToEdit,
         setEntityToEdit,
         showUpdateModal,
+        openModal,
+        closeModal,
+        isModalOpen,
+        formMode,
       }}
     >
       {children}

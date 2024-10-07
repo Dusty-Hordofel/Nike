@@ -15,8 +15,8 @@ export interface IReview extends Document {
 }
 
 export interface ISubProduct {
-  images: [{ public_url: string; url: string }];
-  description_images: string[];
+  images: [{ public_url: { type: string }; url: string }];
+  description_images?: string[];
   color: {
     color: string;
     image: string;
@@ -27,20 +27,19 @@ export interface ISubProduct {
     qty: number;
   }[];
   discount: number;
-  sold: number;
+  sold?: number;
 }
 
-export interface IProduct extends Document {
+export interface IProduct {
   name: string;
   description: string;
-  // brand?: string;
-  slug: string;
-  category: Types.ObjectId;
-  subCategories: Types.ObjectId[];
+  slug?: string;
+  category: string | Types.ObjectId;
+  subCategories: string[] | Types.ObjectId[];
   details?: { name: string; value: string }[];
   questions?: { question: string; answer: string }[];
   reviews?: IReview[];
-  refundPolicy: string;
+  refundPolicy?: string;
   rating?: number;
   numReviews?: number;
   shipping: number;
@@ -128,14 +127,30 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
     },
     subProducts: [
       {
-        images: [],
+        images: [
+          {
+            public_url: {
+              type: String,
+              default:
+                "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
+            },
+            url: {
+              type: String,
+              default:
+                "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
+            },
+          },
+        ],
         description_images: [],
         color: {
           color: {
             type: String,
+            default: "#000000", // Valeur par défaut pour color (ex: noir)
           },
           image: {
             type: String,
+            default:
+              "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
           },
         },
         price: {

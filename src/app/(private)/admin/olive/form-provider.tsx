@@ -14,6 +14,7 @@ interface ProductFormProviderProps {
     isCreateModalOpen: boolean;
     isResultModalOpen: boolean;
     isUpdateModalOpen: boolean;
+    entityToEdit: any;
   }) => React.ReactNode; // Les enfants reçoivent un objet avec plusieurs propriétés
 }
 
@@ -26,6 +27,7 @@ const ProductFormProvider = ({ children }: ProductFormProviderProps) => {
     isCreateModalOpen,
     isResultModalOpen,
     isUpdateModalOpen,
+    entityToEdit,
   } = useProductForm();
   return (
     <FormProvider {...form}>
@@ -36,6 +38,7 @@ const ProductFormProvider = ({ children }: ProductFormProviderProps) => {
           isCreateModalOpen,
           isResultModalOpen,
           isUpdateModalOpen,
+          entityToEdit,
         })}
       </form>
     </FormProvider>

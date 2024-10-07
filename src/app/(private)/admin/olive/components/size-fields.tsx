@@ -89,10 +89,12 @@ const SizeFields = ({
             <label className="sr-only">Quantité</label>
             <Input
               {...register(
-                `subProducts.${subProductIndex}.sizes.${sizeIndex}.qty`
+                `subProducts.${subProductIndex}.sizes.${sizeIndex}.qty`,
+                {
+                  valueAsNumber: true,
+                }
               )}
               placeholder="Quantité"
-              type="number"
             />
             {errors?.subProducts?.[subProductIndex]?.sizes?.[sizeIndex]
               ?.qty && (

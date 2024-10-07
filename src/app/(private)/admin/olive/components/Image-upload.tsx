@@ -1,18 +1,29 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ImageUpload = ({
   register,
   subProductIndex,
   errors,
+  existingImages = [],
 }: {
   register: any;
   subProductIndex: number;
   errors: any;
+  existingImages: { public_url: string; url: string }[];
 }) => {
+  // console.log("🚀 ~ existingImages:ONE IMG SUB", existingImages);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  // console.log("🚀 ~ imagePreviews:PREVIEW", imagePreviews);
+
+  useEffect(() => {
+    if (existingImages?.length > 0) {
+      const previews = existingImages.map((image) => image.public_url); // ou `image.url` selon ton besoin
+      setImagePreviews(previews);
+    }
+  }, [existingImages]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -24,7 +35,7 @@ const ImageUpload = ({
       setImagePreviews(fileArray);
     }
   };
-
+  // console.log("IMAGES TEST", setValue(`subProducts.${subProductIndex}.images`));
   return (
     <div
       className={`${errors.name ? "text-red-600" : "text-black-200"}  flex flex-col`}

@@ -10,7 +10,6 @@ export const LogInSchema = z.object({
 
 export const RegisterSchema = z.object({
   code: z.string().min(5, "Required"),
-  // email: z.string().email("Obligatoire"),
   lastName: z.string().min(2, "Required"),
   firstName: z.string().min(2, "Required"),
   password: z.string().min(6, "Required"),
@@ -23,12 +22,6 @@ export const RegisterSchema = z.object({
   terms: z.boolean().refine((val) => val === true, {
     message: "Required",
   }),
-  // terms: z.boolean().refine((value) => value === true, {
-  //   message: "Required",
-  // }),
-  // terms: z.boolean().refine((value) => value === true, {
-  //   message: "Required",
-  // }),
   marketingOption: z.boolean().optional(),
 });
 
@@ -55,7 +48,6 @@ export const UserSchema = z.object({
 
   phoneNumber: z.string().optional(),
   role: z.string().default("user"),
-  // addresses: addressSchema.optional(),
   marketingOption: z.boolean().default(false),
   terms: z.boolean().refine((val) => val === true, {
     message: "Required",
@@ -76,10 +68,9 @@ export const CategorySchema = z.object({
   category: z
     .string({ message: "Category name is required." })
     .min(1, "Category name is required."),
-
   file: z
     .any()
-    .optional() // Rendre le champ optionnel
+    .optional()
     .refine(
       (files) =>
         !files || (files.length > 0 && files[0]?.size < 5 * 1024 * 1024),
@@ -94,26 +85,14 @@ export const CategorySchema = z.object({
         message: "Only JPEG and PNG files are allowed",
       }
     ),
-
-  // file: z
-  //   .any()
-  //   .refine((files) => files && files.length > 0, {
-  //     message: "File is required",
-  //   })
-  //   .refine((files) => files?.[0]?.size < 5 * 1024 * 1024, {
-  //     message: "File size must be less than 5MB",
-  //   })
-  //   .refine((files) => ["image/jpeg", "image/png"].includes(files?.[0]?.type), {
-  //     message: "Only JPEG and PNG files are allowed",
-  //   }),
 });
 
 export const SubCategorySchema = (validCategories: Item[] | [] | undefined) =>
   z.object({
-    subcategory: z.string().min(1, { message: "Le nom est requis" }), // Champ obligatoire
+    subcategory: z.string().min(1, { message: "Le nom est requis" }),
     file: z
       .any()
-      .optional() // Rendre le champ optionnel
+      .optional()
       .refine(
         (files) =>
           !files || (files.length > 0 && files[0]?.size < 5 * 1024 * 1024),
@@ -131,57 +110,22 @@ export const SubCategorySchema = (validCategories: Item[] | [] | undefined) =>
 
     parent: z
       .string()
-      .min(1, { message: "Le parent est requis" }) // Champ parent obligatoire
+      .min(1, { message: "Le parent est requis" })
       .refine((val) => validCategories?.some((cat) => cat._id === val), {
         message: "Le parent sélectionné est invalide.",
-      }), // Validation basée sur les catégories récupérées dynamiquement
+      }),
   });
-
-// export const ProductSchema = (
-//   validCategories: Item[],
-//   validSubCategories: Item[]
-//   // validCategories: {
-//   //   createdAt: string;
-//   //   image: string;
-//   //   name: string;
-//   //   slug: string;
-//   //   updatedAt: string;
-//   //   __v: number;
-//   //   _id: string;
-//   // }[]
-// ) =>
-//   z.object({
-//     category: z
-//       .string()
-//       .min(1, { message: "La catégorie est requise" }) // Champ parent obligatoire
-//       .refine((val) => validCategories.some((cat) => cat._id === val), {
-//         message: "Le catégorie sélectionnée est invalide.",
-//       }), // Validation basée sur les catégories récupérées dynamiquement
-//     subcategory: z
-//       .string()
-//       .min(1, { message: "La catégorie est requise" }) // Champ parent obligatoire
-//       .refine((val) => validSubCategories.some((sub) => sub._id === val), {
-//         message: "Le sous-catégorie sélectionnée est invalide.",
-//       }), // Validation basée sur les catégories récupérées dynamiquement
-//   });
 
 export const ProductSchema = z.object({
   name: z.string().min(1, { message: "Product name is required." }),
-  category: z.string().min(1, { message: "Please select a category." }), // Validation pour la catégorie
+  category: z.string().min(1, { message: "Please select a category." }),
   description: z
     .string()
-    .min(10, { message: "Product description is required." }), // Validation pour la catégorie
-  brand: z.string().min(10, { message: "Product description is required." }), // Validation pour la catégorie
-  sku: z.string().min(10, { message: "Product description is required." }), // Validation pour la catégorie
-  discount: z.string().min(10, { message: "Product description is required." }), // Validation pour la catégorie
+    .min(10, { message: "Product description is required." }),
+  brand: z.string().min(10, { message: "Product description is required." }),
+  sku: z.string().min(10, { message: "Product description is required." }),
+  discount: z.string().min(10, { message: "Product description is required." }),
   color: z.string({ message: "Please add a color." }),
-  // category: z
-  //   .string()
-  //   .min(1, { message: "Please select a category." })
-  //   .refine((val) => val !== "preference", {
-  //     message: "You must select a valid category.",
-  //   }),
-  // subcategory: z.string().min(1, { message: "Please select a subcategory." }),
   subcategories: z
     .array(z.string())
     .min(1, "Please select at least one subcategory."),
@@ -207,12 +151,8 @@ export const ProductSchema = z.object({
         ), // Vérifie que l'extension est soit jpeg, png ou gif
       { message: "Only .jpg, .png,.webp and .gif formats are allowed." }
     ),
-  // images: z
-  //   .array(z.instanceof(File))
-  //   .min(1, "Please select at least one image."),
 });
 
-// Extraction du type TypeScript pour l'email & password
 export type EmailFormData = z.infer<typeof EmailSchema>;
 export type PasswordFormData = z.infer<typeof PasswordSchema>;
 export type LoginFormData = z.infer<typeof LogInSchema>;
@@ -223,4 +163,3 @@ export type OptionFormData = z.infer<typeof OptionSchema>;
 export type CategoryFormData = z.infer<typeof CategorySchema>;
 export type SubCategoryFormData = z.infer<ReturnType<typeof SubCategorySchema>>;
 export type ProductFormData = z.infer<typeof ProductSchema>;
-// export type ProductFormData = z.infer<ReturnType<typeof ProductSchema>>;

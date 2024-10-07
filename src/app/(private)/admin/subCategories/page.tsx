@@ -98,7 +98,7 @@ const SubCategoriesPage = () => {
   } = useFileContext();
 
   useEffect(() => {
-    if (entityToEdit) {
+    if (entityToEdit && "parent" in entityToEdit) {
       setValue("subcategory", entityToEdit.name);
       setValue("parent", entityToEdit.parent?._id as string);
       setPreviewUrl(entityToEdit.image);
@@ -162,15 +162,16 @@ const SubCategoriesPage = () => {
     file,
     parent,
   }: SubCategoryFormData) => {
-    if (!entityToEdit) return;
-    const imageUrl = (await handleImageUpload(file)) || entityToEdit.image;
-    const updatedCategory = await updateSubCategory.mutateAsync({
-      id: entityToEdit.id,
-      name: subcategory,
-      image: imageUrl,
-      parent,
-    });
-    handleResponse(updatedCategory, true);
+    if (entityToEdit && "image" in entityToEdit) {
+      const imageUrl = (await handleImageUpload(file)) || entityToEdit.image;
+      const updatedCategory = await updateSubCategory.mutateAsync({
+        id: entityToEdit.id,
+        name: subcategory,
+        image: imageUrl,
+        parent,
+      });
+      handleResponse(updatedCategory, true);
+    }
   };
 
   if (categories.isLoading)

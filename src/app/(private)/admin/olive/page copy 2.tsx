@@ -2,22 +2,14 @@
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/buttons/button/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
 import { useGetSubCategoriesByParent } from "@/hooks/admin/use-admin-subcategories.hook";
-import Loader from "@/components/ui/loader";
 import Modal from "@/components/ui/modals/modal";
 import { useModal } from "@/context/modal/modal-context";
-import ImageUpload from "./components/Image-upload";
-import SizeFields from "./components/size-fields";
 import { ProductFormData, productSchema } from "./product-schema";
 import { uploadImageToCloudinary } from "./components/upload-image-to-cloudinary";
 import { useAdminCreateProduct } from "@/hooks/admin/use-admin-products.hook";
 import { AddItemButton } from "@/components/ui/item";
-import { LoaderCircle } from "lucide-react";
 import CreatePoductForm from "./create-product-form";
 import QueryStatus from "./query-status";
 

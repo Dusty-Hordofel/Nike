@@ -1,34 +1,20 @@
 "use client";
-import React, { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
-// import { useGetSubCategoriesByParent } from "@/hooks/admin/use-admin-subcategories.hook";
-// import Modal from "@/components/ui/modals/modal";
-// import { useModal } from "@/context/modal/modal-context";
 import { ProductFormData, productSchema } from "./product-schema";
 import { useModal } from "@/context/modal/modal-context";
 import { uploadImageToCloudinary } from "./components/upload-image-to-cloudinary";
-import { useAdminCreateProduct } from "@/hooks/admin/use-admin-products.hook";
-// import { uploadImageToCloudinary } from "./components/upload-image-to-cloudinary";
-// import { useAdminCreateProduct } from "@/hooks/admin/use-admin-products.hook";
-// import { AddItemButton } from "@/components/ui/item";
-// import CreatePoductForm from "./create-product-form";
-// import QueryStatus from "./query-status";
-
-type Props = {};
+import {
+  useAdminCreateProduct,
+  useAdminUpdateProduct,
+} from "@/hooks/admin/use-admin-products.hook";
+import { ISubProduct } from "@/models/Product";
 
 const useProductForm = () => {
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
   });
-
-  //   const { handleSubmit, reset } = form;
-
-  //   const { fields, append, remove } = useFieldArray({
-  //     control,
-  //     name: "subProducts",
-  //   });
 
   const {
     entityToEdit,
@@ -42,7 +28,12 @@ const useProductForm = () => {
     closeResultModal,
     setUpdateModalOpen,
     setResultModalContent,
+    setEntityToEdit,
     resultModalContent,
+    openModal,
+    closeModal,
+    isModalOpen,
+    formMode,
   } = useModal();
 
   const modal = useModal();
@@ -63,60 +54,74 @@ const useProductForm = () => {
   };
 
   const createProduct = useAdminCreateProduct();
+  const updateCategory = useAdminUpdateProduct();
 
   const onSubmit = async (data: ProductFormData) => {
     console.log("DATASSS", data);
 
-    const updatedSubProducts = await Promise.all(
-      data.subProducts.map(async (subProduct) => {
-        if (subProduct.images && subProduct.images.length > 0) {
-          const uploadedImageUrls = await Promise.all(
-            [...subProduct.images].map(
-              async (file: File) => await uploadImageToCloudinary(file)
-            )
-          );
-          console.log(
-            "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-            uploadedImageUrls
-          );
-          return {
-            ...subProduct,
-            color: {
-              color: subProduct.color,
-              image: uploadedImageUrls[0].url,
-            },
-            images: uploadedImageUrls,
-          };
-        }
+    // const updatedSubProducts = await Promise.all(
+    //   data.subProducts.map(async (subProduct) => {
+    //     if (subProduct.images && subProduct.images.length > 0) {
+    //       const uploadedImageUrls = await Promise.all(
+    //         [...subProduct.images].map(
+    //           async (file: File) => await uploadImageToCloudinary(file)
+    //         )
+    //       );
+    //       console.log(
+    //         "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
+    //         uploadedImageUrls
+    //       );
+    //       return {
+    //         ...subProduct,
+    //         color: {
+    //           color: subProduct.color,
+    //           image: uploadedImageUrls[0].url,
+    //         },
+    //         images: uploadedImageUrls,
+    //       };
+    //     }
 
-        return subProduct;
-      })
-    );
+    //     return subProduct;
+    //   })
+    // );
 
     // Envoyer les données finales au backend
-    const productData = {
-      ...data,
-      subProducts: updatedSubProducts,
-    };
+    // const productData = {
+    //   ...data,
+    //   subProducts: updatedSubProducts,
+    // };
 
-    const newProduct = await createProduct.mutateAsync(productData);
-    console.log("🚀 ~ onSubmit ~ newProduct:FE P", newProduct);
+    // const newProduct = await createProduct.mutateAsync(productData);
+    // console.log("🚀 ~ onSubmit ~ newProduct:FE P", newProduct);
 
-    handleResponse(newProduct);
+    // handleResponse(newProduct);
   };
 
   const handleModalClose = (isUpdate = false) => {
     form.reset();
+    setEntityToEdit(null);
     isUpdate ? modal.setUpdateModalOpen(false) : modal.closeCreateModal();
   };
 
-  //   const productType = form.watch("productType") as string;
-  //   console.log("🚀 ~ ProductForm ~ productType:CLOTHES", productType);
+  useEffect(() => {
+    if (entityToEdit) {
+      form.reset({
+        name: entityToEdit.name || "",
+        description: entityToEdit.description || "",
+        category: entityToEdit.category || "",
+        subCategories: entityToEdit.subCategories || [],
+        productType: entityToEdit.productType || "",
+        shipping: entityToEdit.shipping || 0,
+        subProducts:
+          entityToEdit.subProducts.map((subproduct: ISubProduct) => ({
+            ...subproduct,
+            color: subproduct.color.color,
+          })) || [],
+      });
+    }
+  }, [entityToEdit, form.reset]);
 
   return {
-    // fields,
-    // append,
-    // remove,
     form,
     handleSubmit: form.handleSubmit(onSubmit),
     createProduct,
@@ -124,7 +129,7 @@ const useProductForm = () => {
     isCreateModalOpen,
     isResultModalOpen,
     isUpdateModalOpen,
-    // productType,
+    entityToEdit,
   };
 };
 

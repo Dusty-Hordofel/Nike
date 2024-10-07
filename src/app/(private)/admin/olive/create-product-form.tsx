@@ -3,7 +3,6 @@ import React from "react";
 import ImageUpload from "./components/Image-upload";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import SizeFields from "./components/size-fields";
 import { LoaderCircle } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -15,6 +14,8 @@ const CreatePoductForm = ({
   allSubCategories,
   handleModalClose,
   createProduct,
+  entityToEdit,
+  formMode,
 }: any) => {
   const {
     register,
@@ -89,7 +90,7 @@ const CreatePoductForm = ({
                 id={`input-textarea`}
                 {...register("description")}
                 rows={5}
-                className={cn("p-4 rounded-lg focus:outline-none")}
+                className="p-4 rounded-lg focus:outline-none"
               />
             </div>
             {errors.description && (
@@ -99,20 +100,15 @@ const CreatePoductForm = ({
             )}
           </div>
           {/* Categories */}
-          <div className="flex flex-col">
-            <div
-              className={cn(
-                "w-full  rounded-lg border-default border focus:outline-none transition-all flex justify-between relative gap-x-2 overflow-hidden cursor-pointer",
-                errors.category ? "text-red-600" : "text-black-200"
-              )}
-            >
-              <label className="sr-only" htmlFor="select-category">
-                Category
-              </label>
+          <div
+            className={`flex flex-col ${errors.category ? "text-red-600" : "text-black-200"}`}
+          >
+            <div>
+              <label htmlFor="select-category">Category</label>
               <select
                 id="select-category"
                 {...register("category")}
-                className=" bg-clear z-10 focus:outline-none   py-4 pr-4 pl-3 w-full"
+                className="w-full  rounded-lg border-default border focus:outline-none transition-all flex justify-between relative gap-x-2 overflow-hidden cursor-pointer bg-clear z-10  py-4 pr-4 pl-3 "
                 onChange={async (e) => {
                   const value = e.target.value;
                   setSelectedCategory(value);
@@ -133,7 +129,7 @@ const CreatePoductForm = ({
             </div>
             <div className="h-6">
               {errors.category && (
-                <p className="px-4 pt-[6px] text-xs text-red-600">
+                <p className="px-4 pt-[6px] text-xs ">
                   {errors.category.message}
                 </p>
               )}
@@ -141,17 +137,14 @@ const CreatePoductForm = ({
           </div>
 
           {/* SubCategories */}
-          <div className="flex flex-col">
-            <div
-              className={cn(
-                "w-full py-4 pr-4 pl-3 rounded-lg border-default border focus:outline-none transition-all flex justify-between relative gap-x-2  cursor-pointer",
-                errors.subCategories ? "text-red-600" : "text-black-200"
-              )}
-            >
-              {/* <label htmlFor="checkbox-subcategories">Subcategory</label> */}
-              <div className="grid gap-5 grid-cols-2 justify-center items-center">
-                {allSubCategories.data && allSubCategories.data.length > 0 ? (
-                  allSubCategories.data.map((subCategory: any) => (
+          <div
+            className={`flex flex-col ${errors.subCategories ? "text-red-600" : "text-black-200"}`}
+          >
+            <label htmlFor="checkbox-subcategories">Subcategory</label>
+            <div className="p-5 rounded-lg border">
+              {allSubCategories.data && allSubCategories.data.length > 0 ? (
+                <div className="grid grid-cols-2 gap-5 justify-center items-center ">
+                  {allSubCategories.data.map((subCategory: any) => (
                     <div key={subCategory._id}>
                       <label className="flex items-center gap-x-2">
                         <input
@@ -191,26 +184,25 @@ const CreatePoductForm = ({
                         <span>{subCategory.name}</span>
                       </label>
                     </div>
-                  ))
-                ) : (
-                  <p>No subCategories found, create once</p>
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <p>No subCategories found, create once</p>
+              )}
             </div>
-            <div className="h-6">
-              {errors.subCategories &&
-                allSubCategories.data &&
-                allSubCategories.data.length > 0 && (
-                  <p className="px-4 pt-[6px] text-xs text-red-600">
-                    {errors.subCategories.message}
-                  </p>
-                )}
-            </div>
+
+            {errors.subCategories &&
+              allSubCategories.data &&
+              allSubCategories.data.length > 0 && (
+                <p className="px-4 pt-[6px] text-xs ">
+                  {errors.subCategories.message}
+                </p>
+              )}
           </div>
 
           {/* frais de livraison */}
           <div
-            className={`${errors.name ? "text-red-600" : "text-black-200"}  flex flex-col`}
+            className={`${errors.shipping ? "text-red-600" : "text-black-200"}  flex flex-col`}
           >
             <label>Shipping costs</label>
             <Input
@@ -218,6 +210,7 @@ const CreatePoductForm = ({
                 valueAsNumber: true,
               })}
               placeholder="Frais de livraison"
+              defaultValue={0}
             />
 
             {errors.shipping?.message && (
@@ -227,124 +220,130 @@ const CreatePoductForm = ({
             )}
           </div>
         </div>
-
-        <div className="space-y-4 border rounded-md p-4">
-          <label className="text-3xl font-medium py-4">
-            Product variations
-          </label>
-          {fields.map((field: any, index: number) => (
-            <div key={field.id} className="space-y-4 border rounded-md p-4">
-              <h3 className="text-2xl font-bold">variation {index + 1}</h3>
-              <ImageUpload
-                register={register}
-                errors={errors}
-                subProductIndex={index}
-              />
-
-              <div
-                className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
-              >
-                <div className="flex flex-col">
-                  <label className="text-lg">Color</label>
-                  {/* <div className="w-full"> */}
-                  <div className="flex  items-center justify-center gap-x-4">
-                    <Input {...register(`subProducts.${index}.color`)} />
-                    <div
-                      style={{
-                        backgroundColor: getValues(
-                          `subProducts.${index}.color`
-                        ),
-                      }}
-                      className="size-7 rounded-full shadow-md border"
-                    ></div>
-                  </div>
-                </div>
-                {errors.subProducts?.[index]?.color && (
-                  <p className="px-4 pt-[6px] text-xs ">
-                    {errors.subProducts[index]?.color?.message}
-                  </p>
-                )}
-              </div>
-              {/* Price */}
-              <div
-                className={`${errors.subProducts?.[index]?.price ? "text-red-600" : "text-black-200"}  flex flex-col`}
-              >
-                <div className="flex flex-col">
-                  <label className="text-lg">Price</label>
-                  <Input
-                    {...register(`subProducts.${index}.price`, {
-                      valueAsNumber: true,
-                    })}
-                    defaultValue={0}
-                  />
-                </div>
-                {errors.subProducts?.[index]?.price && (
-                  <p className="px-4 pt-[6px] text-xs ">
-                    {errors.subProducts[index]?.price?.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="text-lg">Sizes</label>
-                <div>
-                  <SizeFields
-                    control={control}
+        <div className="flex flex-col">
+          <div className="space-y-4 border rounded-md p-4">
+            <label className="text-3xl font-medium py-4">
+              Product variations
+            </label>
+            {fields.map((field: any, index: number) => {
+              return (
+                <div key={field.id} className="space-y-4 border rounded-md p-4">
+                  <h3 className="text-2xl font-bold">variation {index + 1}</h3>
+                  <ImageUpload
                     register={register}
-                    subProductIndex={index}
                     errors={errors}
-                    watch={watch}
-                    productType={productType}
+                    subProductIndex={index}
+                    existingImages={entityToEdit.subProducts[index].images}
                   />
+
+                  <div
+                    className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                  >
+                    <div className="flex flex-col">
+                      <label className="text-lg">Color</label>
+                      <div className="flex  items-center justify-center gap-x-4">
+                        <Input {...register(`subProducts.${index}.color`)} />
+                        <div
+                          style={{
+                            backgroundColor: getValues(
+                              `subProducts.${index}.color`
+                            ),
+                          }}
+                          className="size-7 rounded-full shadow-md border"
+                        ></div>
+                      </div>
+                    </div>
+                    {errors.subProducts?.[index]?.color && (
+                      <p className="px-4 pt-[6px] text-xs ">
+                        {errors.subProducts[index]?.color?.message}
+                      </p>
+                    )}
+                  </div>
+                  {/* Price */}
+                  <div
+                    className={`${errors.subProducts?.[index]?.price ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                  >
+                    <div className="flex flex-col">
+                      <label className="text-lg">Price</label>
+                      <Input
+                        {...register(`subProducts.${index}.price`, {
+                          valueAsNumber: true,
+                        })}
+                        defaultValue={0}
+                      />
+                    </div>
+                    {errors.subProducts?.[index]?.price && (
+                      <p className="px-4 pt-[6px] text-xs ">
+                        {errors.subProducts[index]?.price?.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="text-lg">Sizes</label>
+                    <div>
+                      <SizeFields
+                        control={control}
+                        register={register}
+                        subProductIndex={index}
+                        errors={errors}
+                        watch={watch}
+                        productType={productType}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Discount */}
+                  <div
+                    className={`${errors.subProducts?.[index]?.discount ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                  >
+                    <label className="text-lg">Discount</label>
+                    <Input
+                      {...register(`subProducts.${index}.discount`, {
+                        valueAsNumber: true,
+                      })}
+                      placeholder="Discount"
+                      defaultValue={0}
+                    />
+
+                    {errors.subProducts?.[index]?.discount && (
+                      <p className="px-4 pt-[6px] text-xs ">
+                        {errors.subProducts[index]?.discount?.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <Button
+                    className="bg-red-600"
+                    type="button"
+                    onClick={() => remove(index)}
+                  >
+                    Delete varation {index + 1}
+                  </Button>
                 </div>
-              </div>
-
-              {/* Discount */}
-              <div
-                className={`${errors.subProducts?.[index]?.discount ? "text-red-600" : "text-black-200"}  flex flex-col`}
-              >
-                <label className="text-lg">Discount</label>
-                <Input
-                  {...register(`subProducts.${index}.discount`, {
-                    valueAsNumber: true,
-                  })}
-                  placeholder="Discount"
-                  defaultValue={0}
-                />
-
-                {errors.subProducts?.[index]?.discount && (
-                  <p className="px-4 pt-[6px] text-xs ">
-                    {errors.subProducts[index]?.discount?.message}
-                  </p>
-                )}
-              </div>
-
-              <Button
-                className="bg-red-600"
-                type="button"
-                onClick={() => remove(index)}
-              >
-                Delete varation {index + 1}
-              </Button>
-            </div>
-          ))}
-          <Button
-            type="button"
-            onClick={() =>
-              append({
-                // valeurs par defaut
-                images: [],
-                color: "",
-                sizes: [{ size: "", qty: "" }],
-                // sizes: [{ size: "", qty: "", price: "" }],
-                price: 0,
-                discount: 0,
-                sold: 0,
-              })
-            }
-          >
-            Add variation
-          </Button>
+              );
+            })}
+            <Button
+              type="button"
+              onClick={() =>
+                append({
+                  images: [],
+                  color: "",
+                  sizes: [{ size: "", qty: "" }],
+                  price: 0,
+                  discount: 0,
+                  sold: 0,
+                })
+              }
+            >
+              Add variation
+            </Button>
+          </div>
+          {errors.subProducts?.message && (
+            <p className="px-4 pt-[6px] text-xs text-red-600">
+              {String(errors.subProducts.message)}
+            </p>
+          )}
         </div>
       </div>
 
@@ -364,17 +363,18 @@ const CreatePoductForm = ({
           disabled={createProduct.isPending}
           className="relative"
         >
-          {createProduct.isPending ? (
+          {createProduct.isPending && (
             <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
               <LoaderCircle color="#ffffff" className="animate-spin" />
             </div>
-          ) : (
-            "Create a new product"
           )}
+          <div className={`${createProduct.isPending ? "invisible" : "block"}`}>
+            {formMode === "create"
+              ? "Create a new product"
+              : "Update product information"}
+          </div>
         </Button>
       </div>
-      {/* </ProductFormProvider> */}
-      {/* </form> */}
     </>
   );
 };
