@@ -1162,7 +1162,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 54. Ajout d'un Provider de la sous-categorie
 
-### 55.
+### 55. Gestion du formulaire de la categorie
 
 ### 56.
 

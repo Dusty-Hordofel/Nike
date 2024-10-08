@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { FormProvider } from "react-hook-form";
-import useSubProductForm from "./use-subcategories-form";
 import { EntityToEdit } from "@/context/modal/modal-context";
+import useCategoryForm from "./use-category-form";
 
-interface SubProductFormProviderProps {
+interface CategoryFormProviderProps {
   children: (props: {
     handleDeleteCategory: (id: string) => void;
     handleFileChange: any;
@@ -14,11 +14,10 @@ interface SubProductFormProviderProps {
     openModal: (mode: "create" | "update", item?: EntityToEdit) => void;
     closeModal: () => void;
     categories: any;
-    subCategories: any;
   }) => React.ReactNode;
 }
 
-const SubcategoryFormProvider = ({ children }: SubProductFormProviderProps) => {
+const CategoryFormProvider = ({ children }: CategoryFormProviderProps) => {
   const {
     form,
     handleDeleteCategory,
@@ -30,8 +29,7 @@ const SubcategoryFormProvider = ({ children }: SubProductFormProviderProps) => {
     openModal,
     closeModal,
     categories,
-    subCategories,
-  } = useSubProductForm();
+  } = useCategoryForm();
 
   return (
     <FormProvider {...form}>
@@ -45,11 +43,10 @@ const SubcategoryFormProvider = ({ children }: SubProductFormProviderProps) => {
           openModal,
           closeModal,
           categories,
-          subCategories,
         })}
       </form>
     </FormProvider>
   );
 };
 
-export default SubcategoryFormProvider;
+export default CategoryFormProvider;

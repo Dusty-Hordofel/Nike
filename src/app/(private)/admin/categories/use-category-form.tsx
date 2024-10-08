@@ -1,30 +1,21 @@
 "use client";
 
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SubCategorySchema, SubCategoryFormData } from "@/lib/validations/auth";
+import { CategoryFormData, CategorySchema } from "@/lib/validations/auth";
 import { useModal } from "@/context/modal/modal-context";
 import { useFileContext } from "@/context/file/file-context";
-
-import { useEffect } from "react";
-
 import {
-  useAdminCreateSubCategory,
-  useAdminDeleteSubCategory,
-  useAdminUpdateSubCategory,
-  useGetSubCategoriesByParent,
-} from "@/hooks/admin/use-admin-subcategories.hook";
-import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
+  useAdminCreateCategory,
+  useAdminDeleteCategory,
+  useAdminGetCategories,
+  useAdminUpdateCategory,
+} from "@/hooks/admin/use-admin-categories.hook";
 
-const useSubProductForm = () => {
-  const createSubCategory = useAdminCreateSubCategory();
-  const updateSubCategory = useAdminUpdateSubCategory();
-  const categories = useAdminGetCategories();
-  const subCategories = useGetSubCategoriesByParent();
-  const deleteSubCategory = useAdminDeleteSubCategory();
-
-  const form = useForm<SubCategoryFormData>({
-    resolver: zodResolver(SubCategorySchema(categories.data)),
+const useCategoryForm = () => {
+  const form = useForm<CategoryFormData>({
+    resolver: zodResolver(CategorySchema),
   });
 
   const {
@@ -51,12 +42,16 @@ const useSubProductForm = () => {
   } = useFileContext();
 
   useEffect(() => {
-    if (entityToEdit && "parent" in entityToEdit) {
-      form.setValue("subcategory", entityToEdit.name);
-      form.setValue("parent", entityToEdit.parent?._id as string);
+    if (entityToEdit) {
+      form.setValue("category", entityToEdit.name);
       setPreviewUrl(entityToEdit.image);
     }
   }, [entityToEdit, form.setValue, setPreviewUrl]);
+
+  const createCategory = useAdminCreateCategory();
+  const updateCategory = useAdminUpdateCategory();
+  const categories = useAdminGetCategories();
+  const deleteCategory = useAdminDeleteCategory();
 
   const handleModalClose = () => {
     form.reset();
@@ -92,44 +87,35 @@ const useSubProductForm = () => {
   };
 
   const handleDeleteCategory = async (id: string) => {
-    await deleteSubCategory.mutateAsync({ id });
+    await deleteCategory.mutateAsync({ id });
   };
 
   const handleSubCategorySubmit = async ({
-    subcategory,
+    category,
     file,
-    parent,
-  }: SubCategoryFormData) => {
+  }: CategoryFormData) => {
     const imageUrl = file ? await handleImageUpload(file) : entityToEdit?.image;
 
     if (formMode === "create") {
       try {
-        const subCategory = await createSubCategory.mutateAsync({
-          name: subcategory,
+        const newCategory = await createCategory.mutateAsync({
+          name: category,
           image: imageUrl,
-          parent,
         });
-        handleResponse(subCategory);
+        handleResponse(newCategory);
       } catch (error) {
-        console.error(
-          "Erreur lors de la création de la sous-catégorie:",
-          error
-        );
+        console.error("Erreur lors de la création de la catégorie.", error);
       }
     } else if (formMode === "update" && entityToEdit) {
       try {
-        const subCategory = await updateSubCategory.mutateAsync({
+        const updatedCategory = await updateCategory.mutateAsync({
           id: entityToEdit.id,
-          name: subcategory,
+          name: category,
           image: imageUrl,
-          parent,
         });
-        handleResponse(subCategory);
+        handleResponse(updatedCategory);
       } catch (error) {
-        console.error(
-          "Erreur lors de la mise à jour de la sous-catégorie:",
-          error
-        );
+        console.error("Erreur lors de la mise à jour de la catégorie.", error);
       }
     }
   };
@@ -140,14 +126,14 @@ const useSubProductForm = () => {
     handleSubmit: form.handleSubmit(handleSubCategorySubmit),
     handleFileChange,
     handleButtonClick,
+    closeResultModal,
     previewUrl,
     fileInputRef,
     openModal,
     closeModal,
     categories,
-    subCategories,
-    deleteSubCategory,
+    deleteCategory,
   };
 };
 
-export default useSubProductForm;
+export default useCategoryForm;

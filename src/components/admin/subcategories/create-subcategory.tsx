@@ -12,19 +12,12 @@ type Props = {};
 // CategoryFormProps
 // register, errors, clearErrors, setValue
 const CreateSubCategory = ({
-  // register,
-  // errors,
   handleFileChange,
-  // clearErrors,
   handleButtonClick,
-  // setValue,
   previewUrl,
   fileInputRef,
-  // onSubmit,
   onCloseModal,
-  // handleSubmit,
   formMode,
-  // subCategoryTypeForm,
   options,
 }: any) => {
   const {
@@ -40,7 +33,6 @@ const CreateSubCategory = ({
 
   return (
     <SubCategoryForm
-      // subCategoryTypeForm={subCategoryTypeForm}
       register={register}
       errors={errors}
       onCloseModal={onCloseModal}
