@@ -59,42 +59,42 @@ const useProductForm = () => {
   const onSubmit = async (data: ProductFormData) => {
     console.log("DATASSS", data);
 
-    // const updatedSubProducts = await Promise.all(
-    //   data.subProducts.map(async (subProduct) => {
-    //     if (subProduct.images && subProduct.images.length > 0) {
-    //       const uploadedImageUrls = await Promise.all(
-    //         [...subProduct.images].map(
-    //           async (file: File) => await uploadImageToCloudinary(file)
-    //         )
-    //       );
-    //       console.log(
-    //         "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-    //         uploadedImageUrls
-    //       );
-    //       return {
-    //         ...subProduct,
-    //         color: {
-    //           color: subProduct.color,
-    //           image: uploadedImageUrls[0].url,
-    //         },
-    //         images: uploadedImageUrls,
-    //       };
-    //     }
+    const updatedSubProducts = await Promise.all(
+      data.subProducts.map(async (subProduct) => {
+        if (subProduct.images && subProduct.images.length > 0) {
+          const uploadedImageUrls = await Promise.all(
+            [...subProduct.images].map(
+              async (file: File) => await uploadImageToCloudinary(file)
+            )
+          );
+          console.log(
+            "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
+            uploadedImageUrls
+          );
+          return {
+            ...subProduct,
+            color: {
+              color: subProduct.color,
+              image: uploadedImageUrls[0].url,
+            },
+            images: uploadedImageUrls,
+          };
+        }
 
-    //     return subProduct;
-    //   })
-    // );
+        return subProduct;
+      })
+    );
 
     // Envoyer les données finales au backend
-    // const productData = {
-    //   ...data,
-    //   subProducts: updatedSubProducts,
-    // };
+    const productData = {
+      ...data,
+      subProducts: updatedSubProducts,
+    };
 
-    // const newProduct = await createProduct.mutateAsync(productData);
-    // console.log("🚀 ~ onSubmit ~ newProduct:FE P", newProduct);
+    const newProduct = await createProduct.mutateAsync(productData);
+    console.log("🚀 ~ onSubmit ~ newProduct:FE P", newProduct);
 
-    // handleResponse(newProduct);
+    handleResponse(newProduct);
   };
 
   const handleModalClose = (isUpdate = false) => {

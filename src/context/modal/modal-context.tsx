@@ -59,7 +59,7 @@ interface IItem {
   parent?: { _id: string; name: string };
 }
 
-type EntityToEdit = IItem | IProduct;
+export type EntityToEdit = IItem | IProduct;
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [entityToEdit, setEntityToEdit] = useState<any | null>(null);

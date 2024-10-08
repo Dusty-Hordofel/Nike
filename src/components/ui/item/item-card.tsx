@@ -1,12 +1,17 @@
 // import { ItemCardProps } from "@/@types/admin/admin.categories.interface";
 
 import { ItemCardProps } from "@/@types/admin/admin.item.interface";
-
+import { EntityToEdit } from "@/context/modal/modal-context";
+// ItemCardProps
 const ItemCard = ({
   item,
-  onshowUpdateItemModal,
+  openModal,
   onDeleteItem,
-}: ItemCardProps) => {
+}: {
+  item: any;
+  openModal: (mode: "create" | "update", item?: EntityToEdit) => void;
+  onDeleteItem: any;
+}) => {
   return (
     <div
       className="bg-gray-200 w-full aspect-square flex justify-center items-center group/card cursor-pointer relative hover:scale-90 transition-all shadow-lg"
@@ -18,7 +23,7 @@ const ItemCard = ({
         backgroundPosition: "center",
       }}
       onClick={() =>
-        onshowUpdateItemModal({
+        openModal("update", {
           id: item._id,
           name: item.name,
           image: item.image,

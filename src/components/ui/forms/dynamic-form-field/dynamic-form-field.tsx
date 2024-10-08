@@ -33,17 +33,22 @@ type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
 };
 type FileProps = React.InputHTMLAttributes<HTMLInputElement> & {
   fileInputRef?: React.RefObject<HTMLInputElement>;
-  previewUrl?: string | null;
+  previewUrl: string | null;
 };
 
 // / Définir le type pour les propriétés de champ dynamique
+// fileProps={{
+//   previewUrl,
+//   fileInputRef: fileInputRef,
+//   disabled: false,
+// }}
 interface DynamicFormFieldProps {
   inputType: "select" | "input" | "textarea" | "file";
   name: string;
   label?: string;
   disabled?: boolean;
   options?: Item[] | [];
-  previewUrl?: any;
+  previewUrl?: string;
   className?: string;
   register: UseFormRegister<any>;
   errors: FieldErrors<FieldValues>;

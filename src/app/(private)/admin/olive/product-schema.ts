@@ -1,26 +1,28 @@
 import { z } from "zod";
 
 export const subProductSchema = z.object({
-  images: z.any().optional(),
-  // .refine((files) => files && Array.from(files).length > 0, {
-  //   message: "Please select at least one image.",
-  // })
-  // .refine(
-  //   (files) =>
-  //     Array.from(files as File[]).every(
-  //       (file) => file.size <= 5 * 1024 * 1024
-  //     ),
-  //   { message: "Each image must be smaller than 5MB." }
-  // )
-  // .refine(
-  //   (files) =>
-  //     Array.from(files as File[]).every((file) =>
-  //       ["image/jpeg", "image/png", "image/gif", "image/webp"].includes(
-  //         file.type
-  //       )
-  //     ),
-  //   { message: "Only .jpg, .png, .webp and .gif formats are allowed." }
-  // ),
+  images: z
+    .any()
+    .optional()
+    .refine((files) => files && Array.from(files).length > 0, {
+      message: "Please select at least one image.",
+    })
+    .refine(
+      (files) =>
+        Array.from(files as File[]).every(
+          (file) => file.size <= 5 * 1024 * 1024
+        ),
+      { message: "Each image must be smaller than 5MB." }
+    )
+    .refine(
+      (files) =>
+        Array.from(files as File[]).every((file) =>
+          ["image/jpeg", "image/png", "image/gif", "image/webp"].includes(
+            file.type
+          )
+        ),
+      { message: "Only .jpg, .png, .webp and .gif formats are allowed." }
+    ),
   color: z
     .string()
     .min(1, "La couleur est obligatoire")

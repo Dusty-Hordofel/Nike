@@ -68,7 +68,8 @@ export interface SubCategoryFormProps extends FileProps, FormHandlers {
     parent: string;
     file?: any;
   }>;
-  subCategoryTypeForm: "Create" | "Update";
+  // subCategoryTypeForm: "Create" | "Update";
   onCloseModal: () => void;
   options: any;
+  formMode: "create" | "update";
 }

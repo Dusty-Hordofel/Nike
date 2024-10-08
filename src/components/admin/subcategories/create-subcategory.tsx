@@ -21,14 +21,15 @@ const CreateSubCategory = ({
   onSubmit,
   onCloseModal,
   handleSubmit,
-  subCategoryTypeForm,
+  formMode,
+  // subCategoryTypeForm,
   options,
 }: SubCategoryFormProps) => {
   return (
     <Modal title="Create your subcategory" onCloseModal={onCloseModal}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SubCategoryForm
-          subCategoryTypeForm={subCategoryTypeForm}
+          // subCategoryTypeForm={subCategoryTypeForm}
           register={register}
           errors={errors}
           onCloseModal={onCloseModal}
@@ -39,6 +40,7 @@ const CreateSubCategory = ({
           previewUrl={previewUrl}
           fileInputRef={fileInputRef}
           options={options}
+          formMode={formMode}
         />
       </form>
     </Modal>
