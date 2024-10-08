@@ -1,6 +1,7 @@
 import { SubCategoryFormProps } from "@/@types/admin/admin.subcategories.interface";
 import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-form-field";
 import { Button } from "@/components/ui/buttons/button/button";
+// Omit<SubCategoryFormProps, "handleSubmit" | "onSubmit">
 
 const SubCategoryForm = ({
   register,
@@ -15,7 +16,7 @@ const SubCategoryForm = ({
   formMode,
   // subCategoryTypeForm,
   options,
-}: Omit<SubCategoryFormProps, "handleSubmit" | "onSubmit">) => {
+}: any) => {
   return (
     <>
       <DynamicFormField

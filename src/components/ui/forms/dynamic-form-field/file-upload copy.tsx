@@ -11,7 +11,7 @@ import {
 
 // Définir les types des props
 interface FileUploadProps {
-  previewUrls: string | null; // L'URL de prévisualisation du fichier
+  previewUrls: string[] | null; // L'URL de prévisualisation du fichier
   //   handleButtonClick: () => void; // La fonction à appeler lors du clic
   //   error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined; // Indique s'il y a une erreur
 }

@@ -32,6 +32,7 @@ const CreatePoductForm = ({
   handleModalClose,
   createProduct,
 }: any) => {
+   
   return (
     <Modal title="Create your Product" onCloseModal={() => handleModalClose()}>
       <form onSubmit={handleSubmit(onSubmit)}>

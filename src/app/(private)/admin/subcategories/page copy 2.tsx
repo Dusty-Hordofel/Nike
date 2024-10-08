@@ -12,10 +12,7 @@ import { useFileContext } from "@/context/file/file-context";
 import Loader from "@/components/ui/loader";
 import { useEffect } from "react";
 
-import {
-  CreateSubCategory,
-  UpdateSubCategory,
-} from "@/components/admin/subcategories";
+import { CreateSubCategory } from "@/components/admin/subcategories";
 import { AddItemButton, ItemList } from "@/components/ui/item";
 import {
   useAdminCreateSubCategory,
@@ -25,6 +22,7 @@ import {
   useGetSubCategoriesByParent,
 } from "@/hooks/admin/use-admin-subcategories.hook";
 import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
+import QueryStatus from "../olive/query-status";
 
 const SubCategoriesPage = () => {
   const router = useRouter();
@@ -32,20 +30,20 @@ const SubCategoriesPage = () => {
   const pathname = usePathname();
 
   const activePage = pathname.split("/")[2] || "";
-  const entity = activeEntity(activePage);
+  // const entity = activeEntity(activePage);
 
-  function activeEntity(activePage: string) {
-    switch (activePage) {
-      case "categories":
-        return "category";
-      case "subCategories":
-        return "subcategory";
-      case "products":
-        return "product";
-      default:
-        return "";
-    }
-  }
+  // function activeEntity(activePage: string) {
+  //   switch (activePage) {
+  //     case "categories":
+  //       return "category";
+  //     case "subCategories":
+  //       return "subcategory";
+  //     case "products":
+  //       return "product";
+  //     default:
+  //       return "";
+  //   }
+  // }
 
   if (!user /*&& userRole !== "user"*/) {
     router.push(`${window.location.origin}` || "/");
@@ -55,7 +53,7 @@ const SubCategoriesPage = () => {
   const updateSubCategory = useAdminUpdateSubCategory();
   const categories = useAdminGetCategories();
   const subCategories = useGetSubCategoriesByParent();
-  console.log("🚀 ~ SubCategoriesPage ~ subCategories:", subCategories.data);
+  // console.log("🚀 ~ SubCategoriesPage ~ subCategories:", subCategories.data);
   const deleteSubCategory = useAdminDeleteSubCategory();
 
   const {
@@ -72,22 +70,16 @@ const SubCategoriesPage = () => {
 
   const {
     entityToEdit,
-    isCreateModalOpen,
     isResultModalOpen,
-    isUpdateModalOpen,
-    showCreateModal,
     showResultModal,
-    showUpdateModal,
-    closeCreateModal,
-    closeResultModal,
-    setUpdateModalOpen,
     setResultModalContent,
+    closeResultModal,
     resultModalContent,
+    openModal,
+    closeModal,
+    isModalOpen,
+    formMode,
   } = useModal();
-
-  
-
-  console.log("🚀 ~ SubCategoriesPage ~ entityToEdit:ENTITY", entityToEdit);
 
   const {
     handleFileChange,
@@ -107,19 +99,19 @@ const SubCategoriesPage = () => {
     }
   }, [entityToEdit, setValue, setPreviewUrl]);
 
-  const handleModalClose = (isUpdate = false) => {
+  const handleModalClose = () => {
     reset();
     setPreviewUrl(null);
     setPicture(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    isUpdate ? setUpdateModalOpen(false) : closeCreateModal();
+    closeModal();
   };
 
-  const handleResponse = (response: any, isUpdate = false) => {
+  const handleResponse = (response: any) => {
     if (response.success) {
-      handleModalClose(isUpdate);
+      handleModalClose();
       setResultModalContent({ success: true, message: response.message });
       showResultModal();
     } else {
@@ -127,7 +119,7 @@ const SubCategoriesPage = () => {
         success: false,
         message: `An error occurred: ${response.message}`,
       });
-      handleModalClose(isUpdate);
+      handleModalClose();
       showResultModal();
     }
   };
@@ -144,65 +136,57 @@ const SubCategoriesPage = () => {
     await deleteSubCategory.mutateAsync({ id });
   };
 
-  const handleCreateSubCategorySubmit = async ({
+  const handleSubCategorySubmit = async ({
     subcategory,
     file,
     parent,
   }: SubCategoryFormData) => {
-    const imageUrl = await handleImageUpload(file);
-    const newSubCategory = await createSubCategory.mutateAsync({
-      name: subcategory,
-      image: imageUrl,
-      parent,
-    });
-    console.log("🚀 ~ SubCategoriesPage ~ newSubCategory:SUB", newSubCategory);
-    handleResponse(newSubCategory);
-  };
+    const imageUrl = file ? await handleImageUpload(file) : entityToEdit?.image;
 
-  const handleUpdateSubCategorySubmit = async ({
-    subcategory,
-    file,
-    parent,
-  }: SubCategoryFormData) => {
-    if (entityToEdit && "image" in entityToEdit) {
-      const imageUrl = (await handleImageUpload(file)) || entityToEdit.image;
-      const updatedCategory = await updateSubCategory.mutateAsync({
-        id: entityToEdit.id,
-        name: subcategory,
-        image: imageUrl,
-        parent,
-      });
-      handleResponse(updatedCategory, true);
+    if (formMode === "create") {
+      try {
+        const subCategory = await createSubCategory.mutateAsync({
+          name: subcategory,
+          image: imageUrl,
+          parent,
+        });
+        handleResponse(subCategory);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la création de la sous-catégorie:",
+          error
+        );
+      }
+    } else if (formMode === "update" && entityToEdit) {
+      try {
+        const subCategory = await updateSubCategory.mutateAsync({
+          id: entityToEdit.id,
+          name: subcategory,
+          image: imageUrl,
+          parent,
+        });
+        handleResponse(subCategory);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la mise à jour de la sous-catégorie:",
+          error
+        );
+      }
     }
   };
 
-  if (categories.isLoading)
-    return (
-      <div className="max-w-[1090px] px-[6px]  mx-auto h-screen">
-        <div className="flex justify-center items-center h-full">
-          <Loader />
-        </div>
-      </div>
-    );
-
-  if (categories.isError)
-    return (
-      <div className="max-w-[1090px] px-[6px]  mx-auto h-screen">
-        <div className="flex justify-center items-center h-full">
-          <h1>Error: {categories.error?.message}</h1>
-        </div>
-      </div>
-    );
-
   return (
-    <div>
-      {isCreateModalOpen && (
+    <QueryStatus
+      isLoading={categories.isLoading}
+      isError={categories.isError}
+      error={categories.error}
+    >
+      {isModalOpen && (
         <CreateSubCategory
-          subCategoryTypeForm="Create"
           register={register}
           errors={errors}
-          onSubmit={handleCreateSubCategorySubmit}
-          onCloseModal={() => handleModalClose()}
+          onSubmit={handleSubCategorySubmit}
+          onCloseModal={closeModal}
           handleFileChange={handleFileChange}
           clearErrors={clearErrors}
           setValue={setValue}
@@ -211,24 +195,7 @@ const SubCategoriesPage = () => {
           fileInputRef={fileInputRef}
           handleSubmit={handleSubmit}
           options={categories.data}
-        />
-      )}
-
-      {isUpdateModalOpen && (
-        <UpdateSubCategory
-          subCategoryTypeForm="Update"
-          register={register}
-          errors={errors}
-          onSubmit={handleUpdateSubCategorySubmit}
-          onCloseModal={() => handleModalClose(true)}
-          handleFileChange={handleFileChange}
-          clearErrors={clearErrors}
-          setValue={setValue}
-          handleButtonClick={handleButtonClick}
-          previewUrl={previewUrl}
-          fileInputRef={fileInputRef}
-          handleSubmit={handleSubmit}
-          options={categories.data}
+          formMode={formMode}
         />
       )}
 
@@ -245,17 +212,20 @@ const SubCategoriesPage = () => {
         data-testid="interests-layout"
         className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
       >
-        <AddItemButton onClick={showCreateModal} label="Add a SubCategory" />
+        <AddItemButton
+          onClick={() => openModal("create")}
+          label="Add a SubCategory"
+        />
 
         {subCategories.data?.length && (
           <ItemList
             items={subCategories.data}
             onDeleteItem={handleDeleteCategory}
-            showUpdateModal={showUpdateModal}
+            openModal={openModal}
           />
         )}
       </div>
-    </div>
+    </QueryStatus>
   );
 };
 

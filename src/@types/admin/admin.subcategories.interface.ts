@@ -37,12 +37,12 @@ export interface FormHandlers {
 }
 
 export interface SubCategoryFormProps extends FileProps, FormHandlers {
-  onSubmit: ({
+  onSubmit?: ({
     subcategory,
     file,
     parent,
   }: SubCategoryFormData) => Promise<void>;
-  handleSubmit: (
+  handleSubmit?: (
     onValid: SubmitHandler<{
       subcategory: string;
       parent: string;
@@ -56,14 +56,14 @@ export interface SubCategoryFormProps extends FileProps, FormHandlers {
         }>
       | undefined
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  register: UseFormRegister<any>;
+  register?: UseFormRegister<any>;
   errors: FieldErrors<FieldValues>;
-  clearErrors: UseFormClearErrors<{
+  clearErrors?: UseFormClearErrors<{
     subcategory: string;
     parent: string;
     file?: any;
   }>;
-  setValue: UseFormSetValue<{
+  setValue?: UseFormSetValue<{
     subcategory: string;
     parent: string;
     file?: any;
