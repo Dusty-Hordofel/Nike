@@ -233,7 +233,7 @@ const PoductForm = ({
                     register={register}
                     errors={errors}
                     subProductIndex={index}
-                    existingImages={entityToEdit.subProducts[index].images}
+                    existingImages={entityToEdit?.subProducts[index].images}
                   />
 
                   <div

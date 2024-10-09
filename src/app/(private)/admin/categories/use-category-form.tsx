@@ -90,10 +90,7 @@ const useCategoryForm = () => {
     await deleteCategory.mutateAsync({ id });
   };
 
-  const handleSubCategorySubmit = async ({
-    category,
-    file,
-  }: CategoryFormData) => {
+  const handleCategorySubmit = async ({ category, file }: CategoryFormData) => {
     const imageUrl = file ? await handleImageUpload(file) : entityToEdit?.image;
 
     if (formMode === "create") {
@@ -123,7 +120,7 @@ const useCategoryForm = () => {
   return {
     form,
     handleDeleteCategory,
-    handleSubmit: form.handleSubmit(handleSubCategorySubmit),
+    handleSubmit: form.handleSubmit(handleCategorySubmit),
     handleFileChange,
     handleButtonClick,
     closeResultModal,

@@ -44,6 +44,7 @@ const ProductPage = () => {
     isModalOpen,
     formMode,
   } = useModal();
+  console.log("🚀 ~ ProductPage ~ formMode:MODE", formMode);
 
   return (
     <QueryStatus

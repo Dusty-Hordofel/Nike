@@ -97,10 +97,6 @@ const useProductForm = () => {
     handleResponse(newProduct);
   };
 
-  const isFileList = (images: any): images is FileList => {
-    return images instanceof FileList && images.length > 0;
-  };
-
   const handleProductSubmit = async (data: ProductFormData) => {
     if (formMode === "create") {
       try {
@@ -144,98 +140,67 @@ const useProductForm = () => {
         console.error("Erreur lors de la création du produit.", error);
       }
     } else if (formMode === "update" && entityToEdit) {
-      const updatedSubProducts = await Promise.all(
-        data.subProducts.map(async (subProduct, index) => {
-          console.log("REGARDE", subProduct.images);
-          console.log("REGARDE2", Array.isArray(subProduct.images));
-
-          if (isFileList(subProduct.images)) {
-            // Upload new images if a valid FileList is provided
-            const uploadedImageUrls = await Promise.all(
-              Array.from(subProduct.images).map(
-                async (file: File) => await uploadImageToCloudinary(file)
-              )
-            );
-            console.log(
-              "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-              uploadedImageUrls
-            );
-            return {
-              ...subProduct,
-              color: {
-                color: subProduct.color,
-                image: uploadedImageUrls[0]?.url || "",
-              },
-              images: uploadedImageUrls,
-            };
-          } else if (entityToEdit) {
-            // Use existing images from entityToEdit if no new images are provided
-            const existingSubProduct = entityToEdit.subProducts[index];
-            return {
-              ...subProduct,
-              images: existingSubProduct?.images || [],
-              color: existingSubProduct?.color || subProduct.color,
-            };
-          }
-
-          return subProduct;
-          // if (
-          //   Array.isArray(subProduct.images) &&
-          //   subProduct.images.length > 0 &&
-          //   subProduct.images.every(
-          //     (image: any) => !image.hasOwnProperty("url")
-          //   )
-          // ) {
-          //   console.log("IMAGES", subProduct.images);
-          //   console.log("TAILLE", subProduct.images.length);
-          //   const uploadedImageUrls = await Promise.all(
-          //     [...subProduct.images].map(
-          //       async (file: File) => await uploadImageToCloudinary(file)
-          //     )
-          //   );
-          //   console.log(
-          //     "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-          //     uploadedImageUrls
-          //   );
-          //   return {
-          //     ...subProduct,
-          //     color: {
-          //       color: subProduct.color,
-          //       image: uploadedImageUrls[0].url,
-          //     },
-          //     images: uploadedImageUrls,
-          //   };
-          // } else if (entityToEdit) {
-          //   const existingSubProduct = entityToEdit.subProducts[index];
-          //   console.log(
-          //     "🚀 ~ data.subProducts.map ~ existingSubProduct:EXISTING",
-          //     existingSubProduct
-          //   );
-          //   return {
-          //     ...subProduct,
-          //     images: existingSubProduct ? existingSubProduct.images : [],
-          //     color: existingSubProduct
-          //       ? existingSubProduct.color
-          //       : subProduct.color,
-          //   };
-          // }
-          // return subProduct;
-        })
-      );
+      // const updatedSubProducts = await Promise.all(
+      //   data.subProducts.map(async (subProduct, index) => {
+      //     console.log("REGARDE", subProduct.images);
+      //     console.log("REGARDE2", Array.isArray(subProduct.images));
+      //     if (
+      //       Array.isArray(subProduct.images) &&
+      //       subProduct.images.length > 0 &&
+      //       subProduct.images.every(
+      //         (image: any) => !image.hasOwnProperty("url")
+      //       )
+      //     ) {
+      //       console.log("IMAGES", subProduct.images);
+      //       console.log("TAILLE", subProduct.images.length);
+      //       const uploadedImageUrls = await Promise.all(
+      //         [...subProduct.images].map(
+      //           async (file: File) => await uploadImageToCloudinary(file)
+      //         )
+      //       );
+      //       console.log(
+      //         "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
+      //         uploadedImageUrls
+      //       );
+      //       return {
+      //         ...subProduct,
+      //         color: {
+      //           color: subProduct.color,
+      //           image: uploadedImageUrls[0].url,
+      //         },
+      //         images: uploadedImageUrls,
+      //       };
+      //     } else if (entityToEdit) {
+      //       const existingSubProduct = entityToEdit.subProducts[index];
+      //       console.log(
+      //         "🚀 ~ data.subProducts.map ~ existingSubProduct:EXISTING",
+      //         existingSubProduct
+      //       );
+      //       return {
+      //         ...subProduct,
+      //         images: existingSubProduct ? existingSubProduct.images : [],
+      //         color: existingSubProduct
+      //           ? existingSubProduct.color
+      //           : subProduct.color,
+      //       };
+      //     }
+      //     return subProduct;
+      //   })
+      // );
       // Envoyer les données finales au backend
-      const productData = {
-        ...data,
-        subProducts: updatedSubProducts,
-      };
-      const updatedProduct = await updateProduct.mutateAsync({
-        id: entityToEdit._id,
-        ...productData,
-      });
-      console.log(
-        "🚀 ~ handleProductSubmit ~ updatedProduct:UPDATE",
-        updatedProduct
-      );
-      handleResponse(updatedProduct);
+      // const productData = {
+      //   ...data,
+      //   subProducts: updatedSubProducts,
+      // };
+      // const updatedProduct = await updateProduct.mutateAsync({
+      //   id: entityToEdit._id,
+      //   ...productData,
+      // });
+      // console.log(
+      //   "🚀 ~ handleProductSubmit ~ updatedProduct:UPDATE",
+      //   updatedProduct
+      // );
+      // handleResponse(updatedProduct);
     }
   };
 

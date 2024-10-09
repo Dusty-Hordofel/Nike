@@ -139,6 +139,10 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
               default:
                 "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
             },
+            public_id: {
+              type: String,
+              required: true,
+            },
           },
         ],
         description_images: [],

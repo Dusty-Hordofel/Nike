@@ -26,6 +26,7 @@ export const uploadImageToCloudinary = async (file: File) => {
     return {
       url: data.secure_url,
       public_url: data.url,
+      public_id: data.public_id,
     };
     // return data;
   } catch (error) {
