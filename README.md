@@ -1164,11 +1164,11 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 55. Gestion du formulaire de la categorie
 
-### 56.
+### 56. Gestion du formulaire de modification du produit (1)
 
-### 57.
+### 57.Nettoyage du dossier olive (gestion du formulaire)
 
-### 58.
+### 58. Suppresion des images sur cloudinary
 
 ### 59.
 
