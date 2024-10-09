@@ -2,9 +2,9 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductFormData, productSchema } from "./product-schema";
+import { ProductFormData, productSchema } from "../components/product-schema";
 import { useModal } from "@/context/modal/modal-context";
-import { uploadImageToCloudinary } from "./components/upload-image-to-cloudinary";
+import { uploadImageToCloudinary } from "../components/upload-image-to-cloudinary";
 import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
@@ -21,81 +21,29 @@ const useProductForm = () => {
     isCreateModalOpen,
     isResultModalOpen,
     isUpdateModalOpen,
-    showCreateModal,
     showResultModal,
-    showUpdateModal,
-    closeCreateModal,
-    closeResultModal,
-    setUpdateModalOpen,
     setResultModalContent,
-    setEntityToEdit,
-    resultModalContent,
-    openModal,
     closeModal,
-    isModalOpen,
     formMode,
   } = useModal();
 
-  const modal = useModal();
-
-  const handleResponse = (response: any, isUpdate = false) => {
+  const handleResponse = (response: any) => {
     if (response.success) {
-      handleModalClose(isUpdate);
-      modal.setResultModalContent({ success: true, message: response.message });
-      modal.showResultModal();
+      handleModalClose();
+      setResultModalContent({ success: true, message: response.message });
+      showResultModal();
     } else {
-      modal.setResultModalContent({
+      setResultModalContent({
         success: false,
         message: `An error occurred: ${response.message}`,
       });
-      handleModalClose(isUpdate);
-      modal.showResultModal();
+      handleModalClose();
+      showResultModal();
     }
   };
 
   const createProduct = useAdminCreateProduct();
   const updateProduct = useAdminUpdateProduct();
-
-  const onSubmit = async (data: ProductFormData) => {
-    console.log("DATASSS", data);
-
-    const updatedSubProducts = await Promise.all(
-      data.subProducts.map(async (subProduct) => {
-        if (subProduct.images && subProduct.images.length > 0) {
-          const uploadedImageUrls = await Promise.all(
-            [...subProduct.images].map(
-              async (file: File) => await uploadImageToCloudinary(file)
-            )
-          );
-          console.log(
-            "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-            uploadedImageUrls
-          );
-          return {
-            ...subProduct,
-            color: {
-              color: subProduct.color,
-              image: uploadedImageUrls[0].url,
-            },
-            images: uploadedImageUrls,
-          };
-        }
-
-        return subProduct;
-      })
-    );
-
-    // Envoyer les données finales au backend
-    const productData = {
-      ...data,
-      subProducts: updatedSubProducts,
-    };
-
-    const newProduct = await createProduct.mutateAsync(productData);
-    console.log("🚀 ~ onSubmit ~ newProduct:FE P", newProduct);
-
-    handleResponse(newProduct);
-  };
 
   const isFileList = (images: any): images is FileList => {
     return images instanceof FileList && images.length > 0;
@@ -179,47 +127,6 @@ const useProductForm = () => {
           }
 
           return subProduct;
-          // if (
-          //   Array.isArray(subProduct.images) &&
-          //   subProduct.images.length > 0 &&
-          //   subProduct.images.every(
-          //     (image: any) => !image.hasOwnProperty("url")
-          //   )
-          // ) {
-          //   console.log("IMAGES", subProduct.images);
-          //   console.log("TAILLE", subProduct.images.length);
-          //   const uploadedImageUrls = await Promise.all(
-          //     [...subProduct.images].map(
-          //       async (file: File) => await uploadImageToCloudinary(file)
-          //     )
-          //   );
-          //   console.log(
-          //     "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-          //     uploadedImageUrls
-          //   );
-          //   return {
-          //     ...subProduct,
-          //     color: {
-          //       color: subProduct.color,
-          //       image: uploadedImageUrls[0].url,
-          //     },
-          //     images: uploadedImageUrls,
-          //   };
-          // } else if (entityToEdit) {
-          //   const existingSubProduct = entityToEdit.subProducts[index];
-          //   console.log(
-          //     "🚀 ~ data.subProducts.map ~ existingSubProduct:EXISTING",
-          //     existingSubProduct
-          //   );
-          //   return {
-          //     ...subProduct,
-          //     images: existingSubProduct ? existingSubProduct.images : [],
-          //     color: existingSubProduct
-          //       ? existingSubProduct.color
-          //       : subProduct.color,
-          //   };
-          // }
-          // return subProduct;
         })
       );
       // Envoyer les données finales au backend
@@ -239,11 +146,9 @@ const useProductForm = () => {
     }
   };
 
-  const handleModalClose = (isUpdate = false) => {
+  const handleModalClose = () => {
     form.reset();
-    // setEntityToEdit(null);
     closeModal();
-    // isUpdate ? modal.setUpdateModalOpen(false) : modal.closeCreateModal();
   };
 
   useEffect(() => {
@@ -267,7 +172,6 @@ const useProductForm = () => {
   return {
     form,
     handleSubmit: form.handleSubmit(handleProductSubmit),
-    // handleSubmit: form.handleSubmit(onSubmit),
     createProduct,
     handleModalClose,
     isCreateModalOpen,

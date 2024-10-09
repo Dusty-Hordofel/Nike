@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/buttons/button/button";
 import React from "react";
-import ImageUpload from "./components/Image-upload";
+import ImageUpload from "./Image-upload";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import SizeFields from "./components/size-fields";
+import SizeFields from "./size-fields";
 import { LoaderCircle } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { ProductFormData } from "./product-schema";

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import useProductForm from "./use-product-form";
+import useProductForm from "./hooks/use-product-form";
 import { FormProvider } from "react-hook-form";
 
 // interface ProductFormProviderProps {
