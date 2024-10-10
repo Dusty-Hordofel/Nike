@@ -15,7 +15,7 @@ import {
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  console.log("🚀 ~ ProductForm ~ selectedCategory:SOSO", selectedCategory);
+  // console.log("🚀 ~ ProductForm ~ selectedCategory:SOSO", selectedCategory);
 
   const categories = useAdminGetCategories();
   const products = useAdminGetProducts();
@@ -37,7 +37,7 @@ const ProductPage = () => {
     isModalOpen,
     formMode,
   } = useModal();
-  console.log("🚀 ~ ProductPage ~ formMode:MODE", formMode);
+  // console.log("🚀 ~ ProductPage ~ formMode:MODE", formMode);
 
   return (
     <QueryStatus

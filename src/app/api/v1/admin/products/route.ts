@@ -19,6 +19,7 @@ export const POST =
         shipping,
         subProducts,
       } = await request.json();
+      console.dir("🚀 ~ subProducts:SUB", subProducts.images);
 
       const newProduct = new Product({
         name: name,

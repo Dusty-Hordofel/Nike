@@ -141,7 +141,7 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
             },
             public_id: {
               type: String,
-              required: true,
+              // required: true,
             },
           },
         ],
