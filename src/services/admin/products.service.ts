@@ -31,6 +31,9 @@ const deleteProduct = async (productInformation: { id: string }) => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/products`,
     {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(productInformation),
     }
   );

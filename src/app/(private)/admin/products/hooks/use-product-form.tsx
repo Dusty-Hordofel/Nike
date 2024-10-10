@@ -111,9 +111,10 @@ const useProductForm = () => {
 
             const deleteImageUrls = await Promise.all(
               entityToEdit.subProducts[index].images.map(
-                async ({ public_id }: { public_id: string }) =>
+                async ({ public_id }: { public_id: string }) => {
                   // deleteImageFromCloudinary(public_id)
-                  deleteImageFromCloudinary(public_id)
+                  if (public_id) deleteImageFromCloudinary(public_id);
+                }
               )
             );
 

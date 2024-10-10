@@ -1,6 +1,6 @@
 const deleteImageFromCloudinary = async (public_id: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/delete-image`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/cloudinary/delete-image`,
     {
       method: "DELETE",
       headers: {
