@@ -2,18 +2,18 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  ProductFormData,
-  productSchema,
-} from "../../../components/admin/products/product-schema";
 import { useModal } from "@/context/modal/modal-context";
-import { uploadImageToCloudinary } from "../../../components/admin/products/upload-image-to-cloudinary";
 import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
 } from "@/hooks/admin/api/use-admin-products.hook";
 import { ISubProduct } from "@/models/Product";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
+import {
+  ProductFormData,
+  productSchema,
+} from "@/components/admin/products/product-schema";
+import { uploadImageToCloudinary } from "@/components/admin/products/upload-image-to-cloudinary";
 
 const useProductForm = () => {
   const form = useForm<ProductFormData>({
