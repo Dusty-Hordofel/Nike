@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   ResetPasswordFormData,
   userResetPasswordSchema,
-} from "@/lib/validations/auth";
+} from "@/lib/validations/auth/auth";
 import Form, { FormInputField } from "./form-input-field";
 import { Input } from "@/components/ui/input";
 import { UserAuthHeaderForm } from "@/components/client/auth";

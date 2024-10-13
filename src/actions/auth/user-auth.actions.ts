@@ -1,7 +1,7 @@
 "use server";
 
 import { signIn } from "@/auth";
-import { LoginFormData, LogInSchema } from "@/lib/validations/auth";
+import { LoginFormData, LogInSchema } from "@/lib/validations/auth/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function signInWithCredentials(

@@ -6,9 +6,9 @@ import { useModal } from "@/context/modal/modal-context";
 import Modal from "@/components/ui/modals/modal";
 import { CreateCategory } from "@/components/admin/categories";
 import { AddItemButton, ItemList } from "@/components/ui/item";
-import CategoryFormProvider from "./form-provider";
-import useCategoryForm from "./use-category-form";
-import QueryStatus from "../olive/query-status";
+import QueryStatus from "@/components/ui/query-status";
+import CategoryFormProvider from "@/components/admin/categories/form-provider";
+import useCategoryForm from "@/components/admin/categories/use-category-form";
 
 const CategoriesPage = () => {
   const router = useRouter();
@@ -39,11 +39,16 @@ const CategoriesPage = () => {
     useModal();
 
   const {
-    form,
     handleDeleteCategory,
-    openModal,
-    categories,
+    handleFileChange,
+    handleButtonClick,
     closeResultModal,
+    previewUrl,
+    fileInputRef,
+    openModal,
+    closeModal,
+    categories,
+    deleteCategory,
   } = useCategoryForm();
 
   return (
@@ -54,25 +59,15 @@ const CategoriesPage = () => {
     >
       {isModalOpen && (
         <CategoryFormProvider>
-          {({
-            handleFileChange,
-            handleButtonClick,
-            previewUrl,
-            fileInputRef,
-            closeModal,
-          }) => {
-            return (
-              <Modal title="Create your subcategory" onCloseModal={closeModal}>
-                <CreateCategory
-                  onCloseModal={closeModal}
-                  handleFileChange={handleFileChange}
-                  handleButtonClick={handleButtonClick}
-                  previewUrl={previewUrl}
-                  fileInputRef={fileInputRef}
-                />
-              </Modal>
-            );
-          }}
+          <Modal title="Create your subcategory" onCloseModal={closeModal}>
+            <CreateCategory
+              onCloseModal={closeModal}
+              handleFileChange={handleFileChange}
+              handleButtonClick={handleButtonClick}
+              previewUrl={previewUrl}
+              fileInputRef={fileInputRef}
+            />
+          </Modal>
         </CategoryFormProvider>
       )}
 

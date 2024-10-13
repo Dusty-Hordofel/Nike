@@ -14,7 +14,8 @@ export interface IReview extends Document {
   likes: Types.ObjectId[];
 }
 
-export interface ISubProduct {
+export interface ISubProduct extends Document {
+  _id: Types.ObjectId; // Ajout de l'identifiant unique
   images: [{ public_url: { type: string }; url: string }];
   description_images?: string[];
   color: {
@@ -30,7 +31,7 @@ export interface ISubProduct {
   sold?: number;
 }
 
-export interface IProduct {
+export interface IProduct extends Document {
   name: string;
   description: string;
   slug?: string;
@@ -76,13 +77,63 @@ const ReviewSchema: Schema<IReview> = new Schema<IReview>({
   likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
+const SubProductSchema: Schema<ISubProduct> = new Schema<ISubProduct>({
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true, // Mongoose générera automatiquement cet ID
+  },
+  images: [
+    {
+      public_url: {
+        type: String,
+        default: "https://default_image_url.com/default_image.jpg",
+      },
+      url: {
+        type: String,
+        default: "https://default_image_url.com/default_image.jpg",
+      },
+      public_id: {
+        type: String,
+      },
+    },
+  ],
+  description_images: [String],
+  color: {
+    color: {
+      type: String,
+      default: "#000000", // Valeur par défaut pour la couleur (noir)
+    },
+    image: {
+      type: String,
+      default: "https://default_image_url.com/default_image.jpg",
+    },
+  },
+  price: {
+    type: Number,
+    default: 0,
+  },
+  sizes: [
+    {
+      size: String,
+      qty: Number,
+    },
+  ],
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  sold: {
+    type: Number,
+    default: 0,
+  },
+});
+
 const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
   {
     name: {
       type: String,
       required: true,
     },
-
     description: {
       type: String,
       required: true,
@@ -125,63 +176,22 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       required: true,
       default: 0,
     },
-    subProducts: [
-      {
-        images: [
-          {
-            public_url: {
-              type: String,
-              default:
-                "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
-            },
-            url: {
-              type: String,
-              default:
-                "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
-            },
-            public_id: {
-              type: String,
-              // required: true,
-            },
-          },
-        ],
-        description_images: [],
-        color: {
-          color: {
-            type: String,
-            default: "#000000", // Valeur par défaut pour color (ex: noir)
-          },
-          image: {
-            type: String,
-            default:
-              "https://res.cloudinary.com/dgsc66scx/image/upload/fl_preserve_transparency/v1718098586/nike/nike_banner.jpg?_s=public-apps",
-          },
-        },
-        price: {
-          type: Number,
-          default: 0,
-        },
-        sizes: [
-          {
-            size: String,
-            qty: Number,
-          },
-        ],
-        discount: {
-          type: Number,
-          default: 0,
-        },
-        sold: {
-          type: Number,
-          default: 0,
-        },
-      },
-    ],
+    subProducts: [SubProductSchema],
   },
   {
     timestamps: true,
   }
 );
+
+// // Méthode pour supprimer un sous-produit par son ID
+// ProductSchema.methods.removeSubProductById = async function (
+//   subProductId: Types.ObjectId
+// ) {
+//   this.subProducts = this.subProducts.filter(
+//     (subProduct: ISubProduct) => !subProduct._id.equals(subProductId)
+//   );
+//   await this.save();
+// };
 
 const Product =
   mongoose.models.Product || mongoose.model<IProduct>("Product", ProductSchema);

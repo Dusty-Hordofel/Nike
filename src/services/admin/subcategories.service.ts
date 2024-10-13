@@ -1,7 +1,5 @@
-// import { SubCategory } from "./../../@types/admin/admin.subcategories.interface";
 import { Item } from "@/@types/admin/admin.item.interface";
 import { FetchSubCategoriesResponse } from "@/@types/admin/admin.subcategories.interface";
-// import { isvalidParentId } from "@/lib/utils";
 import mongoose from "mongoose";
 
 const createSubCategory = async (subCategoryInformation: {
@@ -44,33 +42,30 @@ const getSubCategories = async (parent?: string): Promise<[] | Item[]> => {
   if (parent && !isValidObjectId(parent)) {
     throw new Error("Invalid parent ID format");
   }
-  // if (parent && !isvalidParentId(parent)) {
-  //   throw new Error("Invalid parent ID format");
-  // }
 
   const url = parent
     ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/subcategories?parent=${encodeURIComponent(parent)}`
     : `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/subcategories`;
 
-  // try {
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  if (!response.ok) {
-    throw new Error(`Error: ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data: FetchSubCategoriesResponse = await response.json();
+
+    return data.subCategories;
+  } catch (error: any) {
+    console.error("Error fetching subcategories:", error);
+    throw new Error(error.message);
   }
-
-  const data: FetchSubCategoriesResponse = await response.json();
-
-  return data.subCategories;
-  // } catch (error: any) {
-  //   console.error("Error fetching subcategories:", error);
-  //   throw new Error(error.message);
-  // }
 };
 
 const updateSubCategory = async (subCategoryInformation: {

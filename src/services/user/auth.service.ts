@@ -1,6 +1,6 @@
-import { LoginFormData, LogInSchema } from "@/lib/validations/auth";
+import { LoginFormData, LogInSchema } from "@/lib/validations/auth/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
-import { RegisterFormData } from "@/lib/validations/auth";
+import { RegisterFormData } from "@/lib/validations/auth/auth";
 import { signIn } from "@/auth";
 async function logInWithCredentials(loginFormData: LoginFormData) {
   try {

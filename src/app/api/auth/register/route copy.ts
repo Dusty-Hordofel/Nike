@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/database";
-import { UserFormData, UserSchema } from "@/lib/validations/auth";
+import { UserFormData, UserSchema } from "@/lib/validations/auth/auth";
 import { z } from "zod";
 // import validator from "validator";
 

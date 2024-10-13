@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CategoryFormData, CategorySchema } from "@/lib/validations/auth";
+import { CategoryFormData, CategorySchema } from "@/lib/validations/auth/auth";
 import { useModal } from "@/context/modal/modal-context";
 import { useFileContext } from "@/context/file/file-context";
 import {
@@ -11,7 +11,7 @@ import {
   useAdminDeleteCategory,
   useAdminGetCategories,
   useAdminUpdateCategory,
-} from "@/hooks/admin/use-admin-categories.hook";
+} from "@/hooks/admin/api/use-admin-categories.hook";
 
 const useCategoryForm = () => {
   const form = useForm<CategoryFormData>({

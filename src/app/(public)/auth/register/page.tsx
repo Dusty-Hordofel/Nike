@@ -19,7 +19,7 @@ import {
   RegisterFormData,
   RegisterSchema,
   UserFormData,
-} from "@/lib/validations/auth";
+} from "@/lib/validations/auth/auth";
 import { cn } from "@/lib/utils";
 import { CrossedEye } from "@/assets/icons";
 import { Eye } from "lucide-react";
@@ -92,28 +92,8 @@ const SignUp = () => {
 
       console.log("🚀 ~ mutationFn: ~ response:", response);
 
-      // const user = await response.json();
-      // console.log("🚀 ~ mutationFn: ~ user:", user);
       return response.json();
     },
-    // onSuccess: async () => {
-    //   // const credentials = {
-    //   //   email,
-    //   //   password: getValues("password"),
-    //   // };
-    //   // await signInWithCredentials(credentials, `${window.location.origin}`);
-    //   // router.push("/");
-    //   // console.log("Successfully"); //redirectTo:
-    //   // await signIn("credentials", {
-    //   //   email,
-    //   //   password: getValues("password"),
-    //   //   callbackUrl: `${window.location.origin}` || "/",
-    //   // });
-    // },
-    // onError: (error: any) => {
-    //   console.error("Error registering user:", error);
-    //   console.log(error);
-    // },
   });
 
   const onSubmit = async (values: UserFormData) => {

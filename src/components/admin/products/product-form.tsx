@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import SizeFields from "./size-fields";
 import { LoaderCircle } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { useAdminDeleteProductVariant } from "@/hooks/admin/api/use-admin-products.hook";
 import { ProductFormData } from "./product-schema";
 
 const PoductForm = ({
@@ -34,6 +35,10 @@ const PoductForm = ({
   });
 
   const productType = watch("productType") as string;
+
+  const deleteProductVariant = useAdminDeleteProductVariant();
+  console.log("🚀 ~ deleteProductVariant:", deleteProductVariant);
+  // await deleteProduct.mutateAsync({ id });
 
   return (
     <>
@@ -227,15 +232,39 @@ const PoductForm = ({
             </label>
             {fields.map((field: any, index: number) => {
               return (
-                <div key={field.id} className="space-y-4 border rounded-md p-4">
-                  <h3 className="text-2xl font-bold">variation {index + 1}</h3>
+                <div
+                  key={field.id}
+                  className="space-y-4 border rounded-md p-4"
+                  // onClick={async () => {
+                  //   console.log("INDEX", index, entityToEdit._id);
+                  //   await deleteProductVariant.mutateAsync({
+                  //     productId: entityToEdit._id,
+                  //     productVariant: index,
+                  //   });
+                  // }}
+                  onClick={() => {
+                    console.log("INDEX", index);
+                  }}
+                >
+                  <h3
+                    className="text-2xl font-bold"
+                    onClick={() => {
+                      console.log("INDEX", index);
+                      console.log(
+                        "INDEX",
+                        index,
+                        entityToEdit.subProducts[index]._id
+                      );
+                    }}
+                  >
+                    variation {index + 1} 2
+                  </h3>
                   <ImageUpload
                     register={register}
                     errors={errors}
                     subProductIndex={index}
-                    existingImages={entityToEdit?.subProducts[index].images}
+                    existingImages={entityToEdit?.subProducts[index]?.images}
                   />
-
                   <div
                     className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
                   >
@@ -316,7 +345,21 @@ const PoductForm = ({
                   <Button
                     className="bg-red-600"
                     type="button"
-                    onClick={() => remove(index)}
+                    // onClick={() => remove(index)}
+
+                    onClick={async () => {
+                      console.log(
+                        "INDEX",
+                        index,
+                        entityToEdit.subProducts[index]._id
+                      );
+                      await deleteProductVariant.mutateAsync({
+                        productId: entityToEdit._id,
+                        subProductId: entityToEdit.subProducts[index]._id,
+                        subProductIndex: index,
+                      });
+                      remove(index);
+                    }}
                   >
                     Delete varation {index + 1}
                   </Button>

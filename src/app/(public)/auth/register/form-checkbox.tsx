@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { UserAuthInputFieldForm } from "@/components/client/auth";
-import { RegisterFormData } from "@/lib/validations/auth";
+import { RegisterFormData } from "@/lib/validations/auth/auth";
 import { FormInputFieldProps } from "@/components/client/auth/user-auth-input-field-form";
 
 const FormCheckbox = <T extends FieldValues>({

@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAdminGetCategories } from "@/hooks/admin/use-admin-categories.hook";
-import { useGetSubCategoriesByParent } from "@/hooks/admin/use-admin-subcategories.hook";
+import { useAdminGetCategories } from "@/hooks/admin/api/use-admin-categories.hook";
+import { useGetSubCategoriesByParent } from "@/hooks/admin/api/use-admin-subcategories.hook";
 import Modal from "@/components/ui/modals/modal";
 import { useModal } from "@/context/modal/modal-context";
 import { AddItemButton } from "@/components/ui/item";
-import ProductForm from "./components/product-form";
-import QueryStatus from "./query-status";
-import ProductFormProvider from "./form-provider";
+import ProductForm from "@/components/admin/products/product-form";
 import {
   useAdminDeleteProduct,
   useAdminGetProducts,
-} from "@/hooks/admin/use-admin-products.hook";
+} from "@/hooks/admin/api/use-admin-products.hook";
+import QueryStatus from "@/components/ui/query-status";
+import ProductFormProvider from "@/components/admin/products/form-provider";
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -26,6 +26,7 @@ const ProductPage = () => {
 
   const allSubCategories = useGetSubCategoriesByParent(selectedCategory, true);
 
+  // we will get these values using useProductForm instead of using useModal, i just want to pass element using  children and useModal
   const {
     isResultModalOpen,
     closeResultModal,
@@ -34,8 +35,19 @@ const ProductPage = () => {
     closeModal,
     isModalOpen,
     formMode,
+    // entityToEdit,
   } = useModal();
-  // console.log("🚀 ~ ProductPage ~ formMode:MODE", formMode);
+
+  // const {
+  //   isResultModalOpen,
+  //   closeResultModal,
+  //   resultModalContent,
+  //   openModal,
+  //   closeModal,
+  //   isModalOpen,
+  //   formMode,
+  //   ...
+  // } = useProductForm();
 
   return (
     <QueryStatus

@@ -2,16 +2,18 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductFormData, productSchema } from "../components/product-schema";
+import {
+  ProductFormData,
+  productSchema,
+} from "../../../components/admin/products/product-schema";
 import { useModal } from "@/context/modal/modal-context";
-import { uploadImageToCloudinary } from "../components/upload-image-to-cloudinary";
+import { uploadImageToCloudinary } from "../../../components/admin/products/upload-image-to-cloudinary";
 import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
-} from "@/hooks/admin/use-admin-products.hook";
+} from "@/hooks/admin/api/use-admin-products.hook";
 import { ISubProduct } from "@/models/Product";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
-// import { deleteImageFromCloudinary } from "../components/delete-image-from-cloudinary";
 
 const useProductForm = () => {
   const form = useForm<ProductFormData>({
@@ -27,6 +29,7 @@ const useProductForm = () => {
     setResultModalContent,
     closeModal,
     formMode,
+    isModalOpen,
   } = useModal();
 
   const handleResponse = (response: any) => {
@@ -62,10 +65,7 @@ const useProductForm = () => {
                   async (file: File) => await uploadImageToCloudinary(file)
                 )
               );
-              // console.log(
-              //   "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES CREATED",
-              //   uploadedImageUrls
-              // );
+
               return {
                 ...subProduct,
                 color: {
@@ -80,14 +80,12 @@ const useProductForm = () => {
           })
         );
 
-        // Envoyer les données finales au backend
         const productData = {
           ...data,
           subProducts: updatedSubProducts,
         };
 
         const newProduct = await createProduct.mutateAsync(productData);
-        // console.log("🚀 ~ onSubmit ~ newProduct:NEW PRODUCT ", newProduct);
 
         handleResponse(newProduct);
       } catch (error) {
@@ -96,64 +94,24 @@ const useProductForm = () => {
     } else if (formMode === "update" && entityToEdit) {
       const updatedSubProducts = await Promise.all(
         data.subProducts.map(async (subProduct, index) => {
-          console.log("REGARDE", subProduct.images);
-          console.log("REGARDE2", Array.isArray(subProduct.images));
-
           if (isFileList(subProduct.images)) {
-            // Upload new images if a valid FileList is provided
             const uploadedImageUrls = await Promise.all(
               Array.from(subProduct.images).map(
                 async (file: File) => await uploadImageToCloudinary(file)
               )
             );
 
-            console.log("IMAGES", entityToEdit.subProducts[index]);
+            if (entityToEdit.subProducts[index]?.images.length > 0) {
+              // const deleteImageUrls =
+              await Promise.all(
+                entityToEdit.subProducts[index].images.map(
+                  async ({ public_id }: { public_id: string }) => {
+                    if (public_id) deleteImageFromCloudinary(public_id);
+                  }
+                )
+              );
+            }
 
-            const deleteImageUrls = await Promise.all(
-              entityToEdit.subProducts[index].images.map(
-                async ({ public_id }: { public_id: string }) => {
-                  // deleteImageFromCloudinary(public_id)
-                  if (public_id) deleteImageFromCloudinary(public_id);
-                }
-              )
-            );
-
-            console.log(
-              "🚀 ~ data.subProducts.map ~ deletedImageUrls:DELETE IMAGE",
-              deleteImageUrls
-            );
-
-            // const deletedImageUrls = await Promise.all(
-            //   Array.from(subProduct.deletedImages).map(
-            //     async (deletedImageId: string) => {
-            //       try {
-            //         const response = await fetch(
-            //           `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/delete/upload/${deletedImageId}`,
-            //           {
-            //             method: "DELETE",
-            //             headers: {
-            //               "Content-Type": "application/json",
-            //               Authorization: `Bearer ${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}`,
-            //             },
-            //           }
-            //         );
-
-            //         if (!response.ok) {
-            //           throw new Error(`Failed to delete image: ${response.statusText}`);
-            //         }
-
-            //         return response.json();
-            //       } catch (error) {
-            //         console.error("Erreur lors de la suppression d'une image.", error);
-            //       }
-            //     }
-            //   )
-
-            // )
-            console.log(
-              "🚀 ~ data.subProducts.map ~ uploadedImageUrls:IMAGES UPLOADED",
-              uploadedImageUrls
-            );
             return {
               ...subProduct,
               color: {
@@ -184,10 +142,7 @@ const useProductForm = () => {
         id: entityToEdit._id,
         ...productData,
       });
-      console.log(
-        "🚀 ~ handleProductSubmit ~ updatedProduct:UPDATE",
-        updatedProduct
-      );
+
       handleResponse(updatedProduct);
     }
   };
@@ -219,10 +174,6 @@ const useProductForm = () => {
     form,
     handleSubmit: form.handleSubmit(handleProductSubmit),
     createProduct,
-    handleModalClose,
-    isCreateModalOpen,
-    isResultModalOpen,
-    isUpdateModalOpen,
     entityToEdit,
   };
 };

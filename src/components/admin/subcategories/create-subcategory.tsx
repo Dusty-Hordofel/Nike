@@ -5,7 +5,7 @@ import Modal from "@/components/ui/modals/modal";
 import CategoryForm from "../categories/category-form";
 import SubCategoryForm from "./subcategory-form";
 import { SubCategoryFormProps } from "@/@types/admin/admin.subcategories.interface";
-import { SubCategoryFormData } from "@/lib/validations/auth";
+import { SubCategoryFormData } from "@/lib/validations/auth/auth";
 import { useFormContext } from "react-hook-form";
 
 type Props = {};

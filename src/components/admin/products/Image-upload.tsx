@@ -14,9 +14,7 @@ const ImageUpload = ({
   errors: any;
   existingImages: { public_url: string; url: string }[];
 }) => {
-  // console.log("🚀 ~ existingImages:ONE IMG SUB", existingImages);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  // console.log("🚀 ~ imagePreviews:PREVIEW", imagePreviews);
 
   useEffect(() => {
     if (existingImages?.length > 0) {
@@ -35,7 +33,7 @@ const ImageUpload = ({
       setImagePreviews(fileArray);
     }
   };
-  // console.log("IMAGES TEST", setValue(`subProducts.${subProductIndex}.images`));
+
   return (
     <div
       className={`${errors.name ? "text-red-600" : "text-black-200"}  flex flex-col`}

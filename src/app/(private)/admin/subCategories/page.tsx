@@ -2,13 +2,16 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
-import { useModal } from "@/context/modal/modal-context";
+// import { useModal } from "@/context/modal/modal-context";
 import Modal from "@/components/ui/modals/modal";
 import { CreateSubCategory } from "@/components/admin/subcategories";
 import { AddItemButton, ItemList } from "@/components/ui/item";
-import QueryStatus from "../olive/query-status";
-import SubcategoryFormProvider from "./form-provider";
-import useSubProductForm from "./use-subcategories-form";
+import useSubProductForm from "@/components/admin/subcategories/use-subcategories-form";
+import QueryStatus from "@/components/ui/query-status";
+import SubcategoryFormProvider from "@/components/admin/subcategories/form-provider";
+// import QueryStatus from "../olive/query-status";
+// import SubcategoryFormProvider from "../../../../components/admin/subcategories/form-provider";
+// import useSubProductForm from "../../../../components/admin/subcategories/use-subcategories-form";
 
 const SubCategoriesPage = () => {
   const router = useRouter();
@@ -35,20 +38,22 @@ const SubCategoriesPage = () => {
     router.push(`${window.location.origin}` || "/");
   }
 
-  const { categories, subCategories, deleteSubCategory } = useSubProductForm();
-
   const {
+    handleDeleteCategory,
+    handleFileChange,
+    handleButtonClick,
+    previewUrl,
+    fileInputRef,
+    openModal,
+    closeModal,
+    categories,
+    subCategories,
     isResultModalOpen,
     closeResultModal,
     resultModalContent,
-    openModal,
     isModalOpen,
     formMode,
-  } = useModal();
-
-  const handleDeleteCategory = async (id: string) => {
-    await deleteSubCategory.mutateAsync({ id });
-  };
+  } = useSubProductForm();
 
   return (
     <QueryStatus
@@ -58,27 +63,17 @@ const SubCategoriesPage = () => {
     >
       {isModalOpen && (
         <SubcategoryFormProvider>
-          {({
-            handleFileChange,
-            handleButtonClick,
-            previewUrl,
-            fileInputRef,
-            closeModal,
-          }) => {
-            return (
-              <Modal title="Create your subcategory" onCloseModal={closeModal}>
-                <CreateSubCategory
-                  onCloseModal={closeModal}
-                  handleFileChange={handleFileChange}
-                  handleButtonClick={handleButtonClick}
-                  previewUrl={previewUrl}
-                  fileInputRef={fileInputRef}
-                  options={categories.data}
-                  formMode={formMode}
-                />
-              </Modal>
-            );
-          }}
+          <Modal title="Create your subcategory" onCloseModal={closeModal}>
+            <CreateSubCategory
+              onCloseModal={closeModal}
+              handleFileChange={handleFileChange}
+              handleButtonClick={handleButtonClick}
+              previewUrl={previewUrl}
+              fileInputRef={fileInputRef}
+              options={categories.data}
+              formMode={formMode}
+            />
+          </Modal>
         </SubcategoryFormProvider>
       )}
 

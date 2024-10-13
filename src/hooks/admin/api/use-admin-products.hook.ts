@@ -3,7 +3,8 @@ import {
   adminCreateProduct,
   adminGetProducts,
   adminUpdateProduct,
-  deleteProduct,
+  adminDeleteProduct,
+  adminDeleteProductVariant,
 } from "@/services/admin/products.service";
 import { getProducts } from "@/services/user/products.service";
 
@@ -34,7 +35,23 @@ const useAdminDeleteProduct = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: deleteProduct,
+    mutationFn: adminDeleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError: (error) => {
+      console.log(`Error: ${error.message}`);
+    },
+  });
+
+  return mutation;
+};
+
+const useAdminDeleteProductVariant = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: adminDeleteProductVariant,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
@@ -67,4 +84,5 @@ export {
   useAdminGetProducts,
   useAdminDeleteProduct,
   useAdminUpdateProduct,
+  useAdminDeleteProductVariant,
 };

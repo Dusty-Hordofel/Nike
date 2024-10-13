@@ -1170,7 +1170,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 58. Suppresion des images sur cloudinary
 
-### 59.
+### 59. Suppresion des images sur cloudinary(2)
 
 ### 61.
 

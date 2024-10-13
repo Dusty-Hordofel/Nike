@@ -5,104 +5,89 @@ import Product from "@/models/Product";
 import { ObjectId } from "mongodb";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
 
-export const POST =
-  // auth(
-  async (request: Request) => {
-    try {
-      await connectDB();
+export const POST = auth(async (request: Request) => {
+  try {
+    await connectDB();
 
-      const {
-        name,
-        description,
-        productType,
-        category,
-        subCategories,
-        shipping,
-        subProducts,
-      } = await request.json();
-      console.dir("🚀 ~ subProducts:SUB", subProducts.images);
+    const {
+      name,
+      description,
+      productType,
+      category,
+      subCategories,
+      shipping,
+      subProducts,
+    } = await request.json();
+    console.dir("🚀 ~ subProducts:SUB", subProducts.images);
 
-      const newProduct = new Product({
-        name: name,
-        description: description,
-        category,
-        subCategories,
-        productType,
-        // details: req.body.details,
-        // questions: req.body.questions,
-        shipping: shipping || undefined,
-        slug: slugify(name),
-        subProducts,
-      });
+    const newProduct = new Product({
+      name: name,
+      description: description,
+      category,
+      subCategories,
+      productType,
+      // details: req.body.details,
+      // questions: req.body.questions,
+      shipping: shipping || undefined,
+      slug: slugify(name),
+      subProducts,
+    });
 
-      await newProduct.save();
+    await newProduct.save();
 
-      console.log("🚀 ~ newProduct:NEW", newProduct);
+    console.log("🚀 ~ newProduct:NEW", newProduct);
 
+    return Response.json(
+      {
+        success: true,
+        error: false,
+        message: "Product created successfully",
+        newProduct,
+      },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    return Response.json(
+      { success: false, error: true, message: error.message },
+      { status: 500 }
+    );
+  }
+});
+
+export const GET = auth(async () => {
+  try {
+    connectDB();
+    const products = await Product.find({})
+      .sort({ updatedAt: -1 })
+      .select("-__v -createdAt -updatedAt");
+
+    if (!products) {
       return Response.json(
         {
           success: true,
           error: false,
-          message: "Product created successfully",
-          newProduct,
-        },
-        { status: 201 }
-      );
-    } catch (error: any) {
-      return Response.json(
-        { success: false, error: true, message: error.message },
-        { status: 500 }
-      );
-    }
-  };
-// );
-
-export const GET =
-  // auth(
-  async () => {
-    try {
-      connectDB();
-      const products = await Product.find({})
-        .sort({ updatedAt: -1 })
-        .select("-__v -createdAt -updatedAt");
-
-      if (!products) {
-        return Response.json(
-          {
-            success: true,
-            error: false,
-            message: `No products found`,
-            products: [],
-          },
-          { status: 200 }
-        );
-      }
-
-      return Response.json(
-        {
-          success: true,
-          error: false,
-          products,
+          message: `No products found`,
+          products: [],
         },
         { status: 200 }
       );
-
-      // return Response.json(
-      //   {
-      //     success: true,
-      //     error: false,
-      //     products,
-      //   },
-      //   { status: 201 }
-      // );
-    } catch (error: any) {
-      return Response.json(
-        { success: false, error: true, message: error.message },
-        { status: 500 }
-      );
     }
-  };
-// );
+
+    return Response.json(
+      {
+        success: true,
+        error: false,
+        products,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return Response.json(
+      { success: false, error: true, message: error.message },
+      { status: 500 }
+    );
+  }
+});
 
 export const DELETE = auth(async (request: Request) => {
   try {
@@ -174,8 +159,6 @@ export const DELETE = auth(async (request: Request) => {
 export const PUT = auth(async (request: any) => {
   try {
     const body = await request.json();
-    // const { id, name, image, parent } = await request.json();
-    console.log("🚀 ~ PUT ~ id:ID", body.id);
 
     if (!ObjectId.isValid(body.id)) {
       return Response.json(

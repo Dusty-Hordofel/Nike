@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/database";
-import { UserSchema } from "@/lib/validations/auth";
+import { UserSchema } from "@/lib/validations/auth/auth";
 import { z } from "zod";
 import User from "@/models/User";
 

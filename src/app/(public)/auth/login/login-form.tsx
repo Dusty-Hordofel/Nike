@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 import { CircleAlert } from "lucide-react";
 import LoginFormStep from "./login-step";
-import { EmailFormData, PasswordFormData } from "@/lib/validations/auth";
+import { EmailFormData, PasswordFormData } from "@/lib/validations/auth/auth";
 import { cn } from "@/lib/utils";
 import { EmailProps, PasswordProps } from "./formProps";
 

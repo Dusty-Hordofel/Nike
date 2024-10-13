@@ -26,7 +26,7 @@ const adminGetProducts = async () => {
   return data.products;
 };
 
-const deleteProduct = async (productInformation: { id: string }) => {
+const adminDeleteProduct = async (productInformation: { id: string }) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/products`,
     {
@@ -35,6 +35,28 @@ const deleteProduct = async (productInformation: { id: string }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(productInformation),
+    }
+  );
+  return response.json();
+};
+
+const adminDeleteProductVariant = async ({
+  productId,
+  subProductId,
+  subProductIndex,
+}: {
+  productId: string;
+  subProductId: string;
+  subProductIndex: number;
+}) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/products/${productId}/subproducts/${subProductId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ subProductIndex }),
     }
   );
   return response.json();
@@ -64,6 +86,7 @@ const adminUpdateProduct = async (productInformation: any) => {
 export {
   adminCreateProduct,
   adminGetProducts,
-  deleteProduct,
+  adminDeleteProduct,
   adminUpdateProduct,
+  adminDeleteProductVariant,
 };

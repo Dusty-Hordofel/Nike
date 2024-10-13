@@ -1,17 +1,3 @@
-// export const createCategory = async (categoryInformation: {
-//   name: string;
-//   image: string;
-// }) => {
-//   const response = await fetch(
-//     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/categories`,
-//     {
-//       method: "POST",
-//       body: JSON.stringify({ ...categoryInformation }),
-//     }
-//   );
-//   return response.json();
-// };
-
 import { FetchCategoriesResponse } from "@/@types/admin/admin.categories.interface";
 import { Item } from "@/@types/admin/admin.item.interface";
 
