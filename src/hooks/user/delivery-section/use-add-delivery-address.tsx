@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { DeliveryInfoFormData } from "@/lib/validations/delivery";
+import { DeliveryInfoFormData } from "@/lib/validations/checkout/delivery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface useSaveAddressProps {

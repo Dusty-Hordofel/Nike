@@ -16,8 +16,8 @@ import {
   OurIconicModels,
   trendSlides,
 } from "@/assets/data/slides";
-import HomeProductsCategories from "@/components/client/home-products-categories";
-import Navbar from "@/components/client/navbar/Navbar";
+import HomeProductsCategories from "@/components/common/home-products-categories";
+import Navbar from "@/components/common/navbar/Navbar";
 
 import {
   Banner as DiscountBanner,

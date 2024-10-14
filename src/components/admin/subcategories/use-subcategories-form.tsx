@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import {
   SubCategorySchema,
   SubCategoryFormData,
-} from "@/lib/validations/auth/auth";
+} from "@/lib/validations/auth/auth-schema";
 import { useModal } from "@/context/modal/modal-context";
 import { useFileContext } from "@/context/file/file-context";
 

@@ -1,4 +1,4 @@
-import CheckoutSectionTitle from "@/components/client/checkout/checkout-section-title";
+import CheckoutSectionTitle from "@/components/common/checkout/checkout-section-title";
 import React from "react";
 import Loader from "../../ui/loader";
 

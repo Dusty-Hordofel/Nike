@@ -12,7 +12,7 @@ import { deleteImageFromCloudinary } from "@/services/admin/images.service";
 import {
   ProductFormData,
   productSchema,
-} from "@/components/admin/products/product-schema";
+} from "@/lib/validations/products/product-schema";
 import { uploadImageToCloudinary } from "@/components/admin/products/upload-image-to-cloudinary";
 
 const useProductForm = () => {

@@ -1,7 +1,7 @@
 import {
   CategoryFormData,
   SubCategoryFormData,
-} from "@/lib/validations/auth/auth";
+} from "@/lib/validations/auth/auth-schema";
 import { RefObject } from "react";
 import {
   FieldErrors,

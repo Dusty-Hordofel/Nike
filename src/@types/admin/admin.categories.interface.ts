@@ -1,4 +1,4 @@
-import { CategoryFormData } from "@/lib/validations/auth/auth";
+import { CategoryFormData } from "@/lib/validations/auth/auth-schema";
 import { RefObject } from "react";
 import {
   FieldErrors,

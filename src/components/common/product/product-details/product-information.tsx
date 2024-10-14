@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import ProductSizes from "./product-size";
-import ProductColors from "@/components/client/product/product-details/product-colors";
+import ProductColors from "@/components/common/product/product-details/product-colors";
 import { IProduct } from "@/models/Product";
 import { Button } from "../../../ui/buttons/button/button";
 import Accordion from "../../accordion/Accordion";

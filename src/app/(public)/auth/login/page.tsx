@@ -7,9 +7,9 @@ import {
   PasswordFormData,
   EmailSchema,
   PasswordSchema,
-} from "@/lib/validations/auth/auth";
-import { UserSelectCountry } from "@/components/client/auth/login";
-import { UserAuthHeaderForm } from "@/components/client/auth";
+} from "@/lib/validations/auth/auth-schema";
+import { UserSelectCountry } from "@/components/common/auth/login";
+import { UserAuthHeaderForm } from "@/components/common/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import React from "react";
-import { UserLoginFooterForm } from "@/components/client/auth/login";
+import { UserLoginFooterForm } from "@/components/common/auth/login";
 
 import {
   FieldErrors,
@@ -8,7 +8,10 @@ import {
 } from "react-hook-form";
 import { CircleAlert } from "lucide-react";
 import LoginFormStep from "./login-step";
-import { EmailFormData, PasswordFormData } from "@/lib/validations/auth/auth";
+import {
+  EmailFormData,
+  PasswordFormData,
+} from "@/lib/validations/auth/auth-schema";
 import { cn } from "@/lib/utils";
 import { EmailProps, PasswordProps } from "./formProps";
 

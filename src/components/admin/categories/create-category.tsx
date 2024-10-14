@@ -1,7 +1,7 @@
 import React from "react";
 import CategoryForm from "./category-form";
 import { useFormContext } from "react-hook-form";
-import { CategoryFormData } from "@/lib/validations/products/category";
+import { CategoryFormData } from "@/lib/validations/products/category-schema";
 
 const CreateCategory = ({
   handleFileChange,

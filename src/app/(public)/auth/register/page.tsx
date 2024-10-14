@@ -14,12 +14,12 @@ import { useSearchParams } from "next/navigation";
 import {
   UserAuthHeaderForm,
   UserAuthInputFieldForm,
-} from "@/components/client/auth";
+} from "@/components/common/auth";
 import {
   RegisterFormData,
   RegisterSchema,
   UserFormData,
-} from "@/lib/validations/auth/auth";
+} from "@/lib/validations/auth/auth-schema";
 import { cn } from "@/lib/utils";
 import { CrossedEye } from "@/assets/icons";
 import { Eye } from "lucide-react";

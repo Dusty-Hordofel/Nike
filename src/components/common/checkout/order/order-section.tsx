@@ -1,5 +1,5 @@
 "use client";
-import CheckoutHeader from "@/components/client/checkout/checkout-section-title";
+import CheckoutHeader from "@/components/common/checkout/checkout-section-title";
 import { Button } from "@/components/ui/buttons/button/button";
 import LegalNotice from "../payment/legal-notice";
 import OrderSummary from "./order-summary";

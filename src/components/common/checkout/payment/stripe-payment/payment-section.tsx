@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
-import CheckoutSectionTitle from "@/components/client/checkout/checkout-section-title";
+import CheckoutSectionTitle from "@/components/common/checkout/checkout-section-title";
 import Loader from "../../../../ui/loader";
 import {
   useActivePaymentMethod,

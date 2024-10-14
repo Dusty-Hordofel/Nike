@@ -1,7 +1,7 @@
 "use client";
-import { Empty } from "@/components/client/cart";
-import CartProductDetails from "@/components/client/cart/CartProductDetails";
-import CartDetails from "@/components/client/cart/cart-details";
+import { Empty } from "@/components/common/cart";
+import CartProductDetails from "@/components/common/cart/CartProductDetails";
+import CartDetails from "@/components/common/cart/cart-details";
 import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

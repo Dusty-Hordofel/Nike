@@ -3,9 +3,9 @@
 import { useActiveDeliveryAddress } from "@/hooks/user/delivery-section";
 import { useState } from "react";
 import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
-import { OrderSection, OrderSummary } from "@/components/client/checkout/order";
-import { PaymentSection } from "@/components/client/checkout/payment/stripe-payment";
-import { DeliverySection } from "@/components/client/checkout/delivery";
+import { OrderSection, OrderSummary } from "@/components/common/checkout/order";
+import { PaymentSection } from "@/components/common/checkout/payment/stripe-payment";
+import { DeliverySection } from "@/components/common/checkout/delivery";
 import Loader from "@/components/ui/loader";
 import { useGetCart } from "@/hooks/user/cart";
 

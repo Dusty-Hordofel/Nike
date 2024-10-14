@@ -7,7 +7,7 @@ import SizeFields from "./size-fields";
 import { LoaderCircle } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useAdminDeleteProductVariant } from "@/hooks/admin/api/use-admin-products.hook";
-import { ProductFormData } from "./product-schema";
+import { ProductFormData } from "@/lib/validations/products/product-schema";
 
 const PoductForm = ({
   setSelectedCategory,
@@ -345,8 +345,6 @@ const PoductForm = ({
                   <Button
                     className="bg-red-600"
                     type="button"
-                    // onClick={() => remove(index)}
-
                     onClick={async () => {
                       console.log(
                         "INDEX",

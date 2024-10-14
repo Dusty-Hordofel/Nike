@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CategoryFormData, CategorySchema } from "@/lib/validations/auth/auth";
 import { useModal } from "@/context/modal/modal-context";
 import { useFileContext } from "@/context/file/file-context";
 import {
@@ -12,6 +11,10 @@ import {
   useAdminGetCategories,
   useAdminUpdateCategory,
 } from "@/hooks/admin/api/use-admin-categories.hook";
+import {
+  CategoryFormData,
+  CategorySchema,
+} from "@/lib/validations/products/category-schema";
 
 const useCategoryForm = () => {
   const form = useForm<CategoryFormData>({

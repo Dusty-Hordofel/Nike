@@ -1,6 +1,6 @@
-import { UserAuthInputFieldForm } from "@/components/client/auth";
+import { UserAuthInputFieldForm } from "@/components/common/auth";
 import { Button } from "@/components/ui/buttons/button/button";
-import { DeliveryInfoFormData } from "@/lib/validations/delivery";
+import { DeliveryInfoFormData } from "@/lib/validations/checkout/delivery";
 import { FieldErrors, SubmitHandler, UseFormRegister } from "react-hook-form";
 
 type DeliveryFormProps = {
