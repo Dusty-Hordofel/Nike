@@ -2,7 +2,7 @@
 
 import ProductCard from "@/components/common/product/product-card/product-card";
 // import { useProducts } from "@/hooks/useProductData";
-import { IProduct } from "@/models/Product";
+import { IProduct } from "@/models/product.model";
 import { useQuery } from "@tanstack/react-query";
 
 const ProductsPage = () => {
@@ -21,11 +21,11 @@ const ProductsPage = () => {
     <div className="flex py-10">
       <div className="h-screen w-[260px] bg-blue-200"></div>
       <main className="min-h-screen flex-1">
-        <section className="grid grid-cols-3 gap-4 px-11">
+        {/* <section className="grid grid-cols-3 gap-4 px-11">
           {products.map((product: IProduct) => {
             return <ProductCard product={product} key={Number(product._id)} />;
           })}
-        </section>
+        </section> */}
       </main>
     </div>
   );

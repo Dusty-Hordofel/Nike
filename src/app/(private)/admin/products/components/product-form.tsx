@@ -6,8 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import SizeFields from "./size-fields";
 import { LoaderCircle } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { useAdminDeleteProductVariant } from "@/hooks/admin/api/use-admin-products.hook";
-import { ProductFormData } from "@/lib/validations/products/product-schema";
+import { useAdminDeleteProductVariant } from "@/hooks/admin/products/use-admin-products.hook";
+import { ProductFormData } from "../../../../../schemas/products/product.schema";
 
 const PoductForm = ({
   setSelectedCategory,

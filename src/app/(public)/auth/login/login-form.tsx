@@ -11,7 +11,7 @@ import LoginFormStep from "./login-step";
 import {
   EmailFormData,
   PasswordFormData,
-} from "@/lib/validations/auth/auth-schema";
+} from "../../../../schemas/user/auth.schema";
 import { cn } from "@/lib/utils";
 import { EmailProps, PasswordProps } from "./formProps";
 

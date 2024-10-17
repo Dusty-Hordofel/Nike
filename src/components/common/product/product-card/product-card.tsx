@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { IProduct } from "@/models/Product";
+import { IProduct } from "@/models/product.model";
 import ProductCardImage from "./product-card-image";
 import ProductCardPrice from "./product-card-price";
 import ProductCardColor from "./product-card-color";
@@ -9,10 +9,12 @@ import ProductCardDescription from "./product-card-description";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { name, subProducts, slug } = product;
-  console.log("🚀 ~ ProductCard ~ slug:SLUG", slug);
+  console.log("🚀 ~ ProductCard ~ subProducts:SUBV", subProducts);
+  // console.log("🚀 ~ ProductCard ~ slug:SLUG", slug);
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
+  // console.log("🚀 ~ ProductCard ~ images:", images[0].public_url);
   const [prices, setPrices] = useState([]);
   // const [prices, setPrices] = useState(
   //   subProducts[active]?.sizes
@@ -34,7 +36,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const newRelease = false;
 
   useEffect(() => {
-    setImages(subProducts[active].images);
+    setImages(subProducts[active]?.images);
     // setPrices(
     //   subProducts[active]?.sizes
     //     .map((s) => {
@@ -47,43 +49,47 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   }, [active, product, subProducts]);
 
   return (
-    <figure>
-      <Link
-        className="sr-only"
-        data-testid="product-card-link"
-        href={`/products/${slug}?style=${active}`}
-        tabIndex={0}
-      >
-        {name}
-      </Link>
-      <Link
-        aria-label={name}
-        className="product-card-link group"
-        href={`/products/${slug}?style=${active}`}
-      >
-        <ProductCardImage images={images} name={name} active={active} />
-        <div className="product-card-info pt-3 pb-[2px]">
-          <ProductCardColor
-            productColors={productColors}
-            subProducts={subProducts}
-            setImages={setImages}
-            setActive={setActive}
-          />
+    <>
+      {subProducts.length > 0 && (
+        <figure>
+          <Link
+            className="sr-only"
+            data-testid="product-card-link"
+            href={`/products/${slug}?style=${active}`}
+            tabIndex={0}
+          >
+            {name}
+          </Link>
+          <Link
+            aria-label={name}
+            className="product-card-link group"
+            href={`/products/${slug}?style=${active}`}
+          >
+            <ProductCardImage images={images} name={name} active={active} />
+            <div className="product-card-info pt-3 pb-[2px]">
+              <ProductCardColor
+                productColors={productColors}
+                subProducts={subProducts}
+                setImages={setImages}
+                setActive={setActive}
+              />
 
-          <ProductCardDescription
-            name={name}
-            productColors={productColors}
-            bestSeller={bestSeller}
-            newRelease={newRelease}
-          />
-          <ProductCardPrice
-            prices={prices}
-            subProducts={subProducts}
-            active={active}
-          />
-        </div>
-      </Link>
-    </figure>
+              <ProductCardDescription
+                name={name}
+                productColors={productColors}
+                bestSeller={bestSeller}
+                newRelease={newRelease}
+              />
+              <ProductCardPrice
+                prices={prices}
+                subProducts={subProducts}
+                active={active}
+              />
+            </div>
+          </Link>
+        </figure>
+      )}
+    </>
   );
 };
 

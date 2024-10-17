@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
-import User from "@/models/User";
+import User from "@/models/user.model";
 import { isValidObjectId } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 

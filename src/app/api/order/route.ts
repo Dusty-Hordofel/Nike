@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
-import { stripe } from "@/lib/stripe";
-import Order from "@/models/Order";
+import { stripe } from "@/lib/stripe/stripe";
+import Order from "@/models/order.model";
 
 import Stripe from "stripe";
 

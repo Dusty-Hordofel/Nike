@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { ObjectId } from "mongodb";
 import { connectDB } from "@/config/database";
-import Category from "@/models/Category";
+import Category from "@/models/category.model";
 import slugify from "slugify";
 
 export const POST =

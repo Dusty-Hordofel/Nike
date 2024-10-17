@@ -2,10 +2,10 @@
 
 // import connectDB from "@/config/database";
 import { currentUser } from "@/utils/auth";
-import User from "@/models/User";
+import User from "@/models/user.model";
 import mongoose from "mongoose";
-import Cart from "@/models/Cart";
-import Product, { IProduct } from "@/models/Product";
+import Cart from "@/models/cart.model";
+import Product, { IProduct } from "@/models/product.model";
 import { CartItem, Coupon } from "@/store/cartSlice";
 import { redirect } from "next/navigation";
 // import { isValidObjectId } from "@/lib/utils";

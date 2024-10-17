@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAdminGetCategories } from "@/hooks/admin/api/use-admin-categories.hook";
-import { useGetSubCategoriesByParent } from "@/hooks/admin/api/use-admin-subcategories.hook";
+import { useAdminGetCategories } from "@/hooks/admin/categories/use-admin-categories.hook";
+import { useGetSubCategoriesByParent } from "@/hooks/admin/sucategories/use-subcategories.hook";
 import Modal from "@/components/ui/modals/modal";
 import { useModal } from "@/context/modal/modal-context";
 import { AddItemButton } from "@/components/ui/item";
-import ProductForm from "@/components/admin/products/product-form";
+import ProductForm from "@/app/(private)/admin/products/components/product-form";
 import {
   useAdminDeleteProduct,
   useAdminGetProducts,
-} from "@/hooks/admin/api/use-admin-products.hook";
+} from "@/hooks/admin/products/use-admin-products.hook";
 import QueryStatus from "@/components/ui/query-status";
-import ProductFormProvider from "@/components/admin/products/form-provider";
+import ProductFormProvider from "@/app/(private)/admin/products/components/form-provider";
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");

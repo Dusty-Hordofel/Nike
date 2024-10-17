@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema, Model, model } from "mongoose";
 
 // Interface TypeScript pour représenter les données d'une catégorie
-interface ICategory extends Document {
+export interface ICategory {
+  _id: string;
   name: string;
   slug: string;
   image: string;

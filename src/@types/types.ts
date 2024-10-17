@@ -1,4 +1,4 @@
-import { ISubProduct } from "@/models/Product";
+import { ISubProduct } from "@/models/product.model";
 
 export interface TrendCrossProps {
   title: string;

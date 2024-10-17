@@ -3,8 +3,8 @@
 import { connectDB, disconnectDB } from "@/config/database";
 // import { isValidObjectId } from "@/lib/utils";
 import { isValidObjectId } from "mongoose";
-import { DeliveryInfoFormData } from "@/lib/validations/checkout/delivery";
-import User from "@/models/User";
+import { DeliveryInfoFormData } from "../../schemas/checkout/delivery.schema";
+import User from "@/models/user.model";
 import { currentUser } from "@/utils/auth";
 import { Address } from "cluster";
 import mongoose from "mongoose";

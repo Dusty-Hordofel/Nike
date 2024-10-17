@@ -2,11 +2,11 @@
 
 import { connectDB } from "@/config/database";
 import { currentUser } from "@/utils/auth";
-import User from "@/models/User";
-import Cart, { ICart } from "@/models/Cart";
+import User from "@/models/user.model";
+import Cart, { ICart } from "@/models/cart.model";
 // import { isValidObjectId } from "@/lib/utils";
 import { isValidObjectId } from "mongoose";
-import Coupon from "@/models/Coupon";
+import Coupon from "@/models/coupon.model";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 

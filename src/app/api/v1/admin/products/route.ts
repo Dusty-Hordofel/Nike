@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 import slugify from "slugify";
-import Product from "@/models/Product";
+import Product from "@/models/product.model";
 import { ObjectId } from "mongodb";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
 

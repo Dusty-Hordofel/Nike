@@ -1,4 +1,4 @@
-import { ISubProduct } from "@/models/Product";
+import { ISubProduct } from "@/models/product.model";
 import React from "react";
 
 interface ProductCardPriceProps {

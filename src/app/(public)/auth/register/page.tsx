@@ -19,7 +19,7 @@ import {
   RegisterFormData,
   RegisterSchema,
   UserFormData,
-} from "@/lib/validations/auth/auth-schema";
+} from "../../../../schemas/user/auth.schema";
 import { cn } from "@/lib/utils";
 import { CrossedEye } from "@/assets/icons";
 import { Eye } from "lucide-react";

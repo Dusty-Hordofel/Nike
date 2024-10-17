@@ -1,5 +1,3 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { DeliveryInfoFormData } from "@/lib/validations/checkout/delivery";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createSubCategory,

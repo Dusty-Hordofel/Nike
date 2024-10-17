@@ -1,7 +1,7 @@
 import {
   EmailFormData,
   PasswordFormData,
-} from "@/lib/validations/auth/auth-schema";
+} from "../../../../schemas/user/auth.schema";
 import {
   UseFormRegister,
   FieldErrors,

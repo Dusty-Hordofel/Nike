@@ -2,10 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  SubCategorySchema,
-  SubCategoryFormData,
-} from "@/lib/validations/auth/auth-schema";
+// import {
+//   SubCategorySchema,
+//   SubCategoryFormData,
+// } from "@/schemas/user/auth.schema";
 import { useModal } from "@/context/modal/modal-context";
 import { useFileContext } from "@/context/file/file-context";
 
@@ -16,8 +16,12 @@ import {
   useAdminDeleteSubCategory,
   useAdminUpdateSubCategory,
   useGetSubCategoriesByParent,
-} from "@/hooks/admin/api/use-admin-subcategories.hook";
-import { useAdminGetCategories } from "@/hooks/admin/api/use-admin-categories.hook";
+} from "@/hooks/admin/sucategories/use-subcategories.hook";
+import { useAdminGetCategories } from "@/hooks/admin/categories/use-admin-categories.hook";
+import {
+  SubCategoryFormData,
+  SubCategorySchema,
+} from "@/schemas/products/subcategory.schema";
 
 const useSubProductForm = () => {
   const createSubCategory = useAdminCreateSubCategory();

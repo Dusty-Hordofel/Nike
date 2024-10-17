@@ -1,7 +1,7 @@
 // import { isValidObjectId } from "@/lib/utils";
 import { isValidObjectId } from "mongoose";
-import Cart from "@/models/Cart";
-import User from "@/models/User";
+import Cart from "@/models/cart.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth";

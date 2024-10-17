@@ -6,18 +6,18 @@ import { useModal } from "@/context/modal/modal-context";
 import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
-} from "@/hooks/admin/api/use-admin-products.hook";
-import { ISubProduct } from "@/models/Product";
+} from "@/hooks/admin/products/use-admin-products.hook";
+import { ISubProduct } from "@/models/product.model";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
 import {
   ProductFormData,
-  productSchema,
-} from "@/lib/validations/products/product-schema";
-import { uploadImageToCloudinary } from "@/components/admin/products/upload-image-to-cloudinary";
+  ProductSchema,
+} from "@/schemas/products/product.schema";
+import { uploadImageToCloudinary } from "@/app/(private)/admin/products/components/upload-image-to-cloudinary";
 
 const useProductForm = () => {
   const form = useForm<ProductFormData>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(ProductSchema),
   });
 
   const {

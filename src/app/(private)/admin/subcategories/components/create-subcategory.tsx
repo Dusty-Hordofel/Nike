@@ -2,15 +2,12 @@ import React from "react";
 // import CategoryForm from "./category-form";
 import { CategoryFormProps } from "@/@types/admin/admin.categories.interface";
 import Modal from "@/components/ui/modals/modal";
-import CategoryForm from "../categories/category-form";
+import CategoryForm from "../../categories/components/category-form";
 import SubCategoryForm from "./subcategory-form";
-import { SubCategoryFormProps } from "@/@types/admin/admin.subcategories.interface";
-import { SubCategoryFormData } from "@/lib/validations/auth/auth-schema";
-import { useFormContext } from "react-hook-form";
 
-type Props = {};
-// CategoryFormProps
-// register, errors, clearErrors, setValue
+import { useFormContext } from "react-hook-form";
+import { SubCategoryFormData } from "@/schemas/user/product.schema";
+
 const CreateSubCategory = ({
   handleFileChange,
   handleButtonClick,

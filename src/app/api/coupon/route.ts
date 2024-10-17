@@ -1,6 +1,6 @@
 import { connectDB } from "@/config/database";
-import Coupon from "@/models/Coupon";
-import Product, { ISubProduct } from "@/models/Product";
+import Coupon from "@/models/coupon.model";
+import Product, { ISubProduct } from "@/models/product.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

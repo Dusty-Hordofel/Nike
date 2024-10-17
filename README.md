@@ -1172,9 +1172,12 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 59. Suppresion des images sur cloudinary(2)
 
-### 61.
+### 61. Réorganisation du projet
 
-### 62.
+- renommage des models et des schemas.
+- réorganisation des fichiers pour une meilleure structure.
+
+### 62. Category Filter
 
 ### 63.
 

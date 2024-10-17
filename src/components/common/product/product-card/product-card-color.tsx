@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ISubProduct } from "@/models/Product";
+import { ISubProduct } from "@/models/product.model";
 // import { SubProduct } from "@/types/types";
 import Image from "next/image";
 

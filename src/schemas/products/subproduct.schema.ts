@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const subProductSchema = z.object({
+export const SubProductSchema = z.object({
   images: z.any().optional(),
   // .refine((files) => files && Array.from(files).length > 0, {
   //   message: "Please select at least one image.",
@@ -49,26 +49,4 @@ export const subProductSchema = z.object({
     .default(0),
 });
 
-// Schéma principal pour les produits
-export const productSchema = z.object({
-  name: z.string().min(1, "Le nom du produit est requis."),
-  description: z.string().min(1, "La description est requise."),
-  category: z.string().min(1, { message: "La catégorie est requise." }),
-  shipping: z
-    .number()
-    .min(0, "Les frais de livraison ne peuvent pas être inférieur à 0")
-    .max(100, "Les frais de livraison ne peuvent pas excéder 50")
-    .default(0),
-  subCategories: z
-    .array(z.string())
-    .min(1, { message: "Please select at least one subcategory." }),
-  // subProducts: z.array(subProductSchema),
-  subProducts: z
-    .array(subProductSchema)
-    .min(1, { message: "Veuillez ajouter au moins un sous-produit." }), // S
-  productType: z.enum(["clothing", "shoes", "accessories"], {
-    message: "Le type de produit est requis.",
-  }),
-});
-
-export type ProductFormData = z.infer<typeof productSchema>;
+export type SubProductFormData = z.infer<typeof SubProductSchema>;

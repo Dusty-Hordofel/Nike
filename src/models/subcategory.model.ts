@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, Model, model } from "mongoose";
 
 // TypeScript interface for displaying sub-category data
-interface ISubCategory extends Document {
+export interface ISubCategory {
   name: string;
   slug: string;
   parent: mongoose.Types.ObjectId;

@@ -10,11 +10,11 @@ import {
   useAdminDeleteCategory,
   useAdminGetCategories,
   useAdminUpdateCategory,
-} from "@/hooks/admin/api/use-admin-categories.hook";
+} from "@/hooks/admin/categories/use-admin-categories.hook";
 import {
   CategoryFormData,
   CategorySchema,
-} from "@/lib/validations/products/category-schema";
+} from "../../../schemas/products/category.schema";
 
 const useCategoryForm = () => {
   const form = useForm<CategoryFormData>({

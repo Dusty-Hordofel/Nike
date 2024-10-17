@@ -9,7 +9,7 @@ import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 import {
   DeliveryInfoFormData,
   DeliveryInfoSchema,
-} from "@/lib/validations/checkout/delivery";
+} from "../../../../schemas/checkout/delivery.schema";
 import { useEffect, useState } from "react";
 import CheckoutHeader from "@/components/common/checkout/checkout-section-title";
 import DeliveryAddressSummary from "./delivery-address-summary";

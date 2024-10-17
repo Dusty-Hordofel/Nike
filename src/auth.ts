@@ -2,10 +2,10 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "./lib/mongodb";
-import { LogInSchema } from "./lib/validations/auth/auth-schema";
+import { LogInSchema } from "./schemas/user/auth.schema";
 import bcrypt from "bcryptjs";
 
-import User from "./models/User";
+import User from "./models/user.model";
 
 export const {
   handlers: { GET, POST },

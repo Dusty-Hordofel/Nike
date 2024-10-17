@@ -16,7 +16,7 @@ export interface IReview extends Document {
 
 export interface ISubProduct extends Document {
   _id: Types.ObjectId; // Ajout de l'identifiant unique
-  images: [{ public_url: { type: string }; url: string }];
+  images: [{ public_url: string; url: string }];
   description_images?: string[];
   color: {
     color: string;
@@ -31,7 +31,8 @@ export interface ISubProduct extends Document {
   sold?: number;
 }
 
-export interface IProduct extends Document {
+export interface IProduct {
+  _id: string;
   name: string;
   description: string;
   slug?: string;

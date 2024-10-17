@@ -1,4 +1,4 @@
-import { IProduct } from "@/models/Product";
+import { IProduct } from "@/models/product.model";
 
 export interface Item {
   _id: string;

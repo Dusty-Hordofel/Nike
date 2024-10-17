@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
-import { stripe } from "@/lib/stripe"; // Vous avez déjà initialisé stripe ici
-import Cart from "@/models/Cart";
-import Order from "@/models/Order";
-import PaymentMethod from "@/models/PaymentMethod";
-import User from "@/models/User";
+import { stripe } from "@/lib/stripe/stripe"; // Vous avez déjà initialisé stripe ici
+import Cart from "@/models/cart.model";
+import Order from "@/models/order.model";
+import PaymentMethod from "@/models/payment-method.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 type PaymentResult = {

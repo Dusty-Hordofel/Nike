@@ -7,7 +7,7 @@ import {
   PasswordFormData,
   EmailSchema,
   PasswordSchema,
-} from "@/lib/validations/auth/auth-schema";
+} from "../../../../schemas/user/auth.schema";
 import { UserSelectCountry } from "@/components/common/auth/login";
 import { UserAuthHeaderForm } from "@/components/common/auth";
 import { useMutation } from "@tanstack/react-query";
