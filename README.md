@@ -1179,7 +1179,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 62. Category Filter
 
-### 63.
+### 63. gestion des filtres
 
 ### 64.
 

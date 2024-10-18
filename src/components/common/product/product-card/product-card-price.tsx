@@ -2,27 +2,23 @@ import { ISubProduct } from "@/models/product.model";
 import React from "react";
 
 interface ProductCardPriceProps {
-  prices: number[];
   subProducts: ISubProduct[];
   active: number;
 }
 
-const ProductCardPrice = ({
-  prices,
-  subProducts,
-  active,
-}: ProductCardPriceProps) => {
+const ProductCardPrice = ({ subProducts, active }: ProductCardPriceProps) => {
   return (
     <div className="product-card-prices">
       <div className="product-card-price font-medium">
         <div
           className={`${subProducts[active]?.discount ? "flex space-x-2" : ""} `}
         >
-          {subProducts[active]?.discount ? (
+          {subProducts[active]?.discount > 0 ? (
             <span>
               {(
-                prices[active] -
-                prices[active] * (subProducts[active]?.discount / 100)
+                subProducts[active]?.price -
+                subProducts[active]?.price *
+                  (subProducts[active]?.discount / 100)
               ).toFixed(2)}
               &nbsp;€
             </span>
@@ -30,7 +26,7 @@ const ProductCardPrice = ({
           <span
             className={`${subProducts[active]?.discount ? "line-through font-light text-gray-500" : "font-medium"}`}
           >
-            {prices[active]}&nbsp;€
+            {subProducts[active]?.price}&nbsp;€
           </span>
         </div>
       </div>

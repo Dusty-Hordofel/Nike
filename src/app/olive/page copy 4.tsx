@@ -1,11 +1,14 @@
 "use client";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/common/product/product-card/product-card";
 import { IProduct } from "@/models/product.model";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/buttons/button/button";
 
-const page = () => {
+type Props = {};
+
+const page = (props: Props) => {
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -17,13 +20,11 @@ const page = () => {
     category: string[];
     color: string[];
     size: string[];
-    price: string;
   }>({
     // search: "",
     category: [],
     color: [],
     size: [],
-    price: "",
   });
 
   const { data, isLoading, isError } =
@@ -86,31 +87,6 @@ const page = () => {
           });
         }
 
-        if (filters.price) {
-          filtered = filtered.sort((a, b) => {
-            const minPriceA = Math.min(
-              ...a.subProducts.map((subProduct) => subProduct.price)
-            );
-
-            const minPriceB = Math.min(
-              ...b.subProducts.map((subProduct) => subProduct.price)
-            );
-
-            if (filters.price === "asc") {
-              return minPriceA - minPriceB;
-            } else if (filters.price === "desc") {
-              return minPriceB - minPriceA;
-            } else {
-              return 0;
-            }
-          });
-          console.log("🚀 ~ filtered=filtered.sort ~ filtered:BOBO", filtered);
-
-          //   return filtered;
-        }
-
-        // if(filters.)
-
         setFilteredProducts(filtered);
         setIsFiltering(false);
       }, 500);
@@ -127,21 +103,12 @@ const page = () => {
     filterKey: FilterKey
   ) => {
     console.log("��� ~ handleFilterChange ~ e.target.value:", e.target.value);
-
-    if (filterKey === "price") {
-      // const priceRange = e.target.value.split("-");
-      setFilters((prev) => ({
-        ...prev,
-        price: e.target.value as "asc" | "desc",
-      }));
-    } else {
-      setFilters((prev) => ({
-        ...prev,
-        [filterKey]: e.target.checked
-          ? [...prev[filterKey], e.target.value]
-          : prev[filterKey].filter((val) => val !== e.target.value),
-      }));
-    }
+    setFilters((prev) => ({
+      ...prev,
+      [filterKey]: e.target.checked
+        ? [...prev[filterKey], e.target.value]
+        : prev[filterKey].filter((val) => val !== e.target.value),
+    }));
   };
 
   return (
@@ -150,6 +117,9 @@ const page = () => {
     >
       <section className="">
         <div
+          aria-live="polite"
+          aria-atomic="true"
+          aria-relevant="all"
           className="header-position css-iqr4dm"
           style={{ top: "0px", transform: "translateY(0px)" }}
         >
@@ -160,16 +130,17 @@ const page = () => {
                 <span className="wall-header__item_count">(137)</span>
               </h1>
               <nav className="flex" aria-label="Sort By">
-                <ProductFilterButton
+                <FilterButton
                   setShowSidebar={setShowSidebar}
                   isLargeScreen={isLargeScreen}
-                  showSidebar={showSidebar}
+                  showSidebar={isLargeScreen}
                 />
                 <div className="hidden relative min-[960px]:block">
-                  <ProductSortButton
+                  <SortButton
                     showDropdown={showDropdown}
-                    setShowDropdown={setShowDropdown}
+                    setShowDropdown={showDropdown}
                   />
+                  <ProductSortDropdown showDropdown={showDropdown} />
                 </div>
               </nav>
             </div>
@@ -177,29 +148,6 @@ const page = () => {
         </div>
       </section>
       <div className="flex">
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="price"
-              value="asc"
-              onChange={(e) => handleFilterChange(e, "price")}
-              checked={filters.price === "asc"}
-            />
-            Prix croissant
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="price"
-              value="desc"
-              onChange={(e) => handleFilterChange(e, "price")}
-              checked={filters.price === "desc"}
-            />
-            Prix décroissant
-          </label>
-        </div>
         <ProductFiltersSidebar
           data={data}
           filters={filters}
@@ -219,11 +167,7 @@ const page = () => {
 
 export default page;
 
-const ProductFilterButton = ({
-  setShowSidebar,
-  isLargeScreen,
-  showSidebar,
-}: any) => {
+const FilterButton = ({ setShowSidebar, isLargeScreen, showSidebar }: any) => {
   return (
     <button
       aria-controls="left-nav"
@@ -277,87 +221,34 @@ const ProductFilterButton = ({
     </button>
   );
 };
-const ProductSortButton = ({ showDropdown, setShowDropdown }: any) => {
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node) &&
-      buttonRef.current &&
-      !buttonRef.current.contains(event.target as Node)
-    ) {
-      setShowDropdown(false);
-    }
-  };
-
-  useEffect(() => {
-    // Ajoute l'écouteur d'événements
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Nettoie l'écouteur d'événements lors du démontage du composant
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+const SortButton = ({ showDropdown, setShowDropdown }: any) => {
   return (
-    <>
-      <SortButton
-        showDropdown={showDropdown}
-        setShowDropdown={setShowDropdown}
-        ref={buttonRef}
-      />
-      <SortDropdownMenu showDropdown={showDropdown} ref={dropdownRef} />
-    </>
+    <button
+      aria-controls="sort-options"
+      aria-expanded={showDropdown}
+      aria-label="Sort By"
+      id="dropdown-btn"
+      role="listbox"
+      tabIndex={0}
+      type="button"
+      onClick={() => setShowDropdown(!showDropdown)}
+    >
+      <span className="flex">
+        <span className=" pr-2">Sort By</span>
+        <span>
+          <ChevronDown
+            className={`transform  transition-transform ${showDropdown ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+          />
+        </span>
+      </span>
+    </button>
   );
 };
 
-interface SortButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  showDropdown: boolean;
-  setShowDropdown: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SortButton = forwardRef<HTMLButtonElement, SortButtonProps>(
-  ({ showDropdown, setShowDropdown, ...props }, ref) => {
-    return (
-      <button
-        aria-controls="sort-options"
-        aria-expanded={showDropdown}
-        aria-label="Sort By"
-        id="dropdown-btn"
-        role="listbox"
-        tabIndex={0}
-        type="button"
-        ref={ref}
-        onClick={() => {
-          setShowDropdown((prev) => !prev);
-        }}
-        {...props}
-      >
-        <span className="flex">
-          <span className="pr-2">Sort By</span>
-          <span>
-            <ChevronDown
-              className={`transform transition-transform ${showDropdown ? "-rotate-180" : "rotate-0"} cursor-pointer`}
-            />
-          </span>
-        </span>
-      </button>
-    );
-  }
-);
-
-const SortDropdownMenu = forwardRef<
-  HTMLDivElement,
-  {
-    showDropdown: boolean;
-  }
->(({ showDropdown }, ref) => {
+const ProductSortDropdown = ({ showDropdown }: { showDropdown: boolean }) => {
   return (
     <div
-      ref={ref}
-      className={`bg-white shadow-sm absolute w-max top-full overflow-hidden flex flex-col p-6 rounded-lg right-0 ${showDropdown ? "visible" : "hidden"}`}
+      className={` bg-white shadow-sm absolute w-max top-full overflow-hidden flex flex-col p-6 rounded-lg right-0 ${showDropdown ? "visible" : "hidden"}`}
       aria-labelledby="dropdown-btn"
       id="sort-options"
       role="menu"
@@ -365,26 +256,24 @@ const SortDropdownMenu = forwardRef<
       <button
         aria-hidden="false"
         aria-label="Featured"
-        className="text-end hover:opacity-55 transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
+        className=" text-end hover:opacity-55 transition-opacity"
         data-ndx="0"
         role="menuitem"
         tabIndex={-1}
         type="button"
         value=""
-        disabled
       >
         Featured
       </button>
       <button
         aria-hidden="false"
         aria-label="Newest"
-        className="text-end hover:opacity-55 transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
+        className="text-end hover:opacity-55 transition-opacity"
         data-ndx="1"
         role="menuitem"
         tabIndex={-1}
         type="button"
         value="newest"
-        disabled
       >
         Newest
       </button>
@@ -414,7 +303,7 @@ const SortDropdownMenu = forwardRef<
       </button>
     </div>
   );
-});
+};
 
 const ProductsList = ({
   showSidebar,

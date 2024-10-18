@@ -2,17 +2,8 @@ interface CardImageProps {
   images: { url: string; public_url: string }[];
   name: string;
   category?: string;
-  active: number;
 }
-const ProductCardImage = ({
-  images,
-  name,
-  category,
-  active,
-}: CardImageProps) => {
-  console.log("🚀 ~ images:IMG", images?.length > 0);
-  // console.log("🚀 ~ images:IMG", images[0]);
-
+const ProductCardImage = ({ images, name, category }: CardImageProps) => {
   return (
     <>
       {images?.length > 0 && (

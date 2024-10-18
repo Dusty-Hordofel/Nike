@@ -9,22 +9,9 @@ import ProductCardDescription from "./product-card-description";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { name, subProducts, slug } = product;
-  console.log("🚀 ~ ProductCard ~ subProducts:SUBV", subProducts);
-  // console.log("🚀 ~ ProductCard ~ slug:SLUG", slug);
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
-  // console.log("🚀 ~ ProductCard ~ images:", images[0].public_url);
-  const [prices, setPrices] = useState([]);
-  // const [prices, setPrices] = useState(
-  //   subProducts[active]?.sizes
-  //     .map((s) => {
-  //       return s.price;
-  //     })
-  //     .sort((a, b) => {
-  //       return a - b;
-  //     })
-  // );
 
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => {
@@ -37,15 +24,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
   useEffect(() => {
     setImages(subProducts[active]?.images);
-    // setPrices(
-    //   subProducts[active]?.sizes
-    //     .map((s) => {
-    //       return s.price;
-    //     })
-    //     .sort((a, b) => {
-    //       return a - b;
-    //     })
-    // );
   }, [active, product, subProducts]);
 
   return (
@@ -65,7 +43,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             className="product-card-link group"
             href={`/products/${slug}?style=${active}`}
           >
-            <ProductCardImage images={images} name={name} active={active} />
+            <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px]">
               <ProductCardColor
                 productColors={productColors}
@@ -80,11 +58,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                 bestSeller={bestSeller}
                 newRelease={newRelease}
               />
-              <ProductCardPrice
-                prices={prices}
-                subProducts={subProducts}
-                active={active}
-              />
+              <ProductCardPrice subProducts={subProducts} active={active} />
             </div>
           </Link>
         </figure>
