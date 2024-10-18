@@ -44,7 +44,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             href={`/products/${slug}?style=${active}`}
           >
             <ProductCardImage images={images} name={name} />
-            <div className="product-card-info pt-3 pb-[2px]">
+            <div className="product-card-info pt-3 pb-[2px] bg-success">
               <ProductCardColor
                 productColors={productColors}
                 subProducts={subProducts}

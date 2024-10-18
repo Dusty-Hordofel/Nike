@@ -47,6 +47,8 @@ export interface IProduct {
   shipping: number;
   productType: string;
   subProducts: ISubProduct[];
+  createdAt: Date;
+  featured: boolean;
 }
 
 const ReviewSchema: Schema<IReview> = new Schema<IReview>({
@@ -176,6 +178,10 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       type: Number,
       required: true,
       default: 0,
+    },
+    featured: {
+      type: Boolean,
+      default: false,
     },
     subProducts: [SubProductSchema],
   },

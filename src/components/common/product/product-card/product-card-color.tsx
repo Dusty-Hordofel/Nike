@@ -29,7 +29,7 @@ const ProductCardColor = ({
   setActive,
   // active
 }: CardColorProps) => {
-  // console.log("🚀 ~ subProducts:SUBPRO", subProducts);
+  console.log("🚀 ~ subProducts:SUBPRO", subProducts);
 
   return (
     <div className=" gap-2 pb-[10px]  group-hover:flex hidden">
