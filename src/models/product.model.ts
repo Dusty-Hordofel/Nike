@@ -1,57 +1,12 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export interface IReview extends Document {
-  reviewBy: Types.ObjectId;
-  rating: number;
-  review: string;
-  size?: string;
-  style?: {
-    color: string;
-    image: string;
-  };
-  fit?: string;
-  images: string[];
-  likes: Types.ObjectId[];
-}
+import {
+  ProductDocument,
+  Review,
+  SubProduct,
+} from "@/@types/admin/admin.products.interface";
 
-export interface ISubProduct extends Document {
-  _id: Types.ObjectId; // Ajout de l'identifiant unique
-  images: [{ public_url: string; url: string }];
-  description_images?: string[];
-  color: {
-    color: string;
-    image: string;
-  };
-  price: number;
-  sizes: {
-    size: string;
-    qty: number;
-  }[];
-  discount: number;
-  sold?: number;
-}
-
-export interface IProduct {
-  _id: string;
-  name: string;
-  description: string;
-  slug?: string;
-  category: string | Types.ObjectId;
-  subCategories: string[] | Types.ObjectId[];
-  details?: { name: string; value: string }[];
-  questions?: { question: string; answer: string }[];
-  reviews?: IReview[];
-  refundPolicy?: string;
-  rating?: number;
-  numReviews?: number;
-  shipping: number;
-  productType: string;
-  subProducts: ISubProduct[];
-  createdAt: Date;
-  featured: boolean;
-}
-
-const ReviewSchema: Schema<IReview> = new Schema<IReview>({
+const ReviewSchema: Schema<Review> = new Schema<Review>({
   reviewBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -80,7 +35,28 @@ const ReviewSchema: Schema<IReview> = new Schema<IReview>({
   likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-const SubProductSchema: Schema<ISubProduct> = new Schema<ISubProduct>({
+const colorSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  hexCode: {
+    type: String,
+    required: true,
+    match: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, // Validation pour le code hexadécimal
+    default: "#000000",
+  },
+  image: {
+    type: String,
+    default: "https://default_image_url.com/default_image.jpg",
+  },
+  // imageUrl: {
+  //   type: String, // URL de l'image représentant la couleur
+  //   required: false, // Pas forcément obligatoire, selon les besoins
+  // },
+});
+
+const SubProductSchema: Schema<SubProduct> = new Schema<SubProduct>({
   _id: {
     type: Schema.Types.ObjectId,
     auto: true, // Mongoose générera automatiquement cet ID
@@ -101,16 +77,18 @@ const SubProductSchema: Schema<ISubProduct> = new Schema<ISubProduct>({
     },
   ],
   description_images: [String],
-  color: {
-    color: {
-      type: String,
-      default: "#000000", // Valeur par défaut pour la couleur (noir)
-    },
-    image: {
-      type: String,
-      default: "https://default_image_url.com/default_image.jpg",
-    },
-  },
+  color: colorSchema,
+  // {
+  //   // color: {
+  //   //   type: String,
+  //   //   default: "#000000", // Valeur par défaut pour la couleur (noir)
+  //   // },
+
+  //   image: {
+  //     type: String,
+  //     default: "https://default_image_url.com/default_image.jpg",
+  //   },
+  // },
   price: {
     type: Number,
     default: 0,
@@ -130,8 +108,16 @@ const SubProductSchema: Schema<ISubProduct> = new Schema<ISubProduct>({
     default: 0,
   },
 });
+export enum Brand {
+  NikeSportswear = "Nike Sportswear",
+  Jordan = "Jordan",
+  NikeByYou = "Nike By You",
+  NikeLab = "NikeLab",
+  ACG = "ACG",
+  NikePro = "Nike Pro",
+}
 
-const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
+const ProductSchema = new Schema<ProductDocument>(
   {
     name: {
       type: String,
@@ -156,6 +142,11 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       enum: ["clothing", "shoes", "accessories"],
       required: [true, "Le type de produit est requis."],
     },
+    brand: {
+      type: String,
+      enum: Object.values(Brand),
+      required: [true, "Brand is required"],
+    },
     subCategories: [{ type: Schema.Types.ObjectId, ref: "subCategory" }],
     details: [{ name: String, value: String }],
     questions: [{ question: String, answer: String }],
@@ -179,6 +170,23 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
       required: true,
       default: 0,
     },
+    // adultGender: {
+    //   type: String,
+    //   enum: ["male", "female", "unisex"],
+    //   required: [true, "Adult gender is required"],
+    // },
+    // kids: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // kidsGender: {
+    //   type: String,
+    //   enum: ["boy", "girl", "unisex"],
+    //   required: function () {
+    //     return this.kids; // Gender for kids is required if kids is true
+    //   },
+    // },
+
     featured: {
       type: Boolean,
       default: false,
@@ -190,17 +198,8 @@ const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
   }
 );
 
-// // Méthode pour supprimer un sous-produit par son ID
-// ProductSchema.methods.removeSubProductById = async function (
-//   subProductId: Types.ObjectId
-// ) {
-//   this.subProducts = this.subProducts.filter(
-//     (subProduct: ISubProduct) => !subProduct._id.equals(subProductId)
-//   );
-//   await this.save();
-// };
+const ProductModel =
+  mongoose.models.Product ||
+  mongoose.model<ProductDocument>("Product", ProductSchema);
 
-const Product =
-  mongoose.models.Product || mongoose.model<IProduct>("Product", ProductSchema);
-
-export default Product;
+export default ProductModel;

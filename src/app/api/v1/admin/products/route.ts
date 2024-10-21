@@ -17,6 +17,8 @@ export const POST = auth(async (request: Request) => {
       subCategories,
       shipping,
       subProducts,
+      brand,
+      featured,
     } = await request.json();
     console.dir("🚀 ~ subProducts:SUB", subProducts.images);
 
@@ -26,6 +28,9 @@ export const POST = auth(async (request: Request) => {
       category,
       subCategories,
       productType,
+      brand,
+      featured,
+
       // details: req.body.details,
       // questions: req.body.questions,
       shipping: shipping || undefined,

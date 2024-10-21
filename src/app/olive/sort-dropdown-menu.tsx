@@ -1,15 +1,26 @@
 "use client";
 import { forwardRef } from "react";
+import ProductSorter from "./product-sorter";
 
 interface SortDropdownMenuProps {
   showDropdown: boolean;
   setShowDropdown: any;
-  handleFilterChange: any;
+  handleSorterChange: any;
   filters: any;
+  isLargeScreen: boolean;
 }
 
 const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
-  ({ showDropdown, setShowDropdown, handleFilterChange, filters }, ref) => {
+  (
+    {
+      showDropdown,
+      setShowDropdown,
+      handleSorterChange,
+      filters,
+      isLargeScreen,
+    },
+    ref
+  ) => {
     return (
       <div
         ref={ref}
@@ -18,17 +29,23 @@ const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
         id="sort-options"
         role="menu"
       >
-        <label
+        <ProductSorter
+          setShowDropdown={setShowDropdown}
+          handleSorterChange={handleSorterChange}
+          filters={filters}
+          isLargeScreen={isLargeScreen}
+        />
+        {/* <label
           className={`cursor-pointer text-end hover:opacity-55 transition-opacity ${filters.price === "featured" ? "text-gray-500" : "text-black-200"}`}
         >
           <input
             type="radio"
-            name="featured"
+            name="sortBy"
             value="featured"
             aria-label="featured"
             tabIndex={1}
             onChange={(e) => {
-              handleFilterChange(e, "price");
+              handleSorterChange(e, "price");
               setShowDropdown(false);
             }}
             checked={filters.price === "featured"}
@@ -41,12 +58,12 @@ const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
         >
           <input
             type="radio"
-            name="newest"
+            name="sortBy"
             value="newest"
             aria-label="Newest"
             tabIndex={1}
             onChange={(e) => {
-              handleFilterChange(e, "price");
+              handleSorterChange(e, "price");
               setShowDropdown(false);
             }}
             checked={filters.price === "newest"}
@@ -59,12 +76,12 @@ const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
         >
           <input
             type="radio"
-            name="price"
+            name="sortBy"
             value="desc"
             aria-label="Price: Low-High"
             tabIndex={1}
             onChange={(e) => {
-              handleFilterChange(e, "price");
+              handleSorterChange(e, "price");
               setShowDropdown(false);
             }}
             checked={filters.price === "desc"}
@@ -77,19 +94,19 @@ const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
         >
           <input
             type="radio"
-            name="price"
+            name="sortBy"
             value="asc"
             aria-label="Price: Low-High"
             tabIndex={1}
             onChange={(e) => {
-              handleFilterChange(e, "price");
+              handleSorterChange(e, "price");
               setShowDropdown(false);
             }}
             checked={filters.price === "asc"}
             hidden
           />
           Price: Low-High
-        </label>
+        </label> */}
       </div>
     );
   }

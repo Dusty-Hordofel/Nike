@@ -55,7 +55,7 @@ const CategoryFilter = ({ data, filters, handleFilterChange }: any) => {
       <ul
         className={`${show ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"} transition-all`}
       >
-        {data.categories.map((category: any) => (
+        {data?.categories.map((category: any) => (
           <li key={category._id} className="flex cursor-pointer">
             <input
               type="checkbox"

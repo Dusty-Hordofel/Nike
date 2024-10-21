@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// import { IProduct } from "@/models/product.model";
+// import { Product } from "@/models/product.model";
 import { useQuery } from "@tanstack/react-query";
 import ProductsList from "./products-list";
 import ProductFilterButton from "./product-filter-button";
@@ -8,7 +8,6 @@ import ProductFiltersSidebar from "./product-filter-sidebar";
 import { filterProducts } from "./filter-products";
 import { Button } from "@/components/ui/buttons/button/button";
 import ProductSorterButton from "./product-sorter-button";
-import ProductSorter from "./product-sorter";
 import { Product } from "@/@types/admin/admin.products.interface";
 
 const page = () => {
@@ -234,7 +233,6 @@ const page = () => {
                     setShowDropdown={setShowDropdown}
                     filters={filters}
                     handleSorterChange={handleSorterChange}
-                    isLargeScreen={isLargeScreen}
                   />
                 </div>
               </nav>
@@ -309,13 +307,153 @@ const page = () => {
                               <legend className="font-medium">
                                 <h3>Sort By</h3>
                               </legend>
-                              {/* Moloto */}
-                              <ProductSorter
-                                setShowDropdown={setShowDropdown}
-                                handleSorterChange={handleSorterChange}
-                                filters={filters}
-                                isLargeScreen={isLargeScreen}
-                              />
+                              {/* à verifier */}
+                              <span
+                                className="selection-set-support"
+                                data-testid="selection-set-support"
+                              ></span>
+                              <div className="nds-selection-children-container sort__content">
+                                <label
+                                  className={`cursor-pointer text-end hover:opacity-55 transition-opacity ${filters.price === "featured" ? "text-gray-500" : "text-black-200"}`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    value="featured"
+                                    aria-label="featured"
+                                    id="sortBy-radio-button-featured"
+                                    tabIndex={1}
+                                    onChange={(e) => {
+                                      handleFilterChange(e, "price");
+                                      setShowDropdown(false);
+                                    }}
+                                    checked={filters.price === "featured"}
+                                    // hidden
+                                    className="custom-radio"
+                                  />
+                                  Featured
+                                </label>
+                                <label
+                                  className={`cursor-pointer text-end hover:opacity-55 transition-opacity ${filters.price === "newest" ? "text-gray-500" : "text-black-200"}`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    value="newest"
+                                    aria-label="Newest"
+                                    tabIndex={1}
+                                    onChange={(e) => {
+                                      handleFilterChange(e, "price");
+                                      setShowDropdown(false);
+                                    }}
+                                    checked={filters.price === "newest"}
+                                    // hidden
+                                    className="custom-radio"
+                                  />
+                                  Newest
+                                </label>
+                                <label
+                                  className={`cursor-pointer text-end hover:opacity-55 transition-opacity ${filters.price === "desc" ? "text-gray-500" : "text-black-200"}`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    value="desc"
+                                    aria-label="Price: Low-High"
+                                    tabIndex={1}
+                                    onChange={(e) => {
+                                      handleFilterChange(e, "price");
+                                      setShowDropdown(false);
+                                    }}
+                                    checked={filters.price === "desc"}
+                                    // hidden
+                                    className="custom-radio"
+                                  />
+                                  Price: High-Low
+                                </label>
+                                <label
+                                  className={`cursor-pointer text-end hover:opacity-55 transition-opacity ${filters.price === "asc" ? "text-gray-500" : "text-black-200"}`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    value="asc"
+                                    aria-label="Price: Low-High"
+                                    tabIndex={1}
+                                    onChange={(e) => {
+                                      handleFilterChange(e, "price");
+                                      setShowDropdown(false);
+                                    }}
+                                    checked={filters.price === "asc"}
+                                    // hidden
+                                    className="custom-radio"
+                                  />
+                                  Price: Low-High
+                                </label>
+                                {/* <div className="flex mt-3 mb-2">
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    className="custom-radio"
+                                    id="sortBy-radio-button-featured"
+                                    value=""
+                                  />
+                                  <label
+                                    htmlFor="sortBy-radio-button-featured"
+                                    className="pl-[6px]"
+                                  >
+                                    Featured
+                                  </label>
+                                </div> */}
+                                {/* <div className="flex mt-3 mb-2">
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    className="custom-radio"
+                                    id="sortBy-radio-button-newest"
+                                    value="newest"
+                                  />
+
+                                  <label
+                                    htmlFor="sortBy-radio-button-newest"
+                                    className="pl-[6px]"
+                                  >
+                                    Newest
+                                  </label>
+                                </div> */}
+                                {/* <div className="flex mt-3 mb-2">
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    className="custom-radio"
+                                    id="sortBy-radio-button-priceDesc"
+                                    value="priceDesc"
+                                    // checked=""
+                                  />
+
+                                  <label
+                                    htmlFor="sortBy-radio-button-priceDesc"
+                                    className="pl-[6px]"
+                                  >
+                                    Price: High-Low
+                                  </label>
+                                </div> */}
+                                {/* <div className="flex mt-3 mb-2 relative items-start">
+                                  <input
+                                    type="radio"
+                                    name="sortBy"
+                                    className="custom-radio"
+                                    id="sortBy-radio-button-priceAsc"
+                                    value="priceAsc"
+                                  />
+                                  <label
+                                    // for="sortBy-radio-button-priceAsc"
+                                    className="pl-[6px]"
+                                  >
+                                    Price: Low-High
+                                  </label>
+                                </div> */}
+                              </div>
                             </fieldset>
                           </div>
                         </div>

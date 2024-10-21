@@ -62,10 +62,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    let categories = await Category.find().lean();
-    // let categories = await Category.find({
-    //   name: { $in: categoriesToFind },
-    // }).lean();
+    let categories = await Category.find({
+      name: { $in: categoriesToFind },
+    }).lean();
     console.log("🚀 ~ GET ~ categories:", categories);
 
     if (!categories) {

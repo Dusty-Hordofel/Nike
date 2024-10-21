@@ -1,4 +1,4 @@
-import { CategoryFormData } from "../../schemas/user/auth.schema";
+// import { CategoryFormData } from "../../schemas/user/auth.schema";
 import { RefObject } from "react";
 import {
   FieldErrors,
@@ -10,6 +10,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { Item } from "./admin.item.interface";
+import { CategoryFormData } from "@/schemas/products/category.schema";
 
 // ITEMS LIST AND CARD
 

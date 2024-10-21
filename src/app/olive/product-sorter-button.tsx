@@ -3,11 +3,12 @@ import { useEffect, useRef } from "react";
 import SortDropdownMenu from "./sort-dropdown-menu";
 import SortButton from "./sort-button";
 
-const ProductSortButton = ({
+const ProductSorterButton = ({
   showDropdown,
   setShowDropdown,
   filters,
-  handleFilterChange,
+  handleSorterChange,
+  isLargeScreen,
 }: any) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -44,10 +45,11 @@ const ProductSortButton = ({
         setShowDropdown={setShowDropdown}
         ref={dropdownRef}
         filters={filters}
-        handleFilterChange={handleFilterChange}
+        handleSorterChange={handleSorterChange}
+        isLargeScreen={isLargeScreen}
       />
     </>
   );
 };
 
-export default ProductSortButton;
+export default ProductSorterButton;

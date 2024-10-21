@@ -8,6 +8,7 @@ import { LoaderCircle } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useAdminDeleteProductVariant } from "@/hooks/admin/products/use-admin-products.hook";
 import { ProductFormData } from "../../../../../schemas/products/product.schema";
+import { colors } from "@/schemas/products/subproduct.schema";
 
 const PoductForm = ({
   setSelectedCategory,
@@ -40,6 +41,16 @@ const PoductForm = ({
   console.log("🚀 ~ deleteProductVariant:", deleteProductVariant);
   // await deleteProduct.mutateAsync({ id });
 
+  const brands = [
+    "Nike Sportswear",
+    "Jordan",
+    "Nike By You",
+    "NikeLab",
+    "ACG",
+    "Nike Pro",
+  ];
+  const watchedSubProducts = watch("subProducts");
+
   return (
     <>
       <div className="max-h-[500px] overflow-y-auto scrollbar-hidden space-y-4">
@@ -68,6 +79,29 @@ const PoductForm = ({
             {errors.productType && (
               <p className="px-4 pt-[6px] text-xs ">
                 {String(errors.productType.message)}
+              </p>
+            )}
+          </div>
+          {/* brand  */}
+          <div
+            className={`${errors.productType ? "text-red-600" : "text-black-200"}  flex flex-col`}
+          >
+            <label htmlFor="brand">Brand</label>
+            <select
+              {...register("brand", { required: "Brand is required" })}
+              className="px-3 py-2  h-10  rounded-md border w-full"
+            >
+              <option value="">Select a Brand</option>
+              {brands.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+            {/* Affichage des erreurs de type de produit */}
+            {errors.brand && (
+              <p className="px-4 pt-[6px] text-xs ">
+                {String(errors.brand.message)}
               </p>
             )}
           </div>
@@ -265,7 +299,46 @@ const PoductForm = ({
                     subProductIndex={index}
                     existingImages={entityToEdit?.subProducts[index]?.images}
                   />
+
+                  {/* selection de la couleur*/}
                   <div
+                    className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                  >
+                    <label>Color</label>
+                    <div className="flex  items-center justify-center gap-x-4">
+                      <select
+                        {...register(`subProducts.${index}.color`, {
+                          required: "Color de produit requis",
+                          // onChange: (e) =>
+                          //   setValue(
+                          //     `subProducts.${index}.color`,
+                          //     e.target.value
+                          //   ),
+                        })}
+                        className="px-3 py-2  h-10  rounded-md border w-full"
+                      >
+                        {colors.map((color) => (
+                          <option key={color.hexCode} value={color.hexCode}>
+                            {color.name}
+                          </option>
+                        ))}
+                      </select>
+                      <div
+                        style={{
+                          backgroundColor: `${watchedSubProducts[index].color}`,
+                        }}
+                        className="size-7 rounded-full shadow-md border"
+                      ></div>
+                    </div>
+
+                    {/* Affichage des erreurs de type de produit */}
+                    {errors.subProducts?.[index]?.color && (
+                      <p className="px-4 pt-[6px] text-xs ">
+                        {errors.subProducts[index]?.color?.message}
+                      </p>
+                    )}
+                  </div>
+                  {/* <div
                     className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
                   >
                     <div className="flex flex-col">
@@ -287,7 +360,7 @@ const PoductForm = ({
                         {errors.subProducts[index]?.color?.message}
                       </p>
                     )}
-                  </div>
+                  </div> */}
                   {/* Price */}
                   <div
                     className={`${errors.subProducts?.[index]?.price ? "text-red-600" : "text-black-200"}  flex flex-col`}
@@ -385,6 +458,18 @@ const PoductForm = ({
               {String(errors.subProducts.message)}
             </p>
           )}
+        </div>
+
+        {/* Featured */}
+        <div>
+          <label className="flex  w-max">
+            <input
+              {...register("featured")}
+              type="checkbox"
+              className="accent-black-200 size-5 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 self-center mr-[6px] cursor-pointer"
+            />
+            <span>Featured</span>
+          </label>
         </div>
       </div>
 

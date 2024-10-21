@@ -1,5 +1,3 @@
-import { IProduct } from "@/models/product.model";
-
 export interface Item {
   _id: string;
   name: string;

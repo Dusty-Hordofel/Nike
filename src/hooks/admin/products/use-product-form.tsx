@@ -7,13 +7,15 @@ import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
 } from "@/hooks/admin/products/use-admin-products.hook";
-import { ISubProduct } from "@/models/product.model";
+// import { SubProduct } from "@/models/product.model";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
 import {
   ProductFormData,
   ProductSchema,
 } from "@/schemas/products/product.schema";
 import { uploadImageToCloudinary } from "@/app/(private)/admin/products/components/upload-image-to-cloudinary";
+import { SubProduct } from "@/@types/admin/admin.products.interface";
+import { colors } from "@/schemas/products/subproduct.schema";
 
 const useProductForm = () => {
   const form = useForm<ProductFormData>({
@@ -55,10 +57,16 @@ const useProductForm = () => {
   };
 
   const handleProductSubmit = async (data: ProductFormData) => {
+    // const selectedColor = colors.find(color => color.hexCode === data.color);
+    console.log("🚀 ~ handleProductSubmit ~ data:TOTO", data);
     if (formMode === "create") {
       try {
         const updatedSubProducts = await Promise.all(
           data.subProducts.map(async (subProduct) => {
+            const selectedColor = colors.find(
+              (color) => color.hexCode === subProduct.color
+            );
+
             if (subProduct.images && subProduct.images.length > 0) {
               const uploadedImageUrls = await Promise.all(
                 [...subProduct.images].map(
@@ -69,7 +77,8 @@ const useProductForm = () => {
               return {
                 ...subProduct,
                 color: {
-                  color: subProduct.color,
+                  name: selectedColor?.name,
+                  hexCode: selectedColor?.hexCode,
                   image: uploadedImageUrls[0].url,
                 },
                 images: uploadedImageUrls,
@@ -94,6 +103,10 @@ const useProductForm = () => {
     } else if (formMode === "update" && entityToEdit) {
       const updatedSubProducts = await Promise.all(
         data.subProducts.map(async (subProduct, index) => {
+          const selectedColor = colors.find(
+            (color) => color.hexCode === subProduct.color
+          );
+
           if (isFileList(subProduct.images)) {
             const uploadedImageUrls = await Promise.all(
               Array.from(subProduct.images).map(
@@ -114,8 +127,13 @@ const useProductForm = () => {
 
             return {
               ...subProduct,
+              // color: {
+              //   color: subProduct.color,
+              //   image: uploadedImageUrls[0]?.url || "",
+              // },
               color: {
-                color: subProduct.color,
+                name: selectedColor?.name,
+                hexCode: selectedColor?.hexCode,
                 image: uploadedImageUrls[0]?.url || "",
               },
               images: uploadedImageUrls,
@@ -162,7 +180,7 @@ const useProductForm = () => {
         productType: entityToEdit.productType || "",
         shipping: entityToEdit.shipping || 0,
         subProducts:
-          entityToEdit.subProducts.map((subproduct: ISubProduct) => ({
+          entityToEdit.subProducts.map((subproduct: SubProduct) => ({
             ...subproduct,
             color: subproduct.color.color,
           })) || [],

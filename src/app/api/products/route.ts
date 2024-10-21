@@ -90,8 +90,22 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    const brands = await Product.find().distinct("brand");
+    if (!brands) {
+      return new NextResponse(JSON.stringify({ message: "No brands found" }), {
+        status: 400,
+      });
+    }
+
     return new NextResponse(
-      JSON.stringify({ products, categories, subCategories, sizes, colors }),
+      JSON.stringify({
+        products,
+        categories,
+        subCategories,
+        sizes,
+        colors,
+        brands,
+      }),
       { status: 200 }
     );
   } catch (error) {

@@ -1,7 +1,3 @@
-import {
-  CategoryFormData,
-  SubCategoryFormData,
-} from "../../schemas/user/auth.schema";
 import { RefObject } from "react";
 import {
   FieldErrors,
@@ -13,6 +9,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { Item } from "./admin.item.interface";
+import { SubCategoryFormData } from "@/schemas/products/subcategory.schema";
 
 // Fetch SubCategories
 

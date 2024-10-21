@@ -1,15 +1,6 @@
 import { z } from "zod";
 import { SubProductSchema } from "./subproduct.schema";
 
-const brands = [
-  "Nike Sportswear",
-  "Jordan",
-  "Nike By You",
-  "NikeLab",
-  "ACG",
-  "Nike Pro",
-];
-
 export const ProductSchema = z.object({
   name: z.string().min(1, "Le nom du produit est requis."),
   description: z.string().min(1, "La description est requise."),
@@ -28,14 +19,6 @@ export const ProductSchema = z.object({
     .min(1, { message: "Veuillez ajouter au moins un sous-produit." }), // S
   productType: z.enum(["clothing", "shoes", "accessories"], {
     message: "Le type de produit est requis.",
-  }),
-  featured: z.boolean().default(false),
-  brand: z.enum(brands as [string, ...string[]], {
-    message: "Brand is required.",
-    // required_error: "Brand is required",
-    // invalid_type_error: "Invalid brand selection",
-    required_error: "Brand is required",
-    invalid_type_error: "Invalid brand selection",
   }),
 });
 

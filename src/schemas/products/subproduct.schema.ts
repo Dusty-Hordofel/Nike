@@ -1,5 +1,20 @@
 import { z } from "zod";
 
+export const colors = [
+  { name: "Noir", hexCode: "#000000" },
+  { name: "Blanc", hexCode: "#FFFFFF" },
+  { name: "Bleu Marine", hexCode: "#000080" },
+  { name: "Rouge", hexCode: "#FF0000" },
+  { name: "Gris", hexCode: "#808080" },
+  { name: "Vert Militaire", hexCode: "#4B5320" },
+  { name: "Beige", hexCode: "#F5F5DC" },
+  { name: "Bleu Turquoise", hexCode: "#40E0D0" },
+  { name: "Marron", hexCode: "#8B4513" },
+  { name: "Rose", hexCode: "#FFC0CB" },
+];
+
+const hexCodes = colors.map((color) => color.hexCode);
+
 export const SubProductSchema = z.object({
   images: z.any().optional(),
   // .refine((files) => files && Array.from(files).length > 0, {
@@ -21,10 +36,13 @@ export const SubProductSchema = z.object({
   //     ),
   //   { message: "Only .jpg, .png, .webp and .gif formats are allowed." }
   // )
-  color: z
-    .string()
-    .min(1, "La couleur est obligatoire")
-    .regex(/^#[0-9A-F]{6}$/i, "La couleur doit être un code hexadécimal"),
+  // color: z
+  //   .string()
+  //   .min(1, "La couleur est obligatoire")
+  //   .regex(/^#[0-9A-F]{6}$/i, "La couleur doit être un code hexadécimal"),
+  color: z.string().refine((value) => hexCodes.includes(value), {
+    message: "Veuillez sélectionner une couleur valide",
+  }),
   price: z
     .number()
     .min(0, "Le prix ne peut pas être inférieure à 0")
