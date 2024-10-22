@@ -19,7 +19,9 @@ export interface SubProduct {
   images: [{ public_url: string; url: string }];
   description_images?: string[];
   color: {
-    color: string;
+    _id: string;
+    name: string;
+    hexCode: string;
     image: string;
   };
   price: number;

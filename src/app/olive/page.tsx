@@ -31,6 +31,8 @@ const page = () => {
     price: "",
   });
 
+  console.log("🚀 ~ page ~ filters:FILTERS", filters);
+
   const { data, isLoading, isError } =
     useQuery({
       queryKey: ["products"],
@@ -1588,7 +1590,8 @@ const page = () => {
         <ProductFiltersSidebar
           data={data}
           filters={filters}
-          handleSorterChange={handleSorterChange}
+          // handleSorterChange={handleSorterChange}
+          handleFilterChange={handleFilterChange}
           showSidebar={showSidebar}
           isLargeScreen={isLargeScreen}
         />

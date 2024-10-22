@@ -35,7 +35,7 @@ const ReviewSchema: Schema<Review> = new Schema<Review>({
   likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-const colorSchema = new mongoose.Schema({
+const subProductColorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -77,7 +77,7 @@ const SubProductSchema: Schema<SubProduct> = new Schema<SubProduct>({
     },
   ],
   description_images: [String],
-  color: colorSchema,
+  color: subProductColorSchema,
   // {
   //   // color: {
   //   //   type: String,

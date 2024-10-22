@@ -1183,11 +1183,11 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 64. gestion des filtres(2)
 
-### 65.
+### 65. gestion des filtre et du schema de produits(1)
 
-### 66.
+### 66. Gestion du filtrage par couleur
 
-### 67.
+### 67.Remplacement de redux toolkit par le context et le Reducer
 
 ### 68.
 

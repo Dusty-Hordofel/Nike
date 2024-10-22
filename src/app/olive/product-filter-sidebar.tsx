@@ -1,4 +1,5 @@
 "use client";
+import { Product } from "@/@types/admin/admin.products.interface";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
@@ -8,7 +9,13 @@ const ProductFilterSidebar = ({
   data,
   filters,
   handleFilterChange,
-}: any) => {
+}: {
+  data: any;
+  isLargeScreen: boolean;
+  showSidebar: boolean;
+  filters: any;
+  handleFilterChange: any;
+}) => {
   return (
     <aside
       className={`h-screen overflow-y-auto bg-blue-200 ${
@@ -28,7 +35,7 @@ const ProductFilterSidebar = ({
         handleFilterChange={handleFilterChange}
       />
       <ColorsFilter
-        data={data}
+        colors={data.colors}
         filters={filters}
         handleFilterChange={handleFilterChange}
       />
@@ -119,7 +126,19 @@ const SizesFilter = ({ data, filters, handleFilterChange }: any) => {
     </div>
   );
 };
-const ColorsFilter = ({ data, filters, handleFilterChange }: any) => {
+
+interface ColorsProps {
+  filters: any;
+  handleFilterChange: any;
+  colors: {
+    _id: string;
+    name: string;
+    hexCode: string;
+    image: string;
+  }[];
+}
+const ColorsFilter = ({ colors, filters, handleFilterChange }: ColorsProps) => {
+  console.log("🚀 ~ ColorsFilter ~ data:COLOR", colors);
   const [show, setShow] = useState(false);
 
   return (
@@ -134,21 +153,29 @@ const ColorsFilter = ({ data, filters, handleFilterChange }: any) => {
       </h3>
 
       <ul
-        className={`${show ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"} transition-all cursor-pointer`}
+        className={`${show ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"} transition-all cursor-pointer flex gap-x-4 flex-wrap`}
       >
-        {data.colors.map((color: string) => (
-          <li key={color} className="cursor-pointer">
-            <input
-              type="checkbox"
-              name="filter"
-              id={color}
-              checked={filters.color.includes(color)}
-              value={color}
-              onChange={(e) => handleFilterChange(e, "color")}
-              className="accent-black-200 size-5 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 self-center mr-[6px] cursor-pointer"
-            />
-            <label htmlFor={color} className="cursor-pointer hover:opacity-50">
-              {color}
+        {colors?.map(({ _id, name, hexCode }) => (
+          <li key={_id} className="cursor-pointer text-center">
+            {/* htmlFor={`${name}-${_id}`}  */}
+            <label className="cursor-pointer group ">
+              <input
+                type="checkbox"
+                name="filter"
+                // id={`${name}-${_id}`}
+                checked={filters.color.includes(hexCode)}
+                value={hexCode}
+                onChange={(e) => handleFilterChange(e, "color")}
+                className="custom-radio "
+                // absolute
+                style={{ width: "40px", height: "40px" }}
+                hidden
+              />
+              <span
+                className="size-10 block rounded-full relative"
+                style={{ backgroundColor: hexCode }}
+              ></span>
+              <span className="text-xs group-hover:opacity-50">{name}</span>
             </label>
           </li>
         ))}

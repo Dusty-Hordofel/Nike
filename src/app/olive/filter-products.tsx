@@ -37,7 +37,7 @@ export function filterProducts(
   if (filters.color.length) {
     filtered = filtered.map((product) => {
       const filteredSubProducts = product.subProducts.filter((subProduct) =>
-        filters.color.includes(subProduct.color.color)
+        filters.color.includes(subProduct.color.hexCode)
       );
       return { ...product, subProducts: filteredSubProducts };
     });

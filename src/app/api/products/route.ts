@@ -81,7 +81,27 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const colors = await Product.find().distinct("subProducts.color.color");
+    // const colors = await Product.find().distinct("subProducts.color.color");
+    // const colors = await Product.find().distinct("subProducts.color");
+    const colors = await Product.aggregate([
+      { $unwind: "$subProducts" }, // Détache chaque sous-produit dans le pipeline
+      { $unwind: "$subProducts.color" }, // Détache chaque couleur dans les sous-produits
+      {
+        $group: {
+          _id: {
+            name: "$subProducts.color.name",
+            hexCode: "$subProducts.color.hexCode",
+          },
+          color: { $first: "$subProducts.color" },
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: "$color",
+        },
+      },
+    ]);
+
     console.log("🚀 ~ GET ~ colors:COCO", colors);
 
     if (!colors) {
