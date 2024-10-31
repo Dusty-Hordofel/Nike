@@ -9,7 +9,6 @@ import ProductCardDescription from "./product-card-description";
 import { Product } from "@/@types/admin/admin.products.interface";
 
 const ProductCard = ({ product }: { product: Product }) => {
-  // console.log("🚀 ~ ProductCard ~ product:FILTERCARD", product);
   const { name, subProducts, slug } = product;
 
   const [active, setActive] = useState(0);
@@ -54,12 +53,12 @@ const ProductCard = ({ product }: { product: Product }) => {
                 setActive={setActive}
               />
 
-              <ProductCardDescription
+              {/* <ProductCardDescription
                 name={name}
                 productColors={productColors}
                 bestSeller={bestSeller}
                 newRelease={newRelease}
-              />
+              /> */}
               <ProductCardPrice subProducts={subProducts} active={active} />
             </div>
           </Link>

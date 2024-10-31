@@ -39,6 +39,7 @@ export function filterProducts(
       const filteredSubProducts = product.subProducts.filter((subProduct) =>
         filters.color.includes(subProduct.color.hexCode)
       );
+
       return { ...product, subProducts: filteredSubProducts };
     });
   }

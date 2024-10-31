@@ -13,7 +13,6 @@ import { Product } from "@/@types/admin/admin.products.interface";
 
 const page = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-
   const [isFiltering, setIsFiltering] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
@@ -32,7 +31,7 @@ const page = () => {
     price: "",
   });
 
-  // console.log("🚀 ~ page ~ filters:FILTERS", filters);
+  console.log("🚀 ~ page ~ filters:FILTERS", filters);
 
   const { data, isLoading, isError } =
     useQuery({
@@ -66,12 +65,95 @@ const page = () => {
 
       setTimeout(() => {
         const filtered = filterProducts(data.products, filters);
-        console.log("🚀 ~ setTimeout ~ filtered:TALA", filtered);
         setFilteredProducts(filtered);
         setIsFiltering(false);
       }, 500);
     }
   }, [data, filters]);
+
+  //   useEffect(() => {
+  //     if (data && data.products) {
+  //       setIsFiltering(true);
+
+  //       setTimeout(() => {
+  //         let filtered: IProduct[] = data.products;
+
+  //         if (filters.category.length) {
+  //           filtered = filtered.filter((product) =>
+  //             filters.category.includes(String(product.category))
+  //           );
+  //         }
+
+  //         if (filters.size.length) {
+  //           filtered = filtered
+  //             .map((product) => {
+  //               const filteredSubProducts = product.subProducts.filter(
+  //                 (subProduct) =>
+  //                   subProduct.sizes.some((subProductSize) =>
+  //                     filters.size.includes(subProductSize.size)
+  //                   )
+  //               );
+
+  //               return {
+  //                 ...product,
+  //                 subProducts: filteredSubProducts,
+  //               };
+  //             })
+  //             .filter((product) => product.subProducts.length > 0);
+  //         }
+
+  //         if (filters.color.length) {
+  //           filtered = filtered.map((product) => {
+  //             const filteredSubProducts = product.subProducts.filter(
+  //               (subProduct) => filters.color.includes(subProduct.color.color)
+  //             );
+
+  //             return {
+  //               ...product,
+  //               subProducts: filteredSubProducts,
+  //             };
+  //           });
+  //         }
+
+  //         if (filters.price) {
+  //           filtered = filtered.sort((a, b) => {
+  //             const minPriceA = Math.min(
+  //               ...a.subProducts.map((subProduct) => subProduct.price)
+  //             );
+
+  //             const minPriceB = Math.min(
+  //               ...b.subProducts.map((subProduct) => subProduct.price)
+  //             );
+
+  //             if (filters.price === "asc") {
+  //               return minPriceA - minPriceB;
+  //             } else if (filters.price === "desc") {
+  //               return minPriceB - minPriceA;
+  //             } else if (filters.price === "newest") {
+  //               const dateA =
+  //                 typeof a.createdAt === "string"
+  //                   ? new Date(a.createdAt)
+  //                   : a.createdAt;
+  //               const dateB =
+  //                 typeof b.createdAt === "string"
+  //                   ? new Date(b.createdAt)
+  //                   : b.createdAt;
+
+  //               return dateB.getTime() - dateA.getTime();
+  //             } else if (filters.price === "featured") {
+  //               return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+  //             } else {
+  //               return 0;
+  //             }
+  //           });
+  //           console.log("🚀 ~ filtered=filtered.sort ~ filtered:BOBO", filtered);
+  //         }
+
+  //         setFilteredProducts(filtered);
+  //         setIsFiltering(false);
+  //       }, 500);
+  //     }
+  //   }, [data, filters]);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error...</p>;
@@ -127,7 +209,6 @@ const page = () => {
   //   }
   // };
 
-  console.log("🚀 ~ page ~ filteredProducts:COCO", filteredProducts);
   return (
     <div
       className={`transition-opacity duration-500 ${isFiltering ? "opacity-50" : "opacity-100"} flex flex-col`}

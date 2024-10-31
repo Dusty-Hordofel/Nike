@@ -1,14 +1,17 @@
+import { SubProduct } from "@/@types/admin/admin.products.interface";
 import { cn } from "@/lib/utils";
-import { ISubProduct } from "@/models/product.model";
+// import { ISubProduct } from "@/models/product.model";
 // import { SubProduct } from "@/types/types";
 import Image from "next/image";
 
 interface CardColorProps {
   productColors: {
+    _id: string;
+    name: string;
+    hexCode: string;
     image: string;
-    color: string;
   }[];
-  subProducts: ISubProduct[];
+  subProducts: SubProduct[];
   setImages: React.Dispatch<
     React.SetStateAction<
       [
@@ -29,13 +32,13 @@ const ProductCardColor = ({
   setActive,
   // active
 }: CardColorProps) => {
-  console.log("🚀 ~ subProducts:SUBPRO", subProducts);
+  // console.log("🚀 ~ subProducts:SUBPRO", subProducts);
 
   return (
     <div className=" gap-2 pb-[10px]  group-hover:flex hidden">
       {productColors
-        ? productColors.map(({ image, color }, index) => {
-            console.log(`🚀 INDEX ${index}`, subProducts[index]);
+        ? productColors.map(({ image, hexCode }, index) => {
+            // console.log(`🚀 INDEX ${index}`, subProducts[index]);
             return image ? (
               <picture key={index}>
                 <img
@@ -54,7 +57,7 @@ const ProductCardColor = ({
             ) : (
               <span
                 key={index}
-                style={{ backgroundColor: `${color}` }}
+                style={{ backgroundColor: `${hexCode}` }}
                 onMouseOver={() => {
                   setImages(subProducts[index].images);
                   setActive(index);

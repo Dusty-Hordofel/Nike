@@ -138,7 +138,7 @@ interface ColorsProps {
   }[];
 }
 const ColorsFilter = ({ colors, filters, handleFilterChange }: ColorsProps) => {
-  console.log("🚀 ~ ColorsFilter ~ data:COLOR", colors);
+  // console.log("🚀 ~ ColorsFilter ~ data:COLOR", colors);
   const [show, setShow] = useState(false);
 
   return (

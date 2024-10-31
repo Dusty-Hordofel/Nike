@@ -7,7 +7,6 @@ import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
 } from "@/hooks/admin/products/use-admin-products.hook";
-// import { SubProduct } from "@/models/product.model";
 import { deleteImageFromCloudinary } from "@/services/admin/images.service";
 import {
   ProductFormData,
@@ -172,17 +171,19 @@ const useProductForm = () => {
 
   useEffect(() => {
     if (entityToEdit) {
+      console.log("🚀 ~ useEffect ~ entityToEditENTITY", entityToEdit);
       form.reset({
         name: entityToEdit.name || "",
         description: entityToEdit.description || "",
         category: entityToEdit.category || "",
+        brand: entityToEdit.brand || "",
         subCategories: entityToEdit.subCategories || [],
         productType: entityToEdit.productType || "",
         shipping: entityToEdit.shipping || 0,
         subProducts:
           entityToEdit.subProducts.map((subproduct: SubProduct) => ({
             ...subproduct,
-            color: subproduct.color.color,
+            color: subproduct.color.hexCode,
           })) || [],
       });
     }
