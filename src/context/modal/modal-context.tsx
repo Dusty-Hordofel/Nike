@@ -1,4 +1,5 @@
-import { IProduct } from "@/models/product.model";
+// import { IProduct } from "@/models/product.model";
+import { Product } from "@/@types/admin/admin.products.interface";
 import React, {
   createContext,
   useState,
@@ -59,7 +60,7 @@ interface IItem {
   parent?: { _id: string; name: string };
 }
 
-export type EntityToEdit = IItem | IProduct;
+export type EntityToEdit = IItem | Product;
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [entityToEdit, setEntityToEdit] = useState<any | null>(null);

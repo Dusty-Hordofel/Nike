@@ -1,5 +1,4 @@
 "use client";
-import { Product } from "@/@types/admin/admin.products.interface";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
@@ -9,21 +8,28 @@ const ProductFilterSidebar = ({
   data,
   filters,
   handleFilterChange,
+  handleSubCategoryChange,
 }: {
   data: any;
   isLargeScreen: boolean;
   showSidebar: boolean;
   filters: any;
   handleFilterChange: any;
+  handleSubCategoryChange: any;
 }) => {
   return (
     <aside
       className={`h-screen overflow-y-auto bg-blue-200 ${
         showSidebar && isLargeScreen
-          ? "w-[260px] pl-12 pb-4 translate-x-0"
+          ? "max-w-[240px] w-full pl-12 pb-4 translate-x-0"
           : "w-0 p-0 -translate-x-full "
-      }  transform transition-all duration-200 `}
+      }  transform transition-all duration-200 custom-scrollbar sticky top-[56px] z-10`}
     >
+      <SubCategoryFilter
+        data={data}
+        filters={filters}
+        handleSubCategoryChange={handleSubCategoryChange}
+      />
       <CategoryFilter
         data={data}
         filters={filters}
@@ -34,6 +40,13 @@ const ProductFilterSidebar = ({
         filters={filters}
         handleFilterChange={handleFilterChange}
       />
+
+      <BrandFilter
+        data={data}
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+      />
+
       <ColorsFilter
         colors={data.colors}
         filters={filters}
@@ -78,6 +91,97 @@ const CategoryFilter = ({ data, filters, handleFilterChange }: any) => {
               htmlFor={category._id}
             >
               {category.name}
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const SubCategoryFilter = ({ data, filters, handleSubCategoryChange }: any) => {
+  // console.log("🚀 ~ data:SUBFILTER", data);
+  // const [show, setShow] = useState(false);
+  return (
+    <div className={`border-b border-gray-300 `}>
+      {/* <h3 className="font-medium py-3  flex justify-between">
+        SubCategories
+        <span onClick={() => setShow(!show)}>
+          <ChevronDown
+            className={`transform  transition-transform ${show ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+          />
+        </span>
+      </h3> */}
+
+      <ul
+        className="pb-5"
+        // max-h-auto
+        // className={`${show ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"} transition-all`}
+      >
+        {data?.subCategories.map((subCategory: any) => {
+          return (
+            <li
+              key={subCategory._id}
+              className={`flex pb-[10px] font-medium ${filters.subcategory === subCategory._id && "underline underline-offset-4"}`}
+            >
+              <input
+                type="radio"
+                name="subcategory"
+                id={subCategory._id}
+                value={subCategory._id}
+                checked={filters.subcategory === subCategory._id}
+                onChange={handleSubCategoryChange}
+                className="accent-black-200 size-5 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 self-center mr-[6px]"
+                hidden
+              />
+              <label
+                className="cursor-pointer hover:opacity-50"
+                htmlFor={subCategory._id}
+              >
+                {subCategory.name}
+              </label>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+const BrandFilter = ({ data, filters, handleFilterChange }: any) => {
+  console.log("🚀 ~ BrandFilter ~ data:BRANDS", data.brands);
+  const [show, setShow] = useState(false);
+
+  return (
+    <div className={`border-b border-gray-300 `}>
+      <h3 className="font-medium py-3 flex justify-between">
+        Brands
+        <span onClick={() => setShow(!show)}>
+          <ChevronDown
+            className={`transform  transition-transform ${show ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+          />
+        </span>
+      </h3>
+
+      <ul
+        className={`${show ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"} transition-all cursor-pointer`}
+      >
+        {data.brands.map((brand: any, index: number) => (
+          <li key={`${brand}${index}`}>
+            <input
+              type="checkbox"
+              name="brand"
+              id={`${brand}${index}`}
+              checked={filters.brand.includes(brand)}
+              value={brand}
+              onChange={(e) => handleFilterChange(e, "brand")}
+              className="accent-black-200 size-5 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 self-center mr-[6px] cursor-pointer"
+            />
+            <label
+              htmlFor={`${brand}${index}`}
+              className="cursor-pointer hover:opacity-50"
+            >
+              {brand}
             </label>
           </li>
         ))}

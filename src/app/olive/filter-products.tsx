@@ -8,20 +8,47 @@ export function filterProducts(
     size: string[];
     color: string[];
     price: string;
+    subcategory: string;
+    brand: string[];
   }
-): Product[] {
-  let filtered = products;
+): { filteredProducts: Product[]; isFiltering: boolean } {
+  let filteredProducts = products;
+  let isFiltering = false;
+
+  if (
+    filters.category.length > 0 ||
+    filters.size.length > 0 ||
+    filters.color.length > 0 ||
+    filters.subcategory.length > 0 ||
+    filters.brand.length > 0 ||
+    filters.price
+  ) {
+    isFiltering = true;
+  }
 
   // Filtrer par catégorie
   if (filters.category.length) {
-    filtered = filtered.filter((product) =>
+    filteredProducts = filteredProducts.filter((product) =>
       filters.category.includes(String(product.category))
+    );
+  }
+
+  // filter by subcategory
+  if (filters.subcategory.length) {
+    filteredProducts = filteredProducts.filter((product) =>
+      product.subCategories.includes(filters.subcategory)
+    );
+  }
+  // // filter by brand
+  if (filters.brand.length) {
+    filteredProducts = filteredProducts.filter((product) =>
+      filters.brand.includes(product.brand)
     );
   }
 
   // Filtrer par taille
   if (filters.size.length) {
-    filtered = filtered
+    filteredProducts = filteredProducts
       .map((product) => {
         const filteredSubProducts = product.subProducts.filter((subProduct) =>
           subProduct.sizes.some((subProductSize) =>
@@ -35,9 +62,13 @@ export function filterProducts(
 
   // Filtrer par couleur
   if (filters.color.length) {
-    filtered = filtered.map((product) => {
+    filteredProducts = filteredProducts.map((product) => {
       const filteredSubProducts = product.subProducts.filter((subProduct) =>
         filters.color.includes(subProduct.color.hexCode)
+      );
+      console.log(
+        "🚀 ~ filteredProducts=filteredProducts.map ~ filteredSubProducts:TALA",
+        filteredSubProducts
       );
 
       return { ...product, subProducts: filteredSubProducts };
@@ -46,7 +77,7 @@ export function filterProducts(
 
   // Trier par prix, nouveauté ou featured
   if (filters.price) {
-    filtered = filtered.sort((a, b) => {
+    filteredProducts = filteredProducts.sort((a, b) => {
       const minPriceA = Math.min(
         ...a.subProducts.map((subProduct) => subProduct.price)
       );
@@ -72,5 +103,5 @@ export function filterProducts(
     });
   }
 
-  return filtered;
+  return { filteredProducts, isFiltering };
 }

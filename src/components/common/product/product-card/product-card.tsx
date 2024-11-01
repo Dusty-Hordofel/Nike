@@ -47,12 +47,14 @@ const ProductCard = ({ product }: { product: Product }) => {
           >
             <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px] bg-success">
-              <ProductCardColor
-                productColors={productColors}
-                subProducts={subProducts}
-                setImages={setImages}
-                setActive={setActive}
-              />
+              {productColors.length > 1 && (
+                <ProductCardColor
+                  productColors={productColors}
+                  subProducts={subProducts}
+                  setImages={setImages}
+                  setActive={setActive}
+                />
+              )}
 
               <ProductCardDescription
                 name={name}

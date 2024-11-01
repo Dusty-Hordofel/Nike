@@ -1,8 +1,9 @@
-import { ISubProduct } from "@/models/product.model";
+// import { SubProduct } from "@/models/product.model";
+import { SubProduct } from "@/@types/admin/admin.products.interface";
 import React from "react";
 
 interface ProductCardPriceProps {
-  subProducts: ISubProduct[];
+  subProducts: SubProduct[];
   active: number;
 }
 

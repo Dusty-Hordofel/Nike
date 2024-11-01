@@ -1,4 +1,4 @@
-import { ISubProduct } from "@/models/product.model";
+import { SubProduct } from "./admin/admin.products.interface";
 
 export interface TrendCrossProps {
   title: string;
@@ -31,7 +31,7 @@ export interface userEmail {
 
 export interface CardContentProps {
   prices: number[];
-  subProducts: ISubProduct[];
+  subProducts: SubProduct[];
   active: number;
   name: string;
   category?: string;

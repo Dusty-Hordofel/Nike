@@ -13,23 +13,47 @@ import { Product } from "@/@types/admin/admin.products.interface";
 
 const page = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [showFilterSidebar, setShowFilterSidebar] = useState(false);
+  const [filterOpacity, setFilterOpacity] = useState(false);
 
   const [isFiltering, setIsFiltering] = useState(false);
+  console.log("🚀 ~ page ~ isFiltering:TALAFILTRE", isFiltering);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   // const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 960);
-
+  type subcatecory =
+    | "Lifestyle"
+    | "Jordan"
+    | "Running"
+    | "Football"
+    | "Basketball"
+    | "Training et fitness"
+    | "Skateboard"
+    | "Retro Running"
+    | "Nike SB"
+    | "Sandals & Slides"
+    | "Nike by You"
+    | "Air Force 1"
+    | "Hoodies & Sweatshirts"
+    | "MALONGAO"
+    | "MOLOASS"
+    | "";
   const [filters, setFilters] = useState<{
     category: string[];
     color: string[];
     size: string[];
     price: "featured" | "asc" | "desc" | "newest" | "";
+    brand: string[];
+    subcategory: string;
+    // subcategory: subcatecory;
   }>({
     category: [],
     color: [],
     size: [],
     price: "",
+    subcategory: "",
+    brand: [],
   });
 
   // console.log("🚀 ~ page ~ filters:FILTERS", filters);
@@ -62,13 +86,17 @@ const page = () => {
 
   useEffect(() => {
     if (data && data.products) {
-      setIsFiltering(true);
+      setFilterOpacity(true);
 
       setTimeout(() => {
-        const filtered = filterProducts(data.products, filters);
-        console.log("🚀 ~ setTimeout ~ filtered:TALA", filtered);
-        setFilteredProducts(filtered);
-        setIsFiltering(false);
+        const { filteredProducts, isFiltering } = filterProducts(
+          data.products,
+          filters
+        );
+        console.log("🚀 ~ setTimeout ~ filtered:TALA", filteredProducts);
+        setFilteredProducts(filteredProducts);
+        setIsFiltering(isFiltering);
+        setFilterOpacity(false);
       }, 500);
     }
   }, [data, filters]);
@@ -90,6 +118,23 @@ const page = () => {
     }
   };
 
+  const handleSubCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters((prev) => ({
+      ...prev,
+      subcategory: e.target.value,
+      // subcategory: e.target.value as subcatecory,
+    }));
+  };
+  const handleBrandChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters((prev) => ({
+      ...prev,
+      b: e.target.value,
+      // subcategory: e.target.value as subcatecory,
+    }));
+  };
+
+  // const handleSubc
+
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     filterKey: FilterKey
@@ -97,7 +142,8 @@ const page = () => {
     if (
       filterKey === "category" ||
       filterKey === "color" ||
-      filterKey === "size"
+      filterKey === "size" ||
+      filterKey === "brand"
     ) {
       setFilters((prev) => ({
         ...prev,
@@ -130,38 +176,33 @@ const page = () => {
   console.log("🚀 ~ page ~ filteredProducts:COCO", filteredProducts);
   return (
     <div
-      className={`transition-opacity duration-500 ${isFiltering ? "opacity-50" : "opacity-100"} flex flex-col`}
+      className={`transition-opacity duration-500 ${filterOpacity ? "opacity-50" : "opacity-100"} flex flex-col`}
     >
-      <section className="">
-        <div
-          className="header-position css-iqr4dm"
-          style={{ top: "0px", transform: "translateY(0px)" }}
-        >
-          <header className="px-12 pb-4 bg-warning">
-            <div className="flex flex-col min-[960px]:flex-row justify-between pt-2">
-              <h1 className="font-medium text-2xl" id="Nike-Tech-Clothing">
-                Nike Tech Clothing
-                <span className="wall-header__item_count">(137)</span>
-              </h1>
-              <nav className="flex" aria-label="Sort By">
-                <ProductFilterButton
-                  setShowSidebar={setShowSidebar}
+      <section className="sticky top-0 z-20">
+        <header className="px-12 pb-4 bg-warning ">
+          <div className="flex flex-col min-[960px]:flex-row justify-between pt-2">
+            <h1 className="font-medium text-2xl" id="Nike-Tech-Clothing">
+              Nike Tech Clothing
+              <span className="wall-header__item_count">(137)</span>
+            </h1>
+            <nav className="flex" aria-label="Sort By">
+              <ProductFilterButton
+                setShowSidebar={setShowSidebar}
+                isLargeScreen={isLargeScreen}
+                showSidebar={showSidebar}
+              />
+              <div className="hidden relative min-[960px]:block">
+                <ProductSorterButton
+                  showDropdown={showDropdown}
+                  setShowDropdown={setShowDropdown}
+                  filters={filters}
+                  handleSorterChange={handleSorterChange}
                   isLargeScreen={isLargeScreen}
-                  showSidebar={showSidebar}
                 />
-                <div className="hidden relative min-[960px]:block">
-                  <ProductSorterButton
-                    showDropdown={showDropdown}
-                    setShowDropdown={setShowDropdown}
-                    filters={filters}
-                    handleSorterChange={handleSorterChange}
-                    isLargeScreen={isLargeScreen}
-                  />
-                </div>
-              </nav>
-            </div>
-          </header>
-        </div>
+              </div>
+            </nav>
+          </div>
+        </header>
       </section>
 
       {showSidebar && (
@@ -188,10 +229,7 @@ const page = () => {
                 role="heading"
                 // aria-level="1"
               ></p>
-              <div
-                className="draggable react-draggable"
-                // style="transform: translate(0px, 0px)"
-              >
+              <div className="draggable react-draggable">
                 <div className="mobile-results-nav css-2civox">
                   <div className="mobile-results-nav__scroll-wrapper">
                     <nav className="flex justify-end relative">
@@ -230,7 +268,6 @@ const page = () => {
                               <legend className="font-medium">
                                 <h3>Sort By</h3>
                               </legend>
-                              {/* Moloto */}
                               <ProductSorter
                                 setShowDropdown={setShowDropdown}
                                 handleSorterChange={handleSorterChange}
@@ -372,46 +409,7 @@ const page = () => {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="filter-group css-3d22fv border-b border-gray-500 mt-5">
-                            <div
-                              className="filter-group__label headline-5"
-                              role="heading"
-                            >
-                              <div className="trigger-content">
-                                <div className="font-medium">
-                                  Sale &amp; Offers&nbsp;
-                                  <div className="filter-group__count is--hidden">
-                                    (0)
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="filter-group__content">
-                              <div
-                                aria-label="Sale &amp; Offers"
-                                className="filter-group__items-group"
-                                id="wallNavFG2"
-                                role="group"
-                              >
-                                <a
-                                  aria-label=""
-                                  className="is--link filter-item is--default css-1v0i2t4"
-                                  href="https://www.nike.com/w/sale-tops-t-shirts-3yaepz9om13"
-                                  aria-checked="false"
-                                  role="checkbox"
-                                  data-group-ndx="2"
-                                  data-group-type="filter"
-                                  data-is-color="false"
-                                  data-ndx={0}
-                                >
-                                  <div className="pseudo-checkbox css-1bppeb5"></div>
-                                  <span className="filter-item__item-label">
-                                    Sale
-                                  </span>
-                                </a>
-                              </div>
-                            </div>
-                          </div> */}
+
                           <div className="filter-group css-3d22fv border-b border-gray-500 mt-5">
                             <div
                               // aria-level="5"
@@ -1511,6 +1509,7 @@ const page = () => {
           filters={filters}
           // handleSorterChange={handleSorterChange}
           handleFilterChange={handleFilterChange}
+          handleSubCategoryChange={handleSubCategoryChange}
           showSidebar={showSidebar}
           isLargeScreen={isLargeScreen}
         />

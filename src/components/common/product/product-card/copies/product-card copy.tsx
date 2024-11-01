@@ -2,10 +2,10 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 // import { Product } from "@/models/product.model";
-import ProductCardImage from "./product-card-image";
-import ProductCardPrice from "./product-card-price";
-import ProductCardColor from "./product-card-color";
-import ProductCardDescription from "./product-card-description";
+import ProductCardImage from "../product-card-image";
+import ProductCardPrice from "../product-card-price";
+import ProductCardColor from "../product-card-color";
+import ProductCardDescription from "../product-card-description";
 import { Product } from "@/@types/admin/admin.products.interface";
 
 const ProductCard = ({ product }: { product: Product }) => {
@@ -53,12 +53,12 @@ const ProductCard = ({ product }: { product: Product }) => {
                 setActive={setActive}
               />
 
-              {/* <ProductCardDescription
+              <ProductCardDescription
                 name={name}
                 productColors={productColors}
                 bestSeller={bestSeller}
                 newRelease={newRelease}
-              /> */}
+              />
               <ProductCardPrice subProducts={subProducts} active={active} />
             </div>
           </Link>

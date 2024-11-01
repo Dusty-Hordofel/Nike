@@ -6,34 +6,34 @@ import SubCategory from "@/models/subcategory.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  // const { searchParams } = new URL(request.url);
 
-  const search = searchParams.get("search") || ""; // Valeur de 'search'
-  const categories =
-    searchParams.get("category")?.split(",").filter(Boolean) || []; // Tableau de catégories
-  const colors = searchParams.get("color")?.split(",").filter(Boolean) || [];
-  const sizes = searchParams.get("size")?.split(",").filter(Boolean) || [];
+  // const search = searchParams.get("search") || ""; // Valeur de 'search'
+  // const categories =
+  //   searchParams.get("category")?.split(",").filter(Boolean) || []; // Tableau de catégories
+  // // const colors = searchParams.get("color")?.split(",").filter(Boolean) || [];
+  // const sizes = searchParams.get("size")?.split(",").filter(Boolean) || [];
 
-  const query: {
-    category?: { $in: string[] };
-    subProducts?: {
-      sizes?: { $in: string[] };
-      color?: { $in: string[] };
-    };
-  } = {};
+  // const query: {
+  //   category?: { $in: string[] };
+  //   subProducts?: {
+  //     sizes?: { $in: string[] };
+  //     color?: { $in: string[] };
+  //   };
+  // } = {};
 
-  if (categories.length > 0) {
-    query.category = { $in: categories }; // Filtrer par catégories sélectionnées
-  }
+  // if (categories.length > 0) {
+  //   query.category = { $in: categories }; // Filtrer par catégories sélectionnées
+  // }
 
-  if (sizes.length > 0) {
-    // Vérifie d'abord si `subProducts` existe, sinon l'initialise
-    if (!query.subProducts) {
-      query.subProducts = {};
-    }
-    query.subProducts.sizes = { $in: sizes };
-  }
-  console.log("🚀 ~ GET ~ query:TALA", query);
+  // if (sizes.length > 0) {
+  //   // Vérifie d'abord si `subProducts` existe, sinon l'initialise
+  //   if (!query.subProducts) {
+  //     query.subProducts = {};
+  //   }
+  //   query.subProducts.sizes = { $in: sizes };
+  // }
+  // console.log("🚀 ~ GET ~ query:TALA", query);
 
   try {
     await connectDB();

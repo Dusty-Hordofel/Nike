@@ -25,7 +25,9 @@ const ProductCardDescription = ({
       </div>
     ) : null}
 
-    <div className="group-hover:hidden block">
+    <div
+      className={`${productColors.length > 1 && "group-hover:hidden block"}`}
+    >
       <div className="product-card-titles">
         <div className="product-card-title font-medium">{name}</div>
         <div className="product-card-subtitle text-gray-500">

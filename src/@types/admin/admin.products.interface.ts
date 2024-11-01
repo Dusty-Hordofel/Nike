@@ -61,8 +61,8 @@ export interface Product {
   name: string;
   description: string;
   slug?: string;
-  category: string | Types.ObjectId;
-  subCategories: string[] | Types.ObjectId[];
+  category: string;
+  subCategories: string[];
   details?: { name: string; value: string }[];
   questions?: { question: string; answer: string }[];
   reviews?: Review[];

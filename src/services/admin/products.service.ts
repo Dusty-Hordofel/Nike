@@ -1,6 +1,3 @@
-import { IProduct } from "@/models/product.model";
-
-// Omit<IProduct, "Document">
 const adminCreateProduct = async (productInformation: any) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/products`,
