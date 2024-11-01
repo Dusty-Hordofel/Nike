@@ -1,5 +1,4 @@
 import { Product } from "@/@types/admin/admin.products.interface";
-// import { IProduct } from "@/models/product.model";
 
 export function filterProducts(
   products: Product[],

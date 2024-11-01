@@ -186,3 +186,25 @@ css-1ncut4k::before {
   padding-right: 30px; /*Ajustez cette valeur pour créer de l'espace pour la scrollbar*/
   box-sizing: content-box; /* Inclut le padding sans affecter la largeur totale */
 }
+
+.css-1iktvq5.is--toggled::after {
+  -webkit-animation: animation-1q62jn2 100ms;
+  animation: animation-1q62jn2 100ms;
+  -webkit-animation-delay: 50ms;
+  animation-delay: 50ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes checkbox-animation {
+  0% {
+    transform: rotate(0deg) scale(0); /* Début de l'animation */
+  }
+  100% {
+    transform: rotate(0deg) scale(1); /* Fin de l'animation */
+  }
+}
+
+.checkbox-animation {
+  animation: checkbox-animation 0.5s forwards;
+}

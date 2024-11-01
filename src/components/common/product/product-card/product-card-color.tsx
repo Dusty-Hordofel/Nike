@@ -28,12 +28,13 @@ const ProductCardColor = ({
   setImages,
   setActive,
 }: CardColorProps) => {
+  console.log("🚀 ~ productColors:COLOR", productColors);
   return (
     <div className=" gap-2 pb-[10px]  group-hover:flex hidden">
       {productColors
-        ? productColors.map(({ image, hexCode }, index) => {
+        ? productColors.map(({ image, hexCode, name, _id }, index) => {
             return image ? (
-              <picture key={index}>
+              <picture key={`${name}-${_id}-${hexCode}`}>
                 <img
                   src={image}
                   alt="image card color"

@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-// import { Product } from "@/models/product.model";
 import ProductCardImage from "./product-card-image";
 import ProductCardPrice from "./product-card-price";
 import ProductCardColor from "./product-card-color";
@@ -9,17 +8,19 @@ import ProductCardDescription from "./product-card-description";
 import { Product } from "@/@types/admin/admin.products.interface";
 
 const ProductCard = ({ product }: { product: Product }) => {
-  // console.log("🚀 ~ ProductCard ~ product:FILTERCARD", product);
   const { name, subProducts, slug } = product;
+  console.log("🚀 ~ ProductCard ~ subProducts:SUBPD", subProducts);
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
+  console.log("🚀 ~ ProductCard ~ images:TALAYE", images);
 
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => {
       return p.color;
     })
   );
+  console.log("🚀 ~ ProductCard ~ productColors:COCO", productColors);
 
   const bestSeller = true;
   const newRelease = false;
@@ -46,7 +47,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             href={`/products/${slug}?style=${active}`}
           >
             <ProductCardImage images={images} name={name} />
-            <div className="product-card-info pt-3 pb-[2px] bg-success">
+            <div className="product-card-info pt-3 pb-[2px] ">
               {productColors.length > 1 && (
                 <ProductCardColor
                   productColors={productColors}
