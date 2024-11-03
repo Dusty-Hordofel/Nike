@@ -11,12 +11,12 @@ import MobileProductFilterAndSort from "./filters/mobile/mobile-product-filter-a
 
 const page = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  console.log("🚀 ~ page ~ filteredProducts:PR", filteredProducts);
+  // console.log("🚀 ~ page ~ filteredProducts:PR", filteredProducts);
   const [showFilterSidebar, setShowFilterSidebar] = useState(false);
   const [filterOpacity, setFilterOpacity] = useState(false);
 
   const [isFiltering, setIsFiltering] = useState(false);
-  console.log("🚀 ~ page ~ isFiltering:TALAFILTRE", isFiltering);
+  // console.log("🚀 ~ page ~ isFiltering:TALAFILTRE", isFiltering);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   // const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -217,6 +217,7 @@ const page = () => {
           showSidebar={showSidebar}
           isLargeScreen={isLargeScreen}
         />
+
         <ProductsList
           filteredProducts={filteredProducts}
           isLargeScreen={isLargeScreen}

@@ -12,6 +12,7 @@ export function filterProducts(
   }
 ): { filteredProducts: Product[]; isFiltering: boolean } {
   let filteredProducts = products;
+  // console.log("🚀 ~ filteredProducts:PROD", filteredProducts);
   let isFiltering = false;
 
   if (
@@ -54,6 +55,8 @@ export function filterProducts(
             filters.size.includes(subProductSize.size)
           )
         );
+        // console.log("🚀 ~ filteredProducts:FOLOLI", filteredProducts);
+
         return { ...product, subProducts: filteredSubProducts };
       })
       .filter((product) => product.subProducts.length > 0);

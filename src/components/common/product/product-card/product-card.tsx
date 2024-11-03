@@ -13,20 +13,22 @@ const ProductCard = ({ product }: { product: Product }) => {
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
-  console.log("🚀 ~ ProductCard ~ images:TALAYE", images);
+  console.log("🚀 ~ ProductCard ~ images:TALAYE", active, images);
 
   const [productColors, setProductColors] = useState(
-    subProducts.map((p) => {
-      return p.color;
-    })
+    subProducts.map((p) => p.color)
   );
-  console.log("🚀 ~ ProductCard ~ productColors:COCO", productColors);
 
   const bestSeller = true;
   const newRelease = false;
 
   useEffect(() => {
-    setImages(subProducts[active]?.images);
+    // setImages(subProducts[active]?.images);
+    setImages((prevImages) => subProducts[active]?.images || prevImages);
+    setProductColors(
+      (prevProductColors) =>
+        subProducts.map((p) => p.color) || prevProductColors
+    );
   }, [active, product, subProducts]);
 
   return (
@@ -48,14 +50,14 @@ const ProductCard = ({ product }: { product: Product }) => {
           >
             <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px] ">
-              {productColors.length > 1 && (
-                <ProductCardColor
-                  productColors={productColors}
-                  subProducts={subProducts}
-                  setImages={setImages}
-                  setActive={setActive}
-                />
-              )}
+              {/* {productColors.length > 1 && ( */}
+              <ProductCardColor
+                productColors={productColors}
+                subProducts={subProducts}
+                setImages={setImages}
+                setActive={setActive}
+              />
+              {/* )} */}
 
               <ProductCardDescription
                 name={name}

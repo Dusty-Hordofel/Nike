@@ -9,7 +9,7 @@ const BrandFilter = ({
   handleFilterChange,
   isLargeScreen,
 }: any) => {
-  console.log("🚀 ~ BrandFilter ~ data:BRANDS", data.brands);
+  //   console.log("🚀 ~ BrandFilter ~ data:BRANDS", data.brands);
   const [show, setShow] = useState(false);
 
   return (

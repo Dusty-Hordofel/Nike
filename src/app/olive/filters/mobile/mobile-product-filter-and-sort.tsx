@@ -17,13 +17,14 @@ const MobileProductFilterAndSort = ({
 }: any) => {
   return (
     <div
-      className={`${!isLargeScreen ? "fixed inset-0 overflow-x-hidden z-50 bg-white overflow-y-auto" : "hidden"}`}
+      // change  showSidebar , use mobile state  variable
+      className={`${!isLargeScreen && showSidebar ? "fixed inset-0 overflow-x-hidden z-50 bg-white overflow-y-auto" : "hidden"}`}
     >
       <div>
         <div>
           <nav className="flex justify-end relative">
             <button
-              className="mobile-results-nav__close-btn bg-red p-5 absolute"
+              className="mobile-results-nav__close-btn p-5 absolute"
               type="button"
               onClick={() => {
                 setShowSidebar(!showSidebar);

@@ -7,7 +7,7 @@ const ProductSorter = ({
   isLargeScreen,
 }: any) => {
   return (
-    <div className={`flex flex-col bg-orange `}>
+    <div className={`flex flex-col`}>
       <label
         className={`cursor-pointer hover:opacity-55 transition-opacity ${isLargeScreen && filters.price === "featured" ? "text-gray-500" : "text-black-200"} ${isLargeScreen ? "text-end" : "flex items-center gap-x-[6px] text-start mt-3 mb-2"}`}
       >

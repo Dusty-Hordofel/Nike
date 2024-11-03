@@ -28,7 +28,7 @@ const ProductCardColor = ({
   setImages,
   setActive,
 }: CardColorProps) => {
-  console.log("🚀 ~ productColors:COLOR", productColors);
+  console.log("🚀 ~ productColors:COLOR VOIR", productColors);
   return (
     <div className=" gap-2 pb-[10px]  group-hover:flex hidden">
       {productColors
@@ -43,7 +43,8 @@ const ProductCardColor = ({
                     "w-10 h-10 object-cover"
                   )}
                   onMouseOver={() => {
-                    setImages(subProducts[index].images);
+                    // setImages(subProducts[index].images);
+                    // setImages(subProducts[index].images);
                     setActive(index);
                   }}
                 />
@@ -53,7 +54,7 @@ const ProductCardColor = ({
                 key={index}
                 style={{ backgroundColor: `${hexCode}` }}
                 onMouseOver={() => {
-                  setImages(subProducts[index].images);
+                  // setImages(subProducts[index].images);
                   setActive(index);
                 }}
               ></span>

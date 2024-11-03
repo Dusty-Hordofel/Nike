@@ -10,6 +10,7 @@ const ProductCardImage = ({ images, name, category }: CardImageProps) => {
         <picture className="product-card-image">
           <img
             src={images[0].url}
+            // src={images[0].url}
             alt={`${name} ${category}`}
             className="aspect-square object-cover"
             // className="h-[200px]  w-full object-cover"

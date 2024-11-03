@@ -10,7 +10,7 @@ const MobileProductSorter = ({
   handleSorterChange,
 }: any) => {
   return (
-    <div className={`border-b border-gray-300 mt-3 pb-10 bg-warning`}>
+    <div className={`border-b border-gray-300 mt-3 pb-10 `}>
       <fieldset aria-label="Sort By">
         <legend className="font-medium">
           <h3>Sort By</h3>
