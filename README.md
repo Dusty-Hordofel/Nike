@@ -1193,8 +1193,6 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 <!-- Remplacement de redux toolkit par le context et le Reducer -->
 
-###
-
 ### 70. Gestion des dépendenses
 ### 71. Gestion des erreurs de deploiement Nextjs
 
@@ -1207,6 +1205,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 - 🔗 [Testing-library](https://nextjs.org/docs/pages/building-your-application/testing/jest)
 - [redux toolkit example](https://dev.to/hossain45/how-to-persist-user-info-using-redux-persist-with-typescript-54g9)
 - 🔗 [redux toolkit example](https://github.com/Mohammad-Faisal/nextjs-app-router-redux-toolkit-persist-integration/blob/main/src/store/index.ts)
+- 🔗 []()
+- 🔗 []()
 - 🔗 []()
 
 ```

@@ -1,8 +1,5 @@
 "use client";
 
-import ProductCard from "@/components/common/product/product-card/product-card";
-// import { useProducts } from "@/hooks/useProductData";
-import { IProduct } from "@/models/product.model";
 import { useQuery } from "@tanstack/react-query";
 
 const ProductsPage = () => {

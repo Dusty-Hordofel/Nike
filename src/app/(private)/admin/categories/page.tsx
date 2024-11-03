@@ -13,11 +13,11 @@ import useCategoryForm from "@/hooks/admin/categories/use-category-form";
 const CategoriesPage = () => {
   const router = useRouter();
   const user = useCurrentUser();
+
   const pathname = usePathname();
 
   const activePage = pathname.split("/")[2] || "";
   const entity = activeEntity(activePage);
-
   function activeEntity(activePage: string) {
     switch (activePage) {
       case "categories":

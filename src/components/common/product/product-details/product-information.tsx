@@ -2,7 +2,6 @@
 import Link from "next/link";
 import ProductSizes from "./product-size";
 import ProductColors from "@/components/common/product/product-details/product-colors";
-// import { IProduct } from "@/models/product.model";
 import { Button } from "../../../ui/buttons/button/button";
 import Accordion from "../../accordion/Accordion";
 import { accordionData } from "@/assets/data/accordion";
