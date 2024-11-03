@@ -1189,13 +1189,13 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 67. Gestion des filtres par Brand et Subcategory
 
-### 68. Gestion de la filter sidebar
+### 68. Gestion de la filter sidebar(2)
 
 <!-- Remplacement de redux toolkit par le context et le Reducer -->
 
-### 69.
+###
 
-### 70.
+### 70. Gestion des dépendenses
 
 ## External Links
 
