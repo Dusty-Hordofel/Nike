@@ -16,8 +16,8 @@ import {
   OurIconicModels,
   trendSlides,
 } from "@/assets/data/slides";
-import HomeProductsCategories from "@/components/home-products-categories";
-import Navbar from "@/components/navbar/Navbar";
+import HomeProductsCategories from "@/components/common/home-products-categories";
+import Navbar from "@/components/common/navbar/Navbar";
 
 import {
   Banner as DiscountBanner,
@@ -33,8 +33,8 @@ import Carousel from "@/components/ui/carousels/carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useAppSelector } from "@/hooks/use-redux-hooks";
-import { useCurrentUser } from "@/hooks/user/use-current-user";
+import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);

@@ -6,10 +6,10 @@ import { useForm } from "react-hook-form";
 import {
   ResetPasswordFormData,
   userResetPasswordSchema,
-} from "@/lib/validations/auth";
+} from "../../../../schemas/user/auth.schema";
 import Form, { FormInputField } from "./form-input-field";
 import { Input } from "@/components/ui/input";
-import { UserAuthHeaderForm } from "@/components/auth";
+import { UserAuthHeaderForm } from "@/components/common/auth";
 import PasswordRule from "./password-rule";
 import { Button } from "@/components/ui/buttons/button/button";
 import { RefreshCcw, X } from "lucide-react";

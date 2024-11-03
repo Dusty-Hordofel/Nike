@@ -1,16 +1,17 @@
 import { isValidObjectId } from "@/lib/utils";
-import Cart from "@/models/Cart";
-import User from "@/models/User";
+import Cart from "@/models/cart.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
-import PaymentMethod from "@/models/PaymentMethod";
+import PaymentMethod from "@/models/payment-method.model";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe/stripe";
 
 // Schéma de validation pour les données entrantes
 const paymentMethodSchema = z.object({
+  id: z.string(),
   paymentMethodId: z
     .string()
     .min(1, "PaymentMethodId is required")
@@ -20,9 +21,8 @@ const paymentMethodSchema = z.object({
     ), // Assure que la chaîne ne contient que des lettres,des chiffres et underscores,
 });
 
-export const PUT = auth(async (...request: any) => {
-  const [req, { params }] = request;
-  console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+export const PUT = auth(async (req) => {
+  // const [req, { params }] = request;
 
   if (!req.auth) {
     return Response.json(
@@ -35,10 +35,10 @@ export const PUT = auth(async (...request: any) => {
 
   // const [req, { params }] = request;
 
-  const { paymentMethodId } = await req.json();
+  const { paymentMethodId, id } = await req.json();
 
   // Validation des données
-  const parsed = paymentMethodSchema.safeParse({ paymentMethodId });
+  const parsed = paymentMethodSchema.safeParse({ paymentMethodId, id });
   if (!parsed.success) {
     return new NextResponse(
       JSON.stringify({
@@ -72,17 +72,19 @@ export const PUT = auth(async (...request: any) => {
       { $set: { isActive: false } }
     );
 
-    const paymentMethod = await PaymentMethod.findOneAndUpdate({
-      userId: dbUser._id,
-      paymentMethodId,
-      isActive: true,
-    });
+    const paymentMethod = await PaymentMethod.findOneAndUpdate(
+      { userId: dbUser._id, paymentMethodId, _id: id },
+      { isActive: true },
+      { new: true }
+    );
 
-    await paymentMethod.save();
-
-    if (!paymentMethod) {
+    if (!paymentMethod.isActive) {
       return Response.json(
-        { success: false, error: true, message: "Payment method not saved" },
+        {
+          success: false,
+          error: true,
+          message: "Active payment method not changed ",
+        },
         {
           status: 500,
         }
@@ -93,9 +95,11 @@ export const PUT = auth(async (...request: any) => {
       {
         success: true,
         error: false,
-        message: "Payment method saved successfully",
+        message: "Active payment method changed successfully",
       },
-      { status: 200 }
+      {
+        status: 200,
+      }
     );
   } catch (error: any) {
     return Response.json(

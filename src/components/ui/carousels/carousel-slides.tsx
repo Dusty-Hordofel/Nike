@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { TrendSlidesProps } from "@/types/types";
+import { TrendSlidesProps } from "@/@types/types";
 import Image from "next/image";
 import CarouselContent from "./carousel-content";
 import Link from "next/link";

@@ -1,8 +1,8 @@
 // import connectDB from "@/config/database";
 import { connectDB } from "@/config/database";
-import { EmailSchema } from "@/lib/validations/auth";
-import Product from "@/models/Product";
-import User from "@/models/User";
+import { EmailSchema } from "../../../../schemas/user/auth.schema";
+import Product from "@/models/product.model";
+import User from "@/models/user.model";
 
 export async function POST(req: Request) {
   try {

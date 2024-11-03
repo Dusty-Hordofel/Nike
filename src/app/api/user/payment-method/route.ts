@@ -1,13 +1,14 @@
-import { isValidObjectId } from "@/lib/utils";
-import Cart from "@/models/Cart";
-import User from "@/models/User";
+import { isValidObjectId } from "mongoose";
+// import { isValidObjectId } from "@/lib/utils";
+import Cart from "@/models/cart.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
-import PaymentMethod from "@/models/PaymentMethod";
+import PaymentMethod from "@/models/payment-method.model";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe/stripe";
 
 // Schéma de validation pour les données entrantes
 const paymentMethodSchema = z.object({
@@ -156,6 +157,7 @@ export const GET = auth(async (req) => {
         const brand = paymentMethod.card?.brand || "Unknown";
 
         return {
+          id: savedPaymentMethodId._id,
           paymentMethodId,
           isActive: savedPaymentMethodId.isActive,
           last4,

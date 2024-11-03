@@ -1,6 +1,7 @@
-import { isValidObjectId } from "@/lib/utils";
-import Cart from "@/models/Cart";
-import User from "@/models/User";
+// import { isValidObjectId } from "@/lib/utils";
+import { isValidObjectId } from "mongoose";
+import Cart from "@/models/cart.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
@@ -126,3 +127,65 @@ export async function POST(
     return { error: "An error occurred while loading cart items" };
   }
 }
+
+export const DELETE = auth(async (req) => {
+  console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+
+  if (!req.auth) {
+    return Response.json(
+      { error: true, message: "unauthorized" },
+      {
+        status: 401,
+      }
+    );
+  }
+
+  try {
+    await connectDB();
+
+    const dbUser = await User.findOne({
+      _id: req.auth?.user._id,
+    });
+
+    if (!dbUser) {
+      return new NextResponse(
+        JSON.stringify({
+          error: true,
+          message: "Unauthorized User",
+        }),
+        { status: 400 }
+      );
+    }
+
+    const cart = await Cart.findOneAndDelete({
+      userId: dbUser._id,
+    });
+
+    if (!cart) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: true,
+          message: "User cart not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        error: false,
+        message: "User cart  deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return Response.json(
+      { message: error.message },
+      {
+        status: 500,
+      }
+    );
+  }
+});

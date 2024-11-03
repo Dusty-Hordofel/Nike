@@ -1136,17 +1136,66 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 43. Organisation
 
-### 44.
+### 44. Organisation des étapes de payment
 
-### 45.
+### 45. Mise à jour de la logique (UseEffect , React Query)
 
-### 46.
+### 46. Gestion du payment Stripe
 
-### 47.
+### 47. Ajout du Modal
 
-### 48.
+## Section 3: Admin Dashboard(Products Categories SubCategories Coupons)
 
-### 49.
+### 48. DynamicFormField
+
+### 49. Mise à jour des inputs
+
+### 50. Categories
+
+### 50.1. Nettoyage Categories
+
+### 51. SubCategories
+
+### 52. Products
+
+### 53. Gestion du formulaire de la sous-categorie
+
+### 54. Ajout d'un Provider de la sous-categorie
+
+### 55. Gestion du formulaire de la categorie
+
+### 56. Gestion du formulaire de modification du produit (1)
+
+### 57.Nettoyage du dossier olive (gestion du formulaire)
+
+### 58. Suppresion des images sur cloudinary
+
+### 59. Suppresion des images sur cloudinary(2)
+
+### 61. Réorganisation du projet
+
+- renommage des models et des schemas.
+- réorganisation des fichiers pour une meilleure structure.
+
+### 62. Category Filter
+
+### 63. gestion des filtres(1)
+
+### 64. gestion des filtres(2)
+
+### 65. gestion des filtre et du schema de produits(1)
+
+### 66. Gestion du filtrage par couleur
+
+### 67. Gestion des filtres par Brand et Subcategory
+
+### 68. Gestion de la filter sidebar
+
+<!-- Remplacement de redux toolkit par le context et le Reducer -->
+
+### 69.
+
+### 70.
 
 ## External Links
 

@@ -9,6 +9,7 @@ export const ButtonStyle = {
         "border border-gray-200 hover:border-black-200 bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
       ghost: "hover:bg-accent hover:text-accent-foreground",
       link: "text-primary underline-offset-4 underline text-xs",
+      destructive: "border border-gray-200 bg-red-600 shadow-sm ",
     },
     size: {
       small: "h-9 px-4 py-[6px] mr-[6px]",
