@@ -36,7 +36,7 @@ export type CommonBannerProps = {
 
 type BannerProps = CommonBannerProps & (ImageProps | VideoProps | NoMediaProps);
 
-const Banner: React.FC<BannerProps> = (props) => {
+export const Banner: React.FC<BannerProps> = (props) => {
   const hasContent =
     props.title ||
     (props.title && props.description) ||
@@ -67,4 +67,4 @@ const Banner: React.FC<BannerProps> = (props) => {
   );
 };
 
-export default Banner;
+// export default Banner;

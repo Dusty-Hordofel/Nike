@@ -18,15 +18,6 @@ import {
 } from "@/assets/data/slides";
 import HomeProductsCategories from "@/components/common/home-products-categories";
 import Navbar from "@/components/common/navbar/Navbar";
-
-import {
-  // Banner as DiscountBanner,
-  // Banner as DiscoverBanner,
-  Banner as VideoBanner,
-  // Banner as ImageBanner,
-  // Banner as SmallDiscountBanner,
-} from "@/components/ui/banner";
-// import ButtonLinks from "@/components/ui/buttons/button-links/buttonLinks";
 import { buttonVariants } from "@/components/ui/buttons/button/button";
 
 import Carousel from "@/components/ui/carousels/carousel";
@@ -35,13 +26,18 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
+import {
+  Banner as DiscountBanner,
+  Banner as DiscoverBanner,
+  Banner as VideoBanner,
+  Banner as ImageBanner,
+  Banner as SmallDiscountBanner,
+} from "@/components/ui/banner/banner";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);
-  // console.log("🚀 ~ Home ~ cartItems:", cartItems);
 
   const user = useCurrentUser();
-  // console.log("🚀 ~ Home ~ user:", user);
 
   return (
     <>
@@ -49,7 +45,7 @@ export default function Home() {
 
       <Navbar />
 
-      <VideoBanner
+      <DiscountBanner
         mediaType="video"
         contentPosition="bottom-left w-[80%]"
         textAlign="text-start"
