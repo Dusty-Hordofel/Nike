@@ -25,7 +25,7 @@ import {
   Banner as VideoBanner,
   // Banner as ImageBanner,
   // Banner as SmallDiscountBanner,
-} from "@/components/ui";
+} from "@/components/ui/banner";
 // import ButtonLinks from "@/components/ui/buttons/button-links/buttonLinks";
 import { buttonVariants } from "@/components/ui/buttons/button/button";
 

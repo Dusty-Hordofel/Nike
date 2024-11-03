@@ -4,7 +4,10 @@ import ProductImages from "@/components/common/product/product-details/product-i
 import ProductInformation from "@/components/common/product/product-details/product-information";
 import Link from "next/link";
 import React from "react";
-import { Banner as VideoBanner, Banner as ImageBanner } from "@/components/ui";
+import {
+  Banner as VideoBanner,
+  Banner as ImageBanner,
+} from "@/components/ui/banner";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
 import { useQuery } from "@tanstack/react-query";
