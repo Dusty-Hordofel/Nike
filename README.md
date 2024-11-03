@@ -1196,6 +1196,7 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 ###
 
 ### 70. Gestion des dépendenses
+### 71. Gestion des erreurs de deploiement Nextjs
 
 ## External Links
 
