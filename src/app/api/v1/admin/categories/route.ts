@@ -4,49 +4,46 @@ import { connectDB } from "@/config/database";
 import Category from "@/models/category.model";
 import slugify from "slugify";
 
-export const POST =
-  // auth(
-  async (request: any) => {
-    try {
-      const { name, image } = await request.json();
-      console.log("🚀 ~ image:IM", image);
-      connectDB();
-      const category = await Category.findOne({ name });
+export const POST = auth(async (request: any) => {
+  try {
+    const { name, image } = await request.json();
+    console.log("🚀 ~ image:IM", image);
+    connectDB();
+    const category = await Category.findOne({ name });
 
-      if (category) {
-        return Response.json(
-          {
-            success: false,
-            error: true,
-            message: `Category ${name} already exist, Try a different name.`,
-          },
-          { status: 400 }
-        );
-      }
-
-      const newCategory = new Category({
-        name,
-        image: image || undefined,
-        slug: slugify(name),
-      });
-      await newCategory.save();
-
+    if (category) {
       return Response.json(
         {
-          success: true,
-          error: false,
-          message: `Category ${name} has been created successfully.`,
+          success: false,
+          error: true,
+          message: `Category ${name} already exist, Try a different name.`,
         },
-        { status: 201 }
-      );
-    } catch (error: any) {
-      return new Response(
-        JSON.stringify({ success: false, error: true, message: error.message }),
-        { status: 500 }
+        { status: 400 }
       );
     }
-  };
-// );
+
+    const newCategory = new Category({
+      name,
+      image: image || undefined,
+      slug: slugify(name),
+    });
+    await newCategory.save();
+
+    return Response.json(
+      {
+        success: true,
+        error: false,
+        message: `Category ${name} has been created successfully.`,
+      },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    return new Response(
+      JSON.stringify({ success: false, error: true, message: error.message }),
+      { status: 500 }
+    );
+  }
+});
 
 export const GET = auth(async () => {
   try {

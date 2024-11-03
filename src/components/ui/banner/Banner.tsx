@@ -3,8 +3,6 @@ import { cn } from "@/lib/utils";
 import BannerVideo from "./banner-video";
 import BannerContent from "./banner-content";
 import BannerImage from "./banner-image";
-// import BannerImage from "./banner-image";
-// import BannerContent from "./banner-content";
 
 export type ImageProps = {
   mediaType: "image";

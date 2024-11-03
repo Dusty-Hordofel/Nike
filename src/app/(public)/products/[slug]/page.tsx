@@ -5,10 +5,10 @@ import ProductInformation from "@/components/common/product/product-details/prod
 import Link from "next/link";
 import React from "react";
 import { Banner as VideoBanner, Banner as ImageBanner } from "@/components/ui";
-import Carousel from "@/components/ui/carousels/carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
 import { useQuery } from "@tanstack/react-query";
+import Carousel from "@/components/ui/carousels/carousel";
 
 interface IProduct {
   params: { slug: string };

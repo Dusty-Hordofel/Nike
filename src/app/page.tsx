@@ -1,10 +1,10 @@
 "use client";
 import { footerMenu } from "@/assets/data/footer";
 import {
-  bannerImage,
+  // bannerImage,
   bannerVideo,
-  discountedItems,
-  discoverItems,
+  // discountedItems,
+  // discoverItems,
 } from "@/assets/data/banner";
 import { categories } from "@/assets/data/products";
 import {
@@ -14,19 +14,19 @@ import {
   NewThisWeek,
   NikeMemberAccess,
   OurIconicModels,
-  trendSlides,
+  // trendSlides,
 } from "@/assets/data/slides";
 import HomeProductsCategories from "@/components/common/home-products-categories";
 import Navbar from "@/components/common/navbar/Navbar";
 
 import {
-  Banner as DiscountBanner,
-  Banner as DiscoverBanner,
+  // Banner as DiscountBanner,
+  // Banner as DiscoverBanner,
   Banner as VideoBanner,
-  Banner as ImageBanner,
-  Banner as SmallDiscountBanner,
+  // Banner as ImageBanner,
+  // Banner as SmallDiscountBanner,
 } from "@/components/ui";
-import ButtonLinks from "@/components/ui/buttons/button-links/buttonLinks";
+// import ButtonLinks from "@/components/ui/buttons/button-links/buttonLinks";
 import { buttonVariants } from "@/components/ui/buttons/button/button";
 
 import Carousel from "@/components/ui/carousels/carousel";
