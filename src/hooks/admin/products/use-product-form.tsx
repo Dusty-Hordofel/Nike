@@ -31,6 +31,10 @@ const useProductForm = () => {
     closeModal,
     formMode,
     isModalOpen,
+    // isResultModalOpen,
+    closeResultModal,
+    resultModalContent,
+    openModal,
   } = useModal();
 
   const handleResponse = (response: any) => {
@@ -194,6 +198,13 @@ const useProductForm = () => {
     handleSubmit: form.handleSubmit(handleProductSubmit),
     createProduct,
     entityToEdit,
+    isResultModalOpen,
+    closeResultModal,
+    resultModalContent,
+    openModal,
+    closeModal,
+    isModalOpen,
+    formMode,
   };
 };
 

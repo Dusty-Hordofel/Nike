@@ -69,7 +69,7 @@ const OrderSummary = ({ cart }: any) => {
       <div className="cart-details-section pt-6 mx-2">
         <header>
           <h3 className="delivery-date">
-            Livraison d'ici le&nbsp;mar. 25 juin
+            Livraison d&lsquo;ici le&nbsp;mar. 25 juin
           </h3>
         </header>
         {cart?.data?.cart?.products.map((product: any) => {

@@ -47,7 +47,7 @@ const SameBillingAsShippingCheckbox = ({ checked, onChange }: any) => {
         </span>
       </div>
       <label htmlFor="billingAddress" className="nds-checkbox-label">
-        Adresse de facturation identique à l'adresse de livraison
+        Adresse de facturation identique à l&lsquo;adresse de livraison
       </label>
     </div>
   );
