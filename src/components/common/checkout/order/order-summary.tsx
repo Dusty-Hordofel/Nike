@@ -54,7 +54,7 @@ const OrderSummary = ({ cart }: any) => {
         </div>
 
         <div className="summary-item flex justify-between items-center">
-          <div className="shipping-label">Frais d'expédition estimés</div>
+          <div className="shipping-label">Frais d&lsquo;expédition estimés</div>
           <div className="shipping-amount">0,00&nbsp;€</div>
         </div>
 
@@ -69,12 +69,12 @@ const OrderSummary = ({ cart }: any) => {
       <div className="cart-details-section pt-6 mx-2">
         <header>
           <h3 className="delivery-date">
-            Livraison d'ici le&nbsp;mar. 25 juin
+            Livraison d&lsquo;ici le&nbsp;mar. 25 juin
           </h3>
         </header>
         {cart?.data?.cart?.products.map((product: any) => {
           return (
-            <div className=" cart-item py-4">
+            <div className=" cart-item py-4" key={product._id}>
               <figure className="cart-item-figure flex">
                 <div className="cart-item-image">
                   <img

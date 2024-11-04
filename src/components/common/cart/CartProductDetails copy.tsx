@@ -58,6 +58,7 @@ const CartProductDetails = ({
                     data-version="__VERSION_HERE__"
                     src={image}
                     id="13fc86f1-df6f-492a-990b-1a4e5c27c1bb"
+                    alt="13fc86f1-df6f-492a-990b-1a4e5c27c1bb"
                   />
                 </picture>
               </Link>

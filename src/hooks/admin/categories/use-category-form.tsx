@@ -49,7 +49,7 @@ const useCategoryForm = () => {
       form.setValue("category", entityToEdit.name);
       setPreviewUrl(entityToEdit.image);
     }
-  }, [entityToEdit, form.setValue, setPreviewUrl]);
+  }, [form, entityToEdit, form.setValue, setPreviewUrl]);
 
   const createCategory = useAdminCreateCategory();
   const updateCategory = useAdminUpdateCategory();

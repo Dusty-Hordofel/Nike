@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import CarouselControls from "./carousel-controls";
-import CarouselSlides from "./carousel-slides";
 import { TrendSlidesProps } from "@/@types/types";
+import CarouselSlides from "./carousel-slides";
+import CarouselControls from "./carousel-controls";
 
 interface CarousselProps {
   title?: string;
@@ -13,7 +13,7 @@ interface CarousselProps {
   children: (slide: TrendSlidesProps) => React.ReactNode; //
 }
 
-const Carousel = ({
+const MediaCarousel = ({
   title,
   data,
   imageClassName,
@@ -94,4 +94,4 @@ const Carousel = ({
   );
 };
 
-export default Carousel;
+export default MediaCarousel;

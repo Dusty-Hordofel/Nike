@@ -9,7 +9,7 @@ import ProductSorterButton from "./sorting/product-sorter-button";
 import { Product } from "@/@types/admin/admin.products.interface";
 import MobileProductFilterAndSort from "./filters/mobile/mobile-product-filter-and-sort";
 
-const page = () => {
+const ProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   // console.log("🚀 ~ page ~ filteredProducts:PR", filteredProducts);
   const [showFilterSidebar, setShowFilterSidebar] = useState(false);
@@ -166,7 +166,9 @@ const page = () => {
   console.log("🚀 ~ page ~ filteredProducts:COCO", filteredProducts);
   return (
     <div
-      className={`transition-opacity duration-500 ${filterOpacity ? "opacity-50" : "opacity-100"} flex flex-col`}
+      className={`transition-opacity duration-500 ${
+        filterOpacity ? "opacity-50" : "opacity-100"
+      } flex flex-col`}
     >
       <section className="sticky top-0 z-20">
         <header className="px-12 pb-4 bg-warning ">
@@ -228,4 +230,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ProductsPage;

@@ -24,7 +24,9 @@ const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
     return (
       <div
         ref={ref}
-        className={`bg-white shadow-sm absolute w-max top-full overflow-hidden flex flex-col p-6 rounded-lg right-0 ${showDropdown ? "visible" : "hidden"}`}
+        className={`bg-white shadow-sm absolute w-max top-full overflow-hidden flex flex-col p-6 rounded-lg right-0 ${
+          showDropdown ? "visible" : "hidden"
+        }`}
         aria-labelledby="dropdown-btn"
         id="sort-options"
         role="menu"
@@ -40,4 +42,5 @@ const SortDropdownMenu = forwardRef<HTMLDivElement, SortDropdownMenuProps>(
   }
 );
 
+SortDropdownMenu.displayName = "SortDropdownMenu";
 export default SortDropdownMenu;

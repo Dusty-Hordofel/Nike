@@ -520,7 +520,6 @@ const Carousel = ({
 };
 
 export default Carousel;
-
 ```
 
 ### 9. Navigation (Part1)
@@ -1194,7 +1193,22 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 <!-- Remplacement de redux toolkit par le context et le Reducer -->
 
 ### 70. Gestion des dépendenses
+
 ### 71. Gestion des erreurs de deploiement Nextjs
+
+### 72. Gestion des erreurs affichées par Nextjs(1)
+
+### 72. Gestion des erreurs affichées par Nextjs(2)
+
+### 72. Gestion des erreurs affichées par Nextjs(3)
+
+### 72. Gestion des erreurs affichées par Nextjs(4)
+
+### 73. Gestion des erreurs affichées par Nextjs(5)
+
+### 74. Gestion des erreurs affichées par Nextjs(6)
+
+### 74. Gestion des erreurs affichées par Nextjs(7)
 
 ## External Links
 

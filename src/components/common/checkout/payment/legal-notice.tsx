@@ -18,7 +18,7 @@ const LegalNotice = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Conditions d'utilisation
+              Conditions d&lsquo;utilisation
             </Link>
             <span>, </span>
             <Link

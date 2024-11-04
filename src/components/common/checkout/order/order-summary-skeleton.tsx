@@ -47,15 +47,17 @@ const OrderSummarySkeleton = () => {
           </div>
 
           <div className="summary-item flex justify-between items-center">
-            <div className="shipping-label">Frais d'expédition estimés</div>
-            <div className="shipping-amount">0,00&nbsp;€</div>
+            <div className="shipping-label">
+              Frais d&apos;expédition estimés
+            </div>
+            <div className="shipping-amount">0,00&lsquo;€</div>
           </div>
 
           <div className="summary-item  flex justify-between items-center mt-2">
             <div className="total-label">
               <span>Total </span>
             </div>
-            <div className="total-amount">0,00&nbsp;€</div>
+            <div className="total-amount">0,00&lsquo;€</div>
           </div>
         </div>
       </div>

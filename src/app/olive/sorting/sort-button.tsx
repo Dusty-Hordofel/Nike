@@ -42,7 +42,9 @@ const SortButton = forwardRef<HTMLButtonElement, SortButtonProps>(
 
           <span>
             <ChevronDown
-              className={`transform transition-transform ${showDropdown ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+              className={`transform transition-transform ${
+                showDropdown ? "-rotate-180" : "rotate-0"
+              } cursor-pointer`}
             />
           </span>
         </span>
@@ -51,4 +53,5 @@ const SortButton = forwardRef<HTMLButtonElement, SortButtonProps>(
   }
 );
 
+SortButton.displayName = "SortButton";
 export default SortButton;
