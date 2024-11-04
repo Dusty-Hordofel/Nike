@@ -29,6 +29,7 @@ import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
 
 // currentCheckoutSection={currentCheckoutSection}
 //               setCurrentCheckoutSection={setCurrentCheckoutSection}
+
 const DeliverySection = ({
   deliveryAddress,
   setCurrentCheckoutSection,
@@ -73,7 +74,13 @@ const DeliverySection = ({
       setCurrentCheckoutSection("payment");
       reset(deliveryAddress.activeDeliveryAddress.activeAddress);
     }
-  }, [deliveryAddress.isSuccess, deliveryAddress.activeDeliveryAddress]);
+  }, [
+    deliveryAddress.isSuccess,
+    deliveryAddress.activeDeliveryAddress,
+    reset,
+    setCurrentCheckoutSection,
+    setDeliveryStep,
+  ]);
 
   useEffect(() => {
     if (
@@ -206,7 +213,9 @@ const DeliverySection = ({
       </div>
 
       <div
-        className={`shippingContainer py-7 px-5 flex justify-end ${deliveryStep === 2 ? "block " : "hidden"}`}
+        className={`shippingContainer py-7 px-5 flex justify-end ${
+          deliveryStep === 2 ? "block " : "hidden"
+        }`}
       >
         <Button
           isLoading={false}

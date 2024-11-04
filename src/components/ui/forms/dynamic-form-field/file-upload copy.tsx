@@ -20,14 +20,21 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({ previewUrls }) => {
   return (
     <div
-      className={` gap-x-2 bg-warning w-full ${previewUrls && previewUrls.length > 0 ? "flex flex-col-reverse " : "flex"}`}
+      className={` gap-x-2 bg-warning w-full ${
+        previewUrls && previewUrls.length > 0
+          ? "flex flex-col-reverse "
+          : "flex"
+      }`}
     >
       <div
-        className={` bg-red-100 overflow-x-auto ${previewUrls && previewUrls.length > 0 && "mt-1 flex gap-x-2"}`}
+        className={` bg-red-100 overflow-x-auto ${
+          previewUrls && previewUrls.length > 0 && "mt-1 flex gap-x-2"
+        }`}
       >
         {previewUrls && previewUrls.length > 0 ? (
-          previewUrls.map((previewUrl) => (
+          previewUrls.map((previewUrl, index) => (
             <img
+              key={index}
               src={previewUrl}
               alt="preview"
               className="w-40 h-40 object-cover rounded"

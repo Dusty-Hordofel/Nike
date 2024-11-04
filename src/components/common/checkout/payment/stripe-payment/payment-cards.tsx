@@ -32,6 +32,7 @@ const PaymentCards = ({
         {paymentMethods.data.cardsWithLast4.map(
           ({ id, brand, last4, paymentMethodId, isActive }: any) => (
             <PaymentCard
+              key={id}
               id={id}
               last4={last4}
               isActive={isActive}

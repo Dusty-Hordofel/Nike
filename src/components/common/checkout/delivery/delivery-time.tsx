@@ -9,8 +9,8 @@ const DeliveryTime = ({ deliveryStep }: { deliveryStep: number | null }) => {
           {deliveryStep === 3
             ? "Délai de livraison"
             : deliveryStep === 2
-              ? "Choisis ton délai de livraison"
-              : ""}
+            ? "Choisis ton délai de livraison"
+            : ""}
         </h3>
         <span
           id="shippingMethodTooltipWrapper"
@@ -45,8 +45,8 @@ const DeliveryTime = ({ deliveryStep }: { deliveryStep: number | null }) => {
               hidden={true}
             >
               <p className="mb2-sm">
-                Les estimations d'expédition tiennent compte des week-ends et
-                des jours fériés.{" "}
+                Les estimations d&apos;expédition tiennent compte des week-ends
+                et des jours fériés.{" "}
                 <a
                   href="http://help-en-us.nike.com/app/answer/article/shipping-delivery/a_id/19279/p/3897"
                   className="text-color-white css-r11el"
@@ -58,8 +58,8 @@ const DeliveryTime = ({ deliveryStep }: { deliveryStep: number | null }) => {
                 </a>
               </p>
               <p className="">
-                La livraison sous 24&nbsp;heures n'est pas disponible pour les
-                sites difficiles d'accès.
+                La livraison sous 24&nbsp;heures n&apos;est pas disponible pour
+                les sites difficiles d&apos;accès.
               </p>
             </div>
           </button>
@@ -67,12 +67,18 @@ const DeliveryTime = ({ deliveryStep }: { deliveryStep: number | null }) => {
       </div>
       <div
         data-attr="shippingContainer"
-        className={`shippingContainer ${deliveryStep === 2 ? "block border-2 rounded-lg border-black-200 text-black-200 p-4 " : deliveryStep === 3 ? "text-gray-500 block" : "hidden"} `}
+        className={`shippingContainer ${
+          deliveryStep === 2
+            ? "block border-2 rounded-lg border-black-200 text-black-200 p-4 "
+            : deliveryStep === 3
+            ? "text-gray-500 block"
+            : "hidden"
+        } `}
       >
         <p data-attr="shipping-preview-method">
           Gratuit
           <br />
-          <span>Livraison d'ici le&nbsp;mer. 26 juin</span>
+          <span>Livraison d&apos;ici le&nbsp;mer. 26 juin</span>
         </p>
       </div>
     </div>

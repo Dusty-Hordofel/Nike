@@ -18,16 +18,19 @@ const DeliveryAddresses = ({
   onActiveSection,
   onAddressId,
 }: any) => {
-  return deliveryAddresses.map((address: DeliveryAddressesProps) => (
-    <DeliveryAddress
-      address={address}
-      handleScrollToTop={handleScrollToTop}
-      handleSetActiveAddress={handleSetActiveAddress}
-      onDeliveryStep={onDeliveryStep}
-      onActiveSection={onActiveSection}
-      onAddressId={onAddressId}
-    />
-  ));
+  return deliveryAddresses.map(
+    (address: DeliveryAddressesProps, index: number) => (
+      <DeliveryAddress
+        key={index}
+        address={address}
+        handleScrollToTop={handleScrollToTop}
+        handleSetActiveAddress={handleSetActiveAddress}
+        onDeliveryStep={onDeliveryStep}
+        onActiveSection={onActiveSection}
+        onAddressId={onAddressId}
+      />
+    )
+  );
 };
 
 export default DeliveryAddresses;

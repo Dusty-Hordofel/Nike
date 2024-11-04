@@ -90,7 +90,7 @@ const CookiesPage = () => {
                       Permet aux fonctionnalités principales de mémoriser ta
                       langue, ton emplacement et le contenu de ton panier.
                       Assure aussi la sécurité, la gestion du réseau et
-                      l'accessibilité.
+                      l&apos;accessibilité.
                     </p>
                   </div>
                   <div
@@ -112,10 +112,10 @@ const CookiesPage = () => {
                         <div className="nds-box css-vdup32 e161jrzw0">
                           <div className="nds-box css-1eth16k e161jrzw0">
                             <p className="nds-text css-gv2gi2 e1yhcai00 appearance-body3 color-secondary weight-regular">
-                              Autorise l'utilisation des données
+                              Autorise l&apos;utilisation des données
                               comportementales pour optimiser les performances,
                               étudier tes interactions avec nos sites et apps et
-                              améliorer l'expérience Nike.
+                              améliorer l&apos;expérience Nike.
                             </p>
                           </div>
                         </div>
@@ -238,7 +238,7 @@ const CookiesPage = () => {
                         <div className="nds-box css-vdup32 e161jrzw0">
                           <div className="nds-box css-1eth16k e161jrzw0">
                             <p className="nds-text css-gv2gi2 e1yhcai00 appearance-body3 color-secondary weight-regular">
-                              Autorise l'utilisation des données
+                              Autorise l&apos;utilisation des données
                               comportementales, avec, entre autres, des cookies,
                               pour améliorer ton expérience et te proposer du
                               contenu pertinent sur les plateformes et dans les
@@ -365,7 +365,7 @@ const CookiesPage = () => {
                             <p className="nds-text css-gv2gi2 e1yhcai00 appearance-body3 color-secondary weight-regular">
                               Autorise le partage de données comportementales
                               avec des partenaires publicitaires. Ces données
-                              servent à améliorer et à suivre l'expérience
+                              servent à améliorer et à suivre l&apos;expérience
                               publicitaire personnalisée sur des sites
                               partenaires.
                             </p>

@@ -15,7 +15,6 @@ import CheckoutHeader from "@/components/common/checkout/checkout-section-title"
 import DeliveryAddressSummary from "./delivery-address-summary";
 import DeliveryModeSelector, { DeliveryMode } from "./delivery-mode-selector";
 import DeliveryTime from "./delivery-time";
-import { useDeliveryContext } from "@/context/checkout/delivery-context";
 import CheckoutSectionHeader from "../checkout-section-header";
 import DeliveryFormElements from "./delivery-form-elements";
 import {
@@ -26,6 +25,7 @@ import {
   useUpdateDeliveryAddressStatus,
 } from "@/hooks/user/delivery-section";
 import { useQueryClient } from "@tanstack/react-query";
+import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
 
 const DeliverySection2 = ({
   deliveryAddress,
@@ -89,7 +89,13 @@ const DeliverySection2 = ({
       setActiveSection("payment");
       reset(deliveryAddress.activeDeliveryAddress.activeAddress);
     }
-  }, [deliveryAddress.isSuccess, deliveryAddress.activeDeliveryAddress]);
+  }, [
+    deliveryAddress.isSuccess,
+    deliveryAddress.activeDeliveryAddress,
+    reset,
+    setActiveSection,
+    setDeliveryStep,
+  ]);
 
   useEffect(() => {
     if (
@@ -248,7 +254,9 @@ const DeliverySection2 = ({
       </div>
 
       <div
-        className={`shippingContainer py-7 px-5 flex justify-end ${deliveryStep === 2 ? "block " : "hidden"}`}
+        className={`shippingContainer py-7 px-5 flex justify-end ${
+          deliveryStep === 2 ? "block " : "hidden"
+        }`}
       >
         <Button
           isLoading={false}

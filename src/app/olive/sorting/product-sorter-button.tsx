@@ -31,7 +31,8 @@ const ProductSorterButton = ({
       // Nettoie l'écouteur d'événements lors du démontage du composant
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
+
   return (
     <>
       <SortButton

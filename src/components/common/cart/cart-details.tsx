@@ -14,7 +14,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-// Props for PromoCodeSection
 type PromoCodeSectionProps = {
   isOpen: boolean;
   setIsOpen: Dispatch<React.SetStateAction<boolean>>;
@@ -23,21 +22,14 @@ type PromoCodeSectionProps = {
   couponCode: string;
 };
 
-// Main component props
 type CheckoutProps = {};
 
-// Main Details component
-const CartDetails: React.FC<CheckoutProps> = (props) => {
+const CartDetails = (props: CheckoutProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
 
   const { cartItems, cartTotal, orderTotal, shipping, appliedCoupon } =
     useAppSelector((state) => state.cart);
-  // console.log("🚀 ~ cartItems:Details", cartItems);
-  console.log("🚀 ~ cartItems:", cartItems);
-  // console.log("🚀 ~ appliedCoupon: APP", appliedCoupon);
-  // console.log("🚀 ~ couponCode:", couponCode);
-  console.log("🚀 ~ coupon:", couponCode);
 
   const handleSaveCart = async () => {
     const saveCart = await saveCartItems(cartItems, appliedCoupon?.code);
@@ -49,7 +41,7 @@ const CartDetails: React.FC<CheckoutProps> = (props) => {
   useEffect(() => {
     const couponCode = appliedCoupon?.code;
     if (couponCode) setCouponCode(couponCode);
-  }, [couponCode]);
+  }, [couponCode, appliedCoupon?.code]);
 
   // const couponCode =appliedCoupon?.code;
 
@@ -180,7 +172,9 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
 }) => {
   return (
     <div
-      className={`flex justify-between ${isTotal ? "py-4 my-3 border-t border-b border-[#E5E5E5]" : "mb-2"}`}
+      className={`flex justify-between ${
+        isTotal ? "py-4 my-3 border-t border-b border-[#E5E5E5]" : "mb-2"
+      }`}
     >
       <span className="w-[387px] inline-block bg-success">{label} </span>
       <span>{value}</span>
