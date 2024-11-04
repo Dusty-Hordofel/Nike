@@ -7,7 +7,7 @@ import React from "react";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
 import { useQuery } from "@tanstack/react-query";
-import Carousel from "@/components/ui/carousels/carousel";
+import MediaCarousel from "@/components/ui/carousels/media-carousel";
 import {
   HeroBanner as VideoBanner,
   HeroBanner as ImageBanner,
@@ -119,7 +119,7 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
 
       <div className="my-24">
         <h3 className="px-12 text-2xl">Ces articles devraient te plaire</h3>
-        <Carousel title="" data={NewThisWeek}>
+        <MediaCarousel title="" data={NewThisWeek}>
           {(slide) => (
             <CarouselContent carouselContentClassName="mt-[36px]">
               <>
@@ -129,7 +129,7 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
               </>
             </CarouselContent>
           )}
-        </Carousel>
+        </MediaCarousel>
       </div>
     </div>
   );

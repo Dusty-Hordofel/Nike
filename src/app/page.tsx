@@ -20,7 +20,7 @@ import HomeProductsCategories from "@/components/common/home-products-categories
 import Navbar from "@/components/common/navbar/Navbar";
 import { buttonVariants } from "@/components/ui/buttons/button/button";
 
-import Carousel from "@/components/ui/carousels/carousel";
+import MediaCarousel from "@/components/ui/carousels/media-carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -57,7 +57,7 @@ export default function Home() {
         {...bannerVideo}
       />
 
-      <Carousel
+      <MediaCarousel
         title="En ce moment"
         data={AtTheMoment}
         imageClassName="h-[571px]"
@@ -67,9 +67,9 @@ export default function Home() {
             <h3 className="text-xl font-medium">{slide.title}</h3>
           </CarouselContent>
         )}
-      </Carousel>
+      </MediaCarousel>
 
-      <Carousel
+      <MediaCarousel
         title="Nos modèles iconiques"
         data={OurIconicModels}
         imageClassName="h-[311px]"
@@ -87,9 +87,9 @@ export default function Home() {
             </Link>
           </CarouselContent>
         )}
-      </Carousel>
+      </MediaCarousel>
 
-      <Carousel
+      <MediaCarousel
         title="Tout pour ton sport"
         data={AllForYourSport}
         imageClassName="h-[311px]"
@@ -107,9 +107,9 @@ export default function Home() {
             </Link>
           </CarouselContent>
         )}
-      </Carousel>
+      </MediaCarousel>
 
-      <Carousel title="Nouveau cette semaine" data={NewThisWeek}>
+      <MediaCarousel title="Nouveau cette semaine" data={NewThisWeek}>
         {(slide) => (
           <CarouselContent carouselContentClassName="mt-[36px]">
             <>
@@ -119,9 +119,9 @@ export default function Home() {
             </>
           </CarouselContent>
         )}
-      </Carousel>
+      </MediaCarousel>
 
-      <Carousel
+      <MediaCarousel
         title="Plus d'articles"
         data={MoreArticles}
         imageClassName="h-[571px]"
@@ -139,9 +139,9 @@ export default function Home() {
             </Link>
           </CarouselContent>
         )}
-      </Carousel>
+      </MediaCarousel>
 
-      <Carousel
+      <MediaCarousel
         title="Accès Membre Nike"
         data={NikeMemberAccess}
         imageClassName="h-[458px]"
@@ -161,7 +161,7 @@ export default function Home() {
             </Link>
           </CarouselContent>
         )}
-      </Carousel>
+      </MediaCarousel>
       <HomeProductsCategories categories={categories} />
 
       <footer className="p-12 border-t border-gray-500 text-sm">

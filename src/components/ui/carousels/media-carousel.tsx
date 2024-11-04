@@ -13,7 +13,7 @@ interface CarousselProps {
   children: (slide: TrendSlidesProps) => React.ReactNode; //
 }
 
-const Carousel = ({
+const MediaCarousel = ({
   title,
   data,
   imageClassName,
@@ -94,4 +94,4 @@ const Carousel = ({
   );
 };
 
-export default Carousel;
+export default MediaCarousel;
