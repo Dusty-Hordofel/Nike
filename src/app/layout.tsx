@@ -5,6 +5,8 @@ import "../styles/globals.css";
 import { helvetica } from "@/assets/fonts/helvetica/helvetica";
 // import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/ui/client-only";
+import Providers from "@/components/providers/providers";
+// import Providers from "@/components/providers/providers";
 // import dynamic from "next/dynamic";
 // import { DeliveryProvider } from "@/context/checkout/delivery-context";
 // import { getUserActiveAdress } from "@/actions/address/user-address.actions";
@@ -26,9 +28,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${helvetica.className} max-w-[1924px]`}>
-        {/* <Providers> */}
-        <ClientOnly>{children}</ClientOnly>
-        {/* </Providers> */}
+        <Providers>
+          <ClientOnly>{children}</ClientOnly>
+        </Providers>
       </body>
     </html>
   );
