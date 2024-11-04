@@ -9,26 +9,9 @@ export default async function Providers({
 }) {
   const session = await auth();
   console.log("🚀 ~ session:", session);
-
   return (
     <SessionProvider session={session}>
       <ClientProviders>{children}</ClientProviders>
     </SessionProvider>
   );
 }
-
-// import React from 'react'
-
-// type Props = {}
-
-// const Providers = async ({ children }: { children: React.ReactNode }) => {
-//   const session = await auth();
-//   console.log("🚀 ~ session:", session);
-//   return (
-//     <SessionProvider session={session}>
-//       <ClientProviders>{children}</ClientProviders>
-//     </SessionProvider>
-//   );
-// };
-
-// export default Providers;
