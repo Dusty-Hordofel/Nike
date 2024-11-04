@@ -81,7 +81,7 @@ export async function POST(
       { success: true, error: false, cart },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log("🚀 ~ getCart ~ error:", error);
     return NextResponse.json(
       { error: "An error occurred while loading cart items" },
@@ -91,7 +91,7 @@ export async function POST(
 }
 
 export const DELETE = auth(async (req) => {
-  console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+  console.log("🚀 ~ DELETE ~ req:", req.auth?.user._id);
 
   if (!req.auth) {
     return NextResponse.json(
@@ -115,11 +115,8 @@ export const DELETE = auth(async (req) => {
     }
 
     const cart = await Cart.findOneAndDelete({
-      userId: dbUser._id,
+      user: dbUser._id,
     });
-    // const cart = await Cart.findOneAndDelete({
-    //   user: dbUser._id,
-    // });
 
     if (!cart) {
       return NextResponse.json(
