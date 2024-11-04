@@ -6,6 +6,7 @@ import { helvetica } from "@/assets/fonts/helvetica/helvetica";
 // import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/ui/client-only";
 import Providers from "@/components/providers/providers";
+import Components from "@/components/providers/components";
 // import Providers from "@/components/providers/providers";
 // import MyComponent from "@/components/providers/providers";
 // import Providers from "@/components/providers/providers";
@@ -34,7 +35,9 @@ export default async function RootLayout({
       <body className={`${helvetica.className} max-w-[1924px]`}>
         {/* <Providers>
           <ClientOnly> */}
-        <Providers>{children}</Providers>
+        <Providers>
+          <Components>{children}</Components>
+        </Providers>
         {/* </ClientOnly>
         </Providers> */}
       </body>
