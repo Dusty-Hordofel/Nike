@@ -138,6 +138,7 @@ const ProductPage = () => {
                 </div>
                 {product.subProducts.map(({ color }: any) => (
                   <div
+                    key={color._id}
                     style={{
                       width: "100%",
                       height: "100%",
