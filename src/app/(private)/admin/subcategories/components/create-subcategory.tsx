@@ -1,12 +1,7 @@
 import React from "react";
-// import CategoryForm from "./category-form";
-import { CategoryFormProps } from "@/@types/admin/admin.categories.interface";
-import Modal from "@/components/ui/modals/modal";
-import CategoryForm from "../../categories/components/category-form";
 import SubCategoryForm from "./subcategory-form";
-
 import { useFormContext } from "react-hook-form";
-import { SubCategoryFormData } from "@/schemas/user/product.schema";
+import { SubCategoryFormData } from "@/schemas/products/subcategory.schema";
 
 const CreateSubCategory = ({
   handleFileChange,
@@ -20,12 +15,8 @@ const CreateSubCategory = ({
   const {
     register,
     formState: { errors },
-    control,
-    watch,
-    getValues,
     setValue,
     clearErrors,
-    trigger,
   } = useFormContext<SubCategoryFormData>();
 
   return (
