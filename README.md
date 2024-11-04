@@ -1210,6 +1210,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 74. Gestion des erreurs affichées par Nextjs(7)
 
+### 74. Gestion des erreurs affichées par Nextjs(8)
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
