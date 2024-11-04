@@ -2,16 +2,19 @@ import { isValidObjectId } from "mongoose";
 import Cart from "@/models/cart.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
+
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 
 export const GET = auth(async (req) => {
-  console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+  // console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
 
   if (!req.auth) {
     return NextResponse.json(
       { error: true, message: "unauthorized" },
-      { status: 401 }
+      {
+        status: 401,
+      }
     );
   }
 
@@ -23,8 +26,11 @@ export const GET = auth(async (req) => {
     });
 
     if (!dbUser) {
-      return NextResponse.json(
-        { error: true, message: "Unauthorized User" },
+      return new NextResponse(
+        JSON.stringify({
+          error: true,
+          message: "Unauthorized User",
+        }),
         { status: 400 }
       );
     }
@@ -32,18 +38,30 @@ export const GET = auth(async (req) => {
     const cart = await Cart.findOne({ user: dbUser._id });
 
     if (!cart) {
-      return NextResponse.json(
-        { error: true, message: "cart not found" },
-        { status: 400 }
+      return new NextResponse(
+        JSON.stringify({
+          error: true,
+          message: "cart not found",
+        }),
+        {
+          status: 400,
+        }
       );
     }
 
     return NextResponse.json(
       { success: true, error: false, cart },
-      { status: 200 }
+      {
+        status: 200,
+      }
     );
   } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: error.message },
+      {
+        status: 500,
+      }
+    );
   }
 });
 
@@ -53,17 +71,27 @@ export async function POST(
 ) {
   try {
     if (!isValidObjectId(userId)) {
-      return NextResponse.json(
-        { success: false, error: true, message: "Unauthorized" },
+      return new NextResponse(
+        JSON.stringify({
+          success: false,
+          error: true,
+          message: "Unauthorized",
+        }),
         { status: 400 }
       );
     }
 
-    const dbUser = await User.findOne({ _id: userId });
+    const dbUser = await User.findOne({
+      _id: userId,
+    });
 
     if (!dbUser) {
-      return NextResponse.json(
-        { success: true, error: false, message: "Unauthorized User" },
+      return new NextResponse(
+        JSON.stringify({
+          success: true,
+          error: false,
+          message: "Unauthorized User",
+        }),
         { status: 400 }
       );
     }
@@ -71,20 +99,33 @@ export async function POST(
     const cart = await Cart.findOne({ user: dbUser._id });
 
     if (!cart) {
-      return NextResponse.json(
-        { success: true, error: false, message: "cart not found" },
-        { status: 400 }
+      return new NextResponse(
+        JSON.stringify({
+          success: true,
+          error: false,
+          message: "cart not found",
+        }),
+        {
+          status: 400,
+        }
       );
     }
 
     return NextResponse.json(
       { success: true, error: false, cart },
-      { status: 200 }
+      {
+        status: 200,
+      }
     );
   } catch (error) {
     console.log("🚀 ~ getCart ~ error:", error);
+
     return NextResponse.json(
-      { error: "An error occurred while loading cart items" },
+      {
+        success: false,
+        error: true,
+        message: "An error occurred while loading cart items",
+      },
       { status: 500 }
     );
   }
@@ -96,7 +137,9 @@ export const DELETE = auth(async (req) => {
   if (!req.auth) {
     return NextResponse.json(
       { error: true, message: "unauthorized" },
-      { status: 401 }
+      {
+        status: 401,
+      }
     );
   }
 
@@ -108,8 +151,11 @@ export const DELETE = auth(async (req) => {
     });
 
     if (!dbUser) {
-      return NextResponse.json(
-        { error: true, message: "Unauthorized User" },
+      return new NextResponse(
+        JSON.stringify({
+          error: true,
+          message: "Unauthorized User",
+        }),
         { status: 400 }
       );
     }
@@ -117,13 +163,14 @@ export const DELETE = auth(async (req) => {
     const cart = await Cart.findOneAndDelete({
       userId: dbUser._id,
     });
-    // const cart = await Cart.findOneAndDelete({
-    //   user: dbUser._id,
-    // });
 
     if (!cart) {
       return NextResponse.json(
-        { success: false, error: true, message: "User cart not found" },
+        {
+          success: false,
+          error: true,
+          message: "User cart not found",
+        },
         { status: 404 }
       );
     }
@@ -132,11 +179,18 @@ export const DELETE = auth(async (req) => {
       {
         success: true,
         error: false,
-        message: "User cart deleted successfully",
+        message: "User cart  deleted successfully",
       },
       { status: 200 }
     );
   } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: error.message },
+      {
+        status: 500,
+      }
+    );
   }
 });
+
+NextResponse.json;
