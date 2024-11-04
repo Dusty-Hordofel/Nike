@@ -6,7 +6,7 @@ import { helvetica } from "@/assets/fonts/helvetica/helvetica";
 // import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/ui/client-only";
 import Providers from "@/components/providers/providers";
-import MyComponent from "@/components/providers/MyComponent";
+import MyComponent from "@/components/providers/my-component";
 // import Providers from "@/components/providers/providers";
 // import Providers from "@/components/providers/providers";
 // import Providers from "@/components/providers/providers";
