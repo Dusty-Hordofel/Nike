@@ -11,10 +11,13 @@ export async function POST(req: NextRequest) {
 
     const test = await Coupon.findOne({ coupon });
     if (test) {
-      return new Response(
-        JSON.stringify({
-          error: "This Coupon name already exists, try with a different name.",
-        }),
+      return NextResponse.json(
+        {
+          error: true,
+          success: false,
+          message:
+            "This Coupon name already exists, try with a different name.",
+        },
         { status: 400 }
       );
     }
@@ -28,12 +31,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        success: "Coupon created successfully !",
-        // coupons: await Coupon.find({}),
+        error: false,
+        success: true,
+        mesage: "Coupon created successfully !",
       },
       { status: 201 }
     );
   } catch (error) {
-    return NextResponse.json({ error }), { status: 500 };
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
