@@ -1,4 +1,3 @@
-// import { isValidObjectId } from "@/lib/utils";
 import { isValidObjectId } from "mongoose";
 import Cart from "@/models/cart.model";
 import User from "@/models/user.model";
@@ -8,10 +7,10 @@ import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 
 export const GET = auth(async (req) => {
-  console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+  // console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
 
   if (!req.auth) {
-    return Response.json(
+    return NextResponse.json(
       { error: true, message: "unauthorized" },
       {
         status: 401,
@@ -37,7 +36,7 @@ export const GET = auth(async (req) => {
     }
 
     const cart = await Cart.findOne({ user: dbUser._id });
-    // console.log("🚀 ~ cart:", cart);
+
     if (!cart) {
       return new NextResponse(
         JSON.stringify({
@@ -50,16 +49,14 @@ export const GET = auth(async (req) => {
       );
     }
 
-    // console.log("🚀 ~ getCart ~ cart:", cart);
-
-    return new NextResponse(
-      JSON.stringify({ success: true, error: false, cart }),
+    return NextResponse.json(
+      { success: true, error: false, cart },
       {
         status: 200,
       }
     );
   } catch (error: any) {
-    return Response.json(
+    return NextResponse.json(
       { message: error.message },
       {
         status: 500,
@@ -100,7 +97,7 @@ export async function POST(
     }
 
     const cart = await Cart.findOne({ user: dbUser._id });
-    // console.log("🚀 ~ cart:", cart);
+
     if (!cart) {
       return new NextResponse(
         JSON.stringify({
@@ -114,17 +111,23 @@ export async function POST(
       );
     }
 
-    // console.log("🚀 ~ getCart ~ cart:", cart);
-
-    return new NextResponse(
-      JSON.stringify({ success: true, error: false, cart }),
+    return NextResponse.json(
+      { success: true, error: false, cart },
       {
         status: 200,
       }
     );
   } catch (error) {
     console.log("🚀 ~ getCart ~ error:", error);
-    return { error: "An error occurred while loading cart items" };
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: true,
+        message: "An error occurred while loading cart items",
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -132,7 +135,7 @@ export const DELETE = auth(async (req) => {
   console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
 
   if (!req.auth) {
-    return Response.json(
+    return NextResponse.json(
       { error: true, message: "unauthorized" },
       {
         status: 401,
@@ -181,7 +184,7 @@ export const DELETE = auth(async (req) => {
       { status: 200 }
     );
   } catch (error: any) {
-    return Response.json(
+    return NextResponse.json(
       { message: error.message },
       {
         status: 500,
@@ -189,3 +192,5 @@ export const DELETE = auth(async (req) => {
     );
   }
 });
+
+NextResponse.json;
