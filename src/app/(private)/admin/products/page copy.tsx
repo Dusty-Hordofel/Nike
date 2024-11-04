@@ -12,6 +12,7 @@ import {
 } from "@/hooks/admin/products/use-admin-products.hook";
 import QueryStatus from "@/components/ui/query-status";
 import ProductFormProvider from "@/app/(private)/admin/products/components/form-provider";
+import useProductForm from "@/hooks/admin/products/use-product-form";
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -27,16 +28,16 @@ const ProductPage = () => {
   const allSubCategories = useGetSubCategoriesByParent(selectedCategory, true);
 
   // we will get these values using useProductForm instead of using useModal, i just want to pass element using  children and useModal
-  const {
-    isResultModalOpen,
-    closeResultModal,
-    resultModalContent,
-    openModal,
-    closeModal,
-    isModalOpen,
-    formMode,
-    // entityToEdit,
-  } = useModal();
+  // const {
+  //   isResultModalOpen,
+  //   closeResultModal,
+  //   resultModalContent,
+  //   openModal,
+  //   closeModal,
+  //   isModalOpen,
+  //   formMode,
+  //   // entityToEdit,
+  // } = useModal();
 
   // const {
   //   isResultModalOpen,
@@ -49,6 +50,26 @@ const ProductPage = () => {
   //   ...
   // } = useProductForm();
 
+  const {
+    isResultModalOpen,
+    closeResultModal,
+    resultModalContent,
+    openModal,
+    closeModal,
+    isModalOpen,
+    formMode,
+    createProduct,
+    entityToEdit,
+  } = useProductForm();
+
+  useEffect(() => {
+    if (entityToEdit) {
+      setSelectedCategory(entityToEdit.category);
+    } else {
+      setSelectedCategory("");
+    }
+  }, [entityToEdit]);
+
   return (
     <QueryStatus
       isLoading={categories.isLoading || products.isLoading}
@@ -57,7 +78,7 @@ const ProductPage = () => {
     >
       {isModalOpen && (
         <ProductFormProvider>
-          {({ createProduct, entityToEdit }) => {
+          {/* {({ createProduct, entityToEdit }) => {
             console.log("🚀 ~ ProductForm ~ entityToEdit:LOLO", entityToEdit);
             useEffect(() => {
               if (entityToEdit) {
@@ -65,22 +86,22 @@ const ProductPage = () => {
               } else {
                 setSelectedCategory("");
               }
-            }, [entityToEdit]);
+            }, [entityToEdit]); */}
 
-            return (
-              <Modal title="Create your Product" onCloseModal={closeModal}>
-                <ProductForm
-                  setSelectedCategory={setSelectedCategory}
-                  categories={categories}
-                  allSubCategories={allSubCategories}
-                  handleModalClose={closeModal}
-                  createProduct={createProduct}
-                  entityToEdit={entityToEdit}
-                  formMode={formMode}
-                />
-              </Modal>
-            );
-          }}
+          {/* return ( */}
+          <Modal title="Create your Product" onCloseModal={closeModal}>
+            <ProductForm
+              setSelectedCategory={setSelectedCategory}
+              categories={categories}
+              allSubCategories={allSubCategories}
+              handleModalClose={closeModal}
+              createProduct={createProduct}
+              entityToEdit={entityToEdit}
+              formMode={formMode}
+            />
+          </Modal>
+          {/* );
+          }} */}
         </ProductFormProvider>
       )}
 
