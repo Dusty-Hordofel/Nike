@@ -61,7 +61,7 @@ export interface Product {
   name: string;
   description: string;
   slug?: string;
-  category: string;
+  category: string | Types.ObjectId;
   subCategories: string[];
   details?: { name: string; value: string }[];
   questions?: { question: string; answer: string }[];
