@@ -27,12 +27,12 @@ import Link from "next/link";
 import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
 import {
-  Banner as DiscountBanner,
-  Banner as DiscoverBanner,
-  Banner as VideoBanner,
-  Banner as ImageBanner,
-  Banner as SmallDiscountBanner,
-} from "@/components/ui/banner/banner";
+  HeroBanner as DiscountBanner,
+  HeroBanner as DiscoverBanner,
+  HeroBanner as VideoBanner,
+  HeroBanner as ImageBanner,
+  HeroBanner as SmallDiscountBanner,
+} from "@/components/ui/banner/hero-banner";
 
 export default function Home() {
   const cartItems = useAppSelector((state) => state);

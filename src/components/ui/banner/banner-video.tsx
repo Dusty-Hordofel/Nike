@@ -1,5 +1,5 @@
 import React from "react";
-import { VideoProps } from "./banner";
+import { VideoProps } from "./hero-banner";
 import { cn } from "@/lib/utils";
 
 type BannerVideo = Omit<VideoProps, "mediaType">;

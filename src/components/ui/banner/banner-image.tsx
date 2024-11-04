@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageProps } from "./banner";
+import { ImageProps } from "./hero-banner";
 import { cn } from "@/lib/utils";
 
 type BannerImageProps = Omit<ImageProps, "mediaType">;
