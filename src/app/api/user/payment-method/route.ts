@@ -8,7 +8,14 @@ import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 import PaymentMethod from "@/models/payment-method.model";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe/stripe";
+// import { stripe } from "@/lib/stripe/stripe";
+
+import Stripe from "stripe";
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2024-06-20",
+  typescript: true,
+});
 
 // Schéma de validation pour les données entrantes
 const paymentMethodSchema = z.object({
@@ -150,8 +157,9 @@ export const GET = auth(async (req) => {
       savedPaymentMethodIds.map(async (savedPaymentMethodId) => {
         const paymentMethodId = savedPaymentMethodId.paymentMethodId;
 
-        const paymentMethod =
-          await stripe.paymentMethods.retrieve(paymentMethodId);
+        const paymentMethod = await stripe.paymentMethods.retrieve(
+          paymentMethodId
+        );
 
         const last4 = paymentMethod.card?.last4 || "Unknown";
         const brand = paymentMethod.card?.brand || "Unknown";
