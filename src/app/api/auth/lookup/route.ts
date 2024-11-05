@@ -1,8 +1,6 @@
-// import connectDB from "@/config/database";
 import { connectDB } from "@/config/database";
-import { EmailSchema } from "../../../../schemas/user/auth.schema";
-import Product from "@/models/product.model";
 import User from "@/models/user.model";
+import { EmailSchema } from "@/schemas/user/auth.schema";
 
 export async function POST(req: Request) {
   try {
@@ -26,9 +24,6 @@ export async function POST(req: Request) {
     const user = await User.findOne({
       email,
     });
-
-    console.log("🚀 ~ POST ~ user:", user);
-    console.log("🚀 ~ POST ~ user:", user.email);
 
     if (user) {
       return new Response(
