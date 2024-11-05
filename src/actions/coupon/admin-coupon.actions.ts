@@ -2,9 +2,10 @@
 
 import { currentUser } from "@/utils/auth";
 import User from "@/models/user.model";
-import { isValidObjectId } from "@/lib/utils";
+
 import Coupon, { ICoupon } from "@/models/coupon.model";
 import { connectDB } from "@/config/database";
+import { isValidObjectId } from "mongoose";
 
 export async function applyCoupon(couponInfos: ICoupon) {
   try {

@@ -1,4 +1,4 @@
-import { getProduct } from "@/utils/apiRequests";
+import { getProduct } from "@/services/user/products.service";
 import { useQuery } from "@tanstack/react-query";
 
 export const useProduct = (slug: string, style: number, size: number) => {

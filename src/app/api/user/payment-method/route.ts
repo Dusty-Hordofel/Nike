@@ -1,5 +1,3 @@
-import { isValidObjectId } from "mongoose";
-// import { isValidObjectId } from "@/lib/utils";
 import Cart from "@/models/cart.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,7 +6,13 @@ import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 import PaymentMethod from "@/models/payment-method.model";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe/stripe";
+
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2024-06-20",
+  typescript: true,
+});
 
 // Schéma de validation pour les données entrantes
 const paymentMethodSchema = z.object({
@@ -150,8 +154,9 @@ export const GET = auth(async (req) => {
       savedPaymentMethodIds.map(async (savedPaymentMethodId) => {
         const paymentMethodId = savedPaymentMethodId.paymentMethodId;
 
-        const paymentMethod =
-          await stripe.paymentMethods.retrieve(paymentMethodId);
+        const paymentMethod = await stripe.paymentMethods.retrieve(
+          paymentMethodId
+        );
 
         const last4 = paymentMethod.card?.last4 || "Unknown";
         const brand = paymentMethod.card?.brand || "Unknown";

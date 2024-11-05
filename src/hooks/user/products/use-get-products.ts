@@ -5,8 +5,7 @@ export const useProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const response = await fetch(
-        "/api/products"
-        // `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
       );
       if (!response.ok) throw new Error("Failed to fetch products.");
 

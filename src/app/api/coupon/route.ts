@@ -1,6 +1,5 @@
 import { connectDB } from "@/config/database";
 import Coupon from "@/models/coupon.model";
-import Product, { ISubProduct } from "@/models/product.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -8,15 +7,17 @@ export async function POST(req: NextRequest) {
 
   try {
     //add User session after find him on database
-
     await connectDB();
 
     const test = await Coupon.findOne({ coupon });
     if (test) {
-      return new Response(
-        JSON.stringify({
-          error: "This Coupon name already exists, try with a different name.",
-        }),
+      return NextResponse.json(
+        {
+          error: true,
+          success: false,
+          message:
+            "This Coupon name already exists, try with a different name.",
+        },
         { status: 400 }
       );
     }
@@ -28,14 +29,15 @@ export async function POST(req: NextRequest) {
       discount,
     }).save();
 
-    return new Response(
-      JSON.stringify({
-        success: "Coupon created successfully !",
-        // coupons: await Coupon.find({}),
-      }),
+    return NextResponse.json(
+      {
+        error: false,
+        success: true,
+        mesage: "Coupon created successfully !",
+      },
       { status: 201 }
     );
   } catch (error) {
-    return new Response(JSON.stringify({ error }), { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

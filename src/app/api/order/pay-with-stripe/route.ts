@@ -1,11 +1,17 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
-import { stripe } from "@/lib/stripe/stripe"; // Vous avez déjà initialisé stripe ici
+// import { stripe } from "@/lib/stripe/stripe"; // Vous avez déjà initialisé stripe ici
 import Cart from "@/models/cart.model";
 import Order from "@/models/order.model";
 import PaymentMethod from "@/models/payment-method.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2024-06-20",
+  typescript: true,
+});
 
 type PaymentResult = {
   id: string;
