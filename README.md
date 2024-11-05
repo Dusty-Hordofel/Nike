@@ -1212,6 +1212,14 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 74. Gestion des erreurs affichées par Nextjs(8)
 
+### 74. Gestion des erreurs affichées par Nextjs(10)
+
+## Section 4: Redux toolkit - useReducer/context
+
+### 75. Product Page
+
+<!-- ### 75. Remplacement de reduxtoolkit par UseReducer -->
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
