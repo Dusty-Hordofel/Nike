@@ -33,7 +33,9 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
     queryKey: ["products", productSlug, productStyle],
     queryFn: () =>
       fetch(
-        `/api/products/${productSlug}?style=${encodeURIComponent(productStyle)}`
+        `${
+          process.env.NEXT_PUBLIC_BASE_URL
+        }/api/products/${productSlug}?style=${encodeURIComponent(productStyle)}`
       ).then((res) => res.json()),
   });
   // const productQuery = useQuery({

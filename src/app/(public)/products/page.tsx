@@ -39,7 +39,10 @@ const ProductsPage = () => {
   const { data, isLoading, isError } =
     useQuery({
       queryKey: ["products"],
-      queryFn: () => fetch(`/api/products`).then((res) => res.json()),
+      queryFn: () =>
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`).then((res) =>
+          res.json()
+        ),
     }) || [];
 
   useEffect(() => {

@@ -10,7 +10,10 @@ const useActiveDeliveryAddress = () => {
     error,
   } = useQuery({
     queryKey: ["active-address"],
-    queryFn: () => fetch("/api/user/address/active").then((res) => res.json()),
+    queryFn: () =>
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/address/active`).then(
+        (res) => res.json()
+      ),
   });
 
   return {

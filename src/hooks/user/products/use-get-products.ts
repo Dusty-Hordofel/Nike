@@ -15,11 +15,3 @@ export const useProducts = () => {
     },
   });
 };
-
-// export const useProducts = () => {
-//   const categoriesQuery = useQuery({
-//     queryKey: ["products"],
-//     queryFn: () => fetch(`/api/products`).then((res) => res.json()),
-//   });
-//   return categoriesQuery;
-// };

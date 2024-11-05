@@ -4,7 +4,9 @@ export const useActivePaymentMethod = () => {
   const query = useQuery({
     queryKey: ["active-payment-method"],
     queryFn: () =>
-      fetch("/api/user/payment-method/active").then((res) => res.json()),
+      fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/payment-method/active`
+      ).then((res) => res.json()),
   });
 
   return query;

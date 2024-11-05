@@ -12,23 +12,6 @@ const useAdminCreateSubCategory = () => {
   const mutation = useMutation({
     mutationFn: createSubCategory,
 
-    // async (subCategoryInformation: {
-    //   name: string;
-    //   image: string;
-    //   parent: string;
-    // }) => {
-    //   const response = await fetch(
-    //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/subcategories`,
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify({
-    //         ...subCategoryInformation,
-    //       }),
-    //     }
-    //   );
-    //   console.log("SAVE USER", response);
-    //   return response.json();
-    // },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["subCategories"] });
     },
