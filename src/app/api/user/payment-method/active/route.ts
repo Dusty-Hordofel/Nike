@@ -1,5 +1,3 @@
-import { isValidObjectId } from "@/lib/utils";
-import Cart from "@/models/cart.model";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -32,8 +30,6 @@ export const PUT = auth(async (req) => {
       }
     );
   }
-
-  // const [req, { params }] = request;
 
   const { paymentMethodId, id } = await req.json();
 
