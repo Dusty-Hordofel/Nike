@@ -1218,6 +1218,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 75. Product Page
 
+### 76. cart with useReducer/context
+
 <!-- ### 75. Remplacement de reduxtoolkit par UseReducer -->
 
 ## External Links
