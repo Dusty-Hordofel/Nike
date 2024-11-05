@@ -1,5 +1,6 @@
+import { SubProduct } from "@/@types/admin/admin.products.interface";
 import { connectDB } from "@/config/database";
-import Product, { ISubProduct } from "@/models/product.model";
+import Product from "@/models/product.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -22,7 +23,7 @@ export async function GET(
       );
     }
 
-    const subProduct = product.subProducts[style] as ISubProduct;
+    const subProduct = product.subProducts[style] as SubProduct;
     console.log("🚀 ~ subProduct:SUBPRO", subProduct);
     // const priceAfterDiscount =
     //   subProduct.discount > 0
@@ -49,17 +50,24 @@ export async function GET(
       discount: subProduct.discount,
       shipping: product.shipping,
       colors: product.subProducts.map(
-        (subProduct: ISubProduct) => subProduct.color
+        (subProduct: SubProduct) => subProduct.color
       ),
       // priceAfterDiscount: Number(priceAfterDiscount),
       // priceBeforeDiscount: Number(priceBeforeDiscount),
       // quantity,
     };
 
-    return new NextResponse(JSON.stringify({ product: newProduct }), {
-      status: 200,
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({ error }), { status: 500 });
+    return NextResponse.json(
+      { product: newProduct },
+      {
+        status: 200,
+      }
+    );
+  } catch (error: any) {
+    console.log("🚀 ~ error:", error);
+    return NextResponse.json(
+      { error: true, success: false, message: error.message },
+      { status: 500 }
+    );
   }
 }
