@@ -1218,7 +1218,9 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 75. Product Page
 
-### 76. cart with useReducer/context
+### 76. Ajout du suffixe sur les points de terminaison
+
+### 77. cart with useReducer/context (1)
 
 <!-- ### 75. Remplacement de reduxtoolkit par UseReducer -->
 

@@ -7,10 +7,8 @@ export async function GET(
   request: Request,
   { params: { slug } }: { params: { slug: string } }
 ) {
-  console.log("🚀 ~ slug:SLUG", slug);
   const { searchParams } = new URL(request.url);
-  const color = searchParams.get("color");
-  console.log("🚀 ~ color:", color);
+  const style = Number(searchParams.get("style")) || 0;
   // const size = Number(searchParams.get("size")) || 0;
 
   try {
@@ -19,22 +17,31 @@ export async function GET(
     console.log("🚀 ~ product:PROD", product);
 
     if (!product) {
-      return NextResponse.json(
-        { message: "No products found" },
+      return new NextResponse(
+        JSON.stringify({ message: "No products found" }),
         { status: 400 }
       );
     }
 
-    const subProduct = product.subProducts.filter(
-      (subProduct: SubProduct) =>
-        subProduct.color.name.toLocaleLowerCase() === color
-    );
-    console.log("🚀 ~ subProduct:SUBO", subProduct);
+    const subProduct = product.subProducts[style] as SubProduct;
+    console.log("🚀 ~ subProduct:SUBPRO", subProduct);
+    // const priceAfterDiscount =
+    //   subProduct.discount > 0
+    //     ? (
+    //         subProduct.sizes[size].price -
+    //         subProduct.sizes[size].price / subProduct.discount
+    //       ).toFixed(2)
+    //     : subProduct.sizes[size].price;
+
+    // const priceBeforeDiscount = subProduct.sizes[size].price;
+    // const quantity = subProduct.sizes[size].qty;
 
     const newProduct = {
+      // subProduct,
       _id: product._id,
       slug: product.slug,
-      color: color,
+      style: Number(style),
+      // sku: subProduct.sku,
       name: product.name,
       description: product.description,
       images: subProduct.images,
@@ -45,9 +52,10 @@ export async function GET(
       colors: product.subProducts.map(
         (subProduct: SubProduct) => subProduct.color
       ),
+      // priceAfterDiscount: Number(priceAfterDiscount),
+      // priceBeforeDiscount: Number(priceBeforeDiscount),
+      // quantity,
     };
-
-    console.log("🚀 ~ subProduct:SUBPRO", subProduct);
 
     return NextResponse.json(
       { product: newProduct },

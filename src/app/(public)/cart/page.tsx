@@ -2,6 +2,7 @@
 import { Empty } from "@/components/common/cart";
 import CartProductDetails from "@/components/common/cart/CartProductDetails";
 import CartDetails from "@/components/common/cart/cart-details";
+import { useCart } from "@/context/cart/cart-context";
 import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -9,9 +10,9 @@ import React, { useEffect, useState } from "react";
 type Props = {};
 
 const CartProductsPage = (props: Props) => {
-  const { cartItems, cartTotal, orderTotal } = useAppSelector(
-    (state) => state.cart
-  );
+  // const { cartItems, cartTotal, orderTotal } = useAppSelector(
+  //   (state) => state.cart
+  // );
 
   // const [items, setItems] = useState(cartItems);
 
@@ -19,7 +20,14 @@ const CartProductsPage = (props: Props) => {
   //   setItems(cartItems);
   // }, [cartItems]);
 
-  console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
+  // console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
+
+  const {
+    state: { cartItems: products },
+    dispatch,
+  } = useCart();
+
+  console.log("🚀 ~ CartProductsPage ~ products:", products);
 
   return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">
@@ -50,7 +58,7 @@ const CartProductsPage = (props: Props) => {
             </div>
           </div>
           <div className="">
-            {cartItems.length > 0 ? (
+            {/* {cartItems.length > 0 ? (
               <>
                 {cartItems.map((cartItem) => (
                   <CartProductDetails
@@ -61,7 +69,7 @@ const CartProductsPage = (props: Props) => {
               </>
             ) : (
               <Empty />
-            )}
+            )} */}
           </div>
         </div>
         <div className=" bg-warning">

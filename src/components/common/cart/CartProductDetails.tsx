@@ -1,14 +1,16 @@
 "use client";
 import { shoeSizes } from "@/assets/data/sizes";
 import { Delete, FavorisIcon, Gift } from "@/assets/icons";
+import { useCart } from "@/context/cart/cart-context";
+import { CartItem } from "@/context/cart/cart-reducer";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
-import {
-  CartItem,
-  emptyCart,
-  removeItemFromCart,
-  updateQuantity,
-  updateSize,
-} from "@/store/cartSlice";
+// import {
+//   CartItem,
+//   emptyCart,
+//   removeItemFromCart,
+//   updateQuantity,
+//   updateSize,
+// } from "@/store/cartSlice";
 import Link from "next/link";
 import React, { ChangeEvent, FC, useState } from "react";
 
@@ -21,36 +23,59 @@ interface SelectProps {
 }
 
 const CartProductDetails = ({
-  cartItem: { productID, image, name, price, quantity, style, size, cartID },
+  cartItem: { productID, name, quantity, style, size, cartID },
 }: {
   cartItem: CartItem;
 }) => {
-  const dispatch = useAppDispatch();
+  const {
+    state: { cartItems: products },
+    dispatch,
+  } = useCart();
+  // price,image
+  // const dispatch = useAppDispatch();
 
-  const clearCartItems = () => {
-    dispatch(emptyCart());
+  // const clearCartItems = () => {
+  //   dispatch(emptyCart());
+  // };
+
+  // const removeCartItem = () => {
+  //   dispatch(removeItemFromCart(cartID));
+  // };
+
+  const addItemToCart = (item: CartItem) => {
+    dispatch({ type: "ADD_ITEM", payload: item });
   };
 
-  const removeCartItem = () => {
-    dispatch(removeItemFromCart(cartID));
+  const updateQuantity = (cartID: string, quantity: number) => {
+    dispatch({ type: "UPDATE_ITEM", payload: { cartID, quantity } });
   };
+
+  const removeCartItem = (cartID: string) => {
+    dispatch({ type: "REMOVE_ITEM", payload: cartID });
+  };
+
+  // const removeCartItem = () => {
+  //   dispatch(removeItemFromCart(cartID));
+  // };
 
   return (
     <>
       {/* <button onClick={clearCartItems}>Clear</button> */}
       <div className="flex text-base py-6 flex-col">
         <div className="flex">
-          <CartProductImage image={image} />
+          {/* <CartProductImage image={image} /> */}
           <div className="css-1muntc4 ei1batk0 flex-grow">
-            <CartProductInfo
+            {/* <CartProductInfo
               name={name}
               productID={productID}
               size={size}
               style={style}
               cartID={cartID}
               quantity={quantity}
-            />
-            <CartProductActions removeCartItem={removeCartItem} />
+            /> */}
+            {/* <CartProductActions 
+            removeCartItem={removeCartItem} 
+            /> */}
           </div>
         </div>
         <div className="leading-7 text-base font-medium">
@@ -168,6 +193,7 @@ const Select: FC<SelectProps> = ({
   style,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string | number>(selected);
+  console.log("🚀 ~ selectedValue:", selectedValue);
   const dispatch = useAppDispatch();
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -175,11 +201,12 @@ const Select: FC<SelectProps> = ({
 
     if (type === "quantity") {
       setSelectedValue(Number(value));
-      dispatch(updateQuantity({ quantity: Number(value), cartID }));
+      // dispatch(updateQuantity({ quantity: Number(value), cartID }));
     } else if (type === "size") {
       setSelectedValue(value);
       const newCartID = `${productID}_${style}_${shoeSizes.indexOf(value)}`;
-      dispatch(updateSize({ size: value, cartID, newCartID }));
+      console.log("🚀 ~ handleSelectChange ~ newCartID:", newCartID);
+      // dispatch(updateSize({ size: value, cartID, newCartID }));
     }
   };
 

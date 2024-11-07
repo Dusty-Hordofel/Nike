@@ -24,18 +24,18 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
 
   const { slug: productSlug } = params;
 
-  const productStyle = Number(searchParams.style);
-  const selectedSize = Number(searchParams.size) || 0;
+  const productColor = searchParams.color as string;
+  const selectedSize = searchParams.size;
 
   console.log("🚀 ~ ProductPage ~ slug:SLUG", productSlug);
 
   const productQuery = useQuery({
-    queryKey: ["products", productSlug, productStyle],
+    queryKey: ["products", productSlug, productColor],
     queryFn: () =>
       fetch(
         `${
           process.env.NEXT_PUBLIC_BASE_URL
-        }/api/products/${productSlug}?style=${encodeURIComponent(productStyle)}`
+        }/api/products/${productSlug}?color=${encodeURIComponent(productColor)}`
       ).then((res) => res.json()),
   });
   // const productQuery = useQuery({
@@ -50,7 +50,7 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
   if (productQuery.isError) return <p>Error...</p>;
 
   const { product } = productQuery.data;
-  console.log("🚀 ~ ProductPage ~ product:TEST", product);
+  console.log("🚀 ~ ProductPage ~ product:TESTONS", product);
   console.log(
     "🚀 ~ ProductPage ~ product:TESTO",
     decodeURIComponent(productSlug)
@@ -61,14 +61,14 @@ const ProductPage = ({ params, searchParams }: IProduct) => {
     <div className="min-h-screen">
       <div className="max-w-[1200px] mx-auto flex">
         <div className="flex">
-          <ProductImages images={product.images} />
+          {/* <ProductImages images={product.images} /> */}
 
           <div className="">
-            <ProductInformation
+            {/* <ProductInformation
               product={product}
-              productStyle={productStyle}
+              productStyle={productColor}
               selectedSize={selectedSize}
-            />
+            /> */}
           </div>
         </div>
       </div>

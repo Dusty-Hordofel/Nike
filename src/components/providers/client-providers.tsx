@@ -3,6 +3,7 @@ import { FileProvider } from "@/context/file/file-context";
 import ModalProvider from "../../context/modal/modal-context";
 import ReduxProvider from "./redux-provider";
 import TanstackQueryProvider from "./tanstack-query-provider";
+import { CartProvider } from "@/context/cart/cart-context";
 
 export default function ClientProviders({
   children,
@@ -12,9 +13,11 @@ export default function ClientProviders({
   return (
     <TanstackQueryProvider>
       <ReduxProvider>
-        <ModalProvider>
-          <FileProvider>{children}</FileProvider>
-        </ModalProvider>
+        <CartProvider>
+          <ModalProvider>
+            <FileProvider>{children}</FileProvider>
+          </ModalProvider>
+        </CartProvider>
       </ReduxProvider>
     </TanstackQueryProvider>
   );

@@ -7,10 +7,8 @@ import Accordion from "../../accordion/Accordion";
 import { accordionData } from "@/assets/data/accordion";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
-// import { addProductToCart, CartItem } from "@/store/cartSlice";
+import { addProductToCart, CartItem } from "@/store/cartSlice";
 import { Product } from "@/@types/admin/admin.products.interface";
-import { useCart } from "@/context/cart/cart-context";
-import { CartItem } from "@/context/cart/cart-reducer";
 
 type Props = {
   product: Product;
@@ -19,7 +17,7 @@ type Props = {
 };
 
 const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
-  // console.log("🚀 ~ ProductInformation ~ selectedSize:", selectedSize);
+  console.log("🚀 ~ ProductInformation ~ selectedSize:", selectedSize);
   const {
     name,
     category,
@@ -36,86 +34,49 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
     priceAfterDiscount,
     priceBeforeDiscount,
   } = product;
-  // console.log("🚀 ~ ProductInformation ~ sizes:SIZES", sizes[selectedSize]);
-  // console.log("🚀 ~ ProductInformation ~ colors:COLORS", colors[productStyle]);
+  console.log("🚀 ~ ProductInformation ~ colors:", colors);
 
   const sizesInDatabase = sizes.map((size: any) => size.size);
-  // console.log(
-  //   "🚀 ~ ProductInformation ~ sizesInDatabase:DB SIZES",
-  //   sizesInDatabase
-  // );
+  console.log(
+    "🚀 ~ ProductInformation ~ sizesInDatabase:DB SIZES",
+    sizesInDatabase
+  );
 
   const [error, setError] = useState("");
-  console.log("🚀 ~ ProductInformation ~ error:ERROR", error);
-  console.log("🚀 ~ selectedSize:SELECT", selectedSize);
-  console.log("🚀 ~ ProductInformation ~ selectedSize:SE", selectedSize);
 
-  const {
-    state: { cartItems: productsCart },
-    dispatch,
-  } = useCart();
+  const { cartItems } = useAppSelector((state) => state.cart);
+  console.log("🚀 ~ ProductInformation ~ cartItems:", cartItems);
+  console.log("🚀 ~ ProductInformation ~ SIZE:", sizes[selectedSize]);
 
-  const updateQuantity = (cartID: string, quantity: number) => {
-    dispatch({ type: "UPDATE_ITEM", payload: { cartID, quantity } });
-  };
-
-  const removeProductFromCart = (cartID: string) => {
-    dispatch({ type: "REMOVE_ITEM", payload: cartID });
-  };
-
-  // const addProductToCartHandler = () => {
-
-  // }
-
-  // const { cartItems } = useAppSelector((state) => state.cart);
-  // console.log("🚀 ~ ProductInformation ~ cartItems:", cartItems);
-  // console.log("🚀 ~ ProductInformation ~ SIZE:", sizes[selectedSize]);
-
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const cartProduct: CartItem = {
     cartID: `${_id}_${productStyle}_${selectedSize}`,
     productID: _id,
     name,
     style: productStyle,
-    size: sizes[selectedSize],
-    color: colors[productStyle],
-    // price: priceAfterDiscount,
+    size: sizes[selectedSize].size,
+    color: colors[productStyle].color,
+    price: priceAfterDiscount,
     shipping,
-    // priceBeforeDiscount,
-    // image: colors[productStyle].image,
+    priceBeforeDiscount,
+    image: colors[productStyle].image,
     quantity: 1,
   };
-  // console.log(
-  //   "🚀 ~ ProductInformation ~ cartProduct: YAYA",
-  //   colors[productStyle]
-  // );
-  // console.log(
-  //   "🚀 ~ ProductInformation ~ cartProduct: YAYAOSS",
-  //   sizes[selectedSize]
-  // );
   console.log("🚀 ~ ProductInformation ~ cartProduct: MONA", cartProduct);
 
-  console.log("🚀 ~ ProductInformation ~ productsCart:CART", productsCart);
+  function addToCartHandler() {
+    if (!selectedSize) {
+      setError("Please Select a size");
+      return;
+    }
 
-  // addProductToCart
-  function addProductToCartHandler() {
-    // if (!selectedSize) {
-    //   console.log("🚀 ~ addProductToCartHandler ~ selectedSize:", selectedSize);
-    //   setError("Please Select a size");
-    //   return;
-    // }
-
-    // if (quantity < 1) {
-    //   setError("This Product is out of stock.");
-    // }
-    // else {
-    // }
-    // dispatch(addProductToCart(cartProduct));
-    dispatch({ type: "ADD_ITEM", payload: cartProduct });
+    if (quantity < 1) {
+      setError("This Product is out of stock.");
+    } else {
+    }
+    dispatch(addProductToCart(cartProduct));
   }
-  console.log("🚀 ~ ProductInformation ~ products:PRODCART", productsCart);
-  // console.log("🚀 ~ ProductInformation ~ products:PRODCART", productsCart);
 
   return (
     <div className=" w-[456px] flex flex-col gap-2 mt-12 mr-2 pl-6 pt-1 pr-12  font-medium">
@@ -182,7 +143,7 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
               size="large"
               variant="primary"
               fullWidth
-              onClick={addProductToCartHandler}
+              onClick={addToCartHandler}
             >
               Ajouter au panier
             </Button>
