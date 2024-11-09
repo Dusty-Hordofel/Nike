@@ -47,7 +47,6 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   if (productQuery.isError) return <p>Error...</p>;
 
   const { product } = productQuery.data;
-  // console.log("🚀 ~ ProductPage ~ product:PROD", product);
 
   return (
     <div className="min-h-screen">

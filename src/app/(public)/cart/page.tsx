@@ -23,11 +23,11 @@ const CartProductsPage = (props: Props) => {
   // console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
 
   const {
-    state: { cartItems: products },
+    state: { cartItems },
     dispatch,
   } = useCart();
 
-  console.log("🚀 ~ CartProductsPage ~ products:", products);
+  console.log("CART", cartItems);
 
   return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">
@@ -57,8 +57,8 @@ const CartProductsPage = (props: Props) => {
               </Link>
             </div>
           </div>
-          <div className="">
-            {/* {cartItems.length > 0 ? (
+          <div>
+            {cartItems.length > 0 ? (
               <>
                 {cartItems.map((cartItem) => (
                   <CartProductDetails
@@ -69,7 +69,7 @@ const CartProductsPage = (props: Props) => {
               </>
             ) : (
               <Empty />
-            )} */}
+            )}
           </div>
         </div>
         <div className=" bg-warning">

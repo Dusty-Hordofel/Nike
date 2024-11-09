@@ -36,24 +36,17 @@ const ProductInformation = ({
     priceAfterDiscount,
     priceBeforeDiscount,
   } = product;
-  console.log("🚀 ~ sizes:MALABO", sizes);
 
   const [productQuantity, setProductQuantity] = useState<number | undefined>(
     undefined
   );
+  console.log("🚀 ~ productQuantity:TALA", productQuantity);
   const [error, setError] = useState("");
 
   const {
     state: { cartItems: productsCart },
     dispatch,
   } = useCart();
-
-  // const productQuantity = sizes.find(
-  //   (size: { _id: string; size: string; qty: number }) =>
-  //     size.size.toLocaleLowerCase() === selectedSize
-  // )?.qty;
-  // console.log("🚀 ~ productQuantity:YIKA", productQuantity);
-  // console.log("🚀 ~ disabled:VERIFy", productQuantity < 1);
 
   const updateQuantity = (cartID: string, quantity: number) => {
     dispatch({ type: "UPDATE_ITEM", payload: { cartID, quantity } });
@@ -80,23 +73,22 @@ const ProductInformation = ({
   };
 
   // addProductToCart
-  function addProductToCartHandler() {
+  function addProductToCart() {
     setError("");
     if (!selectedSize) {
-      console.log("🚀 ~ addProductToCartHandler ~ selectedSize:", selectedSize);
       setError("Please Select a size");
       return;
     }
 
-    if (quantity < 1) {
-      setError("This Product is out of stock.");
-      return;
-    }
+    // if (quantity === 0) {
+    //   setError("This Product is out of stock.");
+    //   return;
+    // }
 
     dispatch({ type: "ADD_ITEM", payload: cartProduct });
   }
 
-  // console.log("🚀 ~ productsCart:TALA CART PANIER", productsCart);
+  console.log("🚀 ~ productsCart:TALA CART PANIER", productsCart);
 
   return (
     <div className=" w-[456px] flex flex-col gap-2 mt-12 mr-2 pl-6 pt-1 pr-12  font-medium">
@@ -142,6 +134,7 @@ const ProductInformation = ({
         <ProductColors
           slug={slug}
           colors={colors}
+          setError={setError}
           selectedColor={selectedColor}
           productQuantity={productQuantity}
           setProductQuantity={setProductQuantity}
@@ -193,7 +186,7 @@ const ProductInformation = ({
                 error ? "block pt-3 text-red-600 font-normal" : "hidden"
               }`}
             >
-              Merci de sélectionner une taille.
+              {error}
             </p>
           </fieldset>
 
@@ -202,7 +195,7 @@ const ProductInformation = ({
               size="large"
               variant="primary"
               fullWidth
-              onClick={addProductToCartHandler}
+              onClick={addProductToCart}
               disabled={productQuantity != undefined && productQuantity < 1}
             >
               Ajouter au panier

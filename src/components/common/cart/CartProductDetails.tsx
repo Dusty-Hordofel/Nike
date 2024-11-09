@@ -3,14 +3,7 @@ import { shoeSizes } from "@/assets/data/sizes";
 import { Delete, FavorisIcon, Gift } from "@/assets/icons";
 import { useCart } from "@/context/cart/cart-context";
 import { CartItem } from "@/context/cart/cart-reducer";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
-// import {
-//   CartItem,
-//   emptyCart,
-//   removeItemFromCart,
-//   updateQuantity,
-//   updateSize,
-// } from "@/store/cartSlice";
+// import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import Link from "next/link";
 import React, { ChangeEvent, FC, useState } from "react";
 
@@ -23,7 +16,17 @@ interface SelectProps {
 }
 
 const CartProductDetails = ({
-  cartItem: { productID, name, quantity, style, size, cartID },
+  cartItem: {
+    productID,
+    name,
+    quantity,
+    size,
+    cartID,
+    color,
+    image,
+    price,
+    priceBeforeDiscount,
+  },
 }: {
   cartItem: CartItem;
 }) => {
@@ -63,16 +66,18 @@ const CartProductDetails = ({
       {/* <button onClick={clearCartItems}>Clear</button> */}
       <div className="flex text-base py-6 flex-col">
         <div className="flex">
-          {/* <CartProductImage image={image} /> */}
+          <CartProductImage image={image} />
           <div className="css-1muntc4 ei1batk0 flex-grow">
-            {/* <CartProductInfo
+            <CartProductInfo
               name={name}
               productID={productID}
               size={size}
-              style={style}
+              color={color}
               cartID={cartID}
               quantity={quantity}
-            /> */}
+              price={price}
+              priceBeforeDiscount={priceBeforeDiscount}
+            />
             {/* <CartProductActions 
             removeCartItem={removeCartItem} 
             /> */}
@@ -104,16 +109,20 @@ const CartProductInfo = ({
   name,
   productID,
   size,
-  style,
+  color,
   cartID,
   quantity,
+  price,
+  priceBeforeDiscount,
 }: {
   name: string;
   productID: number;
   size: string;
-  style: string;
+  color: string;
   cartID: string;
   quantity: number;
+  price: number;
+  priceBeforeDiscount: number;
 }) => (
   <div className="css-18o14p5 ezci20q3 flex justify-between text-[#707072]">
     <div className="flex flex-col leading-7 tracking-[0.06em]">
@@ -125,23 +134,24 @@ const CartProductInfo = ({
         Blanc/Blanc/Gris fumée clair/Gris fumée clair
       </div>
       <div className="flex">
-        <div className="flex">
+        <div className="flex gap-x-2">
           <label className="css-vvuoo e3co8ie1">Taille / Pointure</label>
-          <Select
+          {/* <Select
             selected={size}
             cartID={cartID}
             productID={productID}
-            style={style}
+            style={color}
             type="size"
-          />
+          /> */}{" "}
+          <span className="underline">{size.toLocaleUpperCase()}</span>
         </div>
-        <div className="flex">
+        {/* <div className="flex">
           <label className="css-vvuoo e3co8ie1">Quantité</label>
           <Select selected={quantity} cartID={cartID} type="quantity" />
-        </div>
+        </div> */}
       </div>
     </div>
-    <Price />
+    <Price price={price} priceBeforeDiscount={priceBeforeDiscount} />
     {/* <Price price={price} /> */}
   </div>
 );
@@ -194,7 +204,7 @@ const Select: FC<SelectProps> = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState<string | number>(selected);
   console.log("🚀 ~ selectedValue:", selectedValue);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -234,17 +244,24 @@ const Select: FC<SelectProps> = ({
   );
 };
 
-const Price = () => (
-  // { price }: { price: string }
+const Price = ({
+  price,
+  priceBeforeDiscount,
+}: {
+  price: number;
+  priceBeforeDiscount: number;
+}) => (
   <div>
     <p className="flex gap-4">
-      <span>
-        <span className="sr-only">Prix d&apos;origine</span>
-        139,99&nbsp;€
-      </span>
+      {price !== priceBeforeDiscount && (
+        <span>
+          <span className="sr-only">Prix d&apos;origine</span>
+          {priceBeforeDiscount}&nbsp;€
+        </span>
+      )}
       <span className="text-black-200">
         <span className="sr-only">Prix de vente</span>
-        90,97&nbsp;€
+        {price}&nbsp;€
       </span>
     </p>
   </div>

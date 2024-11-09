@@ -11,11 +11,13 @@ type ProductColorsProps = {
   productQuantity: number | undefined;
   setProductQuantity: any;
   colors: any;
+  setError: any;
 };
 
 const ProductColors = ({
   slug,
   colors,
+  setError,
   selectedColor,
   productQuantity,
   setProductQuantity,
@@ -23,6 +25,7 @@ const ProductColors = ({
   const [activeColor, setActiveColor] = useState(0);
 
   const handleResetSelection = (index: number) => {
+    setError("");
     setProductQuantity(undefined);
     setActiveColor(index);
   };

@@ -37,10 +37,6 @@ const ProductSizes = ({
             }
             scroll={false}
             key={_id}
-            onClick={() => {
-              setError("");
-              setProductQuantity(qty);
-            }}
           >
             <li
               className={cn(
@@ -50,6 +46,13 @@ const ProductSizes = ({
               )}
               style={{
                 cursor: size ? "pointer" : "default",
+              }}
+              onClick={() => {
+                setError("");
+                setProductQuantity(qty);
+                if (size && qty === 0) {
+                  setError("This size is out of stock");
+                }
               }}
             >
               {size}

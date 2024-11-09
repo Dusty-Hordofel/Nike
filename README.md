@@ -1214,6 +1214,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 74. Gestion des erreurs affichées par Nextjs(10)
 
+### 75. Gestion du panier
+
 ## Section 4: Redux toolkit - useReducer/context
 
 ### 75. Product Page
