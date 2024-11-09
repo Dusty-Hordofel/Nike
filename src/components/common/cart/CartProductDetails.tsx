@@ -131,7 +131,7 @@ const CartProductInfo = ({
       </Link>
       <div className="css-bkv97y eneqjw10">Chaussure pour Homme</div>
       <div className="css-1jw2dak ezci20q2">
-        Blanc/Blanc/Gris fumée clair/Gris fumée clair
+        {color.slice(0, 1).toLocaleUpperCase() + color.slice(1)}
       </div>
       <div className="flex">
         <div className="flex gap-x-2">
