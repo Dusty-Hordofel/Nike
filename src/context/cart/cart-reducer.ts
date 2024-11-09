@@ -12,24 +12,25 @@ import { Reducer } from "react";
 export type CartItem = {
   cartID: string;
   productID: number;
-  // image: string;
-  color: {
-    hexCode: string;
-    image: string;
-    name: string;
-    _id: string;
-  };
+  image: string;
+  // color: {
+  //   hexCode: string;
+  //   image: string;
+  //   name: string;
+  //   _id: string;
+  // };
   name: string;
-  // price: number;
-  // priceBeforeDiscount: number;
+  price: number;
+  priceBeforeDiscount: number;
   quantity: number;
   shipping: number;
-  // color: string;
-  size: {
-    qty: number;
-    size: string;
-    _id: string;
-  };
+  color: string;
+  size: string;
+  // size: {
+  //   qty: number;
+  //   size: string;
+  //   _id: string;
+  // };
 };
 
 export type Coupon = {

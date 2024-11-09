@@ -2,13 +2,8 @@
 import Link from "next/link";
 import ProductSizes from "./product-size";
 import ProductColors from "@/components/common/product/product-details/product-colors";
-// import { Button } from "../../../ui/buttons/button/button";
-// import Accordion from "../../accordion/Accordion";
 import { accordionData } from "@/assets/data/accordion";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
-// import { addProductToCart, CartItem } from "@/store/cartSlice";
-import { Product } from "@/@types/admin/admin.products.interface";
 import { useCart } from "@/context/cart/cart-context";
 import { CartItem } from "@/context/cart/cart-reducer";
 import { Button } from "@/components/ui/buttons/button/button";
@@ -41,15 +36,24 @@ const ProductInformation = ({
     priceAfterDiscount,
     priceBeforeDiscount,
   } = product;
+  console.log("🚀 ~ sizes:MALABO", sizes);
 
+  const [productQuantity, setProductQuantity] = useState<number | undefined>(
+    undefined
+  );
   const [error, setError] = useState("");
-
-  const sizesInDatabase = sizes.map((size: any) => size.size) as string[];
 
   const {
     state: { cartItems: productsCart },
     dispatch,
   } = useCart();
+
+  // const productQuantity = sizes.find(
+  //   (size: { _id: string; size: string; qty: number }) =>
+  //     size.size.toLocaleLowerCase() === selectedSize
+  // )?.qty;
+  // console.log("🚀 ~ productQuantity:YIKA", productQuantity);
+  // console.log("🚀 ~ disabled:VERIFy", productQuantity < 1);
 
   const updateQuantity = (cartID: string, quantity: number) => {
     dispatch({ type: "UPDATE_ITEM", payload: { cartID, quantity } });
@@ -60,7 +64,7 @@ const ProductInformation = ({
   };
 
   // CartItem
-  const cartProduct: any = {
+  const cartProduct: CartItem = {
     cartID: `${_id}_${selectedColor}_${selectedSize}`,
     productID: _id,
     name,
@@ -77,18 +81,22 @@ const ProductInformation = ({
 
   // addProductToCart
   function addProductToCartHandler() {
+    setError("");
     if (!selectedSize) {
       console.log("🚀 ~ addProductToCartHandler ~ selectedSize:", selectedSize);
       setError("Please Select a size");
       return;
     }
 
-    // if (quantity < 1) {
-    //   setError("This Product is out of stock.");
-    // }
+    if (quantity < 1) {
+      setError("This Product is out of stock.");
+      return;
+    }
 
     dispatch({ type: "ADD_ITEM", payload: cartProduct });
   }
+
+  // console.log("🚀 ~ productsCart:TALA CART PANIER", productsCart);
 
   return (
     <div className=" w-[456px] flex flex-col gap-2 mt-12 mr-2 pl-6 pt-1 pr-12  font-medium">
@@ -134,11 +142,12 @@ const ProductInformation = ({
         <ProductColors
           slug={slug}
           colors={colors}
-          name={name}
           selectedColor={selectedColor}
+          productQuantity={productQuantity}
+          setProductQuantity={setProductQuantity}
         />
         <div>
-          <fieldset className="mt-5 mb-8">
+          <fieldset className={`mt-5 mb-8 `}>
             <legend className="flex items-center justify-between w-full">
               <span className="">Sélectionner la taille</span>
               <Link href="/" className="flex ">
@@ -167,13 +176,25 @@ const ProductInformation = ({
                 <span>Guide des tailles</span>
               </Link>
             </legend>
-
-            <ProductSizes
-              selectedSize={selectedSize}
-              sizesInDatabase={sizesInDatabase}
-              selectedColor={selectedColor}
-              slug={slug}
-            />
+            <div
+              className={`${error ? "border-red-600 border rounded-sm" : ""}`}
+            >
+              <ProductSizes
+                selectedSize={selectedSize}
+                sizes={sizes}
+                selectedColor={selectedColor}
+                slug={slug}
+                setError={setError}
+                setProductQuantity={setProductQuantity}
+              />
+            </div>
+            <p
+              className={`${
+                error ? "block pt-3 text-red-600 font-normal" : "hidden"
+              }`}
+            >
+              Merci de sélectionner une taille.
+            </p>
           </fieldset>
 
           <div className="space-y-3 mb-8">
@@ -182,6 +203,7 @@ const ProductInformation = ({
               variant="primary"
               fullWidth
               onClick={addProductToCartHandler}
+              disabled={productQuantity != undefined && productQuantity < 1}
             >
               Ajouter au panier
             </Button>
