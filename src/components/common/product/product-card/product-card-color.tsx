@@ -15,7 +15,7 @@ interface CardColorProps {
         {
           public_url: string;
           url: string;
-        },
+        }
       ]
     >
   >;

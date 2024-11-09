@@ -45,7 +45,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     error: "",
   });
 
-  console.log("🚀 ~ CartProvider ~ state:", state);
+  // console.log("🚀 ~ CartProvider ~ state:", state);
 
   useEffect(() => {
     saveCartToLocalStorage(state.cartItems);

@@ -24,7 +24,7 @@ export type CartItem = {
   // priceBeforeDiscount: number;
   quantity: number;
   shipping: number;
-  style: string;
+  // color: string;
   size: {
     qty: number;
     size: string;

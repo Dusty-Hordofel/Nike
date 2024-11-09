@@ -13,62 +13,53 @@ import {
   HeroBanner as ImageBanner,
 } from "@/components/ui/banner/hero-banner";
 
-interface IProduct {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+interface ProductPageParams {
+  slug: string;
+}
+interface ProductPageSearchParams {
+  [key: string]: string | string[] | undefined;
 }
 
-const ProductPage = ({ params, searchParams }: IProduct) => {
-  // const [selectedSizes, setSelectedSizes] = useState(null);
-  // const [productStyle, setProductStyle] = useState(null);
+interface ProductPageProps {
+  params: ProductPageParams;
+  searchParams: ProductPageSearchParams;
+}
 
+const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const { slug: productSlug } = params;
 
-  const productColor = searchParams.color as string;
-  const selectedSize = searchParams.size;
-
-  console.log("🚀 ~ ProductPage ~ slug:SLUG", productSlug);
+  const selectedColor = searchParams.color as string;
+  const selectedSize = searchParams.size as string;
 
   const productQuery = useQuery({
-    queryKey: ["products", productSlug, productColor],
+    queryKey: ["products", productSlug, selectedColor],
     queryFn: () =>
       fetch(
         `${
           process.env.NEXT_PUBLIC_BASE_URL
-        }/api/products/${productSlug}?color=${encodeURIComponent(productColor)}`
+        }/api/products/${productSlug}?color=${encodeURIComponent(
+          selectedColor
+        )}`
       ).then((res) => res.json()),
   });
-  // const productQuery = useQuery({
-  //   queryKey: ["products", productSlug, productStyle, selectedSize],
-  //   queryFn: () =>
-  //     fetch(
-  //       `/api/products/${productSlug}?style=${encodeURIComponent(productStyle)}&size=${encodeURIComponent(selectedSize)}`
-  //     ).then((res) => res.json()),
-  // });
 
   if (productQuery.isLoading) return <p>Loading...</p>;
   if (productQuery.isError) return <p>Error...</p>;
 
   const { product } = productQuery.data;
-  console.log("🚀 ~ ProductPage ~ product:TESTONS", product);
-  console.log(
-    "🚀 ~ ProductPage ~ product:TESTO",
-    decodeURIComponent(productSlug)
-  );
 
-  // console.log("🚀 ~ ProductPage ~ productsQuery:", productQuery);
   return (
     <div className="min-h-screen">
       <div className="max-w-[1200px] mx-auto flex">
         <div className="flex">
-          {/* <ProductImages images={product.images} /> */}
+          <ProductImages images={product.images} />
 
           <div className="">
-            {/* <ProductInformation
+            <ProductInformation
               product={product}
-              productStyle={productColor}
+              selectedColor={selectedColor}
               selectedSize={selectedSize}
-            /> */}
+            />
           </div>
         </div>
       </div>

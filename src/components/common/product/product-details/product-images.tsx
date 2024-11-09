@@ -66,6 +66,7 @@ const ProductImages = ({ images }: ProductImagesProps) => {
           src={images[currentIndex].url}
           alt="slides"
           key={images[currentIndex].url}
+          className="bg-gray-200 h-full"
         />
         <div className="absolute flex gap-2 bottom-6 right-6">
           <ArrowButton direction="left" onClick={prevSlide} />

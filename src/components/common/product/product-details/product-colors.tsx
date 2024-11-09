@@ -8,35 +8,37 @@ type ProductColorsProps = {
   slug: string;
   subProducts: any;
   name: string;
-  productStyle: number;
+  selectedColor: string;
 };
 
-const ProductColors = ({ slug, colors, productStyle, name }: any) => {
-  const [colorVariants, setColorVariants] = useState<any>(colors);
-
+const ProductColors = ({ slug, colors, selectedColor }: any) => {
   return (
-    <div className="flex gap-2 pb-[10px]">
-      {colorVariants.map(({ image, color }: any, index: number) => (
-        <Link
-          aria-label={name}
-          className="product-card__img-link-overlay"
-          data-el-type="Hero"
-          data-testid="product-card__image-link"
-          key={`${name} ${color}`}
-          href={`/products/${slug}?style=${index}`}
-        >
-          <Image
-            src={image}
-            alt=""
-            width={70.3984}
-            height={70.3984}
-            className={cn(
-              productStyle === index && "border border-black-200",
-              "w-[70.3984px] h-[70.3984px] object-cover rounded hover:border-black-200 border"
-            )}
-          />
-        </Link>
-      ))}
+    // pb-[10px]
+    <div className="flex gap-2 my-8">
+      {colors.map(({ image, hexCode, name, _id }: any, index: number) => {
+        return (
+          <Link
+            aria-label={name}
+            className="product-card__img-link-overlay"
+            data-el-type="Hero"
+            data-testid="product-card__image-link"
+            key={_id}
+            href={`/products/${slug}?color=${name.toLocaleLowerCase()}`}
+          >
+            <Image
+              src={image}
+              alt=""
+              width={70.3984}
+              height={70.3984}
+              className={cn(
+                selectedColor === name.toLocaleLowerCase() &&
+                  "border-2 border-black-200",
+                "w-[70.3984px] h-[70.3984px] object-cover rounded hover:border-black-200 border"
+              )}
+            />
+          </Link>
+        );
+      })}
     </div>
   );
 };

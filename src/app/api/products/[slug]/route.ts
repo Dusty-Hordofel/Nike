@@ -7,16 +7,13 @@ export async function GET(
   request: Request,
   { params: { slug } }: { params: { slug: string } }
 ) {
-  console.log("🚀 ~ slug:SLUG", slug);
   const { searchParams } = new URL(request.url);
-  const color = searchParams.get("color");
-  console.log("🚀 ~ color:", color);
-  // const size = Number(searchParams.get("size")) || 0;
+  const selectedColor = searchParams.get("color");
+  const selectedSize = searchParams.get("size") || "";
 
   try {
     await connectDB();
     let product = await Product.findOne({ slug });
-    console.log("🚀 ~ product:PROD", product);
 
     if (!product) {
       return NextResponse.json(
@@ -25,16 +22,38 @@ export async function GET(
       );
     }
 
-    const subProduct = product.subProducts.filter(
+    const subProduct = product.subProducts.find(
       (subProduct: SubProduct) =>
-        subProduct.color.name.toLocaleLowerCase() === color
+        subProduct.color.name.toLocaleLowerCase() === selectedColor
     );
     console.log("🚀 ~ subProduct:SUBO", subProduct);
+
+    // priceAfterDiscount
+    const priceAfterDiscount =
+      subProduct.discount > 0
+        ? (subProduct.price - subProduct.price / subProduct.discount).toFixed(2)
+        : subProduct.price;
+
+    // priceBeforeDiscount
+    const priceBeforeDiscount = subProduct.price;
+
+    // quantity
+    const quantity = selectedSize
+      ? subProduct.sizes.find(
+          (item: { size: string; qty: number; _id: string }) =>
+            item.size.toLocaleLowerCase() === selectedSize
+        ).qty
+      : subProduct.sizes[0].qty;
+
+    // colors
+    const colors = product.subProducts.map(
+      (subProduct: SubProduct) => subProduct.color
+    );
 
     const newProduct = {
       _id: product._id,
       slug: product.slug,
-      color: color,
+      color: selectedColor,
       name: product.name,
       description: product.description,
       images: subProduct.images,
@@ -42,12 +61,11 @@ export async function GET(
       sizes: subProduct.sizes,
       discount: subProduct.discount,
       shipping: product.shipping,
-      colors: product.subProducts.map(
-        (subProduct: SubProduct) => subProduct.color
-      ),
+      colors,
+      priceAfterDiscount: priceAfterDiscount,
+      priceBeforeDiscount: priceBeforeDiscount,
+      quantity,
     };
-
-    console.log("🚀 ~ subProduct:SUBPRO", subProduct);
 
     return NextResponse.json(
       { product: newProduct },
@@ -56,7 +74,6 @@ export async function GET(
       }
     );
   } catch (error: any) {
-    console.log("🚀 ~ error:", error);
     return NextResponse.json(
       { error: true, success: false, message: error.message },
       { status: 500 }
