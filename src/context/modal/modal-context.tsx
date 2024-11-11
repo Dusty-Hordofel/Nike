@@ -28,6 +28,7 @@ interface ModalContextProps {
   >;
   isUpdateModalOpen: boolean;
   setUpdateModalOpen: Dispatch<SetStateAction<boolean>>;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   entityToEdit: any | null;
   setEntityToEdit: Dispatch<SetStateAction<any | null>>;
   showUpdateModal: (entity: any) => void;
@@ -110,6 +111,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         isCreateModalOpen,
         isResultModalOpen,
         isUpdateModalOpen,
+        setIsModalOpen,
         showCreateModal,
         closeCreateModal,
         showResultModal,

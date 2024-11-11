@@ -22,12 +22,13 @@ const ProductInformation = ({
 }: ProductInformationProps) => {
   const {
     name,
+    subProductID,
     category,
     subProducts,
     subProduct,
     _id,
     slug,
-    sku, //not in the mode IProd
+    sku,
     discount,
     colors,
     sizes,
@@ -40,30 +41,24 @@ const ProductInformation = ({
   const [productQuantity, setProductQuantity] = useState<number | undefined>(
     undefined
   );
-  console.log("🚀 ~ productQuantity:TALA", productQuantity);
+
   const [error, setError] = useState("");
 
   const {
-    state: { cartItems: productsCart },
+    // state: { cartItems: productsCart },
     dispatch,
   } = useCart();
-
-  const updateQuantity = (cartID: string, quantity: number) => {
-    dispatch({ type: "UPDATE_ITEM", payload: { cartID, quantity } });
-  };
-
-  const removeProductFromCart = (cartID: string) => {
-    dispatch({ type: "REMOVE_ITEM", payload: cartID });
-  };
 
   // CartItem
   const cartProduct: CartItem = {
     cartID: `${_id}_${selectedColor}_${selectedSize}`,
     productID: _id,
+    subProductID,
     name,
+    slug,
     color: selectedColor,
     size: selectedSize,
-    price: priceAfterDiscount,
+    priceAfterDiscount,
     shipping,
     priceBeforeDiscount,
     image: colors.find(
@@ -87,8 +82,6 @@ const ProductInformation = ({
 
     dispatch({ type: "ADD_ITEM", payload: cartProduct });
   }
-
-  console.log("🚀 ~ productsCart:TALA CART PANIER", productsCart);
 
   return (
     <div className=" w-[456px] flex flex-col gap-2 mt-12 mr-2 pl-6 pt-1 pr-12  font-medium">

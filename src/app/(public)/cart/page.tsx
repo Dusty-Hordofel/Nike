@@ -1,37 +1,34 @@
 "use client";
-import { Empty } from "@/components/common/cart";
-import CartProductDetails from "@/components/common/cart/CartProductDetails";
-import CartDetails from "@/components/common/cart/cart-details";
+import CartProducts from "@/components/common/cart/cart-products";
+import Empty from "@/components/common/cart/empty/Empty";
+import SelectedProductCartModal from "@/components/common/cart/selected-product-cart-modal";
 import { useCart } from "@/context/cart/cart-context";
-import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import CartSummary from "@/components/common/cart/cart-summary";
 
-type Props = {};
+const CartProductsPage = () => {
+  const { state } = useCart();
 
-const CartProductsPage = (props: Props) => {
-  // const { cartItems, cartTotal, orderTotal } = useAppSelector(
-  //   (state) => state.cart
-  // );
-
-  // const [items, setItems] = useState(cartItems);
-
-  // useEffect(() => {
-  //   setItems(cartItems);
-  // }, [cartItems]);
-
-  // console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
-
-  const {
-    state: { cartItems },
-    dispatch,
-  } = useCart();
-
-  console.log("CART", cartItems);
+  const [cartItems, setCartItems] = useState(state.cartItems);
+  const [selectedCartItem, setSelectedCartItem] = useState<{
+    cartID: string;
+    slug: string;
+    color: string;
+    size: string;
+  } | null>(null);
 
   return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">
       <div className="flex bg-success w-max mx-auto">
+        {selectedCartItem && (
+          <SelectedProductCartModal
+            setCartItems={setCartItems}
+            selectedCartItem={selectedCartItem}
+            setSelectedCartItem={setSelectedCartItem}
+          />
+        )}
+
         <div className="px-2 bg-blue-200">
           <div className="css-1rl87ye e15icfp90 p-3 mb-3 w-[664.750px] border border-[#E5E5E5]">
             <div className="css-ki09ja e15icfp92 leading-7 text-[#707072] text-[16px]">
@@ -57,23 +54,20 @@ const CartProductsPage = (props: Props) => {
               </Link>
             </div>
           </div>
+
           <div>
             {cartItems.length > 0 ? (
-              <>
-                {cartItems.map((cartItem) => (
-                  <CartProductDetails
-                    key={cartItem.cartID}
-                    cartItem={cartItem}
-                  />
-                ))}
-              </>
+              <CartProducts
+                cartItems={cartItems}
+                setSelectedCartItem={setSelectedCartItem}
+              />
             ) : (
               <Empty />
             )}
           </div>
         </div>
         <div className=" bg-warning">
-          <CartDetails />
+          <CartSummary />
         </div>
       </div>
     </main>

@@ -1,8 +1,14 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
-const ProductUnavailable = () => {
+const ProductUnavailable = ({ className }: { className?: string }) => {
   return (
-    <div className="absolute bg-gray-900/40 top-0 left-0 rounded-md">
+    <div
+      className={cn(
+        "absolute bg-gray-900/40 top-0 left-0 rounded-md h-full w-full",
+        className
+      )}
+    >
       <svg
         width="100%"
         height="100%"

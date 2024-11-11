@@ -93,6 +93,7 @@ export const Button = ({
       {...props}
       className={cn(
         buttonVariants({ variant, size, fullWidth }),
+        className,
         disabled &&
           !isLoading &&
           "bg-[#E5E5E5] text-[#CACACB] hover:bg-[#E5E5E5] border-[#E5E5E5] hover:border-[#E5E5E5]"

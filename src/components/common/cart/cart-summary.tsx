@@ -24,7 +24,7 @@ type PromoCodeSectionProps = {
 
 type CheckoutProps = {};
 
-const CartDetails = (props: CheckoutProps) => {
+const CartSummary = (props: CheckoutProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
 
@@ -73,9 +73,7 @@ const CartDetails = (props: CheckoutProps) => {
     <div className="px-2 mb-4 max-w-[404px] w-full">
       <aside data-testid="cart-summary" className="px-2 mb-6 bg-blue-400">
         <h2 className="mb-6 text-2xl font-medium">Récapitulatif</h2>
-        {/* <div className="" onClick={handleApplyCoupon}>
-          OL
-        </div> */}
+
         <PromoCodeSection
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -99,7 +97,7 @@ const CartDetails = (props: CheckoutProps) => {
   );
 };
 
-export default CartDetails;
+export default CartSummary;
 
 // Subcomponent for promo code section
 const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({

@@ -1,36 +1,16 @@
-import { error } from "console";
-import { Reducer } from "react";
-
-// export interface CartItem {
-//   id: string;
-//   name: string;
-//   price: number;
-//   quantity: number;
-//   image: string;
-// }
-
 export type CartItem = {
   cartID: string;
-  productID: number;
+  productID: string;
+  subProductID: string;
   image: string;
-  // color: {
-  //   hexCode: string;
-  //   image: string;
-  //   name: string;
-  //   _id: string;
-  // };
+  slug: string;
   name: string;
-  price: number;
+  priceAfterDiscount: number;
   priceBeforeDiscount: number;
   quantity: number;
   shipping: number;
   color: string;
   size: string;
-  // size: {
-  //   qty: number;
-  //   size: string;
-  //   _id: string;
-  // };
 };
 
 export type Coupon = {
