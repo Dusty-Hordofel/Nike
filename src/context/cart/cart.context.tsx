@@ -8,7 +8,7 @@ import React, {
   useEffect,
 } from "react";
 
-import { cartReducer, CartState, CartAction, CartItem } from "./cart-reducer";
+import { cartReducer, CartState, CartAction, CartItem } from "./cart.reducer";
 
 interface CartContextType {
   state: CartState;

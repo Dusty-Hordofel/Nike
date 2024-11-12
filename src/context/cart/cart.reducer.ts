@@ -3,7 +3,7 @@ import {
   calculateNumberOfItemsInCart,
   calculateShippingAmount,
   calculateTaxAmount,
-} from "./cart.utils";
+} from "../../utils/cart.utils";
 
 export type CartItem = {
   cartID: string;

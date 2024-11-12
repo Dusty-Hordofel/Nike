@@ -1,6 +1,6 @@
 "use client";
 import QueryStatus from "@/components/ui/query-status";
-import { CartAction, CartItem } from "@/context/cart/cart-reducer";
+import { CartAction, CartItem } from "@/context/cart/cart.reducer";
 import { Dispatch, SetStateAction } from "react";
 import SelectedProductCartModalContent from "./selected-product-cart-modal-content";
 import { useQuery } from "@tanstack/react-query";

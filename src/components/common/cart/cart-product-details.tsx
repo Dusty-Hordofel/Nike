@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/buttons/button/button";
-import { useCart } from "@/context/cart/cart-context";
-import { CartItem } from "@/context/cart/cart-reducer";
+import { useCart } from "@/context/cart/cart.context";
+import { CartItem } from "@/context/cart/cart.reducer";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 

@@ -4,8 +4,8 @@ import ProductSizes from "./product-size";
 import ProductColors from "@/components/common/product/product-details/product-colors";
 import { accordionData } from "@/assets/data/accordion";
 import { useState } from "react";
-import { useCart } from "@/context/cart/cart-context";
-import { CartItem } from "@/context/cart/cart-reducer";
+import { useCart } from "@/context/cart/cart.context";
+import { CartItem } from "@/context/cart/cart.reducer";
 import { Button } from "@/components/ui/buttons/button/button";
 import Accordion from "../../accordion/Accordion";
 

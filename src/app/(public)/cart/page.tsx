@@ -2,7 +2,7 @@
 import CartProducts from "@/components/common/cart/cart-products";
 import Empty from "@/components/common/cart/empty/Empty";
 import SelectedProductCartModal from "@/components/common/cart/selected-product-cart-modal";
-import { useCart } from "@/context/cart/cart-context";
+import { useCart } from "@/context/cart/cart.context";
 import Link from "next/link";
 import { useState } from "react";
 import CartSummary from "@/components/common/cart/cart-summary";

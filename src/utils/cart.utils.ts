@@ -1,4 +1,4 @@
-import { CartItem, Coupon } from "./cart-reducer";
+import { CartItem, Coupon } from "../context/cart/cart.reducer";
 
 const calculateCartTotal = (cartItems: CartItem[]) => {
   return cartItems.reduce(

@@ -1,6 +1,6 @@
 "use server";
 
-import { currentUser } from "@/utils/auth";
+import { currentUser } from "@/utils/auth.utils";
 import User from "@/models/user.model";
 import Cart from "@/models/cart.model";
 import ProductModel from "@/models/product.model";
