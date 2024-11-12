@@ -1,7 +1,7 @@
 // import { ItemCardProps } from "@/@types/admin/admin.categories.interface";
 
 import { ItemCardProps } from "@/@types/admin/admin.item.interface";
-import { EntityToEdit } from "@/context/modal/modal-context";
+import { EntityToEdit } from "@/context/modal/modal.context";
 // ItemCardProps
 const ItemCard = ({
   item,

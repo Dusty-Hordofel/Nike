@@ -1,6 +1,6 @@
 "use client";
-import { FileProvider } from "@/context/file/file-context";
-import ModalProvider from "../../context/modal/modal-context";
+import { FileProvider } from "@/context/file/file.context";
+import ModalProvider from "../../context/modal/modal.context";
 import ReduxProvider from "./redux-provider";
 import TanstackQueryProvider from "./tanstack-query-provider";
 import { CartProvider } from "@/context/cart/cart.context";

@@ -1,4 +1,4 @@
-import { PaymentContext } from "@/context/checkout/payment-context";
+import { PaymentContext } from "@/context/checkout/payment.context";
 import { useContext } from "react";
 
 export const usePaymentContext = () => {

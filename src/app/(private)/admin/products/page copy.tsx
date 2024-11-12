@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAdminGetCategories } from "@/hooks/admin/categories/use-admin-categories.hook";
 import { useGetSubCategoriesByParent } from "@/hooks/admin/sucategories/use-subcategories.hook";
 import Modal from "@/components/ui/modals/modal";
-import { useModal } from "@/context/modal/modal-context";
+import { useModal } from "@/context/modal/modal.context";
 import { AddItemButton } from "@/components/ui/item";
 import ProductForm from "@/app/(private)/admin/products/components/product-form";
 import {

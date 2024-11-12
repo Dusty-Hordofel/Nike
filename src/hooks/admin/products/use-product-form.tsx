@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useModal } from "@/context/modal/modal-context";
+import { useModal } from "@/context/modal/modal.context";
 import {
   useAdminCreateProduct,
   useAdminUpdateProduct,

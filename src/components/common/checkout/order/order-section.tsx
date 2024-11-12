@@ -5,7 +5,7 @@ import LegalNotice from "../payment/legal-notice";
 import OrderSummary from "./order-summary";
 // import { useModal } from "@/hooks/modal/use-modal-provider";
 import Modal from "@/components/ui/modals/modal";
-import { useModal } from "@/context/modal/modal-context";
+import { useModal } from "@/context/modal/modal.context";
 
 const OrderSection = ({ cart, deliveryAddress }: any) => {
   const {

@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useModal } from "@/context/modal/modal-context";
-import { useFileContext } from "@/context/file/file-context";
+import { useModal } from "@/context/modal/modal.context";
+import { useFileContext } from "@/context/file/file.context";
 import {
   useAdminCreateCategory,
   useAdminDeleteCategory,

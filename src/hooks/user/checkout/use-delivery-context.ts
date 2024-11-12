@@ -1,4 +1,4 @@
-import { DeliveryContext } from "@/context/checkout/delivery-context";
+import { DeliveryContext } from "@/context/checkout/delivery.context";
 import { useContext } from "react";
 
 export const useDeliveryContext = () => {
