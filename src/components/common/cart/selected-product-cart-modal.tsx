@@ -1,6 +1,6 @@
 "use client";
 import QueryStatus from "@/components/ui/query-status";
-import { CartItem } from "@/context/cart/cart-reducer";
+import { CartAction, CartItem } from "@/context/cart/cart-reducer";
 import { Dispatch, SetStateAction } from "react";
 import SelectedProductCartModalContent from "./selected-product-cart-modal-content";
 import { useQuery } from "@tanstack/react-query";
@@ -8,15 +8,17 @@ import { useQuery } from "@tanstack/react-query";
 const SelectedProductCartModal = ({
   selectedCartItem,
   setSelectedCartItem,
-  setCartItems,
-}: {
+  dispatch,
+}: // setCartItems,
+{
   selectedCartItem: {
     cartID: string;
     slug: string;
     color: string;
     size: string;
   };
-  setCartItems: Dispatch<SetStateAction<CartItem[]>>;
+  dispatch: Dispatch<CartAction>;
+  // setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   setSelectedCartItem: Dispatch<
     SetStateAction<{
       slug: string;
@@ -49,7 +51,8 @@ const SelectedProductCartModal = ({
             data={productQuery.data?.product}
             setSelectedCartItem={setSelectedCartItem}
             selectedCartItem={selectedCartItem}
-            setCartItems={setCartItems}
+            dispatch={dispatch}
+            // setCartItems={setCartItems}
           />
         </QueryStatus>
       </div>

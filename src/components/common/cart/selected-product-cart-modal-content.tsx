@@ -1,6 +1,6 @@
 import ProductUnavailable from "@/components/common/product/product-details/product-unavailable";
 import { Button } from "@/components/ui/buttons/button/button";
-import { CartItem } from "@/context/cart/cart-reducer";
+import { CartAction, CartItem } from "@/context/cart/cart-reducer";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
@@ -9,17 +9,16 @@ const SelectedProductCartModalContent = ({
   data,
   setSelectedCartItem,
   selectedCartItem,
-  setCartItems,
+  dispatch,
 }: {
   data: any;
-
-  setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   selectedCartItem: {
     cartID: string;
     slug: string;
     color: string;
     size: string;
   };
+  dispatch: Dispatch<CartAction>;
   setSelectedCartItem: Dispatch<
     SetStateAction<{
       slug: string;
@@ -30,7 +29,8 @@ const SelectedProductCartModalContent = ({
   >;
 }) => {
   const handleSizeChange = (size: string, cartID: string) => {
-    updateCartItemInLocalStorage(cartID, size);
+    // updateCartItemInLocalStorage(cartID, size);
+    dispatch({ type: "UPDATE_ITEM", payload: { cartID, size } });
     setSelectedCartItem(null);
   };
 
@@ -42,7 +42,7 @@ const SelectedProductCartModalContent = ({
     );
 
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    setCartItems(updatedCart);
+    // setCartItems(updatedCart);
   };
   return (
     <>

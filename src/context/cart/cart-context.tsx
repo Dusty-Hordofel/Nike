@@ -14,7 +14,7 @@ interface CartContextType {
   state: CartState;
   dispatch: React.Dispatch<CartAction>;
   // totalAmount: () => number;
-  totalQuantity: () => number;
+  // totalQuantity: () => number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -42,6 +42,12 @@ const saveCartToLocalStorage = (cart: CartItem[]) => {
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, {
     cartItems: getCartFromLocalStorage(),
+    numItemsInCart: 0,
+    cartTotal: 0,
+    shipping: 0,
+    taxAmount: 0,
+    orderTotal: 0,
+    appliedCoupon: undefined,
     error: "",
   });
 
@@ -51,22 +57,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     saveCartToLocalStorage(state.cartItems);
   }, [state.cartItems]);
 
-  // const totalAmount = () => {
-  //   return state.cartItems.reduce(
-  //     (total, item) => total + item.price * item.quantity,
-  //     0
-  //   );
-  // };
-
-  const totalQuantity = () => {
-    return state.cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
-
   return (
-    <CartContext.Provider
-      value={{ state, dispatch, totalQuantity }}
-      // value={{ state, dispatch, totalAmount, totalQuantity }}
-    >
+    <CartContext.Provider value={{ state, dispatch }}>
       {children}
     </CartContext.Provider>
   );

@@ -8,9 +8,24 @@ import { useState } from "react";
 import CartSummary from "@/components/common/cart/cart-summary";
 
 const CartProductsPage = () => {
-  const { state } = useCart();
+  const {
+    state: {
+      cartItems,
+      numItemsInCart,
+      cartTotal,
+      shipping,
+      taxAmount,
+      orderTotal,
+      appliedCoupon,
+      error,
+    },
+    // totalQuantity,
+    // totalAmount,
+    dispatch,
+  } = useCart();
 
-  const [cartItems, setCartItems] = useState(state.cartItems);
+  console.log("🚀 ~ CartProductsPage ~ cartTotal:TOTAL", cartTotal);
+
   const [selectedCartItem, setSelectedCartItem] = useState<{
     cartID: string;
     slug: string;
@@ -18,14 +33,16 @@ const CartProductsPage = () => {
     size: string;
   } | null>(null);
 
+  console.log("🚀 ~ CartProductsPage ~ cartItems:", cartItems);
+
   return (
     <main className="py-10  bg-yellow-500 max-w-[1280px]">
       <div className="flex bg-success w-max mx-auto">
         {selectedCartItem && (
           <SelectedProductCartModal
-            setCartItems={setCartItems}
             selectedCartItem={selectedCartItem}
             setSelectedCartItem={setSelectedCartItem}
+            dispatch={dispatch}
           />
         )}
 
@@ -67,7 +84,10 @@ const CartProductsPage = () => {
           </div>
         </div>
         <div className=" bg-warning">
-          <CartSummary />
+          <CartSummary
+          // totalQuantity={totalQuantity}
+          // totalAmount={totalAmount}
+          />
         </div>
       </div>
     </main>

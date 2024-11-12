@@ -22,9 +22,12 @@ type PromoCodeSectionProps = {
   couponCode: string;
 };
 
-type CheckoutProps = {};
+type CartSummaryProps = {
+  totalQuantity: () => number;
+  totalAmount: () => number;
+};
 
-const CartSummary = (props: CheckoutProps) => {
+const CartSummary = ({ totalQuantity, totalAmount }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
 

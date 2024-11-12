@@ -1,3 +1,10 @@
+import {
+  calculateCartTotal,
+  calculateNumberOfItemsInCart,
+  calculateShippingAmount,
+  calculateTaxAmount,
+} from "./cart.utils";
+
 export type CartItem = {
   cartID: string;
   productID: string;
@@ -18,26 +25,6 @@ export type Coupon = {
   discountPercentage: number;
 };
 
-// export type CartState = {
-//   cartItems: CartItem[];
-//   numItemsInCart: number;
-//   cartTotal: number;
-//   shipping: number;
-//   taxAmount: number;
-//   orderTotal: number;
-//   appliedCoupon?: Coupon;
-// };
-
-// const initialState: CartState = {
-//   cartItems: [],
-//   numItemsInCart: 0,
-//   cartTotal: 0,
-//   shipping: 0,
-//   taxAmount: 0,
-//   orderTotal: 0,
-//   appliedCoupon: undefined,
-// };
-
 export type CartAction =
   | { type: "ADD_ITEM"; payload: CartItem }
   | {
@@ -46,16 +33,18 @@ export type CartAction =
     }
   | {
       type: "UPDATE_ITEM";
-      payload: { cartID: string; quantity: number };
+      payload: { cartID: string; quantity?: number; size?: string };
     }
-  // | {
-  //     type: "DECREMENT_QUANTITY";
-  //     payload: { id: string; quantity: number };
-  //   }
   | { type: "CLEAR_CART" };
 
 export interface CartState {
   cartItems: CartItem[];
+  numItemsInCart: number;
+  cartTotal: number;
+  shipping: number;
+  taxAmount: number;
+  orderTotal: number;
+  appliedCoupon?: Coupon;
   error: string;
 }
 
@@ -82,26 +71,45 @@ export const cartReducer = (state: CartState, action: CartAction) => {
               ? { ...item, quantity: item.quantity + action.payload.quantity }
               : item
           ),
-          error: "", // Réinitialiser le message d'erreur
+          error: "",
         };
       }
 
       return {
         ...state,
         cartItems: [...state.cartItems, action.payload],
-        error: "", // Réinitialiser le message d'erreur
+        error: "",
       };
     }
 
     case "UPDATE_ITEM": {
+      const updatedCartItems = state.cartItems.map((item) =>
+        item.cartID === action.payload.cartID
+          ? {
+              ...item,
+              size: action.payload.size ? action.payload.size : item.size,
+              quantity: action.payload.quantity
+                ? item.quantity + action.payload.quantity
+                : item.quantity,
+            }
+          : item
+      );
+
+      const cartTotal = calculateCartTotal(updatedCartItems);
+      const shipping = calculateShippingAmount(updatedCartItems);
+      const taxAmount = calculateTaxAmount(updatedCartItems, 10);
+      const orderTotal = cartTotal + shipping + taxAmount;
+      const numItemsInCart = calculateNumberOfItemsInCart(updatedCartItems);
+
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item.cartID === action.payload.cartID
-            ? { ...item, quantity: item.quantity + action.payload.quantity }
-            : item
-        ),
-        error: "", // Réinitialiser le message d'erreur
+        cartItems: updatedCartItems,
+        cartTotal,
+        shipping,
+        taxAmount,
+        orderTotal,
+        numItemsInCart,
+        error: "",
       };
     }
 
@@ -111,7 +119,7 @@ export const cartReducer = (state: CartState, action: CartAction) => {
         cartItems: state.cartItems.filter(
           (item) => item.cartID !== action.payload
         ),
-        error: "", // Réinitialiser le message d'erreur
+        error: "",
       };
     }
 
