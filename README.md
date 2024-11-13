@@ -1236,8 +1236,6 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 79. cart Summary(2)
 
-<!-- ### 75. Remplacement de reduxtoolkit par UseReducer -->
-
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
