@@ -13,12 +13,16 @@ type ProductInformationProps = {
   product: any;
   selectedColor: string;
   selectedSize: string;
+  setShowCartModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setProductAddedToCart: React.Dispatch<any>;
 };
 
 const ProductInformation = ({
   product,
   selectedColor,
   selectedSize,
+  setShowCartModal,
+  setProductAddedToCart,
 }: ProductInformationProps) => {
   const {
     name,
@@ -82,6 +86,8 @@ const ProductInformation = ({
     // }
 
     dispatch({ type: "ADD_ITEM", payload: cartProduct });
+    setShowCartModal(true);
+    setProductAddedToCart(cartProduct);
   }
 
   return (

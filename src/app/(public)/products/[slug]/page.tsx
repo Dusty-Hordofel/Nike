@@ -3,7 +3,7 @@ import { bannerVideo } from "@/assets/data/banner";
 import ProductImages from "@/components/common/product/product-details/product-images";
 import ProductInformation from "@/components/common/product/product-details/product-information";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,9 @@ import {
   HeroBanner as VideoBanner,
   HeroBanner as ImageBanner,
 } from "@/components/ui/banner/hero-banner";
+import CartModal from "@/components/common/cart/cart-modal";
+import { CartItem } from "@/context/cart/cart.reducer";
+import { useCart } from "@/context/cart/cart.context";
 
 interface ProductPageParams {
   slug: string;
@@ -27,6 +30,29 @@ interface ProductPageProps {
 
 const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const { slug: productSlug } = params;
+  const {
+    state: {
+      cartItems,
+      numItemsInCart,
+      cartTotal,
+      shipping,
+      taxAmount,
+      orderTotal,
+      appliedCoupon,
+      error,
+    },
+
+    dispatch,
+  } = useCart();
+
+  const [productAddedToCart, setProductAddedToCart] = useState<null | CartItem>(
+    null
+  );
+  console.log("🚀 ~ ProductPage ~ productAddedToCart:", productAddedToCart);
+  const [showCartModal, setShowCartModal] = useState(false);
+  console.log("🚀 ~ ProductPage ~ showCartModal:", showCartModal);
+
+  console.log("🚀 ~ ProductPage ~ numItemsInCart:", numItemsInCart);
 
   const selectedColor = searchParams.color as string;
   const selectedSize = searchParams.size as string;
@@ -50,6 +76,14 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
 
   return (
     <div className="min-h-screen">
+      {showCartModal && (
+        <CartModal
+          numItemsInCart={numItemsInCart}
+          productAddedToCart={productAddedToCart}
+          setShowCartModal={setShowCartModal}
+        />
+      )}
+
       <div className="max-w-[1200px] mx-auto flex">
         <div className="flex">
           <ProductImages images={product.images} />
@@ -59,6 +93,8 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
               product={product}
               selectedColor={selectedColor}
               selectedSize={selectedSize}
+              setShowCartModal={setShowCartModal}
+              setProductAddedToCart={setProductAddedToCart}
             />
           </div>
         </div>

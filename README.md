@@ -1240,6 +1240,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 81. gestion de la modal du panier
 
+setTimeout(function(){debugger},4000)
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
