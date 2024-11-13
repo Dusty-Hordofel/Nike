@@ -6,7 +6,7 @@ import { useCart } from "@/context/cart/cart.context";
 import Link from "next/link";
 import { useState } from "react";
 import CartSummary from "@/components/common/cart/cart-summary";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { useRouter } from "next/navigation";
 
 const CartProductsPage = () => {

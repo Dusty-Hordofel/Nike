@@ -1,5 +1,5 @@
 "use client";
-import useProductForm from "@/hooks/admin/products/use-product-form";
+import useProductForm from "@/hooks/admin/products/use-product-form.hook";
 import React from "react";
 // import useProductForm from "../../../../hooks/admin/products/use-product-form";
 import { FormProvider } from "react-hook-form";

@@ -12,7 +12,7 @@ import {
 } from "@/hooks/admin/products/use-admin-products.hook";
 import QueryStatus from "@/components/ui/query-status";
 import ProductFormProvider from "@/app/(private)/admin/products/components/form-provider";
-import useProductForm from "@/hooks/admin/products/use-product-form";
+import useProductForm from "@/hooks/admin/products/use-product-form.hook";
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");

@@ -31,7 +31,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "@/auth";
 import { signInWithCredentials } from "@/actions/auth/user-auth.actions";
 import { ZodError } from "zod";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-form-field";
 
 const options = [

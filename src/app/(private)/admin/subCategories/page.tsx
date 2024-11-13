@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import Modal from "@/components/ui/modals/modal";
 import { AddItemButton, ItemList } from "@/components/ui/item";
 import useSubProductForm from "@/hooks/admin/sucategories/use-subcategories-form.hook";

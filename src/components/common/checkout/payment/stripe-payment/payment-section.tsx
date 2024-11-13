@@ -18,8 +18,8 @@ import {
   ActivePaymentCard,
   BillingCountry,
 } from "./index";
-import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
-import { usePaymentContext } from "@/hooks/user/checkout/use-payment-context";
+import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context.hook";
+import { usePaymentContext } from "@/hooks/user/checkout/use-payment-context.hook";
 
 export default function PaymentSection({
   deliveryAddress,
@@ -122,7 +122,13 @@ export default function PaymentSection({
       />
 
       <div
-        className={`mt-2 ${deliveryStep === 3 && currentCheckoutSection === "payment" && deliveryAddress.activeDeliveryAddress?.success ? "block" : "hidden"}`}
+        className={`mt-2 ${
+          deliveryStep === 3 &&
+          currentCheckoutSection === "payment" &&
+          deliveryAddress.activeDeliveryAddress?.success
+            ? "block"
+            : "hidden"
+        }`}
       >
         {(paymentStep === 1 || paymentStep === 2) && (
           <>
@@ -139,7 +145,9 @@ export default function PaymentSection({
         {selectedPaymentMethod == "creditDebit" && paymentStep === 1 && (
           <div className="mb-7 mx-5">
             <div
-              className={`px-5 pt-5 pb-[1.5px] border ${hasCardFieldError ? "border-red" : "border-black-200"} rounded-md`}
+              className={`px-5 pt-5 pb-[1.5px] border ${
+                hasCardFieldError ? "border-red" : "border-black-200"
+              } rounded-md`}
             >
               <div className="ncss-col-sm-6 va-sm-b mb-4 px-2">
                 <h3 className="css-5oevkg font-medium">Ajouter une carte</h3>
@@ -178,7 +186,9 @@ export default function PaymentSection({
                   />
                 )}
                 <h3
-                  className={`shippingContainer ${paymentStep === 3 ? "block text-black-200" : "hidden"}`}
+                  className={`shippingContainer ${
+                    paymentStep === 3 ? "block text-black-200" : "hidden"
+                  }`}
                 >
                   Informations de facturation
                 </h3>
@@ -195,7 +205,11 @@ export default function PaymentSection({
           <div className="mt-6 bg-warning flex justify-end pb-5 px-5">
             <button
               disabled={(paymentStep === 1 && !isFormValid) || loading}
-              className={`${isFormValid || paymentStep === 2 ? "bg-black-200 text-white" : "bg-gray-300 text-black-200/30"} w-max py-3 px-6 rounded-full font-medium`}
+              className={`${
+                isFormValid || paymentStep === 2
+                  ? "bg-black-200 text-white"
+                  : "bg-gray-300 text-black-200/30"
+              } w-max py-3 px-6 rounded-full font-medium`}
               onClick={
                 paymentStep === 2 ? () => setPaymentStep(3) : handleSubmit
               }

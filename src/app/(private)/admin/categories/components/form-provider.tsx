@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactNode } from "react";
 import { FormProvider } from "react-hook-form";
-import useCategoryForm from "../../../../../hooks/admin/categories/use-category-form";
+import useCategoryForm from "../../../../../hooks/admin/categories/use-category-form.hook";
 
 const CategoryFormProvider = ({ children }: { children: ReactNode }) => {
   const { form, handleSubmit } = useCategoryForm();

@@ -2,7 +2,7 @@
 
 import { useActiveDeliveryAddress } from "@/hooks/user/delivery-section";
 import { useState } from "react";
-import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context";
+import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context.hook";
 import { OrderSection, OrderSummary } from "@/components/common/checkout/order";
 import { PaymentSection } from "@/components/common/checkout/payment/stripe-payment";
 import { DeliverySection } from "@/components/common/checkout/delivery";
