@@ -245,6 +245,7 @@ const CartProductActions = ({
         variant="ghost"
         size="cart"
         onClick={() => updateQuantity(cartID, 1)}
+        disabled={quantity === 10}
       >
         <svg
           aria-hidden="true"

@@ -1,7 +1,7 @@
 "use client";
+import useSubProductForm from "@/hooks/admin/sucategories/use-subcategories-form.hook";
 import React, { ReactNode } from "react";
 import { FormProvider } from "react-hook-form";
-import useSubProductForm from "../../../../../hooks/admin/sucategories/use-subcategories-form.hook";
 
 const SubcategoryFormProvider = ({ children }: { children: ReactNode }) => {
   const { form, handleSubmit } = useSubProductForm();

@@ -1,18 +1,14 @@
 "use client";
 
-import {
-  applyCouponCode,
-  getCouponCode,
-} from "@/actions/coupon/user-apply-coupon.action";
+import { getCouponCode } from "@/actions/coupon/user-apply-coupon.action";
 import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
 import { cn } from "@/lib/utils";
-import { applyCoupon } from "@/store/cartSlice";
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CartAction, CartItem } from "@/context/cart/cart.reducer";
 
 type PromoCodeSectionProps = {
   isOpen: boolean;
@@ -20,55 +16,60 @@ type PromoCodeSectionProps = {
   setCouponCode: Dispatch<SetStateAction<string>>;
   onApplyCoupon: (e: any) => void;
   couponCode: string;
+  error: string;
 };
 
 type CartSummaryProps = {
+  dispatch: Dispatch<CartAction>;
   totalQuantity: () => number;
   totalAmount: () => number;
 };
 
-const CartSummary = ({ totalQuantity, totalAmount }: any) => {
+const CartSummary = ({
+  shipping,
+  taxAmount,
+  orderTotal,
+  cartItems,
+  appliedCoupon,
+  dispatch,
+}: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
-
-  const { cartItems, cartTotal, orderTotal, shipping, appliedCoupon } =
-    useAppSelector((state) => state.cart);
+  const [error, setError] = useState("");
 
   const handleSaveCart = async () => {
-    const saveCart = await saveCartItems(cartItems, appliedCoupon?.code);
+    const saveCart = await saveCartItems(cartItems, appliedCoupon?.couponCode);
     console.log("🚀 ~ saveCartHandler ~ saveCart:SAVE CART", saveCart);
   };
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
-    const couponCode = appliedCoupon?.code;
+    const couponCode = appliedCoupon?.couponCode;
     if (couponCode) setCouponCode(couponCode);
-  }, [couponCode, appliedCoupon?.code]);
-
-  // const couponCode =appliedCoupon?.code;
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Appliquer le coupon avec la fonction onApplyCoupon
-  //   applyCouponCode(couponCode); // Passer le code du coupon à la fonction parent
-  // };
+  }, [appliedCoupon?.couponCode]);
 
   const handleApplyCoupon = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("first", "COUPON ");
-    const { success, message, coupon } = await getCouponCode("MOYKALR");
-    console.log("🚀 ~ handleApplyCoupon ~ coupon:APPLYCOUPON", coupon?.coupon);
+    setError("");
+    //verifier si le coupon  est déjà appliqué
+    if (couponCode === appliedCoupon?.couponCode) {
+      setError("Coupon is already applied");
+      return;
+    }
+
+    const { success, message, coupon } = await getCouponCode(couponCode);
+    console.log("🚀 ~ handleApplyCoupon ~ message:", message);
 
     if (success) {
-      dispatch(
-        applyCoupon({
-          code: String(coupon?.coupon),
+      dispatch({
+        type: "APPLY_COUPON",
+        payload: {
+          couponCode: String(coupon?.coupon),
           discountPercentage: Number(coupon?.discount),
-        })
-      );
+        },
+      });
     } else {
-      alert(message);
+      // alert(message);
+      setError(message as string);
     }
   };
 
@@ -83,18 +84,26 @@ const CartSummary = ({ totalQuantity, totalAmount }: any) => {
           setCouponCode={setCouponCode}
           onApplyCoupon={handleApplyCoupon}
           couponCode={couponCode}
+          error={error}
         />
-        <SummaryLine label="Sous-total" value={String(cartTotal.toFixed(2))} />
+        <SummaryLine
+          label="Sous-total"
+          value={
+            orderTotal - shipping > 0
+              ? String((orderTotal - shipping).toFixed(2))
+              : "-"
+          }
+        />
         <SummaryLine
           label="Frais estimés de prise en charge et d'expédition"
-          value={String(shipping)}
+          value={shipping > 0 ? String(shipping) : "Gratuit"}
         />
         <SummaryLine
           label="Total"
-          value={String(orderTotal.toFixed(2))}
+          value={orderTotal > 0 ? String(orderTotal.toFixed(2)) : "-"}
           isTotal
         />
-        <CheckoutButtons onSaveCart={handleSaveCart} />
+        <CheckoutButtons cartItems={cartItems} onSaveCart={handleSaveCart} />
       </aside>
     </div>
   );
@@ -103,13 +112,14 @@ const CartSummary = ({ totalQuantity, totalAmount }: any) => {
 export default CartSummary;
 
 // Subcomponent for promo code section
-const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
+const PromoCodeSection = ({
   isOpen,
   setIsOpen,
   setCouponCode,
   onApplyCoupon,
   couponCode,
-}) => {
+  error,
+}: PromoCodeSectionProps) => {
   return (
     <details
       id="promo-codes"
@@ -119,6 +129,7 @@ const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
     >
       <summary className="list-none cursor-pointer flex justify-between items-start font-medium">
         As-tu un code promo&nbsp;?
+        <span className="opacity-50 text-gray-500">MOYKALR40</span>
         <ChevronUp
           className={`${
             isOpen ? "rotate-180" : ""
@@ -147,12 +158,12 @@ const PromoCodeSection: React.FC<PromoCodeSectionProps> = ({
               className="ml-2 px-6 py-2 border-[#e4e4e4] border rounded-full cursor-pointer"
               type="submit"
               data-testid="promo-code-apply-button"
-              // onClick={onApplyCoupon}
             >
               Appliquer
             </button>
           </div>
         </form>
+        {error && <div className="text-red-600 text-xs">{error}</div>}
       </div>
     </details>
   );
@@ -186,37 +197,50 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
 // Subcomponent for checkout buttons
 interface CheckoutButtonsProps {
   onSaveCart: () => Promise<void>;
+  cartItems: CartItem[];
 }
-const CheckoutButtons = ({ onSaveCart }: CheckoutButtonsProps) => {
+const CheckoutButtons = ({ onSaveCart, cartItems }: CheckoutButtonsProps) => {
   return (
     <div className="pt-5 flex flex-col space-y-3">
-      {/* <Link
-        href="/checkout"
-        tabIndex={-1}
-        className={cn(
-          buttonVariants({
-            variant: "primary",
-            size: "large",
-            fullWidth: true,
-          }),
-          "font-medium"
-        )}
-        
-        onClick={() => saveCartHandler()}
-      > */}
-      <Link
-        href="/checkout"
-        className="cursor-pointer"
-        onClick={() => onSaveCart()}
-      >
-        Paiement
-      </Link>
-      {/* </Link> */}
-      <Link
-        href="/checkout"
-        className="py-[18px] px-6 mb-3 bg-[#f5f5f5] rounded-full border border-[#e4e4e4] font-medium min-h-[60px] flex justify-center items-center"
+      {cartItems?.length > 0 ? (
+        <Link
+          href="/checkout"
+          className={cn(
+            buttonVariants({ variant: "primary", size: "large" }),
+            "font-medium w-full"
+          )}
+          onClick={() => onSaveCart()}
+        >
+          Paiement
+        </Link>
+      ) : (
+        <Button
+          disabled
+          className={cn(
+            buttonVariants({
+              variant: "secondary",
+              size: "large",
+              fullWidth: true,
+            })
+          )}
+        >
+          Paiement
+        </Button>
+      )}
+
+      <Button
+        // href="/checkout"
+        // className="py-[18px] px-6 mb-3 bg-[#f5f5f5] rounded-full border border-[#e4e4e4] font-medium min-h-[60px] flex justify-center items-center"
         aria-label="Checkout with PayPal"
         data-testid="paypal-checkout-button"
+        disabled
+        className={cn(
+          buttonVariants({
+            variant: "secondary",
+            size: "large",
+            fullWidth: true,
+          })
+        )}
       >
         <Image
           alt="PayPal"
@@ -224,7 +248,7 @@ const CheckoutButtons = ({ onSaveCart }: CheckoutButtonsProps) => {
           height="14"
           src="https://www.nike.com/assets/experience/pet/payment-icons/paypal@2x.png"
         />
-      </Link>
+      </Button>
     </div>
   );
 };

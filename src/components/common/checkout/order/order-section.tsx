@@ -3,9 +3,11 @@ import CheckoutHeader from "@/components/common/checkout/checkout-section-title"
 import { Button } from "@/components/ui/buttons/button/button";
 import LegalNotice from "../payment/legal-notice";
 import OrderSummary from "./order-summary";
-// import { useModal } from "@/hooks/modal/use-modal-provider";
 import Modal from "@/components/ui/modals/modal";
 import { useModal } from "@/context/modal/modal.context";
+import { useCart } from "@/context/cart/cart.context";
+import { deleteCart } from "@/actions/cart/user-cart.actions";
+import { useRouter } from "next/navigation";
 
 const OrderSection = ({ cart, deliveryAddress }: any) => {
   const {
@@ -16,6 +18,9 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
     isResultModalOpen,
   } = useModal();
 
+  const { dispatch } = useCart();
+  const router = useRouter();
+
   const handleCreateOrder = async () => {
     try {
       const response = await fetch(
@@ -23,7 +28,6 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
         {
           method: "POST",
           body: JSON.stringify({
-            // products: cart.data.products,
             products: cart.data.cart.products,
             shippingAddress:
               deliveryAddress.activeDeliveryAddress.activeAddress,
@@ -51,26 +55,19 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
     }
   };
 
-  // const displayResultModal = (success: boolean, message: string) => {
-  //   showModal(
-  //     <Modal
-  //       title={success ? "Success" : "Error"}
-
-  //       // closeModal={closeModal}
-  //       onCloseModal={closeResultModal}
-  //     />
-  //   );
-  // };
+  const clearCart = async () => {
+    dispatch({
+      type: "CLEAR_CART",
+    });
+    await deleteCart();
+    router.push("/");
+  };
 
   return (
     <>
       <section className="order-summary">
         <span className="sr-only">Paiement Étape 3 sur 3 Étape en cours</span>
-        <CheckoutHeader
-          title="Récapitulatif de la commande"
-          // showEditLink
-          // onChangeStep={setDeliveryStep}
-        />
+        <CheckoutHeader title="Récapitulatif de la commande" />
         <div className="hidden lg:block">
           <LegalNotice />
         </div>
@@ -86,8 +83,6 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
             className="w-full"
             type="button"
             fullWidth
-            // disabled={cart?.data?.cart?.products.length > 0}
-            // onClick={handleCreateOrderAndPayment}
             onClick={handleCreateOrder}
           >
             Soumettre le paiement<span className="ripple"></span>
@@ -98,7 +93,9 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
       {isResultModalOpen && resultModalContent && (
         <Modal
           title={resultModalContent.success ? "Success" : "Error"}
-          onCloseModal={closeResultModal}
+          onCloseModal={
+            resultModalContent.success ? clearCart : closeResultModal
+          }
         >
           <p className="mb-4">{resultModalContent.message}</p>
         </Modal>

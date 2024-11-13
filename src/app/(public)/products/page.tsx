@@ -74,7 +74,7 @@ const ProductsPage = () => {
           data.products,
           filters
         );
-        console.log("🚀 ~ setTimeout ~ filtered:TALA", filteredProducts);
+        // console.log("🚀 ~ setTimeout ~ filtered:TALA", filteredProducts);
         setFilteredProducts(filteredProducts);
         setIsFiltering(isFiltering);
         setFilterOpacity(false);

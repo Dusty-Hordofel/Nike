@@ -41,6 +41,7 @@ const ProductInformation = ({
   const [productQuantity, setProductQuantity] = useState<number | undefined>(
     undefined
   );
+  // console.log("🚀 ~ productQuantity:COTOLI", productQuantity);
 
   const [error, setError] = useState("");
 

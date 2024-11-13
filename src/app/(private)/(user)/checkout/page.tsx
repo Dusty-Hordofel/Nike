@@ -13,7 +13,9 @@ const CheckoutPage = () => {
   const { deliveryStep } = useDeliveryContext();
 
   const deliveryAddress = useActiveDeliveryAddress();
+  console.log("🚀 ~ CheckoutPage ~ deliveryAddress:", deliveryAddress);
   const cart = useGetCart();
+  console.log("🚀 ~ CheckoutPage ~ cart:", cart);
 
   const [currentCheckoutSection, setCurrentCheckoutSection] = useState<
     "address" | "payment" | "summary"

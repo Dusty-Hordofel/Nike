@@ -13,49 +13,69 @@ import { cartReducer, CartState, CartAction, CartItem } from "./cart.reducer";
 interface CartContextType {
   state: CartState;
   dispatch: React.Dispatch<CartAction>;
-  // totalAmount: () => number;
-  // totalQuantity: () => number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// const getCartFromLocalStorage = (): CartItem[] => {
-//   const storedCart = localStorage.getItem("cart");
-//   return storedCart ? JSON.parse(storedCart) : [];
-// };
-
-const getCartFromLocalStorage = (): CartItem[] => {
+const getCartFromLocalStorage = (): CartState => {
   if (typeof window === "undefined") {
-    // Si nous sommes côté serveur, retourner un tableau vide ou un état par défaut
-    return [];
+    return {
+      cartItems: [],
+      numItemsInCart: 0,
+      cartTotal: 0,
+      shipping: 0,
+      taxAmount: 0,
+      orderTotal: 0,
+      appliedCoupon: undefined,
+      error: "",
+    };
   }
 
   // Côté client, accéder à localStorage
   const storedCart = localStorage.getItem("cart");
-  return storedCart ? JSON.parse(storedCart) : [];
+  return storedCart
+    ? JSON.parse(storedCart)
+    : {
+        cartItems: [],
+        numItemsInCart: 0,
+        cartTotal: 0,
+        shipping: 0,
+        taxAmount: 0,
+        orderTotal: 0,
+        appliedCoupon: undefined,
+        error: "",
+      };
 };
 
-const saveCartToLocalStorage = (cart: CartItem[]) => {
-  localStorage.setItem("cart", JSON.stringify(cart));
+export const saveCartToLocalStorage = (state: CartState) => {
+  localStorage.setItem("cart", JSON.stringify(state));
 };
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(cartReducer, {
-    cartItems: getCartFromLocalStorage(),
-    numItemsInCart: 0,
-    cartTotal: 0,
-    shipping: 0,
-    taxAmount: 0,
-    orderTotal: 0,
-    appliedCoupon: undefined,
-    error: "",
-  });
+  const [state, dispatch] = useReducer(cartReducer, getCartFromLocalStorage());
 
-  // console.log("🚀 ~ CartProvider ~ state:", state);
-
+  // Sauvegarde dans le localStorage à chaque mise à jour de cartState
   useEffect(() => {
-    saveCartToLocalStorage(state.cartItems);
-  }, [state.cartItems]);
+    saveCartToLocalStorage(state);
+  }, [state]);
+
+  // Synchroniser cartState entre les onglets
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "cart") {
+        // Charger la dernière version du panier depuis le localStorage
+        const updatedCart = getCartFromLocalStorage();
+        if (updatedCart) {
+          dispatch({ type: "SET_CART", payload: updatedCart });
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   return (
     <CartContext.Provider value={{ state, dispatch }}>

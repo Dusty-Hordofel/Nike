@@ -6,7 +6,7 @@ import User from "@/models/user.model";
 import Cart, { ICart } from "@/models/cart.model";
 // import { isValidObjectId } from "@/lib/utils";
 import { isValidObjectId } from "mongoose";
-import Coupon from "@/models/coupon.model";
+import Coupon, { ICoupon } from "@/models/coupon.model";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -73,7 +73,21 @@ export async function applyCouponCode(couponCode: string) {
   }
 }
 
+function isCouponValid(coupon: ICoupon) {
+  const today = new Date();
+  console.log("🚀 ~ isCouponValid ~ today:", today);
+
+  const startDate = new Date(coupon.startDate);
+  console.log("🚀 ~ isCouponValid ~ startDate:", startDate);
+  const endDate = new Date(coupon.endDate);
+  console.log("🚀 ~ isCouponValid ~ endDate:", endDate);
+
+  return today >= startDate && today <= endDate;
+  // return today >= startDate && today <= endDate;
+}
+
 export async function getCouponCode(couponCode: string) {
+  console.log("🚀 ~ getCouponCode ~ couponCode:MOYKALR40", couponCode); //couponCode
   try {
     // Récupérer l'utilisateur actuel
     const user = await currentUser();
@@ -91,12 +105,23 @@ export async function getCouponCode(couponCode: string) {
     }
 
     const coupon = await Coupon.findOne({ coupon: couponCode });
-
-    if (coupon == null) {
-      return { success: false, error: true, message: "Invalid coupon" };
+    console.log("🚀 ~ getCouponCode ~ coupon:SEELELO", coupon);
+    if (!coupon) {
+      return { success: false, error: true, message: "Coupon not found" };
     }
 
-    revalidatePath("/cart");
+    const mona = isCouponValid(coupon);
+    console.log("🚀 ~ getCouponCode ~ mona:RESULT", mona);
+
+    if (!isCouponValid(coupon)) {
+      return { success: false, error: true, message: "Coupon expired" };
+    }
+
+    // if (coupon == null) {
+    //   return { success: false, error: true, message: "Invalid coupon" };
+    // }
+
+    // revalidatePath("/cart");
 
     return {
       success: true,
