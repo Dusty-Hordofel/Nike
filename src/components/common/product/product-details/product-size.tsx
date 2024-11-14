@@ -25,7 +25,8 @@ const ProductSizes = ({
 }: ProductsAndSizesProps) => {
   return (
     <div className="pt-3">
-      <ul className="grid grid-cols-3 gap-[6px]">
+      {/* min-[960px]:gap-[6px] min-[960px]:grid-cols-3 */}
+      <ul className="grid grid-cols-5  gap-2">
         {sizes.map(({ _id, size, qty }) => (
           <Link
             aria-label={slug}
@@ -39,9 +40,10 @@ const ProductSizes = ({
             key={_id}
           >
             <li
+              // w-[120.664px]
               className={cn(
                 qty > 0 ? "bg-white" : "bg-gray-100 text-gray-300",
-                "font-normal w-[120.664px] h-[48px] flex items-center justify-center border hover:border-black-100  rounded-[4px] border-gray-200",
+                "font-normal  h-[48px] flex items-center justify-center border hover:border-black-100  rounded-[4px] border-gray-200",
                 size.toLocaleLowerCase() === selectedSize && " border-black-100"
               )}
               style={{

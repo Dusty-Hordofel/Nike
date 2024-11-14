@@ -49,7 +49,7 @@ const ProductColors = ({
               height={70.3984}
               className={cn(
                 selectedColor === name.toLowerCase() && "border-2",
-                "w-[70.3984px] h-[70.3984px] object-cover rounded hover:border border-black-200"
+                "min-[960px]:size-[70.3984px] size-[125px] object-cover rounded hover:border border-black-200"
               )}
               onClick={() => handleResetSelection(index)}
             />

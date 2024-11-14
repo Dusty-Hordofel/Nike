@@ -1238,7 +1238,11 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 80. Gestion du nommage des fichiers
 
-### 81. gestion de la modal du panier
+### 81. gestion de la modal du panier(1)
+
+### 81. gestion de la modal du panier(2)
+
+### 82. Make the product page responsive
 
 setTimeout(function(){debugger},4000)
 

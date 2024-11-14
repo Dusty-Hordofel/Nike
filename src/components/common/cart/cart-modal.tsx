@@ -16,7 +16,7 @@ const CartModal = ({
   setShowCartModal,
 }: CartModalProps) => {
   return (
-    <div className=" fixed inset-0 bg-[hsla(0,0%,7%,0.36)]  flex justify-center items-center z-50">
+    <div className=" fixed inset-0 bg-[hsla(0,0%,7%,0.36)]  flex justify-center items-center z-50 fade-out">
       {/* transform: translate3d(0px, 0px, 0px); */}
       <div
         className="bg-white min-[960px]:min-w-[300px] min-[960px]:max-w-[428px] w-full min-[960px]:top-0 min-[960px]:right-12 absolute min-[960px]:max-h-[calc(100%-120px)] max-h-[calc(100%-60px)]  overflow-hidden rounded-3xl fade-out max-[960px]:left-0"

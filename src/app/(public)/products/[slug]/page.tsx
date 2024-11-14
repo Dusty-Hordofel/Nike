@@ -48,11 +48,8 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const [productAddedToCart, setProductAddedToCart] = useState<null | CartItem>(
     null
   );
-  console.log("🚀 ~ ProductPage ~ productAddedToCart:", productAddedToCart);
-  const [showCartModal, setShowCartModal] = useState(false);
-  console.log("🚀 ~ ProductPage ~ showCartModal:", showCartModal);
 
-  console.log("🚀 ~ ProductPage ~ numItemsInCart:", numItemsInCart);
+  const [showCartModal, setShowCartModal] = useState(false);
 
   const selectedColor = searchParams.color as string;
   const selectedSize = searchParams.size as string;
@@ -84,21 +81,13 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         />
       )}
 
-      <div className="max-w-[1200px] mx-auto flex">
-        <div className="flex">
-          <ProductImages images={product.images} />
-
-          <div className="">
-            <ProductInformation
-              product={product}
-              selectedColor={selectedColor}
-              selectedSize={selectedSize}
-              setShowCartModal={setShowCartModal}
-              setProductAddedToCart={setProductAddedToCart}
-            />
-          </div>
-        </div>
-      </div>
+      <ProductInformation
+        product={product}
+        selectedColor={selectedColor}
+        selectedSize={selectedSize}
+        setShowCartModal={setShowCartModal}
+        setProductAddedToCart={setProductAddedToCart}
+      />
 
       <div className="px-12 mt-40">
         <VideoBanner
@@ -108,10 +97,12 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
           {...bannerVideo}
         />
       </div>
-      <div className="mt-16 w-[692px] text-center mx-auto">
-        <h3 className="text-4xl font-medium">Ça, c&apos;est Nike Tech</h3>
+      <div className="mt-16 max-[960px]:px-6 min-[960px]:max-w-[692px] w-full text-center min-[960px]:mx-auto  overflow-hidden">
+        <h3 className="text-3xl min-[960px]:text-4xl font-medium">
+          Ça, c&apos;est Nike Tech
+        </h3>
 
-        <p className="mt-4 text-xl/8">
+        <p className="mt-4 text-lg/8  min-[960px]:text-xl/8">
           Certaines personnes pensent que Nike Tech était déjà très bien comme
           ça. Pas nous. Même si elle est toujours aussi stylée et culte
           qu&rsquo;il y a 10&nbsp;ans, on l&rsquo;a rendue plus chaude et plus
@@ -136,9 +127,11 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         />
       </div>
 
-      <div className="mt-16 w-[692px] text-center mx-auto">
-        <h3 className="text-4xl font-medium">Plus de chaleur</h3>
-        <p className="mt-4 text-xl/8">
+      <div className="mt-16 max-[960px]:px-6 min-[960px]:max-w-[692px] w-full text-center min-[960px]:mx-auto  overflow-hidden">
+        <h3 className="text-3xl min-[960px]:text-4xl font-medium">
+          Plus de chaleur
+        </h3>
+        <p className="mt-4 text-lg/8  min-[960px]:text-xl/8">
           Depuis toujours, Nike Tech procure la chaleur, la légèreté et le
           confort nécessaires pour bouger librement. Sans entrer dans les
           détails, les vêtements Nike Tech sont maintenant plus chauds, sans
