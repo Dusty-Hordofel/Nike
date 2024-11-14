@@ -23,6 +23,7 @@ type CartSummaryProps = {
   dispatch: Dispatch<CartAction>;
   totalQuantity: () => number;
   totalAmount: () => number;
+  handleSaveCart: () => Promise<void>;
 };
 
 const CartSummary = ({
@@ -32,15 +33,11 @@ const CartSummary = ({
   cartItems,
   appliedCoupon,
   dispatch,
+  handleSaveCart,
 }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [error, setError] = useState("");
-
-  const handleSaveCart = async () => {
-    const saveCart = await saveCartItems(cartItems, appliedCoupon?.couponCode);
-    console.log("🚀 ~ saveCartHandler ~ saveCart:SAVE CART", saveCart);
-  };
 
   useEffect(() => {
     const couponCode = appliedCoupon?.couponCode;
@@ -74,44 +71,44 @@ const CartSummary = ({
   };
 
   return (
-    <div className="px-2 mb-4 max-w-[404px] w-full">
-      <aside data-testid="cart-summary" className="px-2 mb-6 bg-blue-400">
-        <h2 className="mb-6 text-2xl font-medium">Récapitulatif</h2>
+    <aside
+      data-testid="cart-summary"
+      className="px-2 mb-6 min-[960px]:max-w-[404px] w-full "
+    >
+      <h2 className="mb-6 text-2xl font-medium">Récapitulatif</h2>
 
-        <PromoCodeSection
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          setCouponCode={setCouponCode}
-          onApplyCoupon={handleApplyCoupon}
-          couponCode={couponCode}
-          error={error}
-        />
-        <SummaryLine
-          label="Sous-total"
-          value={
-            orderTotal - shipping > 0
-              ? String((orderTotal - shipping).toFixed(2))
-              : "-"
-          }
-        />
-        <SummaryLine
-          label="Frais estimés de prise en charge et d'expédition"
-          value={shipping > 0 ? String(shipping) : "Gratuit"}
-        />
-        <SummaryLine
-          label="Total"
-          value={orderTotal > 0 ? String(orderTotal.toFixed(2)) : "-"}
-          isTotal
-        />
-        <CheckoutButtons cartItems={cartItems} onSaveCart={handleSaveCart} />
-      </aside>
-    </div>
+      <PromoCodeSection
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setCouponCode={setCouponCode}
+        onApplyCoupon={handleApplyCoupon}
+        couponCode={couponCode}
+        error={error}
+      />
+      <SummaryLine
+        label="Sous-total"
+        value={
+          orderTotal - shipping > 0
+            ? String((orderTotal - shipping).toFixed(2))
+            : "-"
+        }
+      />
+      <SummaryLine
+        label="Frais estimés de prise en charge et d'expédition"
+        value={shipping > 0 ? String(shipping) : "Gratuit"}
+      />
+      <SummaryLine
+        label="Total"
+        value={orderTotal > 0 ? String(orderTotal.toFixed(2)) : "-"}
+        isTotal
+      />
+      <CheckoutButtons cartItems={cartItems} onSaveCart={handleSaveCart} />
+    </aside>
   );
 };
 
 export default CartSummary;
 
-// Subcomponent for promo code section
 const PromoCodeSection = ({
   isOpen,
   setIsOpen,
@@ -136,12 +133,8 @@ const PromoCodeSection = ({
           } cursor-pointer transition-transform duration-300`}
         />
       </summary>
-      <div
-        className={cn(
-          "transition-max-height duration-500 ease-in-out overflow-hidden",
-          isOpen ? "max-h-96" : "max-h-0"
-        )}
-      >
+      {/* "transition-max-height duration-500 ease-in-out overflow-hidden " */}
+      <div className={cn(isOpen ? "max-h-96" : "max-h-0")}>
         <form onSubmit={onApplyCoupon}>
           <div className="flex my-1 pt-2">
             <input
@@ -149,18 +142,19 @@ const PromoCodeSection = ({
               name="promotionCode"
               aria-label="Enter a Promo Code"
               value={couponCode}
-              className="py-2 border border-[#e4e4e4] px-4 rounded-lg"
+              className="py-2 border border-[#e4e4e4] px-4 rounded-lg w-full"
               onChange={(e) => setCouponCode(e.target.value)}
             />
 
-            <button
+            <Button
               disabled={false}
               className="ml-2 px-6 py-2 border-[#e4e4e4] border rounded-full cursor-pointer"
               type="submit"
               data-testid="promo-code-apply-button"
+              variant="outline"
             >
               Appliquer
-            </button>
+            </Button>
           </div>
         </form>
         {error && <div className="text-red-600 text-xs">{error}</div>}
@@ -169,26 +163,20 @@ const PromoCodeSection = ({
   );
 };
 
-// Props for SummaryLine
 type SummaryLineProps = {
   label: string;
   value: string;
   isTotal?: boolean;
 };
 
-// Subcomponent for summary line
-const SummaryLine: React.FC<SummaryLineProps> = ({
-  label,
-  value,
-  isTotal = false,
-}) => {
+const SummaryLine = ({ label, value, isTotal = false }: SummaryLineProps) => {
   return (
     <div
       className={`flex justify-between ${
         isTotal ? "py-4 my-3 border-t border-b border-[#E5E5E5]" : "mb-2"
       }`}
     >
-      <span className="w-[387px] inline-block bg-success">{label} </span>
+      <div className=" inline-block">{label} </div>
       <span>{value}</span>
     </div>
   );
@@ -201,7 +189,7 @@ interface CheckoutButtonsProps {
 }
 const CheckoutButtons = ({ onSaveCart, cartItems }: CheckoutButtonsProps) => {
   return (
-    <div className="pt-5 flex flex-col space-y-3">
+    <div className="pt-5 min-[960px]:flex flex-col space-y-3 hidden">
       {cartItems?.length > 0 ? (
         <Link
           href="/checkout"

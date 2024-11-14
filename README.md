@@ -1244,6 +1244,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 82. Make the product page responsive
 
+### 83. Make the cart page responsive
+
 setTimeout(function(){debugger},4000)
 
 ## External Links
