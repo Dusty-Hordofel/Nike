@@ -68,10 +68,60 @@ export async function POST(
   req: NextRequest,
   { params: { userId } }: { params: { userId: string } }
 ) {
-  return NextResponse.json(
-    { success: true, error: false, userId },
-    {
-      status: 200,
+  try {
+    if (!isValidObjectId(userId)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: true,
+          message: "Unauthorized",
+        },
+        { status: 400 }
+      );
     }
-  );
+
+    const dbUser = await User.findOne({
+      _id: userId,
+    });
+
+    if (!dbUser) {
+      return NextResponse.json(
+        {
+          success: true,
+          error: false,
+          message: "Unauthorized User",
+        },
+        { status: 400 }
+      );
+    }
+
+    const cart = await Cart.findOne({ user: dbUser._id });
+
+    if (!cart) {
+      return NextResponse.json(
+        {
+          success: true,
+          error: false,
+          message: "cart not found",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, error: false, cart },
+      {
+        status: 200,
+      }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message },
+      {
+        status: 500,
+      }
+    );
+  }
 }
