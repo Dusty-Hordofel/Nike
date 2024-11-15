@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import { auth } from "@/auth";
-import Cart from "@/models/cart.model";
 import { connectDB } from "@/config/database";
 import User from "@/models/user.model";
+import Cart from "@/models/cart.model";
+import { isValidObjectId } from "mongoose";
 
-export const GET = auth(async (req: any) => {
+export const GET = auth(async (req) => {
+  // console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+
   if (!req.auth) {
     return NextResponse.json(
-      { success: false, error: true, message: "unauthorized" },
+      { error: true, message: "unauthorized" },
       {
         status: 401,
       }
@@ -25,7 +27,6 @@ export const GET = auth(async (req: any) => {
     if (!dbUser) {
       return NextResponse.json(
         {
-          success: false,
           error: true,
           message: "Unauthorized User",
         },
@@ -38,7 +39,6 @@ export const GET = auth(async (req: any) => {
     if (!cart) {
       return NextResponse.json(
         {
-          success: false,
           error: true,
           message: "cart not found",
         },
@@ -56,17 +56,10 @@ export const GET = auth(async (req: any) => {
     );
   } catch (error: any) {
     return NextResponse.json(
-      { success: false, error: true, message: error.message },
+      { message: error.message },
       {
         status: 500,
       }
     );
   }
-});
-
-export const POST = auth(async (req: Request) => {
-  return NextResponse.json(
-    { success: true, error: false, message: "Get all carts" },
-    { status: 200 }
-  );
 });
