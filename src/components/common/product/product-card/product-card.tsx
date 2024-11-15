@@ -9,18 +9,12 @@ import { Product } from "@/@types/admin/admin.products.interface";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { name, subProducts, slug } = product;
-  console.log("🚀 ~ ProductCard ~ subProducts:SUBPD", subProducts);
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
-  console.log("🚀 ~ ProductCard ~ images:TALAYE", active, images);
 
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => p.color)
-  );
-  console.log(
-    "🚀 ~ ProductCard ~ productColors:COLORS TO SEE",
-    productColors[0].name.toLocaleLowerCase()
   );
 
   const bestSeller = true;
@@ -42,7 +36,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Link
             className="sr-only"
             data-testid="product-card-link"
-            href={`/products/${slug}?color=${productColors[0].name.toLocaleLowerCase()}`}
+            href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
             tabIndex={0}
           >
             {name}
@@ -50,18 +44,18 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Link
             aria-label={name}
             className="product-card-link group"
-            href={`/products/${slug}?color=${productColors[0].name.toLocaleLowerCase()}`}
+            href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
           >
             <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px] ">
-              {/* {productColors.length > 1 && ( */}
-              <ProductCardColor
-                productColors={productColors}
-                subProducts={subProducts}
-                setImages={setImages}
-                setActive={setActive}
-              />
-              {/* )} */}
+              {productColors.length > 1 && (
+                <ProductCardColor
+                  productColors={productColors}
+                  subProducts={subProducts}
+                  setImages={setImages}
+                  setActive={setActive}
+                />
+              )}
 
               <ProductCardDescription
                 name={name}

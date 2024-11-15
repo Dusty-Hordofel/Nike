@@ -40,8 +40,6 @@ export default function Home() {
     <>
       {/* <div className="h-10 bg-info w-full mb-20"></div> */}
 
-      <Navbar />
-
       <DiscountBanner
         mediaType="video"
         contentPosition="bottom-left w-[80%]"
