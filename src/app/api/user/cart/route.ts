@@ -63,3 +63,15 @@ export const GET = auth(async (req) => {
     );
   }
 });
+
+export async function POST(
+  req: NextRequest,
+  { params: { userId } }: { params: { userId: string } }
+) {
+  return NextResponse.json(
+    { success: true, error: false, userId },
+    {
+      status: 200,
+    }
+  );
+}
