@@ -6,8 +6,6 @@ import Cart from "@/models/cart.model";
 import { isValidObjectId } from "mongoose";
 
 export const GET = auth(async (req) => {
-  // console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
-
   if (!req.auth) {
     return NextResponse.json(
       { error: true, message: "unauthorized" },
@@ -125,3 +123,66 @@ export async function POST(
     );
   }
 }
+
+export const DELETE = auth(async (req) => {
+  // console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
+
+  if (!req.auth) {
+    return NextResponse.json(
+      { error: true, message: "unauthorized" },
+      {
+        status: 401,
+      }
+    );
+  }
+
+  try {
+    await connectDB();
+
+    const dbUser = await User.findOne({
+      _id: req.auth?.user._id,
+    });
+
+    if (!dbUser) {
+      return NextResponse.json(
+        {
+          error: true,
+          success: false,
+          message: "Unauthorized User",
+        },
+        { status: 400 }
+      );
+    }
+
+    const cart = await Cart.findOneAndDelete({
+      userId: dbUser._id,
+    });
+
+    if (!cart) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: true,
+          message: "User cart not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        error: false,
+        message: "User cart  deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message },
+      {
+        status: 500,
+      }
+    );
+  }
+});
