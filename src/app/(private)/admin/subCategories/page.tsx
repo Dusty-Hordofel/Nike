@@ -6,9 +6,11 @@ import Modal from "@/components/ui/modals/modal";
 import { AddItemButton, ItemList } from "@/components/ui/item";
 import useSubProductForm from "@/hooks/admin/sucategories/use-subcategories-form.hook";
 import QueryStatus from "@/components/ui/query-status";
+import SubcategoryFormProvider from "@/components/common/subproduct/form-provider";
+import CreateSubCategory from "@/components/common/subproduct/create-subcategory";
 
-import CreateSubCategory from "./components/create-subcategory";
-import SubcategoryFormProvider from "./components/form-provider";
+// import CreateSubCategory from "../../../../components/common/subproduct/create-subcategory";
+// import SubcategoryFormProvider from "../../../../components/common/subproduct/form-provider";
 
 const SubCategoriesPage = () => {
   const router = useRouter();

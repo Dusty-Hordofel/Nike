@@ -1,5 +1,5 @@
 import React from "react";
-import SubCategoryForm from "./subcategory-form";
+import SubCategoryForm from "../../../app/(private)/admin/subCategories/components/subcategory-form";
 import { useFormContext } from "react-hook-form";
 import { SubCategoryFormData } from "@/schemas/products/subcategory.schema";
 
