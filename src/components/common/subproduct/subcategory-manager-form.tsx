@@ -2,7 +2,7 @@ import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-f
 import { Button } from "@/components/ui/buttons/button/button";
 // Omit<SubCategoryFormProps, "handleSubmit" | "onSubmit">
 
-const SubCategoryForm = ({
+const SubCategoryManagerForm = ({
   register,
   errors,
   handleFileChange,
@@ -69,4 +69,4 @@ const SubCategoryForm = ({
   );
 };
 
-export default SubCategoryForm;
+export default SubCategoryManagerForm;

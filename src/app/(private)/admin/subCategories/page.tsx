@@ -9,9 +9,6 @@ import QueryStatus from "@/components/ui/query-status";
 import SubcategoryFormProvider from "@/components/common/subproduct/form-provider";
 import CreateSubCategory from "@/components/common/subproduct/create-subcategory";
 
-// import CreateSubCategory from "../../../../components/common/subproduct/create-subcategory";
-// import SubcategoryFormProvider from "../../../../components/common/subproduct/form-provider";
-
 const SubCategoriesPage = () => {
   const router = useRouter();
   const user = useCurrentUser();

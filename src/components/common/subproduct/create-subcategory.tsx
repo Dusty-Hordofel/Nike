@@ -1,7 +1,7 @@
 import React from "react";
-import SubCategoryForm from "../../../app/(private)/admin/subCategories/components/subcategory-form";
 import { useFormContext } from "react-hook-form";
 import { SubCategoryFormData } from "@/schemas/products/subcategory.schema";
+import SubCategoryManagerForm from "./subcategory-manager-form";
 
 const CreateSubCategory = ({
   handleFileChange,
@@ -19,8 +19,9 @@ const CreateSubCategory = ({
     clearErrors,
   } = useFormContext<SubCategoryFormData>();
 
+  //SubCategoryManagerForm is old SubCategoryForm
   return (
-    <SubCategoryForm
+    <SubCategoryManagerForm
       register={register}
       errors={errors}
       onCloseModal={onCloseModal}
