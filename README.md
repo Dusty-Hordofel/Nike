@@ -1246,8 +1246,6 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 83. Make the cart page responsive
 
-setTimeout(function(){debugger},4000)
-
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
