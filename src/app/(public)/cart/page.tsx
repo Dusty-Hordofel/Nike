@@ -100,7 +100,7 @@ const CartProductsPage = () => {
                       <div>
                         <h2>{product.name}</h2>
                         <div className="text-gray-600">
-                          <p>Men's jacket</p>
+                          <p>Men&apos;s jacket</p>
                           <p>{product.color}</p>
                         </div>
                         <Button

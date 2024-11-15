@@ -149,7 +149,7 @@ const CartProductInfo = ({
       <Link href="/">
         <h2 className="text-black-100 font-medium">{name}</h2>
       </Link>
-      <div>Men's shoes</div>
+      <div>Men&apos;s shoes</div>
       <div>{color.slice(0, 1).toLocaleUpperCase() + color.slice(1)}</div>
       <div className="flex">
         <div className="flex gap-x-2">

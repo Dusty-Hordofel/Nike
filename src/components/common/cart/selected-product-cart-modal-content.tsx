@@ -65,7 +65,7 @@ const SelectedProductCartModalContent = ({
               </p>
               <h2 className="font-medium text-3xl">{data.name}</h2>
               <p>
-                <span className="sr-only">Prix d'origine</span>
+                <span className="sr-only">Prix d&apos;origine</span>
                 <span>{data.priceBeforeDiscount} €</span>
               </p>
             </div>
