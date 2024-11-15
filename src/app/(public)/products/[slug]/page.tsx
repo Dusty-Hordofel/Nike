@@ -15,6 +15,9 @@ import {
 import CartModal from "@/components/common/cart/cart-modal";
 import { CartItem } from "@/context/cart/cart.reducer";
 import { useCart } from "@/context/cart/cart.context";
+import { useAddProductToWishlist } from "@/hooks/user/wishlist/use-add-product-to-wishlist.hook";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
+import { useModal } from "@/context/modal/modal.context";
 
 interface ProductPageParams {
   slug: string;
@@ -45,11 +48,13 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
     dispatch,
   } = useCart();
 
+  const user = useCurrentUser();
+
   const [productAddedToCart, setProductAddedToCart] = useState<null | CartItem>(
     null
   );
-
   const [showCartModal, setShowCartModal] = useState(false);
+  const [modalContext, setModalContext] = useState<null | string>(null);
 
   const selectedColor = searchParams.color as string;
   const selectedSize = searchParams.size as string;
@@ -71,13 +76,24 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
 
   const { product } = productQuery.data;
 
+  const handleOpenModal = (context: string) => {
+    setModalContext(context);
+    setShowCartModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowCartModal(false);
+    setModalContext(null);
+  };
+
   return (
     <div className="min-h-screen">
       {showCartModal && (
         <CartModal
           numItemsInCart={numItemsInCart}
           productAddedToCart={productAddedToCart}
-          setShowCartModal={setShowCartModal}
+          modalContext={modalContext}
+          handleCloseModal={handleCloseModal}
         />
       )}
 
@@ -85,8 +101,9 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         product={product}
         selectedColor={selectedColor}
         selectedSize={selectedSize}
-        setShowCartModal={setShowCartModal}
         setProductAddedToCart={setProductAddedToCart}
+        onOpenModal={handleOpenModal}
+        userId={user?._id}
       />
 
       <div className="px-12 mt-40">

@@ -60,8 +60,6 @@ const useProductForm = () => {
   };
 
   const handleProductSubmit = async (data: ProductFormData) => {
-    // const selectedColor = colors.find(color => color.hexCode === data.color);
-    console.log("🚀 ~ handleProductSubmit ~ data:TOTO", data);
     if (formMode === "create") {
       try {
         const updatedSubProducts = await Promise.all(
@@ -130,10 +128,6 @@ const useProductForm = () => {
 
             return {
               ...subProduct,
-              // color: {
-              //   color: subProduct.color,
-              //   image: uploadedImageUrls[0]?.url || "",
-              // },
               color: {
                 name: selectedColor?.name,
                 hexCode: selectedColor?.hexCode,

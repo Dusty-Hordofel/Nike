@@ -1,14 +1,18 @@
 "use client";
 
 import { getCouponCode } from "@/actions/coupon/user-apply-coupon.action";
-import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
 import { cn } from "@/lib/utils";
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CartAction, CartItem } from "@/context/cart/cart.reducer";
+import {
+  CartAction,
+  CartItem,
+  CartState,
+  Coupon,
+} from "@/context/cart/cart.reducer";
 
 type PromoCodeSectionProps = {
   isOpen: boolean;
@@ -21,20 +25,17 @@ type PromoCodeSectionProps = {
 
 type CartSummaryProps = {
   dispatch: Dispatch<CartAction>;
-  totalQuantity: () => number;
-  totalAmount: () => number;
+  cartState: CartState;
   handleSaveCart: () => Promise<void>;
 };
 
 const CartSummary = ({
-  shipping,
-  taxAmount,
-  orderTotal,
-  cartItems,
-  appliedCoupon,
+  cartState,
   dispatch,
   handleSaveCart,
-}: any) => {
+}: CartSummaryProps) => {
+  const { cartItems, orderTotal, shipping, appliedCoupon } = cartState;
+
   const [isOpen, setIsOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [error, setError] = useState("");
@@ -54,7 +55,6 @@ const CartSummary = ({
     }
 
     const { success, message, coupon } = await getCouponCode(couponCode);
-    console.log("🚀 ~ handleApplyCoupon ~ message:", message);
 
     if (success) {
       dispatch({
@@ -71,11 +71,8 @@ const CartSummary = ({
   };
 
   return (
-    <aside
-      data-testid="cart-summary"
-      className="px-2 mb-6 min-[960px]:max-w-[404px] w-full "
-    >
-      <h2 className="mb-6 text-2xl font-medium">Récapitulatif</h2>
+    <aside className="px-2 mb-6 min-[960px]:max-w-[33.3333%] w-full">
+      <h2 className="mb-6 text-2xl font-medium">Summary</h2>
 
       <PromoCodeSection
         isOpen={isOpen}
@@ -86,7 +83,7 @@ const CartSummary = ({
         error={error}
       />
       <SummaryLine
-        label="Sous-total"
+        label="Subtotal"
         value={
           orderTotal - shipping > 0
             ? String((orderTotal - shipping).toFixed(2))
@@ -94,8 +91,8 @@ const CartSummary = ({
         }
       />
       <SummaryLine
-        label="Frais estimés de prise en charge et d'expédition"
-        value={shipping > 0 ? String(shipping) : "Gratuit"}
+        label="Estimated Delivery & Handling"
+        value={shipping > 0 ? String(shipping) : "Free"}
       />
       <SummaryLine
         label="Total"
@@ -125,7 +122,7 @@ const PromoCodeSection = ({
       onToggle={() => setIsOpen(!isOpen)}
     >
       <summary className="list-none cursor-pointer flex justify-between items-start font-medium">
-        As-tu un code promo&nbsp;?
+        Do you have a Promo Code?
         <span className="opacity-50 text-gray-500">MOYKALR40</span>
         <ChevronUp
           className={`${
@@ -153,7 +150,7 @@ const PromoCodeSection = ({
               data-testid="promo-code-apply-button"
               variant="outline"
             >
-              Appliquer
+              Apply
             </Button>
           </div>
         </form>
@@ -199,7 +196,7 @@ const CheckoutButtons = ({ onSaveCart, cartItems }: CheckoutButtonsProps) => {
           )}
           onClick={() => onSaveCart()}
         >
-          Paiement
+          Checkout
         </Link>
       ) : (
         <Button
@@ -212,7 +209,7 @@ const CheckoutButtons = ({ onSaveCart, cartItems }: CheckoutButtonsProps) => {
             })
           )}
         >
-          Paiement
+          Checkout
         </Button>
       )}
 

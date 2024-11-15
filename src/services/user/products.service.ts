@@ -14,4 +14,12 @@ const getProduct = async (slug: string, color: string) => {
   return product;
 };
 
-export { getProducts, getProduct };
+const getWishlistProducts = async (userId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/user/${userId}/wishlist`
+  );
+  const { productsInWishlist } = await response.json();
+  return productsInWishlist;
+};
+
+export { getProducts, getProduct, getWishlistProducts };

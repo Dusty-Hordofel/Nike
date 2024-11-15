@@ -7,13 +7,16 @@ import React from "react";
 type CartModalProps = {
   numItemsInCart: number;
   productAddedToCart: CartItem | null;
-  setShowCartModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCloseModal: () => void;
+  modalContext: string | null;
 };
 
 const CartModal = ({
   numItemsInCart,
   productAddedToCart,
-  setShowCartModal,
+  // setShowCartModal,
+  modalContext,
+  handleCloseModal,
 }: CartModalProps) => {
   return (
     <div className=" fixed inset-0 bg-[hsla(0,0%,7%,0.36)]  flex justify-center items-center z-50 fade-out">
@@ -30,7 +33,7 @@ const CartModal = ({
               buttonVariants({ variant: "secondary", size: "cart" }),
               "close-btn-container absolute top-6 right-6  bg-gray-200"
             )}
-            onClick={() => setShowCartModal(false)}
+            onClick={handleCloseModal}
           >
             <svg
               aria-hidden="true"
@@ -66,7 +69,7 @@ const CartModal = ({
               ></path>
             </svg>
             <h2 className="nds-text css-1rhjrcc e1yhcai00 appearance-body1Strong color-primary weight-regular">
-              Ajouté au panier
+              {modalContext === "cart" ? "Added to bag" : "Added to favourites"}
             </h2>
           </div>
           <div className="cart-modal-content py-6 flex">
@@ -82,11 +85,13 @@ const CartModal = ({
               <p className="nds-text css-fwd1nn e1yhcai00 appearance-body1 color-secondary weight-regular">
                 Pantalon de jogging
               </p>
-              <p className="nds-text nike-size css-fwd1nn e1yhcai00 appearance-body1 color-secondary weight-regular">
-                <span>
-                  Taille {productAddedToCart?.size.toLocaleUpperCase()}
-                </span>
-              </p>
+              {productAddedToCart?.size && (
+                <p className="nds-text nike-size css-fwd1nn e1yhcai00 appearance-body1 color-secondary weight-regular">
+                  <span>
+                    Taille {productAddedToCart?.size.toLocaleUpperCase()}
+                  </span>
+                </p>
+              )}
               <div id="price-container" className="space-x-4">
                 {productAddedToCart?.priceAfterDiscount !==
                   productAddedToCart?.priceBeforeDiscount && (
@@ -105,24 +110,39 @@ const CartModal = ({
             </div>
           </div>
           <div className="cart-modal-content space-y-2">
-            <Link
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/cart`}
-              className={cn(
-                buttonVariants({ variant: "outline", fullWidth: true }),
-                "text-black-200 font-medium space-x-2"
-              )}
-            >
-              <span>Afficher le panier </span>
-              <span>({numItemsInCart})</span>
-            </Link>
-            <Link
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/checkout`}
-              className={cn(
-                buttonVariants({ variant: "primary", fullWidth: true })
-              )}
-            >
-              Paiement
-            </Link>
+            {modalContext === "cart" && (
+              <>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/cart`}
+                  className={cn(
+                    buttonVariants({ variant: "outline", fullWidth: true }),
+                    "text-black-200 font-medium space-x-2"
+                  )}
+                >
+                  <span>View Bag</span>
+                  <span>({numItemsInCart})</span>
+                </Link>
+
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/checkout`}
+                  className={cn(
+                    buttonVariants({ variant: "primary", fullWidth: true })
+                  )}
+                >
+                  Checkout
+                </Link>
+              </>
+            )}
+            {modalContext === "wishlist" && (
+              <Link
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}/wishlist`}
+                className={cn(
+                  buttonVariants({ variant: "primary", fullWidth: true })
+                )}
+              >
+                Show favourites
+              </Link>
+            )}
           </div>
         </section>
       </div>
