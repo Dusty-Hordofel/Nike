@@ -1,6 +1,3 @@
-import { isValidObjectId } from "mongoose";
-import Cart from "@/models/cart.model";
-import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
