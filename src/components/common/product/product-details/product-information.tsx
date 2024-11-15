@@ -1,31 +1,45 @@
 "use client";
 import Link from "next/link";
-import ProductSizes from "./product-size";
 import ProductColors from "@/components/common/product/product-details/product-colors";
-import { Button } from "../../../ui/buttons/button/button";
-import Accordion from "../../accordion/Accordion";
 import { accordionData } from "@/assets/data/accordion";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux/use-redux-hooks";
-import { addProductToCart, CartItem } from "@/store/cartSlice";
-import { Product } from "@/@types/admin/admin.products.interface";
+import { useCart } from "@/context/cart/cart.context";
+import { CartItem } from "@/context/cart/cart.reducer";
+import { Button } from "@/components/ui/buttons/button/button";
+import Accordion from "../../accordion/Accordion";
+import ProductSizeSelector from "./product-size-selector";
+import ProductDetails from "./product-details";
+import ProductImages from "./product-images";
+import { useAddProductToWishlist } from "@/hooks/user/wishlist/use-add-product-to-wishlist.hook";
+import { useModal } from "@/context/modal/modal.context";
+import Modal from "@/components/ui/modals/modal";
 
-type Props = {
-  product: Product;
-  productStyle: number;
-  selectedSize: number;
+type ProductInformationProps = {
+  product: any;
+  selectedColor: string;
+  selectedSize: string;
+  setProductAddedToCart: React.Dispatch<any>;
+  userId: string | undefined;
+  onOpenModal: (context: string) => void;
 };
 
-const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
-  console.log("🚀 ~ ProductInformation ~ selectedSize:", selectedSize);
+const ProductInformation = ({
+  product,
+  selectedColor,
+  selectedSize,
+  setProductAddedToCart,
+  userId,
+  onOpenModal,
+}: ProductInformationProps) => {
   const {
     name,
+    subProductID,
     category,
     subProducts,
     subProduct,
     _id,
     slug,
-    sku, //not in the mode IProd
+    sku,
     discount,
     colors,
     sizes,
@@ -34,158 +48,227 @@ const ProductInformation = ({ product, productStyle, selectedSize }: any) => {
     priceAfterDiscount,
     priceBeforeDiscount,
   } = product;
-  console.log("🚀 ~ ProductInformation ~ colors:", colors);
 
-  const sizesInDatabase = sizes.map((size: any) => size.size);
-  console.log(
-    "🚀 ~ ProductInformation ~ sizesInDatabase:DB SIZES",
-    sizesInDatabase
+  const {
+    entityToEdit,
+    isResultModalOpen,
+    showResultModal,
+    setResultModalContent,
+    closeResultModal,
+    resultModalContent,
+    openModal,
+    closeModal,
+    isModalOpen,
+    formMode,
+  } = useModal();
+
+  const handleResponse = (response: any) => {
+    if (response.success) {
+      // handleModalClose();
+      setResultModalContent({ success: true, message: response.message });
+      showResultModal();
+    } else {
+      setResultModalContent({
+        success: false,
+        message: `An error occurred: ${response.message}`,
+      });
+      // handleModalClose();
+      showResultModal();
+    }
+  };
+
+  const [productQuantity, setProductQuantity] = useState<number | undefined>(
+    undefined
   );
 
   const [error, setError] = useState("");
 
-  const { cartItems } = useAppSelector((state) => state.cart);
-  console.log("🚀 ~ ProductInformation ~ cartItems:", cartItems);
-  console.log("🚀 ~ ProductInformation ~ SIZE:", sizes[selectedSize]);
+  const { dispatch } = useCart();
 
-  const dispatch = useAppDispatch();
+  const addProductToWishlist = useAddProductToWishlist();
 
+  // CartItem
   const cartProduct: CartItem = {
-    cartID: `${_id}_${productStyle}_${selectedSize}`,
+    cartID: `${_id}_${selectedColor}_${selectedSize}`,
     productID: _id,
+    subProductID,
     name,
-    style: productStyle,
-    size: sizes[selectedSize].size,
-    color: colors[productStyle].color,
-    price: priceAfterDiscount,
+    slug,
+    color: selectedColor,
+    size: selectedSize,
+    priceAfterDiscount,
     shipping,
     priceBeforeDiscount,
-    image: colors[productStyle].image,
+    image: colors.find(
+      (color: any) => color.name.toLocaleLowerCase() === selectedColor
+    ).image,
     quantity: 1,
   };
-  console.log("🚀 ~ ProductInformation ~ cartProduct: MONA", cartProduct);
 
-  function addToCartHandler() {
+  console.log("🚀 ~ cartProduct:VOIR", cartProduct);
+
+  // addProductToCart
+  function handleAddProductToCart() {
+    setError("");
     if (!selectedSize) {
       setError("Please Select a size");
       return;
     }
 
-    if (quantity < 1) {
-      setError("This Product is out of stock.");
-    } else {
-    }
-    dispatch(addProductToCart(cartProduct));
+    dispatch({ type: "ADD_ITEM", payload: cartProduct });
+    setProductAddedToCart(cartProduct);
+    onOpenModal("cart");
   }
 
+  // addToWishlist
+  async function handleAddProductToWishlist() {
+    if (!userId || !slug || !selectedColor) return;
+
+    setProductAddedToCart(cartProduct);
+
+    try {
+      const addToWishlist = await addProductToWishlist.mutateAsync({
+        userId: userId as string,
+        slug,
+        color: selectedColor,
+      });
+      handleResponse(addToWishlist);
+    } catch (error) {
+      console.error(
+        `Erreur lors de l'ajout du produit ${name} à la wishlist`,
+        error
+      );
+    }
+
+    // onOpenModal("wishlist");
+  }
+
+  // open size guide
+  // const openSizeGuide = () => {
+  //   onOpenModal("sizeGuide");
+  // };
+
   return (
-    <div className=" w-[456px] flex flex-col gap-2 mt-12 mr-2 pl-6 pt-1 pr-12  font-medium">
-      <div className="mb-8">
-        <p className="text-[#992E00] font-medium">Exclu membre</p>
-        <div>
-          <div>
-            <h1 className="text-2xl">{name}</h1>
-            <h2 className="pb-1">{sku}</h2>
-            <h2 className="pb-1">Chaussure pour Homme</h2>
-          </div>
-          <div className="leading-7 mt-1 mb-6">
-            <div
-              className="headline-5 mt3-sm mr2-sm"
-              style={{ display: "inline-block" }}
-            >
-              <div className="product-price__wrapper flex gap-3">
-                <div
-                  className="product-price"
-                  data-test="product-price-reduced"
+    <>
+      {isResultModalOpen && resultModalContent && (
+        <Modal
+          title={resultModalContent.success ? "Success" : "Error"}
+          onCloseModal={closeResultModal}
+        >
+          <p className="mb-4">{resultModalContent.message}</p>
+        </Modal>
+      )}
+
+      <div className="max-w-[1200px] min-[960px]:mx-auto flex">
+        <ProductImages images={product.images} />
+        <div className="w-full min-[960px]:w-[456px] flex flex-col gap-2 mt-12 min-[960px]:mr-2 min-[960px]:pl-6 pt-1 min-[960px]:pr-12 font-medium ">
+          <div className="mb-8">
+            <ProductDetails
+              name={name}
+              sku={sku}
+              priceAfterDiscount={priceAfterDiscount}
+              priceBeforeDiscount={priceBeforeDiscount}
+              discount={discount}
+            />
+            <ProductColors
+              slug={slug}
+              colors={colors}
+              setError={setError}
+              selectedColor={selectedColor}
+              productQuantity={productQuantity}
+              setProductQuantity={setProductQuantity}
+            />
+            <div>
+              <ProductSizeSelector
+                selectedSize={selectedSize}
+                sizes={sizes}
+                selectedColor={selectedColor}
+                slug={slug}
+                setError={setError}
+                setProductQuantity={setProductQuantity}
+                error={error}
+              />
+
+              <div className="space-y-3 mb-8 max-[960px]:px-6">
+                <Button
+                  size="large"
+                  variant="primary"
+                  fullWidth
+                  onClick={handleAddProductToCart}
+                  disabled={productQuantity != undefined && productQuantity < 1}
                 >
-                  {priceAfterDiscount}&nbsp;€
-                </div>
-                <div
-                  className="product-price line-through text-gray-600"
-                  data-test="product-price"
+                  Add to Bag
+                </Button>
+                <Button
+                  size="large"
+                  fullWidth
+                  variant="outline"
+                  className="bg-white"
+                  onClick={handleAddProductToWishlist}
                 >
-                  <span className="sr-only">Réduction de</span>
-                  {priceBeforeDiscount}&nbsp;€
-                </div>
-                <p className="text-primary" data-testid="OfferPercentage">
-                  <span className="text-green-700">
-                    {discount}&nbsp;% de réduction
-                  </span>
+                  <p className="flex items-center justify-center gap-1">
+                    <span>Favourite</span>
+                    <span className="btn-icon-wrapper">
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        role="img"
+                        width="24px"
+                        height="24px"
+                        fill="none"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          d="M16.794 3.75c1.324 0 2.568.516 3.504 1.451a4.96 4.96 0 010 7.008L12 20.508l-8.299-8.299a4.96 4.96 0 010-7.007A4.923 4.923 0 017.205 3.75c1.324 0 2.568.516 3.504 1.451l.76.76.531.531.53-.531.76-.76a4.926 4.926 0 013.504-1.451"
+                        ></path>
+                        <title>non-filled</title>
+                      </svg>
+                    </span>
+                  </p>
+                </Button>
+              </div>
+
+              <div className="py-6 max-[960px]:px-6">
+                <p>Retrait gratuit</p>
+                <Link
+                  href="/"
+                  className="underline underline-offset-8 font-medium  "
+                >
+                  <span>Trouver un magasin</span>
+                </Link>
+                <p className="font-thin text-gray-500 mt-5">
+                  Option «&nbsp;click and collect&nbsp;» disponible au moment du
+                  paiement
                 </p>
+              </div>
+
+              <div className="mt-[40px] max-[960px]:px-6">
+                <Accordion data={accordionData} />
+              </div>
+
+              <div className="flex pt-6 pb-10 max-[960px]:px-6">
+                <picture>
+                  <img
+                    src="/images/triman.png"
+                    className="mr-3 w-7 h-7"
+                    alt=""
+                  />
+                </picture>
+                <div className="flex items-center">
+                  <p>Ce produit peut être recyclé. </p>
+                  <Link href="/" className="ml-1 font-medium underline">
+                    {" "}
+                    En savoir plus
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <ProductColors
-          slug={slug}
-          colors={colors}
-          name={name}
-          productStyle={productStyle}
-        />
-        <div className="mt-5 mb-3 w-full">
-          <div className="flex items-center justify-between w-full">
-            <span className="">Sélectionner la taille</span>
-            <Link href="/">
-              <span className="text-[#707072]">Guide des tailles</span>
-            </Link>
-          </div>
-          <div className="mt-2">
-            <ProductSizes
-              selectedSize={selectedSize}
-              sizesInDatabase={sizesInDatabase}
-              productStyle={productStyle}
-              slug={slug}
-            />
-          </div>
-
-          <div className="space-y-3 mt-2 mb-6">
-            <Button
-              size="large"
-              variant="primary"
-              fullWidth
-              onClick={addToCartHandler}
-            >
-              Ajouter au panier
-            </Button>
-            <Button size="large" fullWidth>
-              Ajouter aux favories
-            </Button>
-          </div>
-
-          {/* lieu */}
-          <div className="py-6 ">
-            <p>Retrait gratuit</p>
-            <Link
-              href="/"
-              className="underline underline-offset-8 font-medium  "
-            >
-              <span>Trouver un magasin</span>
-            </Link>
-            <p className="font-thin text-gray-500 mt-5">
-              Option «&nbsp;click and collect&nbsp;» disponible au moment du
-              paiement
-            </p>
-          </div>
-          {/* Accordion */}
-          <div className="mt-[40px]">
-            <Accordion data={accordionData} />
-          </div>
-          {/* triman */}
-          <div className="flex pt-6 pb-10">
-            <picture>
-              <img src="/images/triman.png" className="mr-3 w-7 h-7" alt="" />
-            </picture>
-            <div className="flex items-center">
-              <p>Ce produit peut être recyclé. </p>
-              <Link href="/" className="ml-1 font-medium underline">
-                {" "}
-                En savoir plus
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -24,8 +24,7 @@ import MediaCarousel from "@/components/ui/carousels/media-carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useAppSelector } from "@/hooks/redux/use-redux-hooks";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import {
   HeroBanner as DiscountBanner,
   HeroBanner as DiscoverBanner,
@@ -35,8 +34,6 @@ import {
 } from "@/components/ui/banner/hero-banner";
 
 export default function Home() {
-  const cartItems = useAppSelector((state) => state);
-
   const user = useCurrentUser();
 
   return (

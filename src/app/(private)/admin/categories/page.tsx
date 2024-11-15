@@ -1,14 +1,14 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
-import { useModal } from "@/context/modal/modal-context";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
+import { useModal } from "@/context/modal/modal.context";
 import Modal from "@/components/ui/modals/modal";
 import { CreateCategory } from "@/app/(private)/admin/categories/components";
 import { AddItemButton, ItemList } from "@/components/ui/item";
 import QueryStatus from "@/components/ui/query-status";
 import CategoryFormProvider from "@/app/(private)/admin/categories/components/form-provider";
-import useCategoryForm from "@/hooks/admin/categories/use-category-form";
+import useCategoryForm from "@/hooks/admin/categories/use-category-form.hook";
 
 const CategoriesPage = () => {
   const router = useRouter();

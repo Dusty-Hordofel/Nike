@@ -18,6 +18,10 @@ const ProductCard = ({ product }: { product: Product }) => {
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => p.color)
   );
+  console.log(
+    "🚀 ~ ProductCard ~ productColors:COLORS TO SEE",
+    productColors[0].name.toLocaleLowerCase()
+  );
 
   const bestSeller = true;
   const newRelease = false;
@@ -38,7 +42,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Link
             className="sr-only"
             data-testid="product-card-link"
-            href={`/products/${slug}?style=${active}`}
+            href={`/products/${slug}?color=${productColors[0].name.toLocaleLowerCase()}`}
             tabIndex={0}
           >
             {name}
@@ -46,7 +50,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Link
             aria-label={name}
             className="product-card-link group"
-            href={`/products/${slug}?style=${active}`}
+            href={`/products/${slug}?color=${productColors[0].name.toLocaleLowerCase()}`}
           >
             <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px] ">

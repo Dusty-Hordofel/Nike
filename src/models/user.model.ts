@@ -14,6 +14,13 @@ export interface IAddress {
   active: boolean;
 }
 
+export interface Wishlist {
+  _id: string;
+  slug: string;
+  color: string;
+  addedAt: any;
+}
+
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
@@ -30,6 +37,7 @@ export interface IUser extends Document {
   marketingOption?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  wishlist: Wishlist[];
 }
 
 const addressSchema = new Schema<IAddress>({
@@ -44,6 +52,14 @@ const addressSchema = new Schema<IAddress>({
   city: { type: String, required: true },
   postalCode: { type: String, required: true },
   active: { type: Boolean, required: true, default: false },
+});
+const wishlistSchema = new Schema({
+  slug: { type: String, required: true },
+  color: {
+    type: String,
+    required: true,
+  },
+  addedAt: { type: Date, default: Date.now },
 });
 
 const userSchema = new Schema<IUser>(
@@ -63,9 +79,8 @@ const userSchema = new Schema<IUser>(
         "https://res.cloudinary.com/dgsc66scx/image/upload/v1712483523/Asset_5_icflwx.png",
     },
     stripeCustomerId: {
-      type: String, // Définir le type approprié
-      unique: true, // Assurez-vous que customId est unique si nécessaire
-      // sparse: true, // Permettre des valeurs uniques tout en permettant que ce champ puisse être vide
+      type: String,
+      unique: true,
     },
     password: { type: String, required: true, minlength: 6 },
     shoppingPreference: {
@@ -76,18 +91,11 @@ const userSchema = new Schema<IUser>(
     emailVerified: { type: Boolean, default: false },
     phoneNumber: { type: String, required: true },
     role: { type: String, default: "user" },
-    // addresses: [{ type: Schema.Types.ObjectId, ref: "Address" }],
     addresses: [addressSchema],
-    //  addresses: {
-    //   type: [addressSchema],
-    //   validate: {
-    //     validator: function (addresses: IAddress[]) {
-    //       return addresses.length > 0;
-    //     },
-    //     message: "User must have at least one address!",
-    //   },
-    // },
-
+    wishlist: {
+      type: [wishlistSchema],
+      default: [],
+    },
     marketingOption: {
       type: Boolean,
       default: false,

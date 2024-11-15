@@ -1,17 +1,13 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user";
-// import { useModal } from "@/context/modal/modal-context";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import Modal from "@/components/ui/modals/modal";
-import { CreateSubCategory } from "@/app/(private)/admin/subcategories/components";
 import { AddItemButton, ItemList } from "@/components/ui/item";
 import useSubProductForm from "@/hooks/admin/sucategories/use-subcategories-form.hook";
 import QueryStatus from "@/components/ui/query-status";
-import SubcategoryFormProvider from "@/app/(private)/admin/subcategories/components/form-provider";
-// import QueryStatus from "../olive/query-status";
-// import SubcategoryFormProvider from "../../../../components/admin/subcategories/form-provider";
-// import useSubProductForm from "../../../../components/admin/subcategories/use-subcategories-form";
+import SubcategoryFormProvider from "@/components/common/subproduct/form-provider";
+import CreateSubCategory from "@/components/common/subproduct/create-subcategory";
 
 const SubCategoriesPage = () => {
   const router = useRouter();

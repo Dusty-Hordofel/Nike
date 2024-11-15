@@ -1,6 +1,6 @@
 "use server";
 
-import { currentUser } from "@/utils/auth";
+import { currentUser } from "@/utils/auth.utils";
 import User from "@/models/user.model";
 
 import Coupon, { ICoupon } from "@/models/coupon.model";

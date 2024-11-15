@@ -37,7 +37,10 @@ export default async function RootLayout({
         {/* <Providers>
           <ClientOnly> */}
         <AppProviders>
-          <Components>{children}</Components>
+          {/* <Components> */}
+
+          {children}
+          {/* </Components> */}
         </AppProviders>
         {/* </ClientOnly>
         </Providers> */}

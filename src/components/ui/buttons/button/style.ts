@@ -16,6 +16,7 @@ export const ButtonStyle = {
       medium: "h-12 px-6 py-3",
       large: "h-[58px] px-6 py-[18px]",
       content: "h-max w-max",
+      cart: "h-10 w-10 p-2",
     },
     fullWidth: {
       true: "w-full",

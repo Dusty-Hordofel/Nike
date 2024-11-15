@@ -5,7 +5,7 @@ import { connectDB, disconnectDB } from "@/config/database";
 import { isValidObjectId } from "mongoose";
 import { DeliveryInfoFormData } from "../../schemas/checkout/delivery.schema";
 import User from "@/models/user.model";
-import { currentUser } from "@/utils/auth";
+import { currentUser } from "@/utils/auth.utils";
 import { Address } from "cluster";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";

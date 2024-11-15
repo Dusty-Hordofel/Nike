@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 //   SubCategorySchema,
 //   SubCategoryFormData,
 // } from "@/schemas/user/auth.schema";
-import { useModal } from "@/context/modal/modal-context";
-import { useFileContext } from "@/context/file/file-context";
+import { useModal } from "@/context/modal/modal.context";
+import { useFileContext } from "@/context/file/file.context";
 
 import { useEffect } from "react";
 

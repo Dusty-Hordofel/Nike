@@ -1,4 +1,5 @@
 import Loader from "@/components/ui/loader";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 interface QueryStatusProps {
@@ -6,6 +7,7 @@ interface QueryStatusProps {
   isError: boolean;
   error: any;
   children: React.ReactNode;
+  className?: string;
 }
 
 const QueryStatus: React.FC<QueryStatusProps> = ({
@@ -13,10 +15,13 @@ const QueryStatus: React.FC<QueryStatusProps> = ({
   isError,
   error,
   children,
+  className,
 }) => {
   if (isLoading) {
     return (
-      <div className="max-w-[1090px] px-[6px] mx-auto h-screen">
+      <div
+        className={cn("max-w-[1090px] px-[6px] mx-auto h-screen ", className)}
+      >
         <div className="flex justify-center items-center h-full">
           <Loader />
         </div>

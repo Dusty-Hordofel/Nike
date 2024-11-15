@@ -1212,6 +1212,42 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 74. Gestion des erreurs affichées par Nextjs(8)
 
+### 74. Gestion des erreurs affichées par Nextjs(10)
+
+### 75. Gestion du panier
+
+## Section 4: Redux toolkit - useReducer/context
+
+### 75. Product Page
+
+### 76. Ajout du suffixe sur les points de terminaison
+
+### 77. cart with useReducer/context (1)
+
+### 77. cart with useReducer/context (2)
+
+### 77. cart with useReducer/context (3)
+
+### 77. cart with useReducer/context (4)
+
+### 78. cart with useReducer/context and cart Modal(1)
+
+### 79. cart Summary(1)
+
+### 79. cart Summary(2)
+
+### 80. Gestion du nommage des fichiers
+
+### 81. gestion de la modal du panier(1)
+
+### 81. gestion de la modal du panier(2)
+
+### 82. Make the product page responsive
+
+### 83. Make the cart page responsive
+
+setTimeout(function(){debugger},4000)
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)

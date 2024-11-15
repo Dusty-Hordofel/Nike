@@ -83,15 +83,22 @@ export const Button = ({
   size,
   fullWidth,
   disabled,
-  isLoading,
+  isLoading = false,
   className,
   ...props
 }: ButtonProps) => {
   return (
     <button
-      className={buttonVariants({ variant, size, fullWidth })}
+      // className={cn(buttonVariants({ variant, size, fullWidth }), className)}
       {...props}
-      disabled={isLoading}
+      className={cn(
+        buttonVariants({ variant, size, fullWidth }),
+        className,
+        disabled &&
+          !isLoading &&
+          "bg-[#E5E5E5] text-[#CACACB] hover:bg-[#E5E5E5] border-[#E5E5E5] hover:border-[#E5E5E5]"
+      )}
+      disabled={isLoading || disabled}
     >
       <span className={`${isLoading ? "invisible" : "visible"}`}>
         {children}

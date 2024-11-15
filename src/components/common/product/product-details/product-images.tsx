@@ -32,7 +32,7 @@ const ProductImages = ({ images }: ProductImagesProps) => {
     setCurrentIndex(index);
   };
   return (
-    <div className="flex w-[calc(100%-456px)]   h-[669px] pl-12 mt-12 gap-x-4 mx-2 sticky top-0">
+    <div className="hidden min-[960px]:flex w-[calc(100%-456px)]   h-[669px] pl-12 mt-12 gap-x-4 mx-2 sticky top-0">
       <ul className="flex flex-col gap-2 overflow-y-scroll">
         {images.map(({ url }, index) => {
           return (
@@ -66,6 +66,7 @@ const ProductImages = ({ images }: ProductImagesProps) => {
           src={images[currentIndex].url}
           alt="slides"
           key={images[currentIndex].url}
+          className="bg-gray-200 h-full"
         />
         <div className="absolute flex gap-2 bottom-6 right-6">
           <ArrowButton direction="left" onClick={prevSlide} />

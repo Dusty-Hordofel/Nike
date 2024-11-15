@@ -1,16 +1,18 @@
 "use server";
 
-import { currentUser } from "@/utils/auth";
+import { currentUser } from "@/utils/auth.utils";
 import User from "@/models/user.model";
 import Cart from "@/models/cart.model";
 import ProductModel from "@/models/product.model";
-import { CartItem, Coupon } from "@/store/cartSlice";
+// import { CartItem, Coupon } from "@/store/cartSlice";
 import { redirect } from "next/navigation";
 import { isValidObjectId } from "mongoose";
 import { connectDB, disconnectDB } from "@/config/database";
 import { applyCouponCode } from "../coupon/user-apply-coupon.action";
 import { revalidatePath } from "next/cache";
-import { Product } from "@/@types/admin/admin.products.interface";
+import { Product, SubProduct } from "@/@types/admin/admin.products.interface";
+import { CartItem } from "@/context/cart/cart.reducer";
+import { error } from "console";
 
 export async function saveCartItems(
   cartItems: CartItem[],
@@ -42,16 +44,22 @@ export async function saveCartItems(
           throw new Error(`Product with ID ${cartItem.productID} not found`);
         }
 
-        const subProduct = dbProduct.subProducts[Number(cartItem.style)];
+        const subProduct = dbProduct.subProducts.find(
+          (subProduct: SubProduct) =>
+            subProduct.color.name.toLocaleLowerCase() === cartItem.color
+        );
+
+        // const subProduct = dbProduct.subProducts[Number(cartItem.style)];
         if (!subProduct) {
           throw new Error(
-            `SubProduct with style ${cartItem.style} not found for product ${dbProduct.name}`
+            `SubProduct with color ${cartItem.color} not found for product ${dbProduct.name}`
           );
         }
 
         // Trouver la taille du produit correspondant dans les sous-produits
         const productSize = subProduct.sizes.find(
-          (p) => p.size === cartItem.size
+          (p) =>
+            p.size.toLocaleLowerCase() === cartItem.size.toLocaleLowerCase()
         );
 
         // Vérifier que la taille du produit a été trouvée et que son prix est défini
@@ -72,6 +80,8 @@ export async function saveCartItems(
               )
             : Number(subProduct.price.toFixed(2));
 
+        console.log("🚀 ~ cartItems.map ~ discountedPrice:", discountedPrice);
+
         // Construire l'objet représentant le produit du panier
         const cartProduct = {
           name: dbProduct.name,
@@ -86,6 +96,8 @@ export async function saveCartItems(
           price: discountedPrice,
         };
 
+        console.log("🚀 ~ cartItems.map ~ cartProduct:", cartProduct);
+
         return cartProduct;
       })
     );
@@ -93,6 +105,7 @@ export async function saveCartItems(
     const cartTotal = products.reduce((total, product) => {
       return total + product.price * product.quantity;
     }, 0);
+    console.log("🚀 ~ cartTotal ~ cartTotal:", cartTotal);
 
     await Cart.findOneAndDelete({ user: user._id });
 
@@ -112,12 +125,20 @@ export async function saveCartItems(
       await applyCouponCode(couponCode);
     }
 
-    revalidatePath("/checkout");
+    // revalidatePath("/checkout");
 
-    return { success: "Cart items saved successfully!" };
+    return {
+      sucess: true,
+      error: false,
+      message: "Cart items saved successfully!",
+    };
   } catch (error) {
     console.error("Error saving cart items:", error);
-    return { error: "An error occurred while saving cart items" };
+    return {
+      sucess: false,
+      error: true,
+      message: "An error occurred while saving cart items",
+    };
   }
 }
 
@@ -141,5 +162,35 @@ export const getCart = async () => {
     return JSON.parse(JSON.stringify(cart));
   } catch (error) {
     return { error: "An error occurred while loading cart items" };
+  }
+};
+
+export const deleteCart = async () => {
+  try {
+    const user = await currentUser();
+    if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
+      return { error: "Unauthorized" };
+    }
+
+    connectDB();
+
+    const dbUser = await User.findOne({ email: user.email });
+    if (!dbUser) {
+      return { error: "Unauthorized" };
+    }
+
+    await Cart.deleteMany({ user: user._id });
+
+    return {
+      success: true,
+      error: false,
+      message: "Cart deleted successfully!",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: true,
+      message: "An error occurred while deleting cart items",
+    };
   }
 };

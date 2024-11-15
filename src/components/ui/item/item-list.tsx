@@ -1,6 +1,6 @@
 import React from "react";
 import ItemCard from "./item-card";
-import { EntityToEdit } from "@/context/modal/modal-context";
+import { EntityToEdit } from "@/context/modal/modal.context";
 
 const ItemList = ({
   items,

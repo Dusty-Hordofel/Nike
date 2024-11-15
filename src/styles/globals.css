@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --podium-cds-motion-duration-300: 300ms;
+}
+
 @layer utilities {
   .absolute-center {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
@@ -32,14 +36,12 @@
   } */
 }
 
-/* Container using CSS Grid */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 400px);
-  gap: 16px; /* Adjust the gap between cards as needed */
+  gap: 16px;
 }
 
-/* Card styling */
 .card {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -207,4 +209,23 @@ css-1ncut4k::before {
 
 .checkbox-animation {
   animation: checkbox-animation 0.5s forwards;
+}
+
+/* Cart */
+.fade-out {
+  animation-delay: 6000ms;
+  animation-duration: var(--podium-cds-motion-duration-300);
+  animation-name: animation-plwpox;
+  animation-direction: reverse;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animation-plwpox {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

@@ -3,54 +3,61 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 interface ProductsAndSizesProps {
-  sizesInDatabase: string[];
   slug: string;
-  productStyle: number;
-  selectedSize: number;
+  sizes: {
+    _id: string;
+    size: string;
+    qty: number;
+  }[];
+  selectedColor: string;
+  selectedSize: string;
+  setError: any;
+  setProductQuantity: any;
 }
 
 const ProductSizes = ({
-  sizesInDatabase,
-  productStyle,
+  selectedColor,
   selectedSize,
+  sizes,
   slug,
+  setError,
+  setProductQuantity,
 }: ProductsAndSizesProps) => {
   return (
-    <div className="mt8-lg">
-      <ul className="grid grid-cols-3 gap-[6px]">
-        {sizesInDatabase.map((size, index) => (
+    <div className="pt-3">
+      {/* min-[960px]:gap-[6px] min-[960px]:grid-cols-3 */}
+      <ul className="grid grid-cols-5  gap-2">
+        {sizes.map(({ _id, size, qty }) => (
           <Link
             aria-label={slug}
-            className="product-card__img-link-overlay group"
-            data-el-type="Hero"
-            data-testid="product-card__image-link"
+            className="group"
             href={
-              sizesInDatabase.includes(size)
-                ? `/products/${slug}?style=${productStyle}&size=${
-                    sizesInDatabase.includes(size)
-                      ? sizesInDatabase.indexOf(size)
-                      : null
-                  }`
-                : `/products/${slug}?style=${productStyle}`
+              size
+                ? `/products/${slug}?color=${selectedColor}&size=${size.toLocaleLowerCase()}`
+                : `/products/${slug}?color=${selectedColor}`
             }
             scroll={false}
-            key={index}
+            key={_id}
           >
             <li
-              key={index}
+              // w-[120.664px]
               className={cn(
-                sizesInDatabase.includes(size)
-                  ? "bg-white"
-                  : "bg-gray-100 text-gray-300",
-                "font-normal w-[120.664px] h-[48px] flex items-center justify-center border hover:border-black-100  rounded-[4px] border-gray-200",
-                sizesInDatabase.indexOf(size) === selectedSize &&
-                  " border-black-100"
+                qty > 0 ? "bg-white" : "bg-gray-100 text-gray-300",
+                "font-normal  h-[48px] flex items-center justify-center border hover:border-black-100  rounded-[4px] border-gray-200",
+                size.toLocaleLowerCase() === selectedSize && " border-black-100"
               )}
               style={{
-                cursor: sizesInDatabase.includes(size) ? "pointer" : "default",
+                cursor: size ? "pointer" : "default",
+              }}
+              onClick={() => {
+                setError("");
+                setProductQuantity(qty);
+                if (size && qty === 0) {
+                  setError("This size is out of stock");
+                }
               }}
             >
-              EU {size}
+              {size}
             </li>
           </Link>
         ))}

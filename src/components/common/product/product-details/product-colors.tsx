@@ -3,40 +3,63 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
+import ProductUnavailable from "./product-unavailable";
 
 type ProductColorsProps = {
   slug: string;
-  subProducts: any;
-  name: string;
-  productStyle: number;
+  selectedColor: string;
+  productQuantity: number | undefined;
+  setProductQuantity: any;
+  colors: any;
+  setError: any;
 };
 
-const ProductColors = ({ slug, colors, productStyle, name }: any) => {
-  const [colorVariants, setColorVariants] = useState<any>(colors);
+const ProductColors = ({
+  slug,
+  colors,
+  setError,
+  selectedColor,
+  productQuantity,
+  setProductQuantity,
+}: ProductColorsProps) => {
+  const [activeColor, setActiveColor] = useState(0);
+
+  const handleResetSelection = (index: number) => {
+    setError("");
+    setProductQuantity(undefined);
+    setActiveColor(index);
+  };
 
   return (
-    <div className="flex gap-2 pb-[10px]">
-      {colorVariants.map(({ image, color }: any, index: number) => (
-        <Link
-          aria-label={name}
-          className="product-card__img-link-overlay"
-          data-el-type="Hero"
-          data-testid="product-card__image-link"
-          key={`${name} ${color}`}
-          href={`/products/${slug}?style=${index}`}
-        >
-          <Image
-            src={image}
-            alt=""
-            width={70.3984}
-            height={70.3984}
-            className={cn(
-              productStyle === index && "border border-black-200",
-              "w-[70.3984px] h-[70.3984px] object-cover rounded hover:border-black-200 border"
-            )}
-          />
-        </Link>
-      ))}
+    <div className="flex gap-2 my-8">
+      {colors.map(({ image, hexCode, name, _id }: any, index: number) => {
+        return (
+          <Link
+            aria-label={name}
+            className="product-card__img-link-overlay relative"
+            data-el-type="Hero"
+            data-testid="product-card__image-link"
+            key={_id}
+            href={`/products/${slug}?color=${name.toLocaleLowerCase()}`}
+          >
+            <Image
+              src={image}
+              alt=""
+              width={70.3984}
+              height={70.3984}
+              className={cn(
+                selectedColor === name.toLowerCase() && "border-2",
+                "min-[960px]:size-[70.3984px] size-[125px] object-cover rounded hover:border border-black-200"
+              )}
+              onClick={() => handleResetSelection(index)}
+            />
+
+            {productQuantity !== undefined &&
+              productQuantity < 1 &&
+              activeColor === index && <ProductUnavailable />}
+          </Link>
+        );
+      })}
     </div>
   );
 };
