@@ -1250,6 +1250,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 85. Gestion de la wishlist
 
+### 85. Gestion du footer
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
