@@ -1252,6 +1252,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 85. Gestion du footer
 
+### 86. Gestion due la HomePage
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
