@@ -40,8 +40,6 @@ export default function Home() {
     <>
       {/* <div className="h-10 bg-info w-full mb-20"></div> */}
 
-      <Navbar />
-
       <DiscountBanner
         mediaType="video"
         contentPosition="bottom-left w-[80%]"
@@ -159,7 +157,7 @@ export default function Home() {
           </CarouselContent>
         )}
       </MediaCarousel>
-      <HomeProductsCategories categories={categories} />
+      {/* <HomeProductsCategories categories={categories} /> */}
 
       <footer className="p-12 border-t border-gray-500 text-sm">
         <ul className="grid grid-cols-4">

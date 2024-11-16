@@ -9,8 +9,7 @@ const SelectedProductCartModal = ({
   selectedCartItem,
   setSelectedCartItem,
   dispatch,
-}: // setCartItems,
-{
+}: {
   selectedCartItem: {
     cartID: string;
     slug: string;
@@ -18,7 +17,6 @@ const SelectedProductCartModal = ({
     size: string;
   };
   dispatch: Dispatch<CartAction>;
-  // setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   setSelectedCartItem: Dispatch<
     SetStateAction<{
       slug: string;

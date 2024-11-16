@@ -8,6 +8,7 @@ import ClientOnly from "@/components/ui/client-only";
 // import Providers from "@/components/providers/app-providers";
 import Components from "@/components/providers/components";
 import AppProviders from "@/components/providers/app-providers";
+import Navbar from "@/components/common/navbar/Navbar";
 // import Providers from "@/components/providers/providers";
 // import MyComponent from "@/components/providers/providers";
 // import Providers from "@/components/providers/providers";
@@ -38,7 +39,7 @@ export default async function RootLayout({
           <ClientOnly> */}
         <AppProviders>
           {/* <Components> */}
-
+          <Navbar />
           {children}
           {/* </Components> */}
         </AppProviders>

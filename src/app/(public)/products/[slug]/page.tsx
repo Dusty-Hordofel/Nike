@@ -18,6 +18,7 @@ import { useCart } from "@/context/cart/cart.context";
 import { useAddProductToWishlist } from "@/hooks/user/wishlist/use-add-product-to-wishlist.hook";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { useModal } from "@/context/modal/modal.context";
+import { saveCartItems } from "@/actions/cart/user-cart.actions";
 
 interface ProductPageParams {
   slug: string;
@@ -34,16 +35,7 @@ interface ProductPageProps {
 const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const { slug: productSlug } = params;
   const {
-    state: {
-      cartItems,
-      numItemsInCart,
-      cartTotal,
-      shipping,
-      taxAmount,
-      orderTotal,
-      appliedCoupon,
-      error,
-    },
+    state: cartState,
 
     dispatch,
   } = useCart();
@@ -86,14 +78,22 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
     setModalContext(null);
   };
 
+  const handleSaveCart = async () => {
+    await saveCartItems(
+      cartState.cartItems,
+      cartState.appliedCoupon?.couponCode
+    );
+  };
+
   return (
     <div className="min-h-screen">
       {showCartModal && (
         <CartModal
-          numItemsInCart={numItemsInCart}
+          numItemsInCart={cartState.numItemsInCart}
           productAddedToCart={productAddedToCart}
           modalContext={modalContext}
           handleCloseModal={handleCloseModal}
+          handleSaveCart={handleSaveCart}
         />
       )}
 
