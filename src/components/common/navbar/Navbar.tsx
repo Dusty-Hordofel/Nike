@@ -22,7 +22,7 @@ const Navbar = () => {
         </div>
 
         <div className="col-span-7 h-full">
-          <nav className="absolute inset-x-0 h-full bg-yellow-100">
+          <nav className="absolute inset-x-0 h-full bg-white">
             <NavLinks menuLinks={menuLinks} />
           </nav>
         </div>
