@@ -22,7 +22,9 @@ const CheckoutPage = () => {
   const { state: cartState } = useCart();
   const cart = useGetCart();
 
-  if (user || cartState.numItemsInCart < 1) {
+  console.log("🚀 ~ CheckoutPage ~ user:", user, cartState.numItemsInCart);
+
+  if ((!user && cartState.numItemsInCart >= 0) || !user) {
     router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/products`);
   }
 
