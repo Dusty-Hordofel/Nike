@@ -1246,6 +1246,10 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 83. Make the cart page responsive
 
+### 84. gestion de la navigation
+
+### 85. Gestion de la wishlist
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
