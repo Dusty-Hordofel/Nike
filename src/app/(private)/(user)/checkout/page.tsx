@@ -8,14 +8,23 @@ import { PaymentSection } from "@/components/common/checkout/payment/stripe-paym
 import { DeliverySection } from "@/components/common/checkout/delivery";
 import Loader from "@/components/ui/loader";
 import { useGetCart } from "@/hooks/user/cart";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
+import { useCart } from "@/context/cart/cart.context";
+import { useRouter } from "next/navigation";
 
 const CheckoutPage = () => {
-  const { deliveryStep } = useDeliveryContext();
+  const router = useRouter();
+  const user = useCurrentUser();
 
+  const { deliveryStep } = useDeliveryContext();
   const deliveryAddress = useActiveDeliveryAddress();
-  console.log("🚀 ~ CheckoutPage ~ deliveryAddress:", deliveryAddress);
+
+  const { state: cartState } = useCart();
   const cart = useGetCart();
-  console.log("🚀 ~ CheckoutPage ~ cart:", cart);
+
+  if (user || cartState.numItemsInCart < 1) {
+    router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/products`);
+  }
 
   const [currentCheckoutSection, setCurrentCheckoutSection] = useState<
     "address" | "payment" | "summary"
