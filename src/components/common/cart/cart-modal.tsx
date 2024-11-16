@@ -9,11 +9,13 @@ type CartModalProps = {
   productAddedToCart: CartItem | null;
   handleCloseModal: () => void;
   modalContext: string | null;
+  handleSaveCart: () => Promise<void>;
 };
 
 const CartModal = ({
   numItemsInCart,
   productAddedToCart,
+  handleSaveCart,
   // setShowCartModal,
   modalContext,
   handleCloseModal,
@@ -128,6 +130,7 @@ const CartModal = ({
                   className={cn(
                     buttonVariants({ variant: "primary", fullWidth: true })
                   )}
+                  onClick={() => handleSaveCart()}
                 >
                   Checkout
                 </Link>
@@ -135,7 +138,8 @@ const CartModal = ({
             )}
             {modalContext === "wishlist" && (
               <Link
-                href={`${process.env.NEXT_PUBLIC_BASE_URL}/wishlist`}
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}/cart`}
+                // href={`${process.env.NEXT_PUBLIC_BASE_URL}/wishlist`}
                 className={cn(
                   buttonVariants({ variant: "primary", fullWidth: true })
                 )}

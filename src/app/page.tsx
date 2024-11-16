@@ -157,7 +157,7 @@ export default function Home() {
           </CarouselContent>
         )}
       </MediaCarousel>
-      <HomeProductsCategories categories={categories} />
+      {/* <HomeProductsCategories categories={categories} /> */}
 
       <footer className="p-12 border-t border-gray-500 text-sm">
         <ul className="grid grid-cols-4">

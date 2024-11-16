@@ -22,13 +22,13 @@ const Navbar = () => {
         </div>
 
         <div className="col-span-7 h-full">
-          <nav className="absolute inset-x-0 h-full ">
+          <nav className="absolute inset-x-0 h-full bg-yellow-100">
             <NavLinks menuLinks={menuLinks} />
           </nav>
         </div>
         <div className="col-span-3 h-full z-10 pt-3">
           <div className="float-right gap-1 flex h-[36px]">
-            <search aria-label="Rechercher des articles Nikes">
+            <search aria-label="Rechercher des articles Nikes ">
               <SearchInput />
             </search>
 

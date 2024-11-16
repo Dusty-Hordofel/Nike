@@ -10,7 +10,7 @@ const SearchInput = () => {
   return (
     <div
       className={cn(
-        "w-[168px] mr-3  h-full   rounded-full overflow-hidden relative group"
+        "w-[168px] mr-3  h-full   rounded-full overflow-hidden relative group max-[960px]:hidden "
       )}
     >
       <IconButton
