@@ -1256,6 +1256,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 87. Refactorisation de l'Api
 
+### 88. Ajout du carousel des images produit
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
