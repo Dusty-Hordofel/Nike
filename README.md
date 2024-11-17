@@ -1254,6 +1254,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 86. Gestion due la HomePage
 
+### 87. Refactorisation de l'Api
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
