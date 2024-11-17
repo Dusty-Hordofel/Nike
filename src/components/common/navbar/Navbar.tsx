@@ -36,8 +36,8 @@ const Navbar = () => {
               <>
                 <Link
                   className="link-icon-hover"
-                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/cart`}
-                  // href={`${process.env.NEXT_PUBLIC_BASE_URL}/wishlist`}
+                  // href={`${process.env.NEXT_PUBLIC_BASE_URL}/cart`}
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/wishlist`}
                 >
                   <FavorisIcon aria-label="Favoris" />
                 </Link>

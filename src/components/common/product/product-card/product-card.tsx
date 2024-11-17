@@ -12,6 +12,8 @@ const ProductCard = ({ product }: { product: Product }) => {
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 960);
+  // const isLargeScreen = useWindowSize(960);
 
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => p.color)
@@ -21,13 +23,22 @@ const ProductCard = ({ product }: { product: Product }) => {
   const newRelease = false;
 
   useEffect(() => {
-    // setImages(subProducts[active]?.images);
     setImages((prevImages) => subProducts[active]?.images || prevImages);
     setProductColors(
       (prevProductColors) =>
         subProducts.map((p) => p.color) || prevProductColors
     );
   }, [active, product, subProducts]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 960);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -48,7 +59,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           >
             <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px] ">
-              {productColors.length > 1 && (
+              {productColors.length > 1 && isLargeScreen && (
                 <ProductCardColor
                   productColors={productColors}
                   subProducts={subProducts}
@@ -62,6 +73,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 productColors={productColors}
                 bestSeller={bestSeller}
                 newRelease={newRelease}
+                isLargeScreen={isLargeScreen}
               />
               <ProductCardPrice subProducts={subProducts} active={active} />
             </div>

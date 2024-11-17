@@ -9,6 +9,7 @@ interface ProductCardDescriptionProps {
   }[];
   bestSeller: boolean;
   newRelease: boolean;
+  isLargeScreen: boolean;
 }
 
 const ProductCardDescription = ({
@@ -17,8 +18,9 @@ const ProductCardDescription = ({
   productColors,
   bestSeller,
   newRelease,
+  isLargeScreen,
 }: ProductCardDescriptionProps) => (
-  <>
+  <div className="max-[960px]:mx-3 max-[960px]:mt-3 max-[960px]:text-[14px]">
     {newRelease || bestSeller ? (
       <div className=" product-card-announcement font-medium text-[#9E3500]">
         {newRelease ? "Dernières sorties" : "Meilleure vente"}
@@ -26,7 +28,9 @@ const ProductCardDescription = ({
     ) : null}
 
     <div
-      className={`${productColors.length > 1 && "group-hover:hidden block"}`}
+      className={`${
+        productColors.length > 1 && isLargeScreen && "group-hover:hidden block"
+      }`}
     >
       <div className="product-card-titles">
         <div className="product-card-title font-medium">{name}</div>
@@ -45,7 +49,7 @@ const ProductCardDescription = ({
         {productColors.length > 1 ? "couleurs" : "couleur"}
       </div>
     </div>
-  </>
+  </div>
 );
 
 export default ProductCardDescription;

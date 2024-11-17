@@ -3,22 +3,9 @@ import { Inter } from "next/font/google";
 
 import "../styles/globals.css";
 import { helvetica } from "@/assets/fonts/helvetica/helvetica";
-// import Providers from "@/components/providers/providers";
 import ClientOnly from "@/components/ui/client-only";
-// import Providers from "@/components/providers/app-providers";
-import Components from "@/components/providers/components";
 import AppProviders from "@/components/providers/app-providers";
 import Navbar from "@/components/common/navbar/Navbar";
-// import Providers from "@/components/providers/providers";
-// import MyComponent from "@/components/providers/providers";
-// import Providers from "@/components/providers/providers";
-// import Providers from "@/components/providers/providers";
-// import Providers from "@/components/providers/providers";
-// import dynamic from "next/dynamic";
-// import { DeliveryProvider } from "@/context/checkout/delivery-context";
-// import { getUserActiveAdress } from "@/actions/address/user-address.actions";
-// import { auth } from "@/auth";
-// import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,16 +22,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${helvetica.className} max-w-[1924px]`}>
-        {/* <Providers>
-          <ClientOnly> */}
-        <AppProviders>
-          {/* <Components> */}
-          <Navbar />
-          {children}
-          {/* </Components> */}
-        </AppProviders>
-        {/* </ClientOnly>
-        </Providers> */}
+        <ClientOnly>
+          <AppProviders>
+            <Navbar />
+            {children}
+          </AppProviders>
+        </ClientOnly>
       </body>
     </html>
   );

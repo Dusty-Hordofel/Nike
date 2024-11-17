@@ -8,6 +8,7 @@ import { filterProducts } from "./filters/filter-products";
 import ProductSorterButton from "./sorting/product-sorter-button";
 import { Product } from "@/@types/admin/admin.products.interface";
 import MobileProductFilterAndSort from "./filters/mobile/mobile-product-filter-and-sort";
+import useWindowSize from "@/hooks/use-window-size";
 
 const ProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -18,7 +19,8 @@ const ProductsPage = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   // const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 960);
+  // const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 960);
+  const isLargeScreen = useWindowSize(960);
 
   const [filters, setFilters] = useState<{
     category: string[];
@@ -55,15 +57,15 @@ const ProductsPage = () => {
     }
   }, [data, isLargeScreen]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 960);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsLargeScreen(window.innerWidth >= 960);
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (data && data.products) {
@@ -133,7 +135,9 @@ const ProductsPage = () => {
         filterOpacity ? "opacity-50" : "opacity-100"
       } flex flex-col`}
     >
-      <section className="sticky top-0 z-20">
+      <section
+      // className="sticky top-0 z-20"
+      >
         <header className="px-12 pb-4 bg-warning ">
           <div className="flex flex-col min-[960px]:flex-row justify-between pt-2">
             <h1 className="font-medium text-2xl" id="Nike-Tech-Clothing">

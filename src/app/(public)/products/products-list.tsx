@@ -10,7 +10,11 @@ const ProductsList = ({
 
   return (
     <section
-      className={`${filteredProducts.length > 0 ? "grid grid-cols-2 min-[960px]:grid-cols-3 gap-4 px-11 overflow-y-auto" : "flex items-center justify-center"} h-[calc(100vh-56px)] w-full`}
+      className={`${
+        filteredProducts.length > 0
+          ? "grid grid-cols-2 min-[960px]:grid-cols-3 gap-4 min-[960px]:px-11 overflow-y-auto"
+          : "flex items-center justify-center"
+      } h-[calc(100vh-56px)] w-full`}
     >
       {filteredProducts.length > 0 ? (
         filteredProducts?.map((product: Product) => (
