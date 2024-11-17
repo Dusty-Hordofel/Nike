@@ -9,10 +9,12 @@ interface ProductCardPriceProps {
 
 const ProductCardPrice = ({ subProducts, active }: ProductCardPriceProps) => {
   return (
-    <div className="product-card-prices">
+    <div className="product-card-prices max-[960px]:mx-3">
       <div className="product-card-price font-medium">
         <div
-          className={`${subProducts[active]?.discount ? "flex space-x-2" : ""} `}
+          className={`${
+            subProducts[active]?.discount ? "flex space-x-2" : ""
+          } `}
         >
           {subProducts[active]?.discount > 0 ? (
             <span>
@@ -25,7 +27,11 @@ const ProductCardPrice = ({ subProducts, active }: ProductCardPriceProps) => {
             </span>
           ) : null}
           <span
-            className={`${subProducts[active]?.discount ? "line-through font-light text-gray-500" : "font-medium"}`}
+            className={`${
+              subProducts[active]?.discount
+                ? "line-through font-light text-gray-500"
+                : "font-medium"
+            }`}
           >
             {subProducts[active]?.price}&nbsp;€
           </span>

@@ -8,7 +8,6 @@ import { DeliveryProvider } from "@/context/checkout/delivery.context";
 
 type CheckoutProvidersProps = {
   children: ReactNode;
-  //   deliveryAddress: any; // Typiquement, tu devrais remplacer `any` par le type approprié pour l'adresse de livraison.
 };
 
 const stripePromise: Promise<Stripe | null> = loadStripe(
