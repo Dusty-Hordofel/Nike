@@ -57,16 +57,6 @@ const ProductsPage = () => {
     }
   }, [data, isLargeScreen]);
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsLargeScreen(window.innerWidth >= 960);
-  //   };
-  //   window.addEventListener("resize", handleResize);
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
   useEffect(() => {
     if (data && data.products) {
       setFilterOpacity(true);
@@ -76,7 +66,7 @@ const ProductsPage = () => {
           data.products,
           filters
         );
-        // console.log("🚀 ~ setTimeout ~ filtered:TALA", filteredProducts);
+
         setFilteredProducts(filteredProducts);
         setIsFiltering(isFiltering);
         setFilterOpacity(false);
@@ -105,7 +95,6 @@ const ProductsPage = () => {
     setFilters((prev) => ({
       ...prev,
       subcategory: e.target.value,
-      // subcategory: e.target.value as subcatecory,
     }));
   };
 
@@ -135,15 +124,24 @@ const ProductsPage = () => {
         filterOpacity ? "opacity-50" : "opacity-100"
       } flex flex-col`}
     >
-      <section
-      // className="sticky top-0 z-20"
-      >
-        <header className="px-12 pb-4 bg-warning ">
-          <div className="flex flex-col min-[960px]:flex-row justify-between pt-2">
-            <h1 className="font-medium text-2xl" id="Nike-Tech-Clothing">
-              Nike Tech Clothing
+      <section className="max-[960px]:pt-4 max-[960px]:border-t max-[960px]:border-[#E5E5E5] max-[960px]:sticky max-[960px]:top-0 max-[960px]:z-20 bg-white max-[960px]:block hidden">
+        <h1 className="max-[960px]:px-5  py-2 text-[20px] font-medium ">
+          Nike Tech Clothing
+        </h1>
+      </section>
+      <section className={`${isLargeScreen && "sticky top-0 z-20"} pb-4`}>
+        <header className="min-[960px]:px-12 min-[960px]:pb-4 bg-white ">
+          <div className="flex  justify-between max-[960px]:px-5 min-[960px]:pt-2 max-[960px]:h-[59px] items-center max-[960px]:border-t max-[960px]:border-[#E5E5E5]">
+            <h1
+              className="font-medium text-2xl hidden min-[960px]:block"
+              id="Nike-Tech-Clothing"
+            >
+              <span>Nike Tech Clothing</span>
               <span>(137)</span>
             </h1>
+            <span className="text-[#707072]  min-[960px]:hidden">
+              919 Results
+            </span>
             <nav className="flex" aria-label="Sort By">
               <ProductFilterButton
                 setShowSidebar={setShowSidebar}

@@ -1,5 +1,6 @@
 import { Product } from "@/@types/admin/admin.products.interface";
 import ProductCard from "@/components/common/product/product-card/product-card";
+import { cn } from "@/lib/utils";
 
 const ProductsList = ({
   showSidebar,
@@ -7,14 +8,22 @@ const ProductsList = ({
   filteredProducts,
 }: any) => {
   console.log("🚀 ~ filteredProducts:OLOM", filteredProducts);
-
+  // c
   return (
     <section
-      className={`${
+      className={cn(
         filteredProducts.length > 0
-          ? "grid grid-cols-2 min-[960px]:grid-cols-3 gap-4 min-[960px]:px-11 overflow-y-auto"
-          : "flex items-center justify-center"
-      } h-[calc(100vh-56px)] w-full`}
+          ? "grid grid-cols-2 min-[960px]:grid-cols-3 gap-4 min-[960px]:px-11"
+          : "flex items-center justify-center",
+        "h-max w-full"
+      )}
+      // className={cn(
+      //   filteredProducts.length > 0
+      //     ? "grid grid-cols-2 min-[960px]:grid-cols-3 gap-4 min-[960px]:px-11"
+      //     : "flex items-center justify-center",
+      //   isLargeScreen ? "h-[calc(100vh-56px)] overflow-y-auto" : "h-max",
+      //   "w-full"
+      // )}
     >
       {filteredProducts.length > 0 ? (
         filteredProducts?.map((product: Product) => (
