@@ -27,27 +27,17 @@ const FavouritesPage = () => {
           </h1>
           <div className="local-nav__actions"></div>
         </header>
-      </>
-    </QueryStatus>
-  );
-};
-
-export default FavouritesPage;
-{
-  /* <div
+        {/* <div
           // className="bg-orange-300 w-[1536px]"
           // className="max-w-[1000px] bg-red-200 px-8"
-        > */
-}
-{
-  /* justify-around flex-wrap align-top */
-}
-<main className="pt-5 flex bg-green-400 w-[1100px]">
-  <div className="w-[1536px] bg-pink-400">
-    <h1>MOMO</h1>
-  </div>
-  {/* className="bg-orange-400 w-full" */}
-  {/* <div>
+        > */}
+        {/* justify-around flex-wrap align-top */}
+        <main className="pt-5 flex bg-green-400 w-[1100px]">
+          <div className="w-[1536px] bg-pink-400">
+            <h1>MOMO</h1>
+          </div>
+          {/* className="bg-orange-400 w-full" */}
+          {/* <div>
               {wishlistQuery.data?.length > 0 ? (
                 wishlistQuery.data?.map(({ product }: any) => (
                   <div>
@@ -72,7 +62,11 @@ export default FavouritesPage;
                 </div>
               )}
             </div> */}
-</main>;
-{
-  /* </div> */
-}
+        </main>
+        {/* </div> */}
+      </>
+    </QueryStatus>
+  );
+};
+
+export default FavouritesPage;

@@ -26,6 +26,7 @@ const BannerVideo = ({
       loop={loop}
       muted={muted}
       controls={controls}
+      playsInline
       {...videoProps}
     />
   );
