@@ -24,7 +24,7 @@ export default async function RootLayout({
       <body className={`${helvetica.className} max-w-[1924px]`}>
         <ClientOnly>
           <AppProviders>
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
           </AppProviders>
         </ClientOnly>

@@ -1250,6 +1250,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 85. Gestion de la wishlist
 
+### 86. Gestion des copies
+
 ### 85. Gestion du footer
 
 ### 86. Gestion due la HomePage
