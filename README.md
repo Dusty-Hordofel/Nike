@@ -1256,6 +1256,10 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 88. Ajout du lien d'authentification
 
+### 89. Gestion du loader produit
+
+### 90. Ajout du slider des images produit
+
 <!-- ### 85. Gestion du footer
 
 ### 86. Gestion due la HomePage
