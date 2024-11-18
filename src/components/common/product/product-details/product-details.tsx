@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 type ProductDetailsProps = {
@@ -6,6 +7,7 @@ type ProductDetailsProps = {
   priceAfterDiscount: number;
   priceBeforeDiscount: number;
   discount: number;
+  className?: string;
 };
 
 const ProductDetails = ({
@@ -14,9 +16,10 @@ const ProductDetails = ({
   priceAfterDiscount,
   priceBeforeDiscount,
   discount,
+  className,
 }: ProductDetailsProps) => {
   return (
-    <div className="max-[960px]:px-6">
+    <div className={cn("max-[960px]:px-6", className)}>
       <p className="text-[#992E00] font-medium">Exclu membre</p>
       <div>
         <div>

@@ -17,13 +17,6 @@ const ProductsList = ({
           : "flex items-center justify-center",
         "h-max w-full"
       )}
-      // className={cn(
-      //   filteredProducts.length > 0
-      //     ? "grid grid-cols-2 min-[960px]:grid-cols-3 gap-4 min-[960px]:px-11"
-      //     : "flex items-center justify-center",
-      //   isLargeScreen ? "h-[calc(100vh-56px)] overflow-y-auto" : "h-max",
-      //   "w-full"
-      // )}
     >
       {filteredProducts.length > 0 ? (
         filteredProducts?.map((product: Product) => (
