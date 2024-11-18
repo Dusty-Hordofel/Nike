@@ -12,7 +12,7 @@ interface NavLinksProps {
 const NavLinks = ({ menuLinks }: NavLinksProps) => {
   return (
     <ul
-      className="flex justify-center items-center menu bg-white flex-wrap min-[960px]:w-[calc(100%-426px)] max-w-[1255px] mx-auto "
+      className="flex justify-center items-center menu  flex-wrap min-[960px]:w-[calc(100%-426px)] max-w-[1255px] mx-auto bg-white"
       role="menubar"
       data-menu="DesktopMenu"
     >

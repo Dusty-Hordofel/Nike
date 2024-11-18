@@ -1252,13 +1252,17 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 86. Gestion des copies
 
-### 85. Gestion du footer
+### 87. Gestion de la page produit
+
+### 88. Ajout du lien d'authentification
+
+<!-- ### 85. Gestion du footer
 
 ### 86. Gestion due la HomePage
 
 ### 87. Refactorisation de l'Api
 
-### 88. Ajout du carousel des images produit
+### 88. Ajout du carousel des images produit -->
 
 ## External Links
 
