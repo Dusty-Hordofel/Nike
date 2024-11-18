@@ -31,7 +31,7 @@ const ProductColors = ({
   };
 
   return (
-    <div className="flex gap-2 my-8">
+    <div className="flex gap-2 min-[960px]:my-8">
       {colors.map(({ image, hexCode, name, _id }: any, index: number) => {
         return (
           <Link

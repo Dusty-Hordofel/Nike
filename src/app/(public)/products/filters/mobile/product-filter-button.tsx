@@ -5,11 +5,21 @@ const ProductFilterButton = ({
 }: any) => {
   return (
     <button
-      aria-controls="left-nav"
-      aria-describedby="Nike-Tech-Clothing"
-      aria-expanded="true"
-      aria-label="Hide Filters"
-      className={`flex ${!isLargeScreen ? "border border-gray-400 rounded-full justify-center items-center p-2" : "pr-6"}`}
+      // aria-controls="left-nav"
+      // aria-describedby="Nike-Tech-Clothing"
+      aria-expanded={showSidebar}
+      aria-label={
+        showSidebar && isLargeScreen
+          ? "Hide Filters"
+          : isLargeScreen
+          ? "Show Filters"
+          : "Filters"
+      }
+      className={`flex ${
+        !isLargeScreen
+          ? "border border-gray-400 rounded-full justify-center items-center py-[6px] px-5"
+          : "pr-6"
+      }`}
       type="button"
       onClick={() => setShowSidebar(!showSidebar)}
     >
@@ -17,8 +27,8 @@ const ProductFilterButton = ({
         {showSidebar && isLargeScreen
           ? "Hide Filters"
           : isLargeScreen
-            ? "Show Filters"
-            : "Filters"}
+          ? "Show Filters"
+          : "Filters"}
       </span>
       <svg
         aria-hidden="true"

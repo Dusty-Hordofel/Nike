@@ -20,7 +20,10 @@ const QueryStatus: React.FC<QueryStatusProps> = ({
   if (isLoading) {
     return (
       <div
-        className={cn("max-w-[1090px] px-[6px] mx-auto h-screen ", className)}
+        className={cn(
+          "max-w-[1090px] px-[6px] mx-auto h-screen bg-white",
+          className
+        )}
       >
         <div className="flex justify-center items-center h-full">
           <Loader />

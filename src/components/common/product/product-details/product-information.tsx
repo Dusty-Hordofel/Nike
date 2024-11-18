@@ -13,6 +13,7 @@ import ProductImages from "./product-images";
 import { useAddProductToWishlist } from "@/hooks/user/wishlist/use-add-product-to-wishlist.hook";
 import { useModal } from "@/context/modal/modal.context";
 import Modal from "@/components/ui/modals/modal";
+import ProductImageSlider from "@/components/common/product/product-details/product-image-slider";
 
 type ProductInformationProps = {
   product: any;
@@ -159,9 +160,20 @@ const ProductInformation = ({
         </Modal>
       )}
 
+      <ProductDetails
+        name={name}
+        sku={sku}
+        priceAfterDiscount={priceAfterDiscount}
+        priceBeforeDiscount={priceBeforeDiscount}
+        discount={discount}
+        className="hidden max-[960px]:block max-[960px]:mb-4"
+      />
+
+      <ProductImageSlider images={product.images} />
+
       <div className="max-w-[1200px] min-[960px]:mx-auto flex">
         <ProductImages images={product.images} />
-        <div className="w-full min-[960px]:w-[456px] flex flex-col gap-2 mt-12 min-[960px]:mr-2 min-[960px]:pl-6 pt-1 min-[960px]:pr-12 font-medium ">
+        <div className="w-full min-[960px]:w-[456px] flex flex-col gap-2 min-[960px]:mt-12 min-[960px]:mr-2 min-[960px]:pl-6 pt-1 min-[960px]:pr-12 font-medium ">
           <div className="mb-8">
             <ProductDetails
               name={name}
@@ -169,6 +181,7 @@ const ProductInformation = ({
               priceAfterDiscount={priceAfterDiscount}
               priceBeforeDiscount={priceBeforeDiscount}
               discount={discount}
+              className="hidden min-[960px]:block"
             />
             <ProductColors
               slug={slug}

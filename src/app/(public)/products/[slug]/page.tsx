@@ -3,7 +3,7 @@ import { bannerVideo } from "@/assets/data/banner";
 import ProductImages from "@/components/common/product/product-details/product-images";
 import ProductInformation from "@/components/common/product/product-details/product-information";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
 import { useQuery } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ import { useAddProductToWishlist } from "@/hooks/user/wishlist/use-add-product-t
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { useModal } from "@/context/modal/modal.context";
 import { saveCartItems } from "@/actions/cart/user-cart.actions";
+import QueryStatus from "@/components/ui/query-status";
 
 interface ProductPageParams {
   slug: string;
@@ -48,6 +49,11 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const [showCartModal, setShowCartModal] = useState(false);
   const [modalContext, setModalContext] = useState<null | string>(null);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  // console.log("🚀 ~ ProductPage ~ containerRef:REF", containerRef);
+  const [activeIndex, setActiveIndex] = useState(0);
+  console.log("🚀 ~ ProductPage ~ activeIndex:", activeIndex);
+
   const selectedColor = searchParams.color as string;
   const selectedSize = searchParams.size as string;
 
@@ -63,10 +69,10 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
       ).then((res) => res.json()),
   });
 
-  if (productQuery.isLoading) return <p>Loading...</p>;
-  if (productQuery.isError) return <p>Error...</p>;
+  // if (productQuery.isLoading) return <p>Loading...</p>;
+  // if (productQuery.isError) return <p>Error...</p>;
 
-  const { product } = productQuery.data;
+  // const { product } = productQuery.data;
 
   const handleOpenModal = (context: string) => {
     setModalContext(context);
@@ -85,92 +91,120 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
     );
   };
 
+  // const handleScroll = (images: any, direction: "next" | "prev") => {
+  //   if (direction === "next") {
+  //     setActiveIndex((prevIndex) => (prevIndex + 1) % images.length); // Boucle infinie
+  //   } else {
+  //     setActiveIndex((prevIndex) =>
+  //       prevIndex === 0 ? images.length - 1 : prevIndex - 1
+  //     );
+  //   }
+  // };
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const scrollLeft = containerRef.current.scrollLeft;
+      const containerWidth = containerRef.current.offsetWidth;
+
+      // Calculer l'index actif
+      const newIndex = Math.round(scrollLeft / containerWidth);
+      setActiveIndex(newIndex);
+    }
+  };
+
   return (
-    <div className="min-h-screen">
-      {showCartModal && (
-        <CartModal
-          numItemsInCart={cartState.numItemsInCart}
-          productAddedToCart={productAddedToCart}
-          modalContext={modalContext}
-          handleCloseModal={handleCloseModal}
-          handleSaveCart={handleSaveCart}
+    <QueryStatus
+      isLoading={productQuery.isLoading}
+      isError={productQuery.isError}
+      error={productQuery.error}
+      className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0"
+    >
+      <div className="min-h-screen">
+        {showCartModal && (
+          <CartModal
+            numItemsInCart={cartState.numItemsInCart}
+            productAddedToCart={productAddedToCart}
+            modalContext={modalContext}
+            handleCloseModal={handleCloseModal}
+            handleSaveCart={handleSaveCart}
+          />
+        )}
+
+        <ProductInformation
+          product={productQuery?.data?.product}
+          selectedColor={selectedColor}
+          selectedSize={selectedSize}
+          setProductAddedToCart={setProductAddedToCart}
+          onOpenModal={handleOpenModal}
+          userId={user?._id}
         />
-      )}
 
-      <ProductInformation
-        product={product}
-        selectedColor={selectedColor}
-        selectedSize={selectedSize}
-        setProductAddedToCart={setProductAddedToCart}
-        onOpenModal={handleOpenModal}
-        userId={user?._id}
-      />
+        <div className="px-12 mt-40">
+          <VideoBanner
+            mediaType="video"
+            showContent={false}
+            bannerClassName="h-[740px]"
+            {...bannerVideo}
+          />
+        </div>
+        <div className="mt-16 max-[960px]:px-6 min-[960px]:max-w-[692px] w-full text-center min-[960px]:mx-auto  overflow-hidden">
+          <h3 className="text-3xl min-[960px]:text-4xl font-medium">
+            Ça, c&apos;est Nike Tech
+          </h3>
 
-      <div className="px-12 mt-40">
-        <VideoBanner
-          mediaType="video"
-          showContent={false}
-          bannerClassName="h-[740px]"
-          {...bannerVideo}
-        />
+          <p className="mt-4 text-lg/8  min-[960px]:text-xl/8">
+            Certaines personnes pensent que Nike Tech était déjà très bien comme
+            ça. Pas nous. Même si elle est toujours aussi stylée et culte
+            qu&rsquo;il y a 10&nbsp;ans, on l&rsquo;a rendue plus chaude et plus
+            douce que jamais, sans être plus lourde. Tout le plaisir est pour
+            nous&nbsp;!
+            <br />
+            <br />
+            <Link target="_blank" href="">
+              Voir toute la collection
+            </Link>
+          </p>
+        </div>
+
+        <div className="px-12 mt-40">
+          <ImageBanner
+            mediaType="image"
+            showContent={false}
+            bannerClassName="h-[740px]"
+            href="#"
+            alt=""
+            src="https://res.cloudinary.com/dgsc66scx/image/upload/v1717781346/nike/image_rppxjq.webp"
+          />
+        </div>
+
+        <div className="mt-16 max-[960px]:px-6 min-[960px]:max-w-[692px] w-full text-center min-[960px]:mx-auto  overflow-hidden">
+          <h3 className="text-3xl min-[960px]:text-4xl font-medium">
+            Plus de chaleur
+          </h3>
+          <p className="mt-4 text-lg/8  min-[960px]:text-xl/8">
+            Depuis toujours, Nike Tech procure la chaleur, la légèreté et le
+            confort nécessaires pour bouger librement. Sans entrer dans les
+            détails, les vêtements Nike Tech sont maintenant plus chauds, sans
+            être plus lourds.
+          </p>
+        </div>
+
+        <div className="my-24">
+          <h3 className="px-12 text-2xl">Ces articles devraient te plaire</h3>
+          <MediaCarousel title="" data={NewThisWeek}>
+            {(slide) => (
+              <CarouselContent carouselContentClassName="mt-[36px]">
+                <>
+                  <h4 className="text-base font-medium">{slide.title}</h4>
+                  <p className="w-full text-gray-500">{slide.type}</p>
+                  <p className="pt-2 font-medium">{slide.prix}</p>
+                </>
+              </CarouselContent>
+            )}
+          </MediaCarousel>
+        </div>
       </div>
-      <div className="mt-16 max-[960px]:px-6 min-[960px]:max-w-[692px] w-full text-center min-[960px]:mx-auto  overflow-hidden">
-        <h3 className="text-3xl min-[960px]:text-4xl font-medium">
-          Ça, c&apos;est Nike Tech
-        </h3>
-
-        <p className="mt-4 text-lg/8  min-[960px]:text-xl/8">
-          Certaines personnes pensent que Nike Tech était déjà très bien comme
-          ça. Pas nous. Même si elle est toujours aussi stylée et culte
-          qu&rsquo;il y a 10&nbsp;ans, on l&rsquo;a rendue plus chaude et plus
-          douce que jamais, sans être plus lourde. Tout le plaisir est pour
-          nous&nbsp;!
-          <br />
-          <br />
-          <Link target="_blank" href="">
-            Voir toute la collection
-          </Link>
-        </p>
-      </div>
-
-      <div className="px-12 mt-40">
-        <ImageBanner
-          mediaType="image"
-          showContent={false}
-          bannerClassName="h-[740px]"
-          href="#"
-          alt=""
-          src="https://res.cloudinary.com/dgsc66scx/image/upload/v1717781346/nike/image_rppxjq.webp"
-        />
-      </div>
-
-      <div className="mt-16 max-[960px]:px-6 min-[960px]:max-w-[692px] w-full text-center min-[960px]:mx-auto  overflow-hidden">
-        <h3 className="text-3xl min-[960px]:text-4xl font-medium">
-          Plus de chaleur
-        </h3>
-        <p className="mt-4 text-lg/8  min-[960px]:text-xl/8">
-          Depuis toujours, Nike Tech procure la chaleur, la légèreté et le
-          confort nécessaires pour bouger librement. Sans entrer dans les
-          détails, les vêtements Nike Tech sont maintenant plus chauds, sans
-          être plus lourds.
-        </p>
-      </div>
-
-      <div className="my-24">
-        <h3 className="px-12 text-2xl">Ces articles devraient te plaire</h3>
-        <MediaCarousel title="" data={NewThisWeek}>
-          {(slide) => (
-            <CarouselContent carouselContentClassName="mt-[36px]">
-              <>
-                <h4 className="text-base font-medium">{slide.title}</h4>
-                <p className="w-full text-gray-500">{slide.type}</p>
-                <p className="pt-2 font-medium">{slide.prix}</p>
-              </>
-            </CarouselContent>
-          )}
-        </MediaCarousel>
-      </div>
-    </div>
+    </QueryStatus>
   );
 };
 
