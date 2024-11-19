@@ -16,6 +16,7 @@ export interface TrendSlidesProps {
   exclusive?: string;
   prix?: string;
   cross?: TrendCrossProps[];
+  label?: string;
 }
 
 export interface UserData {
