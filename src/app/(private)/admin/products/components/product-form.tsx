@@ -61,7 +61,9 @@ const PoductForm = ({
 
           {/* Product type */}
           <div
-            className={`${errors.productType ? "text-red-600" : "text-black-200"}  flex flex-col`}
+            className={`${
+              errors.productType ? "text-red-600" : "text-black-200"
+            }  flex flex-col`}
           >
             <label>Type de produit</label>
             <select
@@ -84,7 +86,9 @@ const PoductForm = ({
           </div>
           {/* brand  */}
           <div
-            className={`${errors.productType ? "text-red-600" : "text-black-200"}  flex flex-col`}
+            className={`${
+              errors.productType ? "text-red-600" : "text-black-200"
+            }  flex flex-col`}
           >
             <label htmlFor="brand">Brand</label>
             <select
@@ -107,7 +111,9 @@ const PoductForm = ({
           </div>
 
           <div
-            className={`${errors.name ? "text-red-600" : "text-black-200"}  flex flex-col`}
+            className={`${
+              errors.name ? "text-red-600" : "text-black-200"
+            }  flex flex-col`}
           >
             <label>Product name</label>
             <Input {...register("name")} placeholder="Product name" />
@@ -121,7 +127,9 @@ const PoductForm = ({
 
           {/* Description */}
           <div
-            className={`${errors.description ? "text-red-600" : "text-black-200"}  flex flex-col`}
+            className={`${
+              errors.description ? "text-red-600" : "text-black-200"
+            }  flex flex-col`}
           >
             <div className="space-y-1">
               <label>Description</label>
@@ -140,7 +148,9 @@ const PoductForm = ({
           </div>
           {/* Categories */}
           <div
-            className={`flex flex-col ${errors.category ? "text-red-600" : "text-black-200"}`}
+            className={`flex flex-col ${
+              errors.category ? "text-red-600" : "text-black-200"
+            }`}
           >
             <div>
               <label htmlFor="select-category">Category</label>
@@ -177,7 +187,9 @@ const PoductForm = ({
 
           {/* SubCategories */}
           <div
-            className={`flex flex-col ${errors.subCategories ? "text-red-600" : "text-black-200"}`}
+            className={`flex flex-col ${
+              errors.subCategories ? "text-red-600" : "text-black-200"
+            }`}
           >
             <label htmlFor="checkbox-subcategories">Subcategory</label>
             <div className="p-5 rounded-lg border">
@@ -241,7 +253,9 @@ const PoductForm = ({
 
           {/* frais de livraison */}
           <div
-            className={`${errors.shipping ? "text-red-600" : "text-black-200"}  flex flex-col`}
+            className={`${
+              errors.shipping ? "text-red-600" : "text-black-200"
+            }  flex flex-col`}
           >
             <label>Shipping costs</label>
             <Input
@@ -302,7 +316,11 @@ const PoductForm = ({
 
                   {/* selection de la couleur*/}
                   <div
-                    className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                    className={`${
+                      errors.subProducts?.[index]?.color
+                        ? "text-red-600"
+                        : "text-black-200"
+                    }  flex flex-col`}
                   >
                     <label>Color</label>
                     <div className="flex  items-center justify-center gap-x-4">
@@ -363,7 +381,11 @@ const PoductForm = ({
                   </div> */}
                   {/* Price */}
                   <div
-                    className={`${errors.subProducts?.[index]?.price ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                    className={`${
+                      errors.subProducts?.[index]?.price
+                        ? "text-red-600"
+                        : "text-black-200"
+                    }  flex flex-col`}
                   >
                     <div className="flex flex-col">
                       <label className="text-lg">Price</label>
@@ -397,7 +419,11 @@ const PoductForm = ({
 
                   {/* Discount */}
                   <div
-                    className={`${errors.subProducts?.[index]?.discount ? "text-red-600" : "text-black-200"}  flex flex-col`}
+                    className={`${
+                      errors.subProducts?.[index]?.discount
+                        ? "text-red-600"
+                        : "text-black-200"
+                    }  flex flex-col`}
                   >
                     <label className="text-lg">Discount</label>
                     <Input

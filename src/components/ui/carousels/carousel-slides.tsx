@@ -28,7 +28,7 @@ const CarouselSlides = ({
           <ul
             ref={carouselRef}
             className={cn(
-              "flex overflow-x-auto w-full h-max scroll-smooth px-12 pb-[30px]",
+              "flex overflow-x-auto w-full h-max scroll-smooth max-sm:px-6 px-12 pb-[30px] scrollbar-hidden",
               carouselClassName
             )}
           >

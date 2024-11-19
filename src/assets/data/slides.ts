@@ -533,67 +533,86 @@ export const NewThisWeek: TrendSlidesProps[] = [
     prix: "119,99 €",
   },
 ];
-export const NikeMemberAccess: TrendSlidesProps[] = [
+
+export const NikeMemberAccess: {
+  title: string;
+  img: string;
+  imageWidth: number;
+  imageHeight: number;
+  active: boolean;
+  centered?: boolean;
+  type?: string;
+  exclusive?: string;
+  prix?: string;
+  cross?: TrendCrossProps[];
+  label: string;
+}[] = [
   {
-    title: "Acheter",
+    title: "Ton accès exclusif",
+    label: "Acheter",
     img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068088/nike/vkvj2raq9jrp5cdrkhl5.png",
     imageWidth: 458,
     imageHeight: 571,
     active: true,
-    type: "Chaussure pour ado",
+    type: "Articles pour les membres",
     exclusive: "Exclusivité Membres",
     prix: "64,99 €",
   },
   {
-    title: "Célébrer",
+    title: "Notre façon de dire merci",
+    label: "Célébrer",
     img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068088/nike/pkcbeb2twq67vt5wqqbm.jpg",
     imageWidth: 458,
     imageHeight: 571,
     active: true,
-    type: "Chaussure pour ado",
+    type: "Récompense pour les membres",
     exclusive: "Exclusivité Membres",
     prix: "94,99 €",
   },
   {
-    title: "Bouger",
+    title: "Bouge à ton rythme",
+    label: "Bouger",
     img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068087/nike/iiubjydvbyrwulhq3jvd.jpg",
     imageWidth: 458,
     imageHeight: 571,
     active: true,
-    type: "Chaussure pour homme",
+    type: "Sport et bien-être",
     exclusive: "Exclusivité Membres",
     prix: "189.99 €",
   },
   {
-    title: "Personnaliser",
+    title: "Ton service de personnalisation",
+    label: "Personnaliser",
     img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068087/nike/j6hobczb7oarvd2jtpla.png",
     imageWidth: 458,
     imageHeight: 571,
     active: true,
-    type: "Chaussure pour homme",
+    type: "Nike By You",
     exclusive: "Exclusivité Membres",
     prix: "79,99 €",
   },
   {
-    title: "Nike App",
+    title: "Donne le meilleur de toi-même",
+    label: "Nike App",
     img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068087/nike/whcvqsne5dbhjtd8bfwz.png",
     imageWidth: 458,
     imageHeight: 571,
     active: true,
-    type: "Chaussure pour homme",
+    type: "Apps Nike",
     exclusive: "Exclusivité Membres",
     prix: "129.99 €",
   },
-  {
-    title: "Découvrir",
-    img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068087/nike/whcvqsne5dbhjtd8bfwz.png",
-    imageWidth: 458,
-    imageHeight: 571,
-    active: true,
-    type: "Chaussure pour homme",
-    exclusive: "Exclusivité Membres",
-    prix: "199.99 €",
-  },
+  // ,
+  // {
+  //   title: "Découvrir",
+  //   img: "https://res.cloudinary.com/dgsc66scx/image/upload/v1717068087/nike/whcvqsne5dbhjtd8bfwz.png",
+  //   imageWidth: 458,
+  //   imageHeight: 571,
+  //   active: true,
+  //   type: "Chaussure pour homme",
+  //   exclusive: "Exclusivité Membres",
+  //   prix: "199.99 €",
+  // },
 ];
 
 export const MoreArticles: TrendSlidesProps[] = [
