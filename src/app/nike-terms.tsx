@@ -155,7 +155,7 @@ const NikeTerms = (props: NikeTermsProps) => {
               className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
               style={{ paddingLeft: "0px" }}
             >
-              Conditions d'utilisation
+              Conditions d&apos;utilisation
             </p>
           </Link>
         </li>
@@ -183,7 +183,7 @@ const NikeTerms = (props: NikeTermsProps) => {
               className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
               style={{ paddingLeft: "0px" }}
             >
-              Informations sur l'entreprise
+              Informations sur l&apos;entreprise
             </p>
           </Link>
         </li>
