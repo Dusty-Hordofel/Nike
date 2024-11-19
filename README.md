@@ -1260,6 +1260,10 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 90. Ajout du slider des images produit
 
+### 91. Gestion due la HomePage
+
+### 92. Gestion du footer
+
 <!-- ### 85. Gestion du footer
 
 ### 86. Gestion due la HomePage

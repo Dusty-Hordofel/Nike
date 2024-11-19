@@ -32,14 +32,15 @@ import {
   HeroBanner as ImageBanner,
   HeroBanner as SmallDiscountBanner,
 } from "@/components/ui/banner/hero-banner";
+import MobileFooterLinks from "./mobile-footer-links";
+import NikeTerms from "./nike-terms";
+import DesktopFooterLinks from "./desktop-footer-links";
 
 export default function Home() {
   const user = useCurrentUser();
 
   return (
     <>
-      {/* <div className="h-10 bg-info w-full mb-20"></div> */}
-
       <DiscountBanner
         mediaType="video"
         contentPosition="bottom-left w-[80%]"
@@ -52,139 +53,128 @@ export default function Home() {
         {...bannerVideo}
       />
 
-      <MediaCarousel
-        title="En ce moment"
-        data={AtTheMoment}
-        imageClassName="h-[571px]"
-      >
-        {(slide) => (
-          <CarouselContent carouselContentClassName="mt-[36px]">
-            <h3 className="text-xl font-medium">{slide.title}</h3>
-          </CarouselContent>
-        )}
-      </MediaCarousel>
+      <div className="space-y-5">
+        <MediaCarousel
+          title="En ce moment"
+          data={AtTheMoment}
+          imageClassName="h-[571px]"
+        >
+          {(slide) => (
+            <CarouselContent carouselContentClassName="mt-[36px]">
+              <h3 className="text-xl font-medium">{slide.title}</h3>
+            </CarouselContent>
+          )}
+        </MediaCarousel>
 
-      <MediaCarousel
-        title="Nos modèles iconiques"
-        data={OurIconicModels}
-        imageClassName="h-[311px]"
-      >
-        {(slide) => (
-          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
-            <Link
-              href=""
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "small" }),
-                "font-medium"
-              )}
-            >
-              {slide.title}
-            </Link>
-          </CarouselContent>
-        )}
-      </MediaCarousel>
+        <MediaCarousel
+          title="Nos modèles iconiques"
+          data={OurIconicModels}
+          imageClassName="h-[311px]"
+        >
+          {(slide) => (
+            <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+              <Link
+                href=""
+                className={cn(
+                  buttonVariants({ variant: "secondary", size: "small" }),
+                  "font-medium"
+                )}
+              >
+                {slide.title}
+              </Link>
+            </CarouselContent>
+          )}
+        </MediaCarousel>
 
-      <MediaCarousel
-        title="Tout pour ton sport"
-        data={AllForYourSport}
-        imageClassName="h-[311px]"
-      >
-        {(slide) => (
-          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
-            <Link
-              href=""
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "small" }),
-                "font-medium"
-              )}
-            >
-              {slide.title}
-            </Link>
-          </CarouselContent>
-        )}
-      </MediaCarousel>
+        <MediaCarousel
+          title="Tout pour ton sport"
+          data={AllForYourSport}
+          imageClassName="h-[311px]"
+        >
+          {(slide) => (
+            <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+              <Link
+                href=""
+                className={cn(
+                  buttonVariants({ variant: "secondary", size: "small" }),
+                  "font-medium"
+                )}
+              >
+                {slide.title}
+              </Link>
+            </CarouselContent>
+          )}
+        </MediaCarousel>
 
-      <MediaCarousel title="Nouveau cette semaine" data={NewThisWeek}>
-        {(slide) => (
-          <CarouselContent carouselContentClassName="mt-[36px]">
-            <>
-              <h4 className="text-base font-medium">{slide.title}</h4>
-              <p className="w-full text-gray-500">{slide.type}</p>
-              <p className="pt-2 font-medium">{slide.prix}</p>
-            </>
-          </CarouselContent>
-        )}
-      </MediaCarousel>
+        <MediaCarousel title="Nouveau cette semaine" data={NewThisWeek}>
+          {(slide) => (
+            <CarouselContent carouselContentClassName="mt-[36px]">
+              <>
+                <h4 className="text-base font-medium">{slide.title}</h4>
+                <p className="w-full text-gray-500">{slide.type}</p>
+                <p className="pt-2 font-medium">{slide.prix}</p>
+              </>
+            </CarouselContent>
+          )}
+        </MediaCarousel>
 
-      <MediaCarousel
-        title="Plus d'articles"
-        data={MoreArticles}
-        imageClassName="h-[571px]"
-      >
-        {(slide) => (
-          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
-            <Link
-              href=""
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "small" }),
-                "font-medium"
-              )}
-            >
-              {slide.title}
-            </Link>
-          </CarouselContent>
-        )}
-      </MediaCarousel>
+        <MediaCarousel
+          title="Plus d'articles"
+          data={MoreArticles}
+          imageClassName="h-[571px]"
+        >
+          {(slide) => (
+            <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+              <Link
+                href=""
+                className={cn(
+                  buttonVariants({ variant: "secondary", size: "small" }),
+                  "font-medium"
+                )}
+              >
+                {slide.title}
+              </Link>
+            </CarouselContent>
+          )}
+        </MediaCarousel>
 
-      <MediaCarousel
-        title="Accès Membre Nike"
-        data={NikeMemberAccess}
-        imageClassName="h-[458px]"
-      >
-        {(slide) => (
-          <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
-            <p className="w-full text-gray-500 pb-2">{slide.type}</p>
-            <h4 className="text-base font-medium">{slide.title}</h4>
-            <Link
-              href=""
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "small" }),
-                "font-medium mt-[18px]"
-              )}
-            >
-              {slide.title}
-            </Link>
-          </CarouselContent>
-        )}
-      </MediaCarousel>
+        <MediaCarousel
+          title="Accès Membre Nike"
+          data={NikeMemberAccess}
+          imageClassName="h-[458px]"
+        >
+          {(slide) => (
+            <CarouselContent carouselContentClassName="absolute left-12 bottom-12">
+              <p className="w-full text-white pb-2">{slide.type}</p>
+              <h3 className="text-xl text-white font-medium">{slide.title}</h3>
+              <Link
+                href=""
+                className={cn(
+                  buttonVariants({ variant: "secondary", size: "small" }),
+                  "font-medium mt-[18px]"
+                )}
+              >
+                {slide.label}
+              </Link>
+            </CarouselContent>
+          )}
+        </MediaCarousel>
+      </div>
       {/* <HomeProductsCategories categories={categories} /> */}
 
-      <footer className="p-12 border-t border-gray-500 text-sm">
-        <ul className="grid grid-cols-4">
-          {footerMenu.map(({ name, content }, index) => (
-            <li key={index}>
-              <h4 className="font-medium mb-6">{name}</h4>
-              <ul className="">
-                {content.map(({ text, url }) => (
-                  <li
-                    className=" text-gray-500 hover:text-black-200"
-                    key={name}
-                  >
-                    <Link href={url} className="">
-                      {text}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+      <footer className="max-[960px]:py-12 max-[960px]:px-6 min-[960px]:p-12   text-sm">
+        <div className="min-[960px]:mb-[60px] mb-[36px] border-[#E5E5E5] border-t"></div>
+        <div className=""></div>
+        <MobileFooterLinks />
+        <DesktopFooterLinks footerMenu={footerMenu} />
+        <div className="min-[960px]:mb-[72px] mb-6"></div>
+        <NikeTerms />
       </footer>
 
       {/* 
       <SmallDiscountBanner
         mediaType="image"
-        src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1512,c_limit/340cfca0-c6d2-4748-ac2b-aa77dcfe44ad/nike-just-do-it.png"
+        src="https://static.nike.com/Link/images/f_auto/dpr_2.0,cs_srgb/w_1512,c_limit/340cfca0-c6d2-4748-ac2b-aa77dcfe44ad/nike-just-do-it.png"
         title="-25% sur tout le site"
         alt="Molongui"
         href="https://www.nike.com/fr/w/promotions-9dklk"
