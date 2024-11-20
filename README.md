@@ -1266,7 +1266,9 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ## Section 5: Cache management
 
-### 93. Attempt to manage cache n°1 with tanstack query
+### 93. Attempt to manage cache n°1 with TanStack Query
+
+### 94. Attempt to manage cache n°2 with tanstack Query
 
 <!-- ### 85. Gestion du footer
 
