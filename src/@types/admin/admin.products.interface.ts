@@ -60,7 +60,7 @@ export interface Product {
   _id: string;
   name: string;
   description: string;
-  slug?: string;
+  slug: string;
   category: string | Types.ObjectId;
   subCategories: string[];
   details?: { name: string; value: string }[];

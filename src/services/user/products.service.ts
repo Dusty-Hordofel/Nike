@@ -8,7 +8,9 @@ const getProducts = async () => {
 
 const getProduct = async (slug: string, color: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${slug}?color=${color}`
+    `${
+      process.env.NEXT_PUBLIC_BASE_URL
+    }/api/v1/products/${slug}?color=${color.toLocaleLowerCase()}`
   );
   const product = await response.json();
   return product;

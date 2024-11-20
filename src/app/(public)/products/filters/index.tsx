@@ -19,16 +19,22 @@ const BrandFilter = ({
         {isLargeScreen && (
           <span onClick={() => setShow(!show)}>
             <ChevronDown
-              className={`transform  transition-transform ${show ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+              className={`transform  transition-transform ${
+                show ? "-rotate-180" : "rotate-0"
+              } cursor-pointer`}
             />
           </span>
         )}
       </h3>
 
       <ul
-        className={`${(show && isLargeScreen) || !isLargeScreen ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"}  transition-all`}
+        className={`${
+          (show && isLargeScreen) || !isLargeScreen
+            ? "opacity-100 delay-200 max-h-auto pb-5"
+            : "opacity-0  max-h-0"
+        }  transition-all`}
       >
-        {data.brands.map((brand: any, index: number) => (
+        {data?.brands.map((brand: any, index: number) => (
           <li key={`${brand}${index}`}>
             <input
               type="checkbox"
@@ -67,14 +73,20 @@ const CategoryFilter = ({
         {isLargeScreen && (
           <span onClick={() => setShow(!show)}>
             <ChevronDown
-              className={`transform  transition-transform ${show ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+              className={`transform  transition-transform ${
+                show ? "-rotate-180" : "rotate-0"
+              } cursor-pointer`}
             />
           </span>
         )}
       </h3>
 
       <ul
-        className={`${(show && isLargeScreen) || !isLargeScreen ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"}  transition-all`}
+        className={`${
+          (show && isLargeScreen) || !isLargeScreen
+            ? "opacity-100 delay-200 max-h-auto pb-5"
+            : "opacity-0  max-h-0"
+        }  transition-all`}
       >
         {data?.categories.map((category: any) => (
           <li key={category._id} className="flex cursor-pointer">
@@ -127,14 +139,20 @@ const ColorsFilter = ({
         {isLargeScreen && (
           <span onClick={() => setShow(!show)}>
             <ChevronDown
-              className={`transform  transition-transform ${show ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+              className={`transform  transition-transform ${
+                show ? "-rotate-180" : "rotate-0"
+              } cursor-pointer`}
             />
           </span>
         )}
       </h3>
 
       <ul
-        className={`${(show && isLargeScreen) || !isLargeScreen ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"} transition-all cursor-pointer flex gap-x-4 flex-wrap`}
+        className={`${
+          (show && isLargeScreen) || !isLargeScreen
+            ? "opacity-100 delay-200 max-h-auto pb-5"
+            : "opacity-0  max-h-0"
+        } transition-all cursor-pointer flex gap-x-4 flex-wrap`}
       >
         {colors?.map(({ _id, name, hexCode }) => (
           <li key={_id} className="cursor-pointer text-center">
@@ -187,16 +205,22 @@ const SizesFilter = ({
         {isLargeScreen && (
           <span onClick={() => setShow(!show)}>
             <ChevronDown
-              className={`transform  transition-transform ${show ? "-rotate-180" : "rotate-0"} cursor-pointer`}
+              className={`transform  transition-transform ${
+                show ? "-rotate-180" : "rotate-0"
+              } cursor-pointer`}
             />
           </span>
         )}
       </h3>
 
       <ul
-        className={`${(show && isLargeScreen) || !isLargeScreen ? "opacity-100 delay-200 max-h-auto pb-5" : "opacity-0  max-h-0"}  transition-all`}
+        className={`${
+          (show && isLargeScreen) || !isLargeScreen
+            ? "opacity-100 delay-200 max-h-auto pb-5"
+            : "opacity-0  max-h-0"
+        }  transition-all`}
       >
-        {data.sizes.map((size: any) => (
+        {data?.sizes.map((size: any) => (
           <li key={size._id}>
             <input
               type="checkbox"
@@ -228,7 +252,10 @@ const SubCategoryFilter = ({ data, filters, handleSubCategoryChange }: any) => {
           return (
             <li
               key={subCategory._id}
-              className={`flex pb-[10px] font-medium ${filters.subcategory === subCategory._id && "underline underline-offset-4"}`}
+              className={`flex pb-[10px] font-medium ${
+                filters.subcategory === subCategory._id &&
+                "underline underline-offset-4"
+              }`}
             >
               <input
                 type="radio"

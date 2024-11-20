@@ -25,7 +25,7 @@ const ProductImageSlider = ({ images }: { images: Image[] }) => {
         className="w-full overflow-x-scroll flex snap-x snap-mandatory gap-x-1 scrollbar-hide"
         onScroll={handleScroll}
       >
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <img
             key={index}
             src={image.url}
@@ -36,7 +36,7 @@ const ProductImageSlider = ({ images }: { images: Image[] }) => {
       </div>
 
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {images.map((_, index) => (
+        {images?.map((_, index) => (
           <span
             key={index}
             className={`h-2 w-2 rounded-full ${

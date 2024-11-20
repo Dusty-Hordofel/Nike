@@ -48,6 +48,8 @@ const ProductsPage = () => {
         ),
     }) || [];
 
+  console.log("🚀 ~ ProductsPage ~ data:DATA", data);
+
   useEffect(() => {
     if (data && data.products && isLargeScreen) {
       setTimeout(() => {
@@ -126,6 +128,7 @@ const ProductsPage = () => {
       error={error}
       className="h-[calc(100vh-136px)] min-w-[320px] max-w-[1920px] w-full mx-0"
     >
+      <h1>MOMO</h1>
       <div
         className={`transition-opacity duration-500 ${
           filterOpacity ? "opacity-50" : "opacity-100"
@@ -155,7 +158,7 @@ const ProductsPage = () => {
                   isLargeScreen={isLargeScreen}
                   showSidebar={showSidebar}
                 />
-                <div className="hidden relative min-[960px]:block">
+                {/* <div className="hidden relative min-[960px]:block">
                   <ProductSorterButton
                     showDropdown={showDropdown}
                     setShowDropdown={setShowDropdown}
@@ -163,7 +166,7 @@ const ProductsPage = () => {
                     handleSorterChange={handleSorterChange}
                     isLargeScreen={isLargeScreen}
                   />
-                </div>
+                </div> */}
               </nav>
             </div>
           </header>
