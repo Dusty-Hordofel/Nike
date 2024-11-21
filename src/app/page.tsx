@@ -53,11 +53,11 @@ export default function Home() {
         {...bannerVideo}
       />
 
-      <div className="space-y-5">
+      <div className="space-y-5 ">
         <MediaCarousel
           title="En ce moment"
           data={AtTheMoment}
-          imageClassName="h-[571px]"
+          imageClassName="h-[571px] "
         >
           {(slide) => (
             <CarouselContent carouselContentClassName="mt-[36px]">
