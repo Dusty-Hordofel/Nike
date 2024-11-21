@@ -128,7 +128,6 @@ const ProductsPage = () => {
       error={error}
       className="h-[calc(100vh-136px)] min-w-[320px] max-w-[1920px] w-full mx-0"
     >
-      <h1>MOMO</h1>
       <div
         className={`transition-opacity duration-500 ${
           filterOpacity ? "opacity-50" : "opacity-100"
