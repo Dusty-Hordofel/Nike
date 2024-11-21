@@ -1,5 +1,6 @@
 import { Product } from "@/@types/admin/admin.products.interface";
 import ProductCard from "@/components/common/product/product-card/product-card";
+import Loader from "@/components/ui/loader";
 import { cn } from "@/lib/utils";
 
 const ProductsList = ({
@@ -7,8 +8,6 @@ const ProductsList = ({
   isLargeScreen,
   filteredProducts,
 }: any) => {
-  // console.log("🚀 ~ filteredProducts:OLOM", filteredProducts);
-
   return (
     <section
       className={cn(
@@ -23,9 +22,9 @@ const ProductsList = ({
           <ProductCard product={product} key={Number(product._id)} />
         ))
       ) : (
-        <div className=" w-full h-full flex items-center justify-center">
+        <div className="w-full h-screen flex items-center justify-center">
           <h2 className="font-extrabold text-4xl min-[450px]:text-5xl  sm:text-6xl md:text-7xl">
-            Product Not Found
+            <Loader />
           </h2>
         </div>
       )}

@@ -41,20 +41,21 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <>
       {subProducts.length > 0 && (
-        <figure>
-          <Link
-            className="sr-only"
-            data-testid="product-card-link"
-            href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
-            tabIndex={0}
-          >
-            {name}
-          </Link>
-          <Link
-            aria-label={name}
-            className="product-card-link group"
-            href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
-          >
+        <Link
+          aria-label={name}
+          className="product-card-link group"
+          href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
+        >
+          <figure>
+            <Link
+              className="sr-only"
+              data-testid="product-card-link"
+              href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
+              tabIndex={0}
+            >
+              {name}
+            </Link>
+
             <ProductCardImage images={images} name={name} />
             <div className="product-card-info pt-3 pb-[2px] ">
               {productColors.length > 1 && isLargeScreen && (
@@ -75,8 +76,8 @@ const ProductCard = ({ product }: { product: Product }) => {
               />
               <ProductCardPrice subProducts={subProducts} active={active} />
             </div>
-          </Link>
-        </figure>
+          </figure>
+        </Link>
       )}
     </>
   );

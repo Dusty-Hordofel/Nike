@@ -1,6 +1,10 @@
 const getProducts = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
+    // ,
+    // {
+    //   cache: "force-cache",
+    // }
   );
   const { products } = await response.json();
   return products;

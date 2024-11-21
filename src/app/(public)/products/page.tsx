@@ -42,6 +42,9 @@ const ProductsPage = () => {
   const { data, isLoading, error, isError } =
     useQuery({
       queryKey: ["products"],
+      placeholderData: (previousData, previousQuery) => previousData,
+      //   staleTime: 604800000, // 1 semaine en millisecondes
+      // cacheTime: 7 * 24 * 60 * 60 * 1000,
       queryFn: () =>
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`).then((res) =>
           res.json()
