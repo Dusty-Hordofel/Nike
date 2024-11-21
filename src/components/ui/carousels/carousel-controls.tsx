@@ -14,7 +14,7 @@ const CarouselControls = ({
   goToNextSlide,
 }: CarouselControlsProps) => {
   return (
-    <div className="flex">
+    <div className="min-[960px]:flex hidden">
       <div onClick={() => goToPreviousSlide()}>
         <ArrowButton direction="left" disabled={isAtStart} />
       </div>
