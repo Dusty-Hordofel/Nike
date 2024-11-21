@@ -41,6 +41,7 @@ const ProductColors = ({
             data-testid="product-card__image-link"
             key={_id}
             href={`/products/${slug}?color=${name.toLocaleLowerCase()}`}
+            scroll={false}
           >
             <Image
               src={image}
