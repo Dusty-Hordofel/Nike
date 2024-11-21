@@ -26,17 +26,6 @@ const ProductFilterSidebar = ({
           ? "w-[240px] translate-x-0 pl-12 pb-4 custom-scrollbar"
           : "w-0 p-0 -translate-x-full "
       }`}
-      // className={`-translate-x-full max-w-[240px] w-full`}
-      // className={`h-screen ${
-      //   showSidebar && isLargeScreen
-      //     ? "max-w-[240px] w-full pl-12 pb-4 translate-x-0"
-      //     : "w-0 p-0 -translate-x-full invisible"
-      // } transform transition-all duration-200 `}
-      // className={`h-screen overflow-y-auto bg-blue-200 ${
-      //   showSidebar && isLargeScreen
-      //     ? "max-w-[240px] w-full pl-12 pb-4 translate-x-0"
-      //     : "w-0 p-0 -translate-x-full "
-      // }  transform transition-all duration-200 custom-scrollbar sticky top-[56px] z-10`}
     >
       <DesktopProductFilter
         data={data}
