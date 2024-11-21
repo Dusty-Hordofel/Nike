@@ -6,18 +6,26 @@ import ProductCardPrice from "./product-card-price";
 import ProductCardColor from "./product-card-color";
 import ProductCardDescription from "./product-card-description";
 import { Product } from "@/@types/admin/admin.products.interface";
+import useWindowSize from "@/hooks/use-window-size";
+import {
+  useGetProduct,
+  usePrefetchAllProductVariants,
+} from "@/hooks/user/products/use-get-product.hook";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProduct } from "@/services/user/products.service";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { name, subProducts, slug } = product;
 
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(subProducts[active]?.images);
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 960);
-  // const isLargeScreen = useWindowSize(960);
+
+  const isLargeScreen = useWindowSize(960);
 
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => p.color)
   );
+  console.log("🚀 ~ ProductCard ~ productColors:", productColors);
 
   const bestSeller = true;
   const newRelease = false;
@@ -29,16 +37,6 @@ const ProductCard = ({ product }: { product: Product }) => {
         subProducts.map((p) => p.color) || prevProductColors
     );
   }, [active, product, subProducts]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 960);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <>

@@ -7,8 +7,8 @@ const ProductsList = ({
   isLargeScreen,
   filteredProducts,
 }: any) => {
-  console.log("🚀 ~ filteredProducts:OLOM", filteredProducts);
-  // c
+  // console.log("🚀 ~ filteredProducts:OLOM", filteredProducts);
+
   return (
     <section
       className={cn(

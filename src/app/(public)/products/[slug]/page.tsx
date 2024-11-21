@@ -1,9 +1,8 @@
 "use client";
 import { bannerVideo } from "@/assets/data/banner";
-import ProductImages from "@/components/common/product/product-details/product-images";
 import ProductInformation from "@/components/common/product/product-details/product-information";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
 import { useQuery } from "@tanstack/react-query";
@@ -15,9 +14,7 @@ import {
 import CartModal from "@/components/common/cart/cart-modal";
 import { CartItem } from "@/context/cart/cart.reducer";
 import { useCart } from "@/context/cart/cart.context";
-import { useAddProductToWishlist } from "@/hooks/user/wishlist/use-add-product-to-wishlist.hook";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
-import { useModal } from "@/context/modal/modal.context";
 import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import QueryStatus from "@/components/ui/query-status";
 
@@ -35,24 +32,15 @@ interface ProductPageProps {
 
 const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const { slug: productSlug } = params;
-  const {
-    state: cartState,
-
-    dispatch,
-  } = useCart();
+  const { state: cartState } = useCart();
 
   const user = useCurrentUser();
 
+  const [showCartModal, setShowCartModal] = useState(false);
+  const [modalContext, setModalContext] = useState<null | string>(null);
   const [productAddedToCart, setProductAddedToCart] = useState<null | CartItem>(
     null
   );
-  const [showCartModal, setShowCartModal] = useState(false);
-  const [modalContext, setModalContext] = useState<null | string>(null);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  // console.log("🚀 ~ ProductPage ~ containerRef:REF", containerRef);
-  const [activeIndex, setActiveIndex] = useState(0);
-  console.log("🚀 ~ ProductPage ~ activeIndex:", activeIndex);
 
   const selectedColor = searchParams.color as string;
   const selectedSize = searchParams.size as string;
@@ -69,11 +57,6 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
       ).then((res) => res.json()),
   });
 
-  // if (productQuery.isLoading) return <p>Loading...</p>;
-  // if (productQuery.isError) return <p>Error...</p>;
-
-  // const { product } = productQuery.data;
-
   const handleOpenModal = (context: string) => {
     setModalContext(context);
     setShowCartModal(true);
@@ -89,27 +72,6 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
       cartState.cartItems,
       cartState.appliedCoupon?.couponCode
     );
-  };
-
-  // const handleScroll = (images: any, direction: "next" | "prev") => {
-  //   if (direction === "next") {
-  //     setActiveIndex((prevIndex) => (prevIndex + 1) % images.length); // Boucle infinie
-  //   } else {
-  //     setActiveIndex((prevIndex) =>
-  //       prevIndex === 0 ? images.length - 1 : prevIndex - 1
-  //     );
-  //   }
-  // };
-
-  const handleScroll = () => {
-    if (containerRef.current) {
-      const scrollLeft = containerRef.current.scrollLeft;
-      const containerWidth = containerRef.current.offsetWidth;
-
-      // Calculer l'index actif
-      const newIndex = Math.round(scrollLeft / containerWidth);
-      setActiveIndex(newIndex);
-    }
   };
 
   return (

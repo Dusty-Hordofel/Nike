@@ -28,7 +28,7 @@ const DesktopProductFilter = ({
         handleFilterChange={handleFilterChange}
       />
       <ColorsFilter
-        colors={data.colors}
+        colors={data?.colors}
         filters={filters}
         isLargeScreen={isLargeScreen}
         handleFilterChange={handleFilterChange}

@@ -34,7 +34,7 @@ const ProductImages = ({ images }: ProductImagesProps) => {
   return (
     <div className="hidden min-[960px]:flex w-[calc(100%-456px)]   h-[669px] pl-12 mt-12 gap-x-4 mx-2 sticky top-0">
       <ul className="flex flex-col gap-2 overflow-y-scroll">
-        {images.map(({ url }, index) => {
+        {images?.map(({ url }, index) => {
           return (
             <li
               key={index}
@@ -63,9 +63,9 @@ const ProductImages = ({ images }: ProductImagesProps) => {
           height={100}
           width={535}
           priority
-          src={images[currentIndex].url}
+          src={images[currentIndex]?.url}
           alt="slides"
-          key={images[currentIndex].url}
+          key={images[currentIndex]?.url}
           className="bg-gray-200 h-full"
         />
         <div className="absolute flex gap-2 bottom-6 right-6">

@@ -48,6 +48,8 @@ const ProductsPage = () => {
         ),
     }) || [];
 
+  console.log("🚀 ~ ProductsPage ~ data:DATA", data);
+
   useEffect(() => {
     if (data && data.products && isLargeScreen) {
       setTimeout(() => {
@@ -155,7 +157,7 @@ const ProductsPage = () => {
                   isLargeScreen={isLargeScreen}
                   showSidebar={showSidebar}
                 />
-                <div className="hidden relative min-[960px]:block">
+                {/* <div className="hidden relative min-[960px]:block">
                   <ProductSorterButton
                     showDropdown={showDropdown}
                     setShowDropdown={setShowDropdown}
@@ -163,7 +165,7 @@ const ProductsPage = () => {
                     handleSorterChange={handleSorterChange}
                     isLargeScreen={isLargeScreen}
                   />
-                </div>
+                </div> */}
               </nav>
             </div>
           </header>

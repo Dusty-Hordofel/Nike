@@ -48,7 +48,7 @@ const ProductInformation = ({
     shipping,
     priceAfterDiscount,
     priceBeforeDiscount,
-  } = product;
+  } = product || {};
 
   const {
     entityToEdit,
@@ -100,7 +100,7 @@ const ProductInformation = ({
     priceAfterDiscount,
     shipping,
     priceBeforeDiscount,
-    image: colors.find(
+    image: colors?.find(
       (color: any) => color.name.toLocaleLowerCase() === selectedColor
     ).image,
     quantity: 1,
@@ -169,10 +169,10 @@ const ProductInformation = ({
         className="hidden max-[960px]:block max-[960px]:mb-4"
       />
 
-      <ProductImageSlider images={product.images} />
+      <ProductImageSlider images={product?.images} />
 
       <div className="max-w-[1200px] min-[960px]:mx-auto flex">
-        <ProductImages images={product.images} />
+        <ProductImages images={product?.images} />
         <div className="w-full min-[960px]:w-[456px] flex flex-col gap-2 min-[960px]:mt-12 min-[960px]:mr-2 min-[960px]:pl-6 pt-1 min-[960px]:pr-12 font-medium ">
           <div className="mb-8">
             <ProductDetails
