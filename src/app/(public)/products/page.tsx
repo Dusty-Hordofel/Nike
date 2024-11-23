@@ -13,6 +13,7 @@ import QueryStatus from "@/components/ui/query-status";
 
 const ProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  console.log("🚀 ~ ProductsPage ~ filteredProducts:", filteredProducts);
   const [showFilterSidebar, setShowFilterSidebar] = useState(false);
   const [filterOpacity, setFilterOpacity] = useState(false);
 
@@ -149,11 +150,12 @@ const ProductsPage = () => {
                 className="font-medium text-2xl hidden min-[960px]:block"
                 id="Nike-Tech-Clothing"
               >
+                {/* enter the relevant category and number later */}
                 <span>Nike Tech Clothing</span>
-                <span>(137)</span>
+                <span>{filteredProducts.length}</span>
               </h1>
               <span className="text-[#707072]  min-[960px]:hidden">
-                919 Results
+                {filteredProducts.length} Results
               </span>
               <nav className="flex" aria-label="Sort By">
                 <ProductFilterButton
