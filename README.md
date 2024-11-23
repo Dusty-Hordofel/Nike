@@ -1276,6 +1276,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 97. handle cart ui errors
 
+### 98. handle cart ui errors
+
 <!--
 
 ### . Refactorisation de l'Api
