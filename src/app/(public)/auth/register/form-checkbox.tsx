@@ -6,7 +6,7 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import Link from "next/link";
 import { UserAuthInputFieldForm } from "@/components/common/auth";
 import { RegisterFormData } from "../../../../schemas/user/auth.schema";

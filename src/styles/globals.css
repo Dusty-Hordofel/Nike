@@ -235,5 +235,5 @@ css-1ncut4k::before {
   scrollbar-width: none; /* Firefox */
 }
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* WebKit */
+  display: none;
 }

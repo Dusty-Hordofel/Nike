@@ -2,7 +2,7 @@
 import SendResetPasswordEmail from "@/emails/send-reset-password-email";
 import React, { useState } from "react";
 import Nava from "./navbar/Navbar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { Button } from "@/components/ui/buttons/button/button";
 
 const LoloPage = () => {

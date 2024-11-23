@@ -20,7 +20,7 @@ import {
   RegisterSchema,
   UserFormData,
 } from "../../../../schemas/user/auth.schema";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { CrossedEye } from "@/assets/icons";
 import { Eye } from "lucide-react";
 import ShoppingPreference from "./shopping-preference";

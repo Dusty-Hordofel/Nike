@@ -8,7 +8,7 @@ import { filterProducts } from "./filters/filter-products";
 import ProductSorterButton from "./sorting/product-sorter-button";
 import { Product } from "@/@types/admin/admin.products.interface";
 import MobileProductFilterAndSort from "./filters/mobile/mobile-product-filter-and-sort";
-import useWindowSize from "@/hooks/use-window-size";
+import useWindowSize from "@/hooks/common/use-window-size";
 import QueryStatus from "@/components/ui/query-status";
 
 const ProductsPage = () => {

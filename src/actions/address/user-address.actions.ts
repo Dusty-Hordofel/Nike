@@ -11,10 +11,8 @@ import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
 export const saveUserAddress = async (newAddress: DeliveryInfoFormData) => {
-  // console.log("🚀 ~ saveUserAddress ~ newAddress:", newAddress);
   try {
     const user = await currentUser();
-    // console.log("🚀 ~ saveUserAddress ~ user:", user);
     if (!user || typeof user._id !== "string" || !isValidObjectId(user._id)) {
       return { error: "Unauthorized" };
     }

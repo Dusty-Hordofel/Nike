@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils"; // Votre utilitaire pour la gestion des classes CSS
+import { cn } from "@/lib/common/utils"; // Votre utilitaire pour la gestion des classes CSS
 import { FileIcon } from "lucide-react"; // Assurez-vous d'importer correctement votre icône ou de la remplacer
 import {
   FieldError,
@@ -20,10 +20,14 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({ previewUrl }) => {
   return (
     <div
-      className={` gap-x-2 bg-warning w-full ${previewUrl ? "flex flex-col-reverse " : "flex"}`}
+      className={` gap-x-2 bg-warning w-full ${
+        previewUrl ? "flex flex-col-reverse " : "flex"
+      }`}
     >
       <div
-        className={` bg-red-100 overflow-x-auto ${previewUrl && "mt-1 flex gap-x-2"}`}
+        className={` bg-red-100 overflow-x-auto ${
+          previewUrl && "mt-1 flex gap-x-2"
+        }`}
       >
         {previewUrl ? (
           <img

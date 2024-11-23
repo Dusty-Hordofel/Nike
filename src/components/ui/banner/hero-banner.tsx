@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import BannerVideo from "./banner-video";
 import BannerContent from "./banner-content";
 import BannerImage from "./banner-image";

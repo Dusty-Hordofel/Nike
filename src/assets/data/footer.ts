@@ -1,3 +1,158 @@
+export const footerLinks = [
+  {
+    title: "Resources",
+    links: [
+      {
+        href: "https://www.nike.com/fr/cartes-cadeaux",
+        label: "Gift Cards",
+        ariaLabel: "resources,gift cards",
+      },
+      {
+        href: "https://www.nike.com/fr/retail/",
+        label: "Find a Store",
+        ariaLabel: "resources,find a store",
+      },
+      {
+        href: "https://www.nike.com/fr/articles",
+        label: "Nike Journal",
+        ariaLabel: "resources,nike journal",
+      },
+      {
+        href: "https://www.nike.com/fr/adhesion",
+        label: "Become a Member",
+        ariaLabel: "resources,become a member",
+      },
+      {
+        href: "https://www.nike.com/fr/student-discount",
+        label: "Student Discount",
+        ariaLabel: "resources,student discount",
+      },
+      {
+        href: "#site-feedback",
+        label: "Feedback",
+        ariaLabel: "resources,site feedback",
+      },
+      {
+        href: "https://www.nike.com/fr/code-promo",
+        label: "Promo Codes",
+        ariaLabel: "resources,promo codes",
+      },
+    ],
+  },
+  {
+    title: "Help",
+    links: [
+      {
+        href: "https://www.nike.com/fr/help",
+        label: "Get Help",
+        ariaLabel: "help,get help",
+      },
+      {
+        href: "https://www.nike.com/fr/orders/details",
+        label: "Order Status",
+        ariaLabel: "help,order status",
+      },
+      {
+        href: "https://www.nike.com/fr/help/a/expedition-livraison-ue",
+        label: "Shipping & Delivery",
+        ariaLabel: "help,shipping and delivery",
+      },
+      {
+        href: "https://www.nike.com/fr/help/a/conditions-de-retour-ue",
+        label: "Returns",
+        ariaLabel: "help,returns",
+      },
+      {
+        href: "https://www.nike.com/help/a/change-cancel-order",
+        label: "Order Cancellation",
+        ariaLabel: "help,order cancellation",
+      },
+      {
+        href: "https://www.nike.com/fr/help/a/modes-de-paiement-ue",
+        label: "Payment Options",
+        ariaLabel: "help,payment options",
+      },
+      {
+        href: "https://www.nike.com/fr/cartes-cadeaux",
+        label: "Gift Card Balance",
+        ariaLabel: "help,gift card balance",
+      },
+
+      {
+        href: "https://www.nike.com/help/#contact",
+        label: "Contact Us",
+        ariaLabel: "help,contact us",
+      },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      {
+        href: "https://about.nike.com/",
+        label: "About Nike",
+        ariaLabel: "company,about nike",
+      },
+      {
+        href: "https://news.nike.com/",
+        label: "News",
+        ariaLabel: "company,news",
+      },
+      {
+        href: "https://jobs.nike.com/",
+        label: "Careers",
+        ariaLabel: "company,careers",
+      },
+      {
+        href: "https://investors.nike.com/",
+        label: "Investors",
+        ariaLabel: "company,investors",
+      },
+      {
+        href: "https://about.nike.com/en/impact",
+        label: "Purpose",
+        ariaLabel: "company,purpose",
+      },
+      {
+        href: "https://www.nike.com/fr/developpement-durable",
+        label: "Sustainability",
+        ariaLabel: "company,sustainability",
+      },
+    ],
+  },
+  {
+    title: "Promotions & Discounts",
+    links: [
+      {
+        href: "https://www.nike.com/help/a/student-discount",
+        label: "Student",
+        ariaLabel: "promotions discounts,student",
+      },
+      {
+        href: "https://www.nike.com/help/a/military-discount",
+        label: "Military",
+        ariaLabel: "promotions discounts,military",
+      },
+      {
+        href: "https://www.nike.com/help/a/teacher-discount",
+        label: "Teacher",
+        ariaLabel: "promotions discounts,teacher",
+      },
+      {
+        href: "https://www.nike.com/help/a/first-responder-discount",
+        label: "First Responders & Medical Professionals",
+        ariaLabel:
+          "promotions discounts,first responders medical professionals",
+      },
+      {
+        href: "https://www.nike.com/help/a/birthday-terms-promo",
+        label: "Birthday",
+        ariaLabel: "promotions discounts,birthday",
+      },
+    ],
+  },
+];
+
 export const footerMenu = [
   {
     name: "Ressources",

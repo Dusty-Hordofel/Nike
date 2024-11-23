@@ -1,7 +1,7 @@
 "use client";
 import SearchIcon from "@/assets/icons/search/SearchIcon";
 import IconButton from "@/components/ui/icon-button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { useState } from "react";
 
 const SearchInput = () => {

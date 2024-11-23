@@ -1,7 +1,7 @@
 import { Product } from "@/@types/admin/admin.products.interface";
 import ProductCard from "@/components/common/product/product-card/product-card";
 import Loader from "@/components/ui/loader";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 
 const ProductsList = ({
   showSidebar,

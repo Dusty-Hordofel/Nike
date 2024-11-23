@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/buttons/button/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import React from "react";
 
 interface UserAuthFooterProps {

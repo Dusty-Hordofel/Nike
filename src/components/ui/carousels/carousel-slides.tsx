@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { TrendSlidesProps } from "@/@types/types";
 import Image from "next/image";
 import CarouselContent from "./carousel-content";

@@ -76,9 +76,9 @@ const CartProductDetails = ({
           removeProductFromCart={removeProductFromCart}
         />
         <div className="text-base font-medium pt-3">
-          <p>Retrait gratuit</p>
+          <p>Free Pickup</p>
           <button className="pickup border-b border-black-100 hover:border-b-2">
-            Trouver un magasin
+            Find a Store
           </button>
         </div>
       </div>

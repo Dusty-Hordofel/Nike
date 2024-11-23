@@ -106,8 +106,6 @@ const ProductInformation = ({
     quantity: 1,
   };
 
-  console.log("🚀 ~ cartProduct:VOIR", cartProduct);
-
   // addProductToCart
   function handleAddProductToCart() {
     setError("");

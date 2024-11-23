@@ -1,4 +1,4 @@
-import { getCardBrandImage } from "@/lib/utils";
+import { getCardBrandImage } from "@/lib/common/utils";
 import React from "react";
 
 type ActivePaymentCardProps = {

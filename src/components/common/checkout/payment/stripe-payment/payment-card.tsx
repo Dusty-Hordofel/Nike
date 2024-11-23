@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/buttons/button/button";
-import { getCardBrandImage } from "@/lib/utils";
+import { getCardBrandImage } from "@/lib/common/utils";
 import { UseMutationResult } from "@tanstack/react-query";
 import React from "react";
 
@@ -30,7 +30,9 @@ const PaymentCard = ({
 }: PaymentCardProps) => {
   return (
     <div
-      className={`py-4  border-black-200 flex justify-between px-3 rounded-lg ${isActive ? "border-2" : "border"} cursor-pointer`}
+      className={`py-4  border-black-200 flex justify-between px-3 rounded-lg ${
+        isActive ? "border-2" : "border"
+      } cursor-pointer`}
       onClick={() => onChangeActivePaymentMethod(paymentMethodId, id)}
       // onClick={async () =>
       //   changeActivePaymentMethod.mutateAsync(paymentMethodId)

@@ -1,5 +1,5 @@
 import { SubProduct } from "@/@types/admin/admin.products.interface";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 
 interface CardColorProps {
   productColors: {

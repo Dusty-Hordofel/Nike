@@ -1,7 +1,7 @@
 import React from "react";
 import BannerLinks from "../buttons/button-links/buttonLinks";
 import { nike } from "@/assets/fonts/nike/nike";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { CommonBannerProps } from "./hero-banner";
 
 type BannerContentProps = Omit<CommonBannerProps, "href" | "bannerClassName">;
