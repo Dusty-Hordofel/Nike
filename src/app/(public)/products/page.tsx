@@ -151,8 +151,8 @@ const ProductsPage = () => {
                 id="Nike-Tech-Clothing"
               >
                 {/* enter the relevant category and number later */}
-                <span>Nike Tech Clothing</span>
-                <span>{filteredProducts.length}</span>
+                <span>Nike Tech Clothing</span>{" "}
+                <span>({filteredProducts.length})</span>
               </h1>
               <span className="text-[#707072]  min-[960px]:hidden">
                 {filteredProducts.length} Results
