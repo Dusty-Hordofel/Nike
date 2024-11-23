@@ -116,68 +116,70 @@ const CartProductsPage = () => {
             </p>
           </div>
 
-          <QueryStatus
-            isLoading={wishlistQuery.isLoading}
-            isError={wishlistQuery.isError}
-            error={wishlistQuery.error}
-            data={wishlistQuery.data?.product}
-            className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0 "
-          >
-            <h2 className="mt-6 text-2xl font-medium">Favourites</h2>
-            <div className="grid min-[960px]:grid-cols-2  grid-cols-1">
-              {wishlistQuery.data?.length > 0 ? (
-                wishlistQuery.data?.map(({ product }: any) => (
-                  <div
-                    key={product._id}
-                    className="flex gap-x-4 py-6 max-[960px]:border-b max-[960px]:border-gray-300"
-                  >
-                    <figure>
-                      <Link
-                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/products/${product.slug}?color=${product.color}`}
-                      >
-                        <picture>
-                          <img
-                            className="size-[164px] object-cover"
-                            src={product.images[0].url}
-                            alt={product.name}
-                          />
-                        </picture>
-                      </Link>
-                    </figure>
-                    <div className="text-sm">
-                      <div>
-                        <h2>{product.name}</h2>
-                        <div className="text-gray-600">
-                          <p>Men&apos;s jacket</p>
-                          <p>{product.color}</p>
+          {user && (
+            <QueryStatus
+              isLoading={wishlistQuery.isLoading}
+              isError={wishlistQuery.isError}
+              error={wishlistQuery.error}
+              data={wishlistQuery.data?.product}
+              className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0 "
+            >
+              <h2 className="mt-6 text-2xl font-medium">Favourites</h2>
+              <div className="grid min-[960px]:grid-cols-2  grid-cols-1">
+                {wishlistQuery.data?.length > 0 ? (
+                  wishlistQuery.data?.map(({ product }: any) => (
+                    <div
+                      key={product._id}
+                      className="flex gap-x-4 py-6 max-[960px]:border-b max-[960px]:border-gray-300"
+                    >
+                      <figure>
+                        <Link
+                          href={`${process.env.NEXT_PUBLIC_BASE_URL}/products/${product.slug}?color=${product.color}`}
+                        >
+                          <picture>
+                            <img
+                              className="size-[164px] object-cover"
+                              src={product.images[0].url}
+                              alt={product.name}
+                            />
+                          </picture>
+                        </Link>
+                      </figure>
+                      <div className="text-sm">
+                        <div>
+                          <h2>{product.name}</h2>
+                          <div className="text-gray-600">
+                            <p>Men&apos;s jacket</p>
+                            <p>{product.color}</p>
+                          </div>
+                          <Button
+                            className="p-0 m-0 h-max text-sm text-gray-600"
+                            variant="link"
+                            size="medium"
+                            // disabled
+                          >
+                            Select size
+                          </Button>
                         </div>
                         <Button
-                          className="p-0 m-0 h-max text-sm text-gray-600"
-                          variant="link"
-                          size="medium"
-                          // disabled
+                          className="mt-3 bg-white"
+                          variant="outline"
+                          size="small"
+                          disabled
                         >
-                          Select size
+                          Add to Bag
                         </Button>
                       </div>
-                      <Button
-                        className="mt-3 bg-white"
-                        variant="outline"
-                        size="small"
-                        disabled
-                      >
-                        Add to Bag
-                      </Button>
                     </div>
+                  ))
+                ) : (
+                  <div className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0  flex justify-center items-center">
+                    <p>No products in your wishlist.</p>
                   </div>
-                ))
-              ) : (
-                <div className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0  flex justify-center items-center">
-                  <p>No products in your wishlist.</p>
-                </div>
-              )}
-            </div>
-          </QueryStatus>
+                )}
+              </div>
+            </QueryStatus>
+          )}
         </main>
       </div>
 

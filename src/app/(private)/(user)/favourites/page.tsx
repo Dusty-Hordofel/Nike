@@ -21,7 +21,7 @@ const FavouritesPage = () => {
       isLoading={wishlistQuery.isLoading}
       isError={wishlistQuery.isError}
       error={wishlistQuery.error}
-      data={wishlistQuery.data}
+      data={wishlistQuery.data?.product}
       className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0 bg-white"
     >
       <>
