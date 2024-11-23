@@ -1,5 +1,5 @@
 import { FooterLinksProps } from "@/@types/common/footer.types";
-import NikeTerms from "@/app/nike-terms";
+import NikeTerms from "@/components/common/footer/nike-terms";
 
 import React from "react";
 import MobileFooterLinks from "./mobile-footer-links";

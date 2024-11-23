@@ -33,7 +33,7 @@ import {
   HeroBanner as SmallDiscountBanner,
 } from "@/components/ui/banner/hero-banner";
 import MobileFooterLinks from "../components/common/footer/mobile-footer-links";
-import NikeTerms from "./nike-terms";
+import NikeTerms from "../components/common/footer/nike-terms";
 import DesktopFooterLinks from "../components/common/footer/desktop-footer-links";
 
 export default function Home() {
