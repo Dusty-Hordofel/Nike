@@ -44,6 +44,7 @@ const SelectedProductCartModal = ({
           isLoading={productQuery.isLoading}
           isError={productQuery.isError}
           error={productQuery.error}
+          data={productQuery.data?.product}
         >
           <SelectedProductCartModalContent
             data={productQuery.data?.product}
