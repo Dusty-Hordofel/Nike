@@ -5,10 +5,15 @@ import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { useGetProductsFromWishlist } from "@/hooks/user/wishlist/use-get-products-from-wishlist.hook";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const FavouritesPage = () => {
   const user = useCurrentUser();
+  const router = useRouter();
+
+  if (!user) router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`);
+
   const wishlistQuery = useGetProductsFromWishlist(user);
 
   return (
