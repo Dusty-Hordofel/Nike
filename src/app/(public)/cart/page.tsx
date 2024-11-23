@@ -50,20 +50,31 @@ const CartProductsPage = () => {
               {!user && <MembershipMessaging />}
 
               <div>
-                <div className="max-[960px]:flex max-[960px]:flex-col max-[960px]:items-center max-[960px]:mb-6  ">
-                  <h1 className="font-medium text-2xl">Bag</h1>
-                  <div className="hidden max-[960px]:flex">
-                    <span className="text-gray-400">
-                      {cartState.cartItems?.length > 0
-                        ? cartState.cartItems.length
-                        : 0}{" "}
-                    </span>
-                    <span className="text-gray-400">
-                      Item{cartState.cartItems?.length > 0 && "s"} |{" "}
-                    </span>
-                    <span>${cartState.orderTotal.toFixed(2)}</span>
+                {
+                  <div className="max-[960px]:flex max-[960px]:flex-col max-[960px]:items-center max-[960px]:mb-6  ">
+                    <h1 className="font-medium text-2xl">Bag</h1>
+                    <div className="hidden max-[960px]:flex">
+                      <span className="text-gray-400">
+                        {cartState.cartItems?.length > 0
+                          ? cartState.cartItems.length
+                          : 0}
+                      </span>
+                      &nbsp;
+                      <span className="text-gray-400 inline-block">
+                        Item
+                        {(cartState.cartItems?.length == 0 ||
+                          cartState.cartItems?.length > 1) &&
+                          "s"}
+                        &nbsp;|&nbsp;
+                      </span>
+                      <span className="inline-block">
+                        {cartState.cartItems?.length > 0
+                          ? "$" + cartState.orderTotal.toFixed(2)
+                          : "-"}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                }
                 {cartState.cartItems?.length > 0 ? (
                   <CartProducts
                     cartItems={cartState.cartItems}
@@ -80,6 +91,29 @@ const CartProductsPage = () => {
               dispatch={dispatch}
               handleSaveCart={handleSaveCart}
             />
+          </div>
+
+          <div className="css-194qd6i e1637p4y1">
+            <h2 className="mt-6 text-2xl font-medium">Favorites</h2>
+            <p
+              className="nds-text css-qtj9g7 e1yhcai00 appearance-body1 color-primary weight-regular"
+              data-automation="guest-wishlist"
+            >
+              Want to view your favorites?&nbsp;
+              <Link
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`}
+                className="underline text-gray-500 font-medium underline-offset-4"
+              >
+                Join us
+              </Link>{" "}
+              or{" "}
+              <Link
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`}
+                className="underline text-gray-500 font-medium underline-offset-4"
+              >
+                Sign-in
+              </Link>
+            </p>
           </div>
 
           <QueryStatus
