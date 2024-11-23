@@ -1276,13 +1276,11 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 97. handle cart ui errors
 
-<!-- ### 85. Gestion du footer
+<!--
 
-### 86. Gestion due la HomePage
+### . Refactorisation de l'Api
 
-### 87. Refactorisation de l'Api
-
-### 88. Ajout du carousel des images produit -->
+ -->
 
 ## External Links
 
