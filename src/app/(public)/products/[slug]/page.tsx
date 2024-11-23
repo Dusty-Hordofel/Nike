@@ -95,7 +95,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         )}
 
         <ProductInformation
-          product={productQuery.data.product}
+          product={productQuery.data?.product}
           selectedColor={selectedColor}
           selectedSize={selectedSize}
           setProductAddedToCart={setProductAddedToCart}
