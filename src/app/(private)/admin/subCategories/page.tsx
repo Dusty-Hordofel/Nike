@@ -56,6 +56,7 @@ const SubCategoriesPage = () => {
       isLoading={categories.isLoading}
       isError={categories.isError}
       error={categories.error}
+      data={categories.data}
     >
       {isModalOpen && (
         <SubcategoryFormProvider>

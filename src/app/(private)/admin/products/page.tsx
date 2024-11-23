@@ -51,6 +51,7 @@ const ProductPage = () => {
       isLoading={categories.isLoading || products.isLoading}
       isError={categories.isError || products.isLoading}
       error={categories.error || products.error}
+      data={categories.data}
     >
       {isModalOpen && (
         <ProductFormProvider>
