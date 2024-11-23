@@ -129,6 +129,7 @@ const ProductsPage = () => {
       isLoading={isLoading}
       isError={isError}
       error={error}
+      data={data?.products}
       className="h-[calc(100vh-136px)] min-w-[320px] max-w-[1920px] w-full mx-0"
     >
       <div

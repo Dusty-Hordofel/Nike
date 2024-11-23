@@ -1272,6 +1272,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 95. Footer
 
+### 96. loading error management
+
 <!-- ### 85. Gestion du footer
 
 ### 86. Gestion due la HomePage

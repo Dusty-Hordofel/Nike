@@ -30,10 +30,5 @@ const TanstackQueryProvider = ({ children }: { children: React.ReactNode }) => {
     </PersistQueryClientProvider>
   );
 };
-// const TanstackQueryProvider = ({ children }: { children: React.ReactNode }) => {
-//   return (
-//     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-//   );
-// };
 
 export default TanstackQueryProvider;

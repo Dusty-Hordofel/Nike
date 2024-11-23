@@ -86,6 +86,7 @@ const CartProductsPage = () => {
             isLoading={wishlistQuery.isLoading}
             isError={wishlistQuery.isError}
             error={wishlistQuery.error}
+            data={wishlistQuery.data?.product}
             className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0 "
           >
             <h2 className="mt-6 text-2xl font-medium">Favourites</h2>
