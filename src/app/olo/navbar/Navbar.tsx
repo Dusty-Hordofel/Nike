@@ -2,9 +2,10 @@
 import { CartIcon, FavorisIcon, NikeIcon } from "@/assets/icons";
 import React, { useState } from "react";
 import SearchInput from "./search/SearchInput";
-import NavLinks from "./navigation/NavLinks";
+// import NavLinks from "./navigation/NavLinks";
 import { menuLinks } from "@/assets/data/menu-links";
 import Link from "next/link";
+import NavLinks from "./navigation/NavLinks";
 
 const Nava = () => {
   const [expand, setExpand] = useState(false);

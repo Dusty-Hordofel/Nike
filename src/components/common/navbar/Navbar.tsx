@@ -4,7 +4,7 @@ import { useCart } from "@/context/cart/cart.context";
 import DesktopNavbar from "./desktop-navbar";
 import MobileNavbar from "./mobile-navbar";
 import { usePathname } from "next/navigation";
-import { disableNavAndFooter } from "@/app/disable-nav-and-footer";
+import { disableNavAndFooter } from "@/components/common/disable-nav-and-footer";
 
 const Navbar = () => {
   const [expand, setExpand] = useState(false);
