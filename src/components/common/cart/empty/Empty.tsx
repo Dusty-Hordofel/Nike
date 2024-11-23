@@ -3,9 +3,8 @@ import React from "react";
 const Empty = () => {
   return (
     <div className="leading-6">
-      <h1 className="font-medium text-2xl mb-1">Panier</h1>
       <p data-automation="no-items" className="text-base">
-        Il n&apos;y a aucun article dans ton panier.
+        There are no items in your bag.
       </p>
     </div>
   );
