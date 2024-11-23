@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
-import { TrendSlidesProps } from "@/@types/types";
+import { cn } from "@/lib/common/utils";
 import Image from "next/image";
 import CarouselContent from "./carousel-content";
 import Link from "next/link";
+import { TrendSlidesProps } from "@/@types/common/trends.types";
 
 type CarouselSlidesProps = {
   carouselRef: React.MutableRefObject<HTMLUListElement | null>;

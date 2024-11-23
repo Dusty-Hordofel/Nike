@@ -11,8 +11,8 @@ interface useSaveAddressProps {
 // paymentStatus
 const useCreateOrderAndPayment = ({
   setPaymentStatus,
-  //   setError,
-}: useSaveAddressProps) => {
+}: //   setError,
+useSaveAddressProps) => {
   // const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -34,20 +34,13 @@ const useCreateOrderAndPayment = ({
       //   queryClient.invalidateQueries({ queryKey: ["addresses"] });
 
       if (data.success) {
-        alert("Payment succeeded!");
-        console.log("Payment succeeded!");
         setPaymentStatus("success");
-        // window.location.href = "/"; // Redirection vers la page d'accueil
       } else {
-        alert("Payment failed. Please try again.");
-        console.log("Payment failed. Please try again.");
         setPaymentStatus("failed");
       }
     },
     onError: (error) => {
       console.log(`Error: ${error.message}`);
-      // alert("Payment failed. Please try again.");
-      // console.log("Payment failed. Please try again.");
       // setPaymentStatus("failed");
     },
   });

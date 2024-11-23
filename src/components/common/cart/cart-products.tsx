@@ -17,7 +17,7 @@ function CartProducts({
   >;
 }) {
   return (
-    <>
+    <div className=" max-[960px]:border-t max-[960px]:border-gray-200 max-[960px]:pt-2">
       {cartItems.map((cartItem) => (
         <CartProductDetails
           key={cartItem.cartID}
@@ -25,7 +25,7 @@ function CartProducts({
           setSelectedCartItem={setSelectedCartItem}
         />
       ))}
-    </>
+    </div>
   );
 }
 

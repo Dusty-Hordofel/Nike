@@ -8,7 +8,7 @@ import { useState } from "react";
 import CartSummary from "@/components/common/cart/cart-summary";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import { useGetProductsFromWishlist } from "@/hooks/user/wishlist/use-get-products-from-wishlist.hook";
 import QueryStatus from "@/components/ui/query-status";
@@ -50,7 +50,20 @@ const CartProductsPage = () => {
               {!user && <MembershipMessaging />}
 
               <div>
-                <h1 className="font-medium text-2xl">Bag</h1>
+                <div className="max-[960px]:flex max-[960px]:flex-col max-[960px]:items-center max-[960px]:mb-6  ">
+                  <h1 className="font-medium text-2xl">Bag</h1>
+                  <div className="hidden max-[960px]:flex">
+                    <span className="text-gray-400">
+                      {cartState.cartItems?.length > 0
+                        ? cartState.cartItems.length
+                        : 0}{" "}
+                    </span>
+                    <span className="text-gray-400">
+                      Item{cartState.cartItems?.length > 0 && "s"} |{" "}
+                    </span>
+                    <span>${cartState.orderTotal.toFixed(2)}</span>
+                  </div>
+                </div>
                 {cartState.cartItems?.length > 0 ? (
                   <CartProducts
                     cartItems={cartState.cartItems}

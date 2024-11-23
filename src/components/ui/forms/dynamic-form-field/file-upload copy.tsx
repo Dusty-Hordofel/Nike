@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils"; // Votre utilitaire pour la gestion des classes CSS
+import { cn } from "@/lib/common/utils"; // Votre utilitaire pour la gestion des classes CSS
 import { FileIcon } from "lucide-react"; // Assurez-vous d'importer correctement votre icône ou de la remplacer
 import {
   FieldError,

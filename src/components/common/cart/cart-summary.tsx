@@ -2,7 +2,7 @@
 
 import { getCouponCode } from "@/actions/coupon/user-apply-coupon.action";
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -71,7 +71,7 @@ const CartSummary = ({
   };
 
   return (
-    <aside className="px-2 mb-6 min-[960px]:max-w-[33.3333%] w-full">
+    <aside className="px-2 mb-6 min-[960px]:max-w-[33.3333%] w-full mt-5">
       <h2 className="mb-6 text-2xl font-medium">Summary</h2>
 
       <PromoCodeSection

@@ -6,7 +6,7 @@ import ProductCardPrice from "./product-card-price";
 import ProductCardColor from "./product-card-color";
 import ProductCardDescription from "./product-card-description";
 import { Product } from "@/@types/admin/admin.products.interface";
-import useWindowSize from "@/hooks/use-window-size";
+import useWindowSize from "@/hooks/common/use-window-size";
 import {
   useGetProduct,
   usePrefetchAllProductVariants,

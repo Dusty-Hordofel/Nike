@@ -6,6 +6,8 @@ import { helvetica } from "@/assets/fonts/helvetica/helvetica";
 import ClientOnly from "@/components/ui/client-only";
 import AppProviders from "@/components/providers/app-providers";
 import Navbar from "@/components/common/navbar/Navbar";
+import Footer from "@/components/common/footer/footer";
+import { footerLinks, footerMenu } from "@/assets/data/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,7 @@ export default async function RootLayout({
           <AppProviders>
             <Navbar />
             {children}
+            <Footer footerLinks={footerLinks} />
           </AppProviders>
         </ClientOnly>
       </body>

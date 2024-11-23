@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import React from "react";
 
 type ProductDetailsProps = {

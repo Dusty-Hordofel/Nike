@@ -2,7 +2,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { ArrowButton } from "@/components/ui/buttons/arrow-button/arrow-button";
 
 export type NavLink = {

@@ -12,7 +12,7 @@ import {
   EmailFormData,
   PasswordFormData,
 } from "../../../../schemas/user/auth.schema";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { EmailProps, PasswordProps } from "./formProps";
 
 type LoginFormProps = {
@@ -42,7 +42,9 @@ const LoginForm = ({
     >
       <div
         className={cn(
-          ` h-11 bg-gray-100 py-3 px-4 mb-5 items-center gap-x-4 rounded-md ${formCurrentStep === 2 && error.length > 1 ? "flex" : "hidden"}`
+          ` h-11 bg-gray-100 py-3 px-4 mb-5 items-center gap-x-4 rounded-md ${
+            formCurrentStep === 2 && error.length > 1 ? "flex" : "hidden"
+          }`
         )}
       >
         <CircleAlert color="#ee0005" />

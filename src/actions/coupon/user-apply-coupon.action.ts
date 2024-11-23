@@ -33,13 +33,9 @@ export async function applyCouponCode(couponCode: string) {
       return { success: false, error: true, message: "Invalid coupon" };
     }
 
-    // console.log("🚀 ~ applyCoupon ~ coupon: AC", coupon);
-
     const { cartTotal } = (await Cart.findOne({ user: dbUser._id })) as ICart;
-    // console.log("🚀 ~ applyCoupon ~ cartTotal:", cartTotal);
 
     let totalAfterDiscount = cartTotal - (cartTotal * coupon.discount) / 100;
-    // console.log("🚀 ~ applyCoupon ~ totalAfterDiscount:", totalAfterDiscount);
 
     await Cart.findOneAndUpdate(
       { user: user._id },
@@ -48,8 +44,6 @@ export async function applyCouponCode(couponCode: string) {
         new: true,
       }
     );
-
-    console.log("COUPON APPLY", cartTotal);
 
     // revalidatePath("/checkout");
     // revalidatePath("/cart");
@@ -75,19 +69,16 @@ export async function applyCouponCode(couponCode: string) {
 
 function isCouponValid(coupon: ICoupon) {
   const today = new Date();
-  console.log("🚀 ~ isCouponValid ~ today:", today);
 
   const startDate = new Date(coupon.startDate);
-  console.log("🚀 ~ isCouponValid ~ startDate:", startDate);
+
   const endDate = new Date(coupon.endDate);
-  console.log("🚀 ~ isCouponValid ~ endDate:", endDate);
 
   return today >= startDate && today <= endDate;
   // return today >= startDate && today <= endDate;
 }
 
 export async function getCouponCode(couponCode: string) {
-  console.log("🚀 ~ getCouponCode ~ couponCode:MOYKALR40", couponCode); //couponCode
   try {
     // Récupérer l'utilisateur actuel
     const user = await currentUser();

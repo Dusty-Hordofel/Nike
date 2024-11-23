@@ -16,13 +16,13 @@ import {
   OurIconicModels,
   // trendSlides,
 } from "@/assets/data/slides";
-import HomeProductsCategories from "@/components/common/home-products-categories";
+import HomeProductsCategories from "@/components/common/home/home-products-categories";
 import Navbar from "@/components/common/navbar/Navbar";
 import { buttonVariants } from "@/components/ui/buttons/button/button";
 
 import MediaCarousel from "@/components/ui/carousels/media-carousel";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import Link from "next/link";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import {
@@ -32,9 +32,9 @@ import {
   HeroBanner as ImageBanner,
   HeroBanner as SmallDiscountBanner,
 } from "@/components/ui/banner/hero-banner";
-import MobileFooterLinks from "./mobile-footer-links";
+import MobileFooterLinks from "../components/common/footer/mobile-footer-links";
 import NikeTerms from "./nike-terms";
-import DesktopFooterLinks from "./desktop-footer-links";
+import DesktopFooterLinks from "../components/common/footer/desktop-footer-links";
 
 export default function Home() {
   const user = useCurrentUser();
@@ -161,15 +161,6 @@ export default function Home() {
         </MediaCarousel>
       </div>
       {/* <HomeProductsCategories categories={categories} /> */}
-
-      <footer className="max-[960px]:py-12 max-[960px]:px-6 min-[960px]:p-12   text-sm">
-        <div className="min-[960px]:mb-[60px] mb-[36px] border-[#E5E5E5] border-t"></div>
-        <div className=""></div>
-        <MobileFooterLinks />
-        <DesktopFooterLinks footerMenu={footerMenu} />
-        <div className="min-[960px]:mb-[72px] mb-6"></div>
-        <NikeTerms />
-      </footer>
 
       {/* 
       <SmallDiscountBanner

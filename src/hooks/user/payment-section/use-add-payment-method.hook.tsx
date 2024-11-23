@@ -26,7 +26,7 @@ const useAddPaymentMethod = () =>
             }),
           }
         );
-        console.log("SAVE PAYMENT METHOD", response);
+
         return response.json();
       },
       onSuccess: () => {

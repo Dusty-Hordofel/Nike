@@ -12,7 +12,9 @@ const NikeTerms = (props: NikeTermsProps) => {
       >
         <li className="css-uu6h57">
           <p className="nds-text css-175n91z e1yhcai00 appearance-body2Strong color-secondary weight-regular text-nowrap">
-            <span>©&nbsp; 2024 Nike, Inc. Tous droits réservés</span>
+            <span>
+              ©&nbsp; {new Date().getFullYear()} Nike, Inc. All Rights Reserved
+            </span>
           </p>
         </li>
         <li>
@@ -155,7 +157,7 @@ const NikeTerms = (props: NikeTermsProps) => {
               className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
               style={{ paddingLeft: "0px" }}
             >
-              Conditions d&apos;utilisation
+              Terms of Sale
             </p>
           </Link>
         </li>
@@ -169,49 +171,62 @@ const NikeTerms = (props: NikeTermsProps) => {
               className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
               style={{ paddingLeft: "0px" }}
             >
-              Conditions générales de vente
+              Terms of Use
             </p>
           </Link>
         </li>
+
         <li>
           <Link
-            aria-label="company details"
+            aria-label="nike privacy policy"
             className="css-1isz5ne"
-            href="https://www.nike.com/gb/help/Link/company-details"
+            data-testid="link"
+            href="https://agreementservice.svs.nike.com/rest/agreement?agreementType=privacyPolicy&amp;uxId=com.nike.commerce.nikedotcom.web&amp;country=US&amp;language=en&amp;requestType=redirect"
           >
             <p
               className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
               style={{ paddingLeft: "0px" }}
             >
-              Informations sur l&apos;entreprise
+              Nike Privacy Policy
             </p>
           </Link>
         </li>
+
         <li>
           <Link
-            aria-label="privacy cookie policy"
+            aria-label="your privacy choices"
+            className="flex items-center gap-x-1"
+            data-testid="link"
+            href="https://www.nike.com/guest/settings/do-not-share-my-data"
+          >
+            <img
+              alt=""
+              aria-hidden="true"
+              src="https://static.nike.com/a/images/w_960,c_limit/3732c58b-d0ad-4c3c-898c-c4b90193312b/image.png"
+              style={{ objectFit: "contain" }}
+            />
+
+            <p
+              className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
+              style={{ paddingLeft: "0px" }}
+            >
+              Your Privacy Choices
+            </p>
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            aria-label="ca supply chains act"
             className="css-1isz5ne"
-            href="https://agreementservice.svs.nike.com/rest/agreement?agreementType=privacyPolicy&amp;uxId=com.nike.commerce.nikedotcom.web&amp;country=fr&amp;language=fr&amp;requestType=redirect"
+            data-testid="link"
+            href="https://about.nike.com/en/impact-resources/statement-on-forced-labor"
           >
             <p
               className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
               style={{ paddingLeft: "0px" }}
             >
-              Politique de confidentialité et de gestion des cookies
-            </p>
-          </Link>
-        </li>
-        <li>
-          <Link
-            aria-label="cookie settings"
-            className="css-1isz5ne"
-            href="https://www.nike.com/fr/guest/settings/privacy"
-          >
-            <p
-              className="nds-text css-170191f e1yhcai00 appearance-body2Strong color-primary weight-regular"
-              style={{ paddingLeft: "0px" }}
-            >
-              Paramètres de confidentialité et de cookies
+              CA Supply Chains Act
             </p>
           </Link>
         </li>

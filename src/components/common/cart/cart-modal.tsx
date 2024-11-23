@@ -1,6 +1,6 @@
 import { Button, buttonVariants } from "@/components/ui/buttons/button/button";
 import { CartItem } from "@/context/cart/cart.reducer";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import Link from "next/link";
 import React from "react";
 

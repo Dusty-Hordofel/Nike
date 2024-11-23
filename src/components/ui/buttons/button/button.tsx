@@ -1,6 +1,6 @@
 // import  Loading  from "@/assets/icons/loading/loading";
 import { Loading } from "@/assets/icons";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { ButtonStyle } from "./style";
 

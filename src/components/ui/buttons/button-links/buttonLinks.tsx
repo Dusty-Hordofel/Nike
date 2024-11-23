@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "../button/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 
 type ButtonLinkListProps = {
   links?: { label: string; href: string }[];

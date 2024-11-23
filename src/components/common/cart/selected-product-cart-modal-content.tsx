@@ -1,7 +1,7 @@
 import ProductUnavailable from "@/components/common/product/product-details/product-unavailable";
 import { Button } from "@/components/ui/buttons/button/button";
 import { CartAction, CartItem } from "@/context/cart/cart.reducer";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 

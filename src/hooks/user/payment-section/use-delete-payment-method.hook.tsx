@@ -24,7 +24,7 @@ const useDeletePaymentMethod = () =>
             }),
           }
         );
-        console.log("SAVE PAYMENT METHOD", response);
+
         return response.json();
       },
       onSuccess: () => {

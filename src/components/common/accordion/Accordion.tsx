@@ -1,6 +1,6 @@
 "use client";
 import Chevron from "@/assets/icons/chevron/Chevron";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 import { useCallback, useState } from "react";
 import React from "react";
 

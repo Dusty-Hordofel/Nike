@@ -56,6 +56,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         )}`
       ).then((res) => res.json()),
   });
+  console.log("🚀 ~ ProductPage ~ productQuery:", productQuery);
 
   const handleOpenModal = (context: string) => {
     setModalContext(context);
@@ -79,6 +80,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
       isLoading={productQuery.isLoading}
       isError={productQuery.isError}
       error={productQuery.error}
+      data={productQuery.data?.product}
       className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0"
     >
       <div className="min-h-screen">
@@ -93,7 +95,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         )}
 
         <ProductInformation
-          product={productQuery?.data?.product}
+          product={productQuery.data.product}
           selectedColor={selectedColor}
           selectedSize={selectedSize}
           setProductAddedToCart={setProductAddedToCart}

@@ -6,7 +6,7 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/common/utils";
 
 export interface FormInputFieldProps<T extends FieldValues>
   extends React.InputHTMLAttributes<HTMLInputElement> {
