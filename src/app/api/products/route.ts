@@ -1,13 +1,19 @@
 import { connectDB } from "@/config/database";
-import Category from "@/models/category.model";
-import Product from "@/models/product.model";
-import SubCategory from "@/models/subcategory.model";
+import {
+  brandService,
+  categoryService,
+  colorService,
+  productService,
+  sizeService,
+  subcategoryService,
+} from "@/services/server/mongodb";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
     await connectDB();
-    const products = await Product.find({}).sort({ createdAt: -1 }).lean();
+    const products = await productService.getProducts();
 
     if (!products) {
       return new NextResponse(
@@ -16,7 +22,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    let categories = await Category.find().lean();
+    let categories = await categoryService.getCategories();
 
     if (!categories) {
       return new NextResponse(
@@ -25,15 +31,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    console.log("🚀 ~ GET ~ categories:", categories);
-
-    let subCategories = await SubCategory.find()
-      .populate({
-        path: "parent",
-        model: Category,
-      })
-      .lean();
-    console.log("🚀 ~ GET ~ subCategories:", subCategories);
+    let subCategories = await subcategoryService.getSubCategories();
 
     if (!subCategories) {
       return new NextResponse(
@@ -42,8 +40,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const sizes = await Product.find().distinct("subProducts.sizes.size");
-    console.log("🚀 ~ GET ~ sizes:", sizes);
+    const sizes = await sizeService.getSizes();
 
     if (!sizes) {
       return new NextResponse(JSON.stringify({ message: "No sizes found" }), {
@@ -51,26 +48,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const colors = await Product.aggregate([
-      { $unwind: "$subProducts" }, // Détache chaque sous-produit dans le pipeline
-      { $unwind: "$subProducts.color" }, // Détache chaque couleur dans les sous-produits
-      {
-        $group: {
-          _id: {
-            name: "$subProducts.color.name",
-            hexCode: "$subProducts.color.hexCode",
-          },
-          color: { $first: "$subProducts.color" },
-        },
-      },
-      {
-        $replaceRoot: {
-          newRoot: "$color",
-        },
-      },
-    ]);
-
-    console.log("🚀 ~ GET ~ colors:COCO", colors);
+    const colors = await colorService.getColors();
 
     if (!colors) {
       return new NextResponse(JSON.stringify({ message: "No colors found" }), {
@@ -78,7 +56,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const brands = await Product.find().distinct("brand");
+    const brands = await brandService.getBrands();
+
     if (!brands) {
       return new NextResponse(JSON.stringify({ message: "No brands found" }), {
         status: 400,

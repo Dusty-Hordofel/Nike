@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 import Product from "@/models/product.model";
 import { ObjectId } from "mongodb";
-import { deleteImageFromCloudinary } from "@/services/admin/images.service";
+import { deleteImageFromCloudinary } from "@/services/client/admin/images.service";
 
 export const DELETE = auth(async (request: Request) => {
   const url = new URL(request.url);

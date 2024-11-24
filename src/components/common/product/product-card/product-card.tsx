@@ -12,7 +12,7 @@ import {
   usePrefetchAllProductVariants,
 } from "@/hooks/user/products/use-get-product.hook";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getProduct } from "@/services/user/products.service";
+import { getProduct } from "@/services/client/user/products.service";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { name, subProducts, slug } = product;

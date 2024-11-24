@@ -1,4 +1,4 @@
-import { getWishlistProducts } from "@/services/user/products.service";
+import { getWishlistProducts } from "@/services/client/user/products.service";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetProductsFromWishlist = (user?: {

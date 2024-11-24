@@ -3,7 +3,7 @@ import { connectDB } from "@/config/database";
 import slugify from "slugify";
 import Product from "@/models/product.model";
 import { ObjectId } from "mongodb";
-import { deleteImageFromCloudinary } from "@/services/admin/images.service";
+import { deleteImageFromCloudinary } from "@/services/client/admin/images.service";
 
 export const POST = auth(async (request: Request) => {
   try {

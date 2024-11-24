@@ -1,4 +1,4 @@
-import { addProductToWishlist } from "@/services/user/wishlist.service";
+import { addProductToWishlist } from "@/services/client/user/wishlist.service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useAddProductToWishlist = () => {

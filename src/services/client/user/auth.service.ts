@@ -1,6 +1,6 @@
-import { LoginFormData, LogInSchema } from "../../schemas/user/auth.schema";
+import { LoginFormData, LogInSchema } from "../../../schemas/user/auth.schema";
 import { isRedirectError } from "next/dist/client/components/redirect";
-import { RegisterFormData } from "../../schemas/user/auth.schema";
+import { RegisterFormData } from "../../../schemas/user/auth.schema";
 import { signIn } from "@/auth";
 async function logInWithCredentials(loginFormData: LoginFormData) {
   try {

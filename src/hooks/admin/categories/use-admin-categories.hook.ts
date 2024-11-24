@@ -3,7 +3,7 @@ import {
   deleteCategory,
   getCategories,
   updateCategory,
-} from "@/services/admin/categories.service";
+} from "@/services/client/admin/categories.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useAdminCreateCategory = () => {

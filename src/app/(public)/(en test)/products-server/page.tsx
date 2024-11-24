@@ -1,5 +1,5 @@
 //Mise en place de la récupération des produits côté server coté server
-import { getProducts } from "@/services/user/products.service";
+import { getProducts } from "@/services/client/user/products.service";
 import React, { Suspense } from "react";
 import ProductsList from "../../products/products-list";
 import Loader from "@/components/ui/loader";
