@@ -1282,6 +1282,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 99. Products
 
+### 100. Product
+
 <!--
 
 ### . Refactorisation de l'Api
