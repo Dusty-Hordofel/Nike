@@ -10,18 +10,20 @@ import React from "react";
 
 const FavouritesPage = () => {
   const user = useCurrentUser();
+  console.log("🚀 ~ FavouritesPage ~ user:", user);
   const router = useRouter();
 
   if (!user) router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`);
 
   const wishlistQuery = useGetProductsFromWishlist(user);
+  console.log("🚀 ~ FavouritesPage ~ wishlistQuery:", wishlistQuery);
 
   return (
     <QueryStatus
       isLoading={wishlistQuery.isLoading}
       isError={wishlistQuery.isError}
       error={wishlistQuery.error}
-      data={wishlistQuery.data?.product}
+      data={wishlistQuery.data}
       className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0 bg-white"
     >
       <>

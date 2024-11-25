@@ -1,89 +1,71 @@
 import { auth } from "@/auth";
 import { ObjectId } from "mongodb";
 import { connectDB } from "@/config/database";
-import Category from "@/models/category.model";
 import slugify from "slugify";
+import { categoryService } from "@/services/server/mongodb";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 
 export const POST = auth(async (request: any) => {
   try {
     const { name, image } = await request.json();
-    console.log("🚀 ~ image:IM", image);
+
     connectDB();
-    const category = await Category.findOne({ name });
+    const category = await categoryService.getCategoryByName(name);
 
     if (category) {
-      return Response.json(
-        {
-          success: false,
-          error: true,
-          message: `Category ${name} already exist, Try a different name.`,
-        },
-        { status: 400 }
+      return createErrorResponse(
+        null,
+        `Category ${name} already exist, Try a different name.`,
+        400
       );
     }
-
-    const newCategory = new Category({
+    await categoryService.createCategory({
       name,
       image: image || undefined,
       slug: slugify(name),
     });
-    await newCategory.save();
 
-    return Response.json(
-      {
-        success: true,
-        error: false,
-        message: `Category ${name} has been created successfully.`,
-      },
-      { status: 201 }
+    return createSuccessResponse(
+      null,
+      `Category ${name} has been created successfully.`,
+      201
     );
   } catch (error: any) {
-    return new Response(
-      JSON.stringify({ success: false, error: true, message: error.message }),
-      { status: 500 }
-    );
+    return createErrorResponse({}, error.message, 500);
   }
 });
 
 export const GET = auth(async () => {
   try {
     connectDB();
-    const categories = await Category.find({})
-      .sort({ updatedAt: -1 })
-      .select("-__v -createdAt -updatedAt");
+    const categories = await categoryService.getCategories();
 
     if (!categories) {
-      return Response.json(
+      return createErrorResponse(
         {
-          success: true,
-          error: false,
-          message: `No Categories found`,
           categories: [],
         },
-        { status: 200 }
+        "No Categories found",
+        200
       );
     }
 
-    return Response.json(
-      {
-        success: true,
-        error: false,
-        categories,
-      },
-      { status: 201 }
+    return createSuccessResponse(
+      { categories },
+      "category created successfully",
+      201
     );
   } catch (error: any) {
-    return new Response(
-      JSON.stringify({ success: false, error: true, message: error.message }),
-      { status: 500 }
-    );
+    return createErrorResponse(null, error.message, 500);
   }
 });
 
 export const PUT = auth(async (request: any) => {
   try {
     const { id, name, image } = await request.json();
-    console.log("🚀 ~ PUT ~ id:ID", id);
 
     if (!ObjectId.isValid(id)) {
       return new Response(
@@ -98,23 +80,15 @@ export const PUT = auth(async (request: any) => {
 
     connectDB();
 
-    await Category.findByIdAndUpdate(id, { name, image });
+    await categoryService.updateCategory(id, { name, image });
 
-    return Response.json(
-      {
-        success: true,
-        error: false,
-        message: "Category has been updated successfuly",
-      },
-      { status: 200 }
+    return createSuccessResponse(
+      null,
+      "Category has been updated successfuly",
+      200
     );
   } catch (error: any) {
-    return new Response(
-      JSON.stringify({ success: false, error: true, message: error.message }),
-      {
-        status: 500,
-      }
-    );
+    return createErrorResponse(null, error.message, 500);
   }
 });
 
@@ -123,48 +97,23 @@ export const DELETE = auth(async (request: any) => {
     const { id } = await request.json();
 
     if (!ObjectId.isValid(id)) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: true,
-          message: "Invalid MongoDB ID",
-        }),
-        { status: 400 }
-      );
+      return createErrorResponse(null, "Invalid MongoDB ID", 400);
     }
 
     await connectDB();
 
-    const deleteCategory = await Category.findByIdAndDelete(id);
+    const deleteCategory = await categoryService.deleteCategory(id);
 
     if (!deleteCategory) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: true,
-          message: `Category not found`,
-        }),
-        { status: 404 }
-      );
+      return createErrorResponse(null, "Category not found", 404);
     }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        error: false,
-        message: "Category has been deleted successfully",
-      }),
-      { status: 200 }
+    return createSuccessResponse(
+      null,
+      "Category has been deleted successfully",
+      200
     );
   } catch (error: any) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: true,
-        message: "An error occurred while deleting the category",
-        details: error.message,
-      }),
-      { status: 500 }
-    );
+    return createErrorResponse(null, error.message, 500);
   }
 });

@@ -1,7 +1,9 @@
 import { connectDB } from "@/config/database";
-import { productService } from "@/services/server/mongodb";
-import { subProductService } from "@/services/server/mongodb/subproduct.service";
-import { NextResponse } from "next/server";
+import { productService, subProductService } from "@/services/server/mongodb";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 
 export async function GET(
   request: Request,
@@ -16,10 +18,7 @@ export async function GET(
     let product = await productService.getProductBySlug(slug);
 
     if (!product) {
-      return NextResponse.json(
-        { message: "No products found" },
-        { status: 400 }
-      );
+      return createErrorResponse(null, "Product not found", 400);
     }
 
     const subProduct = await subProductService.getSubProduct(
@@ -56,16 +55,8 @@ export async function GET(
       quantity,
     };
 
-    return NextResponse.json(
-      { product: newProduct },
-      {
-        status: 200,
-      }
-    );
+    return createSuccessResponse({ product: newProduct });
   } catch (error: any) {
-    return NextResponse.json(
-      { error: true, success: false, message: error.message },
-      { status: 500 }
-    );
+    return createErrorResponse(null, error.message, 500);
   }
 }

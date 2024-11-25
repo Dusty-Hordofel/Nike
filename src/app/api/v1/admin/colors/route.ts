@@ -1,6 +1,10 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 import Color from "@/models/color.model";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 
 const colors = [
   { name: "Noir", hexCode: "#000000" },
@@ -17,40 +21,32 @@ const colors = [
 
 export const GET = auth(async () => {
   try {
-    // Connexion à la base de données
     connectDB();
 
-    // Obtenir les couleurs existantes dans la base de données
     const existingColors = await Color.find({
       hexCode: { $in: colors.map((color) => color.hexCode) },
     });
 
-    // Filtrer les couleurs déjà présentes
     const existingHexCodes = existingColors.map((color) => color.hexCode);
     const newColors = colors.filter(
       (color) => !existingHexCodes.includes(color.hexCode)
     );
 
-    // Insérer les nouvelles couleurs
     if (newColors.length > 0) {
       const insertedColors = await Color.insertMany(newColors, {
         ordered: false,
       });
-      return Response.json(
-        {
-          message: "Nouvelles couleurs insérées avec succès",
-          insertedColors,
-        },
-        { status: 200 }
+
+      return createSuccessResponse(
+        { insertedColors },
+        "New colors successfully inserted",
+        200
       );
     } else {
-      return Response.json(
-        { message: "Toutes les couleurs existent déjà." },
-        { status: 200 }
-      );
+      return createErrorResponse(null, "All the colors already exist.", 409);
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Erreur lors de l'insertion des couleurs :", error);
-    return Response.json({ message: "Erreur serveur", error }, { status: 500 });
+    return createErrorResponse(null, error.message, 500);
   }
 });
