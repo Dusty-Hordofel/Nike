@@ -54,11 +54,14 @@ export const POST = async (
   }
 };
 
-export const GET = async ({
-  params: { userId },
-}: {
-  params: { userId: string };
-}) => {
+export const GET = async (
+  request: Request,
+  {
+    params: { userId },
+  }: {
+    params: { userId: string };
+  }
+) => {
   try {
     await connectDB();
 
