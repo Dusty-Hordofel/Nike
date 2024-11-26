@@ -7,6 +7,7 @@ import {
   createErrorResponse,
   createSuccessResponse,
 } from "@/utils/api-response.utils";
+import { NextRequest } from "next/server";
 
 export const GET = auth(async (req) => {
   // console.log("🚀 ~ GET ~ req:", req.auth?.user._id);
@@ -37,11 +38,10 @@ export const GET = auth(async (req) => {
   }
 });
 
-export async function POST({
-  params: { userId },
-}: {
-  params: { userId: string };
-}) {
+export async function POST(
+  req: NextRequest,
+  { params: { userId } }: { params: { userId: string } }
+) {
   try {
     if (!isValidObjectId(userId)) {
       return createErrorResponse(null, "unauthorized", 401);
