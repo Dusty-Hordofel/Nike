@@ -1286,12 +1286,6 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 101. Categories ,category, favourites,colors ...
 
-<!--
-
-### . Refactorisation de l'Api
-
- -->
-
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)
