@@ -7,7 +7,7 @@ import {
   useAdminCreateProduct,
   useAdminUpdateProduct,
 } from "@/hooks/admin/products/use-admin-products.hook";
-import { deleteImageFromCloudinary } from "@/services/admin/images.service";
+import { deleteImageFromCloudinary } from "@/services/client/admin/images.service";
 import {
   ProductFormData,
   ProductSchema,

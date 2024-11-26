@@ -1,4 +1,4 @@
-import { getProduct } from "@/services/user/products.service";
+import { getProduct } from "@/services/client/user/products.service";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetProduct = (slug: string, color: string) => {

@@ -1,7 +1,9 @@
-import { SubProduct } from "@/@types/admin/admin.products.interface";
 import { connectDB } from "@/config/database";
-import Product from "@/models/product.model";
-import { NextRequest, NextResponse } from "next/server";
+import { productService, subProductService } from "@/services/server/mongodb";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 
 export async function GET(
   request: Request,
@@ -13,42 +15,26 @@ export async function GET(
 
   try {
     await connectDB();
-    let product = await Product.findOne({ slug });
+    let product = await productService.getProductBySlug(slug);
 
     if (!product) {
-      return NextResponse.json(
-        { message: "No products found" },
-        { status: 400 }
-      );
+      return createErrorResponse(null, "Product not found", 400);
     }
 
-    const subProduct = product.subProducts.find(
-      (subProduct: SubProduct) =>
-        subProduct.color.name.toLocaleLowerCase() === selectedColor
+    const subProduct = await subProductService.getSubProduct(
+      product,
+      selectedColor as string
     );
-    console.log("🚀 ~ subProduct:SUBO", subProduct);
 
-    // priceAfterDiscount
     const priceAfterDiscount =
-      subProduct.discount > 0
-        ? (subProduct.price - subProduct.price / subProduct.discount).toFixed(2)
-        : subProduct.price;
+      subProductService.getPriceAfterDiscount(subProduct);
 
-    // priceBeforeDiscount
-    const priceBeforeDiscount = subProduct.price;
+    const priceBeforeDiscount =
+      subProductService.getPriceBeforeDiscount(subProduct);
 
-    // quantity
-    const quantity = selectedSize
-      ? subProduct.sizes.find(
-          (item: { size: string; qty: number; _id: string }) =>
-            item.size.toLocaleLowerCase() === selectedSize
-        ).qty
-      : subProduct.sizes[0].qty;
+    const quantity = subProductService.getQuantity(subProduct, selectedSize);
 
-    // colors
-    const colors = product.subProducts.map(
-      (subProduct: SubProduct) => subProduct.color
-    );
+    const colors = subProductService.getColors(product);
 
     const newProduct = {
       _id: product._id,
@@ -69,16 +55,8 @@ export async function GET(
       quantity,
     };
 
-    return NextResponse.json(
-      { product: newProduct },
-      {
-        status: 200,
-      }
-    );
+    return createSuccessResponse({ product: newProduct });
   } catch (error: any) {
-    return NextResponse.json(
-      { error: true, success: false, message: error.message },
-      { status: 500 }
-    );
+    return createErrorResponse(null, error.message, 500);
   }
 }

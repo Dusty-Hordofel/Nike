@@ -1278,6 +1278,14 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 98. Disable footer and navbar on pages dedicated to authentication
 
+## Section 6: API refactoring
+
+### 99. Products
+
+### 100. Product
+
+### 101. Categories ,category, favourites,colors ...
+
 <!--
 
 ### . Refactorisation de l'Api

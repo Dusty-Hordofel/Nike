@@ -5,8 +5,8 @@ import {
   adminUpdateProduct,
   adminDeleteProduct,
   adminDeleteProductVariant,
-} from "@/services/admin/products.service";
-import { getProducts } from "@/services/user/products.service";
+} from "@/services/client/admin/products.service";
+import { getProducts } from "@/services/client/user/products.service";
 
 const useAdminCreateProduct = () => {
   const queryClient = useQueryClient();
