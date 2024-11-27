@@ -6,6 +6,7 @@ import { menuLinks } from "@/assets/data/menu-links";
 import Link from "next/link";
 import { useCart } from "@/context/cart/cart.context";
 import { CartState } from "@/context/cart/cart.reducer";
+import { usePathname } from "next/navigation";
 
 interface MobileNavbarProps {
   cartState: CartState;
@@ -22,10 +23,10 @@ const MobileNavbar = ({ cartState }: MobileNavbarProps) => {
         </div>
         <div className="flex gap-x-3">
           <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/products`}>
-            All Products
+            Products
           </Link>
           <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/products`}>
-            Admin Panel
+            Dashboard
           </Link>
         </div>
 
