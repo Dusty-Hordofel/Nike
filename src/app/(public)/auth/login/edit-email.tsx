@@ -23,7 +23,7 @@ const EditEmail = ({ formCurrentStep, email, setFormCurrentStep }: Props) => {
         className="text-gray-500 underline"
         onClick={() => setFormCurrentStep(1)}
       >
-        Modifier
+        Edit
       </button>
     </div>
   );

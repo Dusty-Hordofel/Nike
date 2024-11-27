@@ -21,7 +21,7 @@ const UserSelectCountry = () => {
           htmlFor="country"
           className="underline inline-block text-gray-500"
         >
-          Modifier
+          Edit
         </label>
         <select
           name="country"

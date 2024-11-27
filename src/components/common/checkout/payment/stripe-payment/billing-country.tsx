@@ -8,13 +8,10 @@ interface PaymentHeaderProps {
 
 const BillingCountry: React.FC<PaymentHeaderProps> = ({ country, onEdit }) => {
   return (
-    <div className="bg-green-200">
-      <h3 className="bg-blue-100 flex items-center">
-        Pays/région de facturation
-        <span
-          id="billingCountryTipWrapper"
-          className="flex bg-blue-300 items-center"
-        >
+    <div>
+      <h3 className=" flex items-center">
+        Billing Country/Region
+        <span id="billingCountryTipWrapper" className="flex  items-center">
           <button
             className="d-sm-ib css-9a7n2d"
             id="billingCountryTip"
@@ -44,8 +41,8 @@ const BillingCountry: React.FC<PaymentHeaderProps> = ({ country, onEdit }) => {
               hidden={true}
             >
               <p className="">
-                Cela correspond au pays/à la région où ton mode de paiement est
-                enregistré.
+                This corresponds to the country/region where your payment method
+                is registered.
               </p>
             </div>
           </button>
@@ -55,13 +52,13 @@ const BillingCountry: React.FC<PaymentHeaderProps> = ({ country, onEdit }) => {
         <span className="mr1-sm css-zjxnbk flex">
           {country}
           <button
-            aria-label="Modifier"
+            aria-label="Edit"
             className="ml-4 bg-yellow-100"
             type="button"
             id="billingCountryEditButton"
             onClick={onEdit}
           >
-            Modifier<span className="ripple"></span>
+            Edit
           </button>
         </span>
       </div>

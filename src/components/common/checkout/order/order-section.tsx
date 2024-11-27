@@ -32,7 +32,7 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
             shippingAddress:
               deliveryAddress.activeDeliveryAddress.activeAddress,
             paymentMethod: "credit card",
-            total: cart.data.cart.cartTotal, //a modifier
+            total: cart.data.cart.cartTotal, //to Edit
             totalBeforeDiscount: cart.data.cart.cartTotal,
             couponApplied: "LOUBAR",
           }),
@@ -66,8 +66,8 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
   return (
     <>
       <section className="order-summary">
-        <span className="sr-only">Paiement Étape 3 sur 3 Étape en cours</span>
-        <CheckoutHeader title="Récapitulatif de la commande" />
+        <span className="sr-only">Payment Step 3 of 3 Step in progress</span>
+        <CheckoutHeader title="Order Review" />
         <div className="hidden lg:block">
           <LegalNotice />
         </div>
@@ -85,7 +85,7 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
             fullWidth
             onClick={handleCreateOrder}
           >
-            Soumettre le paiement<span className="ripple"></span>
+            Submit payment
           </Button>
         </div>
       </section>

@@ -1,10 +1,9 @@
 "use client";
 
 import React, { Dispatch, SetStateAction } from "react";
-// import DeliveryAddress from "./delivery-address";
 import ActiveDeliveryAddress from "./active-delivery-address";
-import DeliveryAddress from "./delivery-address";
 import DeliveryAddresses from "./delivery-addresses";
+import { UseFormReset } from "react-hook-form";
 
 interface DeliveryAddressSummaryProps {
   activeDeliveryAddress: any;
@@ -15,6 +14,18 @@ interface DeliveryAddressSummaryProps {
   handleSetActiveAddress: any;
   handleAddNewAddress: () => void;
   onActiveSection: Dispatch<SetStateAction<"address" | "payment" | "summary">>;
+  reset: UseFormReset<{
+    address: string;
+    lastName: string;
+    firstName: string;
+    city: string;
+    postalCode: string;
+    email: string;
+    phoneNumber: string;
+    country: string;
+    _id?: string | undefined;
+    companyInfo?: string | undefined;
+  }>;
 }
 
 const DeliveryAddressSummary = ({
@@ -26,6 +37,7 @@ const DeliveryAddressSummary = ({
   onActiveSection,
   handleAddNewAddress,
   handleSetActiveAddress,
+  reset,
 }: DeliveryAddressSummaryProps) => {
   const {
     activeAddress: {
@@ -49,16 +61,18 @@ const DeliveryAddressSummary = ({
   };
 
   return (
-    <div className={`${deliveryStep === 2 ? "py-5" : "pt-5"} bg-warning px-5`}>
+    <div className={`${deliveryStep === 2 ? "py-5" : "pt-5"} px-5`}>
       <div data-attr="shippingPreviewContainer">
         <div
           className={`${deliveryStep === 3 && "mb-4"}`}
           data-attr="addressPreview"
         >
           <h3
-            className={`shippingContainer ${deliveryStep === 3 ? "block text-black-200" : "hidden"}`}
+            className={`shippingContainer ${
+              deliveryStep === 3 ? "block text-black-200" : "hidden"
+            }`}
           >
-            Adresse de livraison
+            Shipping Address
           </h3>
           <div className="space-y-2">
             {deliveryStep === 2 && (
@@ -69,6 +83,7 @@ const DeliveryAddressSummary = ({
                 onDeliveryStep={onDeliveryStep}
                 onActiveSection={onActiveSection}
                 onAddressId={onAddressId}
+                reset={reset}
               />
             )}
             {deliveryStep === 3 && (
@@ -93,8 +108,7 @@ const DeliveryAddressSummary = ({
             type="button"
             onClick={handleAddNewAddress}
           >
-            {" "}
-            Ajouter une nouvelle adresse<span className="ripple"></span>
+            Add a new address
           </button>
         </div>
       )}

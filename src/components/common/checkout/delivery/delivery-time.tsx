@@ -3,7 +3,7 @@ import React from "react";
 
 const DeliveryTime = ({ deliveryStep }: { deliveryStep: number | null }) => {
   return (
-    <div className=" bg-orange  pt-2 px-5 mb-5">
+    <div className=" bg-white  pt-2 px-5 mb-5">
       <div className={`flex mr-1 ${deliveryStep === 2 ? "mb-4" : ""} `}>
         <h3 className="text-black-200">
           {deliveryStep === 3

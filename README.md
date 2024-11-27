@@ -1286,6 +1286,10 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 101. Categories ,category, favourites,colors ...
 
+### 102. Address, Checkout ...
+
+<!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
+
 ## External Links
 
 - 🔗 [Nextjs](https://nextjs.org/docs/getting-started/installation)

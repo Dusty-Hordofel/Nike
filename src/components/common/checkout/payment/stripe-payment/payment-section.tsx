@@ -2,7 +2,6 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
 import "./input.css";
 import CheckoutSectionTitle from "@/components/common/checkout/checkout-section-title";
-import Loader from "../../../../ui/loader";
 import {
   useActivePaymentMethod,
   useChangeActivePaymentMethod,
@@ -20,6 +19,7 @@ import {
 } from "./index";
 import { useDeliveryContext } from "@/hooks/user/checkout/use-delivery-context.hook";
 import { usePaymentContext } from "@/hooks/user/checkout/use-payment-context.hook";
+import Loader from "@/components/ui/loader";
 
 export default function PaymentSection({
   deliveryAddress,
@@ -72,7 +72,7 @@ export default function PaymentSection({
   )
     return (
       <section>
-        <span className="sr-only">Paiement Étape 2 sur 3 Étape terminée</span>
+        <span className="sr-only">Payment Step 2 of 3 Step completed</span>
         <CheckoutSectionTitle
           title="Paiement"
           isComplete={
@@ -81,7 +81,7 @@ export default function PaymentSection({
           onChangeStep={() => setPaymentStep(2)}
         />
 
-        <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
+        <div className="h-[184px]  w-full flex justify-center items-center">
           <Loader />
         </div>
       </section>
@@ -98,8 +98,8 @@ export default function PaymentSection({
   };
 
   const handleEditClick = () => {
-    // Logique pour la modification du pays/région
-    console.log("Modifier le pays/région");
+    // Logic for country/region modification
+    console.log("Change country/region");
   };
 
   const handleChangeActivePaymentMethod = async (
@@ -112,9 +112,9 @@ export default function PaymentSection({
 
   return (
     <section>
-      <span className="sr-only">Paiement Étape 2 sur 3 Étape en cours</span>
+      <span className="sr-only">Payment Step 2 of 3 Step in progress</span>
       <CheckoutSectionTitle
-        title="Paiement"
+        title="Payment"
         isComplete={
           paymentStep === 3 && activePaymentMethod.data.success ? true : false
         }
@@ -150,7 +150,7 @@ export default function PaymentSection({
               } rounded-md`}
             >
               <div className="ncss-col-sm-6 va-sm-b mb-4 px-2">
-                <h3 className="css-5oevkg font-medium">Ajouter une carte</h3>
+                <h3 className="css-5oevkg font-medium">Add Card</h3>
               </div>
               <StripePayment
                 total="33"
@@ -170,9 +170,7 @@ export default function PaymentSection({
         )}
 
         {paymentStep === 3 && (
-          <div
-            className={`${paymentStep === 3 ? "py-5" : "pt-5"} bg-warning px-5`}
-          >
+          <div className={`${paymentStep === 3 ? "py-5" : "pt-5"} px-5`}>
             <div data-attr="shippingPreviewContainer">
               <div
                 className={`${paymentStep === 3 && "mb-4"}`}
@@ -190,7 +188,7 @@ export default function PaymentSection({
                     paymentStep === 3 ? "block text-black-200" : "hidden"
                   }`}
                 >
-                  Informations de facturation
+                  Billing information
                 </h3>
                 <BillingAddress
                   paymentStep={paymentStep}
@@ -214,9 +212,7 @@ export default function PaymentSection({
                 paymentStep === 2 ? () => setPaymentStep(3) : handleSubmit
               }
             >
-              {loading
-                ? "Processing..."
-                : "Continuer pour voir le récapitulatif de la commande"}
+              {loading ? "Processing..." : "Continue To Order Review"}
             </button>
           </div>
         )}
