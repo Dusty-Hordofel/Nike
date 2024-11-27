@@ -111,7 +111,7 @@ export default function PaymentSection({
   };
 
   return (
-    <section>
+    <section className="mb-5">
       <span className="sr-only">Payment Step 2 of 3 Step in progress</span>
       <CheckoutSectionTitle
         title="Payment"
@@ -217,6 +217,7 @@ export default function PaymentSection({
           </div>
         )}
       </div>
+      <div className="border-b border-gray-200 mx-5"></div>
     </section>
   );
 }

@@ -24,7 +24,7 @@ const NavLinks = ({ menuLinks }: NavLinksProps) => {
               className="h-16 px-3 flex items-center justify-center"
               key={index}
             >
-              <NavLink name={name} submenu={submenu} />
+              <NavLink name={name} submenu={submenu} sublinks={sublinks} />
             </li>
           </>
         );

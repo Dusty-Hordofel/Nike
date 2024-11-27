@@ -64,7 +64,7 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
   };
 
   return (
-    <>
+    <section className="mb-5 bg-white">
       <section className="order-summary">
         <span className="sr-only">Payment Step 3 of 3 Step in progress</span>
         <CheckoutHeader title="Order Review" />
@@ -100,7 +100,8 @@ const OrderSection = ({ cart, deliveryAddress }: any) => {
           <p className="mb-4">{resultModalContent.message}</p>
         </Modal>
       )}
-    </>
+      <div className="border-b border-gray-200 mx-5"></div>
+    </section>
   );
 };
 

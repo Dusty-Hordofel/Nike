@@ -31,6 +31,20 @@ export const menuLinks = [
       },
     ],
   },
+  {
+    name: "Admin Panel",
+    submenu: true,
+    sublinks: [
+      {
+        Head: "Admin Panel",
+        sublink: [
+          { name: "See all products", link: "/admin/products" },
+          { name: "See all products for men", link: "/admin/products" },
+          { name: "See all products for women", link: "/admin/products" },
+        ],
+      },
+    ],
+  },
   // {
   //   name: "Nouveautés du moment",
   //   // name: "Nouveautés et articles du moment",

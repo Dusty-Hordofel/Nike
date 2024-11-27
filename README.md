@@ -1288,6 +1288,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 102. Address, Checkout ...
 
+### 103. Show Admin Panel
+
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
 ## External Links

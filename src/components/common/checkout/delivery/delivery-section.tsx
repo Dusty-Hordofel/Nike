@@ -164,10 +164,8 @@ const DeliverySection = ({
   )
     return <p>Error...</p>;
 
-  // console.log("🚀 ~ DeliverySection2 ~ setDeliveryStep:DEV STEP", deliveryStep);
-
   return (
-    <section>
+    <section className="mb-5">
       <span className="sr-only">
         Delivery options Step 1 of 3 Step completed
       </span>
@@ -234,6 +232,7 @@ const DeliverySection = ({
           Continue to Payment
         </Button>
       </div>
+      <div className="border-b border-gray-200 mx-5"></div>
     </section>
   );
 };
