@@ -18,7 +18,7 @@ interface ItemLink {
 
 export const menuLinks = [
   {
-    name: "All Products",
+    name: "Products",
     submenu: true,
     sublinks: [
       {
@@ -32,7 +32,7 @@ export const menuLinks = [
     ],
   },
   {
-    name: "Admin Panel",
+    name: "Dashboard",
     submenu: true,
     sublinks: [
       {

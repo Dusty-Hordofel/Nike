@@ -9,69 +9,96 @@ import {
 } from "lucide-react";
 
 export const adminNavLinksData = [
-  {
-    name: "Dashboard",
-    href: "/admin/dashboard",
-  },
+  // {
+  //   name: "Dashboard",
+  //   href: "/admin/dashboard",
+  // },
   {
     name: "Products",
     href: "/admin/products",
+    isActiveLink: true,
   },
   {
     name: "Categories",
     href: "/admin/categories",
+    isActiveLink: true,
   },
   {
     name: "Subcategories",
     href: "/admin/subcategories",
+    isActiveLink: true,
   },
   {
     name: "Orders",
-    href: "/admin/orders",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/orders",
   },
   {
     name: "Payments",
-    href: "/admin/payments",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/payments",
   },
   {
     name: "Customers",
-    href: "/admin/customers",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/customers",
   },
 
   {
     name: "Marketing",
-    href: "/admin/marketing",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/marketing",
   },
   {
     name: "Discount",
-    href: "/admin/discount",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/discount",
   },
   {
     name: "Shipping",
-    href: "/admin/shipping",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/shipping",
   },
   {
     name: "Inventory",
-    href: "/admin/inventory",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/inventory",
   },
   {
     name: "Media Library",
-    href: "/admin/media-library",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/media-library",
   },
   {
     name: "Settings",
-    href: "/admin/settings",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/settings",
   },
   {
     name: "Help",
-    href: "/admin/help",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/help",
   },
   {
     name: "Security",
-    href: "/admin/security",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/security",
   },
   {
     name: "Notifications",
-    href: "/admin/center/notifications",
+    href: "#",
+    isActiveLink: false,
+    // href: "/admin/center/notifications",
   },
 ];
