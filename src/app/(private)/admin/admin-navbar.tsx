@@ -28,11 +28,11 @@ export const AdminDesktopNavbar = ({ navLinks }: { navLinks: NavLink[] }) => {
     <header className="my-12">
       <nav>
         <div className="flex flex-col w-full overflow-hidden ">
-          <div className="flex self-end">
+          {/* <div className="flex self-end">
             <ArrowButton direction="left" />
             <ArrowButton />
-          </div>
-          <div className="flex bg-success h-16 items-center gap-x-4">
+          </div> */}
+          <div className="flex  h-16 items-center gap-x-4">
             <div className="w-1/4 mr-4">
               <h1 className="text-2xl font-medium">
                 {activePage.slice(0, 1).toUpperCase() + activePage.slice(1)}
@@ -40,7 +40,7 @@ export const AdminDesktopNavbar = ({ navLinks }: { navLinks: NavLink[] }) => {
             </div>
             <NavbarLinks navLinks={navLinks} pathname={pathname} />
           </div>
-          {/* <br /> */}
+
           <hr />
         </div>
       </nav>
@@ -56,7 +56,7 @@ const NavbarLinks = ({
   pathname: string;
 }) => {
   return (
-    <ul className="flex items-centergap-x-4 bg-warning overflow-x-scroll">
+    <ul className="flex items-centergap-x-4  overflow-x-scroll">
       {navLinks.map((navLink, index) => (
         <NavBarLink key={index} link={navLink} pathname={pathname} />
       ))}

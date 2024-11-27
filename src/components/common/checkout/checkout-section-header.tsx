@@ -7,15 +7,18 @@ type CheckoutSectionHeaderProps = {
   step: number | null;
 };
 
-const CheckoutSectionHeader = ({ title, step }: CheckoutSectionHeaderProps) => {
+const CheckoutSectionHeader = ({
+  title = "Options de livraison",
+  step,
+}: CheckoutSectionHeaderProps) => {
   return (
     <section>
       <span className="sr-only">
         {title} Étape {step} sur 3 Étape terminée
       </span>
-      <CheckoutSectionTitle title="Options de livraison" />
+      <CheckoutSectionTitle title={title} />
 
-      <div className="h-[184px] bg-green-100 w-full flex justify-center items-center">
+      <div className="h-[184px] w-full flex justify-center items-center">
         <Loader />
       </div>
     </section>

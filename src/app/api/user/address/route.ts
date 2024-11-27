@@ -1,20 +1,17 @@
 import User from "@/models/user.model";
-import { NextResponse } from "next/server";
-
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 
 // we can use PUT to update  address  and POST to add address
 export const POST = auth(async (req) => {
   const newAddress = await req.json();
 
   if (!req.auth) {
-    return Response.json(
-      { error: true, message: "unauthorized" },
-      {
-        status: 401,
-      }
-    );
+    return createErrorResponse(null, "unauthorized", 401);
   }
 
   try {
@@ -25,16 +22,10 @@ export const POST = auth(async (req) => {
     });
 
     if (!dbUser) {
-      return new NextResponse(
-        JSON.stringify({
-          error: true,
-          message: "Unauthorized User",
-        }),
-        { status: 400 }
-      );
+      return createErrorResponse(null, "Unauthorized User", 401);
     }
 
-    // Désactiver toutes les adresses actives
+    // Disable all active addresses
     for (const address of dbUser.addresses) {
       if (address.active) {
         address.active = false;
@@ -48,15 +39,10 @@ export const POST = auth(async (req) => {
       });
       await dbUser.save();
 
-      return Response.json(
-        {
-          error: false,
-          success: true,
-          message: "New address successfully added ",
-        },
-        {
-          status: 201,
-        }
+      return createSuccessResponse(
+        null,
+        "New address successfully added ",
+        201
       );
     } else {
       // Adresse existante à mettre à jour
@@ -68,47 +54,24 @@ export const POST = auth(async (req) => {
         });
 
         await dbUser.save();
-        return Response.json(
-          {
-            error: false,
-            success: true,
-            message: "address successfully updated ",
-          },
-          {
-            status: 201,
-          }
+
+        return createSuccessResponse(
+          null,
+          "address successfully updated ",
+          201
         );
       } else {
-        return Response.json(
-          {
-            error: true,
-            success: false,
-            message: "Address not found",
-          },
-          {
-            status: 401,
-          }
-        );
+        return createErrorResponse(null, "Address not found", 401);
       }
     }
   } catch (error: any) {
-    return Response.json(
-      { message: error.message },
-      {
-        status: 500,
-      }
-    );
+    return createErrorResponse({}, error.message, 500);
   }
 });
 
 export const GET = auth(async (req) => {
   if (!req.auth) {
-    return Response.json(
-      { error: true, message: "unauthorized" },
-      {
-        status: 401,
-      }
-    );
+    return createErrorResponse(null, "unauthorized", 401);
   }
 
   try {
@@ -119,34 +82,13 @@ export const GET = auth(async (req) => {
     });
 
     if (!dbUser) {
-      return new NextResponse(
-        JSON.stringify({
-          error: true,
-          message: "Unauthorized User",
-        }),
-        { status: 400 }
-      );
+      return createErrorResponse({}, "Unauthorized User", 400);
     }
 
     const userAddresses = dbUser.addresses;
-    console.log("🚀 ~ GET ~ userAddresses:", userAddresses);
 
-    return Response.json(
-      {
-        error: false,
-        success: true,
-        addresses: userAddresses,
-      },
-      {
-        status: 200,
-      }
-    );
+    return createSuccessResponse({ addresses: userAddresses }, "", 200);
   } catch (error: any) {
-    return Response.json(
-      { message: error.message },
-      {
-        status: 500,
-      }
-    );
+    return createErrorResponse({}, error.message, 500);
   }
 });

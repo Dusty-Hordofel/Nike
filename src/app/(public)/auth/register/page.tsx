@@ -113,14 +113,14 @@ const SignUp = () => {
           ariaLabel="Enter your email to join us or sign in."
         />
         <div className={cn("text-black-100 pb-6")}>
-          Nous avons envoyé un code à
+          We sent a code to
           <div>
             <span className="pr-[5px]">{email}</span>
             <button
               className="text-gray-500 underline"
               onClick={() => router.push(`/login?email=${email}`)}
             >
-              Modifier
+              Edit
             </button>
           </div>
         </div>

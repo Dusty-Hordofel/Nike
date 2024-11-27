@@ -42,6 +42,7 @@ const DeliverySection = ({
   const [refresh, setRefresh] = useState(false);
   const [addingNewAddress, setAddingNewAddress] = useState(false);
   const [addressId, setAddressId] = useState<string | undefined>();
+  console.log("🚀 ~ addressId:", addressId);
 
   const [selectedMode, setSelectedMode] = useState<DeliveryMode>(
     DeliveryMode.Shipping
@@ -163,15 +164,13 @@ const DeliverySection = ({
   )
     return <p>Error...</p>;
 
-  // console.log("🚀 ~ DeliverySection2 ~ setDeliveryStep:DEV STEP", deliveryStep);
-
   return (
-    <section>
+    <section className="mb-5">
       <span className="sr-only">
-        Options de livraison Étape 1 sur 3 Étape terminée
+        Delivery options Step 1 of 3 Step completed
       </span>
       <CheckoutHeader
-        title="Options de livraison"
+        title="Delivery Options"
         isComplete={
           deliveryStep === 3 && deliveryAddress.activeDeliveryAddress?.success
             ? true
@@ -198,13 +197,14 @@ const DeliverySection = ({
                 onActiveSection={setCurrentCheckoutSection}
                 handleAddNewAddress={handleAddNewAddress}
                 handleSetActiveAddress={handleSetActiveAddress}
+                reset={reset}
               />
             </>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="p-5">
               <DeliveryFormElements register={register} errors={errors} />
               <div className="mt-10 flex justify-end">
-                <Button isLoading={false}>Enregistrer et continuer</Button>
+                <Button isLoading={false}>Save & Continue</Button>
               </div>
             </form>
           )}
@@ -229,9 +229,10 @@ const DeliverySection = ({
             });
           }}
         >
-          Passer au paiement
+          Continue to Payment
         </Button>
       </div>
+      <div className="border-b border-gray-200 mx-5"></div>
     </section>
   );
 };

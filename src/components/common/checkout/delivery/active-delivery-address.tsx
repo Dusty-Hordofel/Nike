@@ -10,7 +10,7 @@ const ActiveDeliveryAddress = ({
   phoneNumber,
 }: any) => {
   return (
-    <section className="text-gray-500  border-black-200 py-1  bg-blue-100 relative ">
+    <section className="text-gray-500  border-black-200 py-1  relative ">
       <div className="css-7ym3jb">
         <p data-attr="address-preview-fullName">
           {lastName} {firstName}

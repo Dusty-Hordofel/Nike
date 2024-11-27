@@ -20,9 +20,12 @@ const MobileNavbar = ({ cartState }: MobileNavbarProps) => {
             <NikeIcon className="cursor-pointer hover:opacity-70 w-[60px] h-[60px]  scale-125 " />
           </Link>
         </div>
-        <div>
+        <div className="flex gap-x-3">
           <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/products`}>
             All Products
+          </Link>
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/products`}>
+            Admin Panel
           </Link>
         </div>
 

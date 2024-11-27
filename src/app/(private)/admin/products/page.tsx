@@ -12,8 +12,11 @@ import {
 import QueryStatus from "@/components/ui/query-status";
 import ProductFormProvider from "@/app/(private)/admin/products/components/form-provider";
 import useProductForm from "@/hooks/admin/products/use-product-form.hook";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 
 const ProductPage = () => {
+  const user = useCurrentUser();
+
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const categories = useAdminGetCategories();
@@ -119,6 +122,12 @@ const ProductPage = () => {
                   aria-label="Remove"
                   name="remove-item-button"
                   onClick={async (e) => {
+                    if (!user) {
+                      alert(
+                        "You must be authenticated and have admin privileges to perform this CRUD operation."
+                      );
+                      return;
+                    }
                     e.stopPropagation();
                     handleDeleteProduct(product._id);
                   }}

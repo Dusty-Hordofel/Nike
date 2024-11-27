@@ -1,6 +1,10 @@
 import { auth } from "@/auth";
 import { connectDB } from "@/config/database";
 import Order from "@/models/order.model";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 import { NextResponse } from "next/server";
 
 import Stripe from "stripe";
@@ -33,8 +37,8 @@ export const POST = auth(async (request: Request) => {
   } = await request.json();
 
   try {
-    return Response.json({ success: true, error: false });
-  } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    return createSuccessResponse(null, "", 200);
+  } catch (error: any) {
+    return createErrorResponse(null, error.message, 500);
   }
 });
