@@ -1294,6 +1294,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 105. Dashboard 2
 
+### 106. Disclaimer
+
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
 ## External Links
