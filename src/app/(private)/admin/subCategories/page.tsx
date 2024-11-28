@@ -12,9 +12,10 @@ import CreateSubCategory from "@/components/common/subproduct/create-subcategory
 const SubCategoriesPage = () => {
   const router = useRouter();
   const user = useCurrentUser();
+  console.log("🚀 ~ SubCategoriesPage ~ user:", user);
   const pathname = usePathname();
 
-  const activePage = pathname.split("/")[2] || "";
+  // const activePage = pathname.split("/")[2] || "";
   // const entity = activeEntity(activePage);
 
   // function activeEntity(activePage: string) {
@@ -30,9 +31,9 @@ const SubCategoriesPage = () => {
   //   }
   // }
 
-  if (!user /*&& userRole !== "user"*/) {
-    router.push(`${window.location.origin}` || "/");
-  }
+  // if (!user /*&& userRole !== "user"*/) {
+  //   router.push(`${window.location.origin}` || "/");
+  // }
 
   const {
     handleDeleteCategory,
@@ -69,6 +70,7 @@ const SubCategoriesPage = () => {
               fileInputRef={fileInputRef}
               options={categories.data}
               formMode={formMode}
+              user={user}
             />
           </Modal>
         </SubcategoryFormProvider>

@@ -11,8 +11,8 @@ import CategoryFormProvider from "@/app/(private)/admin/categories/components/fo
 import useCategoryForm from "@/hooks/admin/categories/use-category-form.hook";
 
 const CategoriesPage = () => {
-  const router = useRouter();
   const user = useCurrentUser();
+  console.log("🚀 ~ CategoriesPage ~ user:CATO GOGO", user);
 
   const pathname = usePathname();
 
@@ -31,9 +31,9 @@ const CategoriesPage = () => {
     }
   }
 
-  if (!user /*&& userRole !== "user"*/) {
-    router.push(`${window.location.origin}` || "/");
-  }
+  // if (!user /*&& userRole !== "user"*/) {
+  //   router.push(`${window.location.origin}` || "/");
+  // }
 
   const { isResultModalOpen, resultModalContent, isModalOpen, formMode } =
     useModal();

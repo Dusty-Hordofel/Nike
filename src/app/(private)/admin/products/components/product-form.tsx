@@ -36,10 +36,7 @@ const PoductForm = ({
   });
 
   const productType = watch("productType") as string;
-
   const deleteProductVariant = useAdminDeleteProductVariant();
-  console.log("🚀 ~ deleteProductVariant:", deleteProductVariant);
-  // await deleteProduct.mutateAsync({ id });
 
   const brands = [
     "Nike Sportswear",
@@ -283,13 +280,6 @@ const PoductForm = ({
                 <div
                   key={field.id}
                   className="space-y-4 border rounded-md p-4"
-                  // onClick={async () => {
-                  //   console.log("INDEX", index, entityToEdit._id);
-                  //   await deleteProductVariant.mutateAsync({
-                  //     productId: entityToEdit._id,
-                  //     productVariant: index,
-                  //   });
-                  // }}
                   onClick={() => {
                     console.log("INDEX", index);
                   }}
@@ -327,11 +317,6 @@ const PoductForm = ({
                       <select
                         {...register(`subProducts.${index}.color`, {
                           required: "Color de produit requis",
-                          // onChange: (e) =>
-                          //   setValue(
-                          //     `subProducts.${index}.color`,
-                          //     e.target.value
-                          //   ),
                         })}
                         className="px-3 py-2  h-10  rounded-md border w-full"
                       >
@@ -356,29 +341,7 @@ const PoductForm = ({
                       </p>
                     )}
                   </div>
-                  {/* <div
-                    className={`${errors.subProducts?.[index]?.color ? "text-red-600" : "text-black-200"}  flex flex-col`}
-                  >
-                    <div className="flex flex-col">
-                      <label className="text-lg">Color</label>
-                      <div className="flex  items-center justify-center gap-x-4">
-                        <Input {...register(`subProducts.${index}.color`)} />
-                        <div
-                          style={{
-                            backgroundColor: getValues(
-                              `subProducts.${index}.color`
-                            ),
-                          }}
-                          className="size-7 rounded-full shadow-md border"
-                        ></div>
-                      </div>
-                    </div>
-                    {errors.subProducts?.[index]?.color && (
-                      <p className="px-4 pt-[6px] text-xs ">
-                        {errors.subProducts[index]?.color?.message}
-                      </p>
-                    )}
-                  </div> */}
+
                   {/* Price */}
                   <div
                     className={`${
@@ -509,12 +472,7 @@ const PoductForm = ({
         >
           Cancel
         </Button>
-        <Button
-          aria-label="OK"
-          type="submit"
-          disabled={createProduct.isPending}
-          className="relative"
-        >
+        <Button aria-label="OK" type="submit" className="relative">
           {createProduct.isPending && (
             <div className="absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
               <LoaderCircle color="#ffffff" className="animate-spin" />

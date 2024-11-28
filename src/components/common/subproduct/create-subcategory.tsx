@@ -11,7 +11,8 @@ const CreateSubCategory = ({
   onCloseModal,
   formMode,
   options,
-}: any) => {
+}: // user,
+any) => {
   const {
     register,
     formState: { errors },
@@ -33,6 +34,7 @@ const CreateSubCategory = ({
       fileInputRef={fileInputRef}
       options={options}
       formMode={formMode}
+      // user={user}
     />
   );
 };
