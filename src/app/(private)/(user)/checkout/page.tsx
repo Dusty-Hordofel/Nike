@@ -32,7 +32,7 @@ const CheckoutPage = () => {
 
   if (deliveryAddress.isLoading || cart.isLoading)
     return (
-      <div className="max-w-[1090px] px-[6px] bg-green-500 mx-auto h-screen">
+      <div className="max-w-[1090px] px-[6px]  mx-auto h-screen">
         <div className="flex justify-center items-center h-full">
           <Loader />
         </div>
@@ -41,7 +41,7 @@ const CheckoutPage = () => {
 
   if (deliveryAddress.isError || cart.isError)
     return (
-      <div className="max-w-[1090px] px-[6px] bg-green-500 mx-auto h-screen">
+      <div className="max-w-[1090px] px-[6px]  mx-auto h-screen">
         <div className="flex justify-center items-center h-full">
           <h1>Error: {deliveryAddress.error?.message}</h1>
         </div>

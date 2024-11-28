@@ -1,34 +1,19 @@
 import React from "react";
-import { cn } from "@/lib/common/utils"; // Votre utilitaire pour la gestion des classes CSS
-import { FileIcon } from "lucide-react"; // Assurez-vous d'importer correctement votre icône ou de la remplacer
-import {
-  FieldError,
-  FieldErrors,
-  FieldErrorsImpl,
-  FieldValues,
-  Merge,
-} from "react-hook-form";
+import { cn } from "@/lib/common/utils";
+import { FileIcon } from "lucide-react";
 
-// Définir les types des props
 interface FileUploadProps {
-  previewUrl: string | null | undefined; // L'URL de prévisualisation du fichier
-  //   handleButtonClick: () => void; // La fonction à appeler lors du clic
-  //   error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined; // Indique s'il y a une erreur
+  previewUrl: string | null | undefined;
 }
 
-// Composant fonctionnel en TypeScript
-const FileUpload: React.FC<FileUploadProps> = ({ previewUrl }) => {
+const FileUpload = ({ previewUrl }: FileUploadProps) => {
   return (
     <div
-      className={` gap-x-2 bg-warning w-full ${
+      className={` gap-x-2  w-full ${
         previewUrl ? "flex flex-col-reverse " : "flex"
       }`}
     >
-      <div
-        className={` bg-red-100 overflow-x-auto ${
-          previewUrl && "mt-1 flex gap-x-2"
-        }`}
-      >
+      <div className={`  overflow-x-auto ${previewUrl && "mt-1 flex gap-x-2"}`}>
         {previewUrl ? (
           <img
             src={previewUrl}
@@ -39,8 +24,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ previewUrl }) => {
           <FileIcon strokeWidth={1.25} size={32} />
         )}
       </div>
-      <div className="flex-1 bg-purple-300">
-        <p className="text-sm font-semibold bg-warning text-start">
+      <div className="flex-1 ">
+        <p className="text-sm font-semibold  text-start">
           Cliquez pour ajouter une image
         </p>
         <p className="text-xs text-gray-500">

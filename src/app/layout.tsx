@@ -8,6 +8,7 @@ import AppProviders from "@/components/providers/app-providers";
 import Navbar from "@/components/common/navbar/Navbar";
 import Footer from "@/components/common/footer/footer";
 import { footerLinks, footerMenu } from "@/assets/data/footer";
+import Disclaimer from "@/components/ui/disclaimer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
       <body className={`${helvetica.className} max-w-[1924px]`}>
         <ClientOnly>
           <AppProviders>
+            <Disclaimer />
             <Navbar />
             {children}
             <Footer footerLinks={footerLinks} />

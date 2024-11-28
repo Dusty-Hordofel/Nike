@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useModal } from "@/context/modal/modal.context";
 import {
   useAdminCreateProduct,
+  useAdminDeleteProduct,
+  useAdminGetProducts,
   useAdminUpdateProduct,
 } from "@/hooks/admin/products/use-admin-products.hook";
 import { deleteImageFromCloudinary } from "@/services/client/admin/images.service";
@@ -15,8 +17,16 @@ import {
 import { uploadImageToCloudinary } from "@/app/(private)/admin/products/components/upload-image-to-cloudinary";
 import { SubProduct } from "@/@types/admin/admin.products.interface";
 import { colors } from "@/schemas/products/subproduct.schema";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
+import { useAdminGetCategories } from "../categories/use-admin-categories.hook";
 
 const useProductForm = () => {
+  const user = useCurrentUser();
+
+  const categories = useAdminGetCategories();
+  const products = useAdminGetProducts();
+  const deleteProduct = useAdminDeleteProduct();
+
   const form = useForm<ProductFormData>({
     resolver: zodResolver(ProductSchema),
   });
@@ -31,7 +41,6 @@ const useProductForm = () => {
     closeModal,
     formMode,
     isModalOpen,
-    // isResultModalOpen,
     closeResultModal,
     resultModalContent,
     openModal,
@@ -59,7 +68,35 @@ const useProductForm = () => {
     return images instanceof FileList && images.length > 0;
   };
 
+  const handleDeleteProduct = async (id: string) => {
+    // permissions and authorizations will be managed by middleware
+    if (
+      !user ||
+      (user && user._id !== process.env.NEXT_PUBLIC_ADMIN_ID) ||
+      (user && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    ) {
+      alert(
+        "You must be authenticated and have admin privileges to perform this CRUD operation."
+      );
+      return;
+    }
+
+    await deleteProduct.mutateAsync({ id });
+  };
+
   const handleProductSubmit = async (data: ProductFormData) => {
+    // permissions and authorizations will be managed by middleware
+    if (
+      !user ||
+      (user && user._id !== process.env.NEXT_PUBLIC_ADMIN_ID) ||
+      (user && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    ) {
+      alert(
+        "You must be authenticated and have admin privileges to perform this CRUD operation."
+      );
+      return;
+    }
+
     if (formMode === "create") {
       try {
         const updatedSubProducts = await Promise.all(
@@ -169,7 +206,6 @@ const useProductForm = () => {
 
   useEffect(() => {
     if (entityToEdit) {
-      console.log("🚀 ~ useEffect ~ entityToEditENTITY", entityToEdit);
       form.reset({
         name: entityToEdit.name || "",
         description: entityToEdit.description || "",
@@ -179,7 +215,7 @@ const useProductForm = () => {
         productType: entityToEdit.productType || "",
         shipping: entityToEdit.shipping || 0,
         subProducts:
-          entityToEdit.subProducts.map((subproduct: SubProduct) => ({
+          entityToEdit?.subProducts.map((subproduct: SubProduct) => ({
             ...subproduct,
             color: subproduct.color.hexCode,
           })) || [],
@@ -199,6 +235,9 @@ const useProductForm = () => {
     closeModal,
     isModalOpen,
     formMode,
+    handleDeleteProduct,
+    categories,
+    products,
   };
 };
 

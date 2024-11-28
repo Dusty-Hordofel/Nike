@@ -1,31 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAdminGetCategories } from "@/hooks/admin/categories/use-admin-categories.hook";
 import { useGetSubCategoriesByParent } from "@/hooks/admin/sucategories/use-subcategories.hook";
 import Modal from "@/components/ui/modals/modal";
 import { AddItemButton } from "@/components/ui/item";
 import ProductForm from "@/app/(private)/admin/products/components/product-form";
-import {
-  useAdminDeleteProduct,
-  useAdminGetProducts,
-} from "@/hooks/admin/products/use-admin-products.hook";
 import QueryStatus from "@/components/ui/query-status";
 import ProductFormProvider from "@/app/(private)/admin/products/components/form-provider";
 import useProductForm from "@/hooks/admin/products/use-product-form.hook";
-import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
+// import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 
 const ProductPage = () => {
-  const user = useCurrentUser();
+  // const user = useCurrentUser();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-  const categories = useAdminGetCategories();
-  const products = useAdminGetProducts();
-  const deleteProduct = useAdminDeleteProduct();
-
-  const handleDeleteProduct = async (id: string) => {
-    await deleteProduct.mutateAsync({ id });
-  };
 
   const allSubCategories = useGetSubCategoriesByParent(selectedCategory, true);
 
@@ -39,6 +26,9 @@ const ProductPage = () => {
     formMode,
     createProduct,
     entityToEdit,
+    handleDeleteProduct,
+    categories,
+    products,
   } = useProductForm();
 
   useEffect(() => {
@@ -122,12 +112,6 @@ const ProductPage = () => {
                   aria-label="Remove"
                   name="remove-item-button"
                   onClick={async (e) => {
-                    if (!user) {
-                      alert(
-                        "You must be authenticated and have admin privileges to perform this CRUD operation."
-                      );
-                      return;
-                    }
                     e.stopPropagation();
                     handleDeleteProduct(product._id);
                   }}

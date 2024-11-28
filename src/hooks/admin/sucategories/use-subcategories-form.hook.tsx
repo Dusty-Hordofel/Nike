@@ -2,10 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import {
-//   SubCategorySchema,
-//   SubCategoryFormData,
-// } from "@/schemas/user/auth.schema";
 import { useModal } from "@/context/modal/modal.context";
 import { useFileContext } from "@/context/file/file.context";
 
@@ -22,8 +18,11 @@ import {
   SubCategoryFormData,
   SubCategorySchema,
 } from "@/schemas/products/subcategory.schema";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 
 const useSubProductForm = () => {
+  const user = useCurrentUser();
+
   const createSubCategory = useAdminCreateSubCategory();
   const updateSubCategory = useAdminUpdateSubCategory();
   const categories = useAdminGetCategories();
@@ -99,6 +98,18 @@ const useSubProductForm = () => {
   };
 
   const handleDeleteCategory = async (id: string) => {
+    // permissions and authorizations will be managed by middleware
+    if (
+      !user ||
+      (user && user._id !== process.env.NEXT_PUBLIC_ADMIN_ID) ||
+      (user && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    ) {
+      alert(
+        "You must be authenticated and have admin privileges to perform this CRUD operation."
+      );
+      return;
+    }
+
     await deleteSubCategory.mutateAsync({ id });
   };
 
@@ -107,6 +118,18 @@ const useSubProductForm = () => {
     file,
     parent,
   }: SubCategoryFormData) => {
+    // permissions and authorizations will be managed by middleware
+    if (
+      !user ||
+      (user && user._id !== process.env.NEXT_PUBLIC_ADMIN_ID) ||
+      (user && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    ) {
+      alert(
+        "You must be authenticated and have admin privileges to perform this CRUD operation."
+      );
+      return;
+    }
+
     const imageUrl = file ? await handleImageUpload(file) : entityToEdit?.image;
 
     if (formMode === "create") {
@@ -154,11 +177,9 @@ const useSubProductForm = () => {
     categories,
     subCategories,
     deleteSubCategory,
-
     isResultModalOpen,
     closeResultModal,
     resultModalContent,
-    // openModal,
     isModalOpen,
     formMode,
   };

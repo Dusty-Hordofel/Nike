@@ -140,7 +140,7 @@ const DynamicFormField = ({
         <div className="flex flex-col">
           <div
             className={cn(
-              "w-full py-4 pr-4 pl-3 rounded-lg border-default border focus:outline-none transition-all flex justify-between relative gap-x-2 bg-green-400 cursor-pointer",
+              "w-full py-4 pr-4 pl-3 rounded-lg border-default border focus:outline-none transition-all flex justify-between relative gap-x-2 cursor-pointer",
               error ? "text-red-600" : "text-black-200"
             )}
             onClick={onButtonClick}

@@ -15,8 +15,11 @@ import {
   CategoryFormData,
   CategorySchema,
 } from "../../../schemas/products/category.schema";
+import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 
 const useCategoryForm = () => {
+  const user = useCurrentUser();
+
   const form = useForm<CategoryFormData>({
     resolver: zodResolver(CategorySchema),
   });
@@ -90,10 +93,35 @@ const useCategoryForm = () => {
   };
 
   const handleDeleteCategory = async (id: string) => {
+    // permissions and authorizations will be managed by middleware
+    if (
+      !user ||
+      (user && user._id !== process.env.NEXT_PUBLIC_ADMIN_ID) ||
+      (user && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    ) {
+      alert(
+        "You must be authenticated and have admin privileges to perform this CRUD operation."
+      );
+      return;
+    }
+
     await deleteCategory.mutateAsync({ id });
   };
 
   const handleCategorySubmit = async ({ category, file }: CategoryFormData) => {
+    // permissions and authorizations will be managed by middleware
+
+    if (
+      !user ||
+      (user && user._id !== process.env.NEXT_PUBLIC_ADMIN_ID) ||
+      (user && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    ) {
+      alert(
+        "You must be authenticated and have admin privileges to perform this CRUD operation."
+      );
+      return;
+    }
+
     const imageUrl = file ? await handleImageUpload(file) : entityToEdit?.image;
 
     if (formMode === "create") {

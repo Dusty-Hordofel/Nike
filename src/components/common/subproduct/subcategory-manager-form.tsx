@@ -14,7 +14,8 @@ const SubCategoryManagerForm = ({
   onCloseModal,
   formMode,
   options,
-}: any) => {
+}: // user,
+any) => {
   return (
     <>
       <DynamicFormField
@@ -58,10 +59,29 @@ const SubCategoryManagerForm = ({
       />
 
       <div className="flex gap-x-3 justify-end mt-4">
-        <Button type="button" variant="outline" onClick={onCloseModal}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCloseModal}
+          // disabled={
+          //   !user ||
+          //   (user &&
+          //     user._id !== process.env.ADMIN_ID &&
+          //     user.email !== process.env.ADMIN_EMAIL)
+          // }
+        >
           Cancel
         </Button>
-        <Button aria-label="OK" type="submit">
+        <Button
+          aria-label="OK"
+          type="submit"
+          // disabled={
+          //   !user ||
+          //   (user &&
+          //     user._id !== process.env.ADMIN_ID &&
+          //     user.email !== process.env.ADMIN_EMAIL)
+          // }
+        >
           {formMode === "create" ? "Create" : "Update"}
         </Button>
       </div>
