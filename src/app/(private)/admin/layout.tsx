@@ -12,7 +12,7 @@ export default function AdminDashboardLayout({
   return (
     <div className="w-[90%] mx-auto flex flex-col min-h-screen">
       <AdminNavigation navLinks={adminNavLinksData} />
-      {/* <Sidebar /> */}
+
       <div className="">{children}</div>
     </div>
   );
