@@ -48,7 +48,10 @@ const SelectedProductCartModalContent = ({
     <>
       {data && Object.keys(data).length > 0 && (
         <section className="  grid grid-cols-2 h-full gap-x-4 w-full">
-          <div className="relative ">
+          <div
+            className="relative 
+          "
+          >
             <Image
               src={data.images[0].url}
               alt={data.name}

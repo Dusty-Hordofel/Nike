@@ -24,9 +24,7 @@ const OrderSummary = ({ cart }: any) => {
       <div className="summary-section p-5">
         <div className="summary-item flex justify-between items-center">
           <div className="flex items-center">
-            <span aria-label="subtotalText" className="bg-blue-100">
-              Subtotal
-            </span>
+            <span aria-label="subtotalText">Subtotal</span>
             <span id="subtotalTooltipWrapper" className="ml-2 top-1 relative">
               <button id="subtotalTooltip" aria-label="Détails du sous-total">
                 <div className="css-1ou3w6b">
