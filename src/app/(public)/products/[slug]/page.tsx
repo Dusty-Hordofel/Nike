@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState } from "react";
 import CarouselContent from "@/components/ui/carousels/carousel-content";
 import { NewThisWeek } from "@/assets/data/slides";
-import { useQuery } from "@tanstack/react-query";
 import MediaCarousel from "@/components/ui/carousels/media-carousel";
 import {
   HeroBanner as VideoBanner,
@@ -17,6 +16,7 @@ import { useCart } from "@/context/cart/cart.context";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import QueryStatus from "@/components/ui/query-status";
+import { useGetProduct } from "@/hooks/user/products/use-get-product.hook";
 
 interface ProductPageParams {
   slug: string;
@@ -45,18 +45,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
   const selectedColor = searchParams.color as string;
   const selectedSize = searchParams.size as string;
 
-  const productQuery = useQuery({
-    queryKey: ["products", productSlug, selectedColor],
-    queryFn: () =>
-      fetch(
-        `${
-          process.env.NEXT_PUBLIC_BASE_URL
-        }/api/products/${productSlug}?color=${encodeURIComponent(
-          selectedColor
-        )}`
-      ).then((res) => res.json()),
-  });
-  console.log("🚀 ~ ProductPage ~ productQuery:", productQuery);
+  const productQuery = useGetProduct(productSlug, selectedColor);
 
   const handleOpenModal = (context: string) => {
     setModalContext(context);
@@ -77,10 +66,11 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
 
   return (
     <QueryStatus
-      isLoading={productQuery.isLoading}
-      isError={productQuery.isError}
-      error={productQuery.error}
-      data={productQuery.data?.product}
+      isLoading={!productQuery.product}
+      // isLoading={productQuery.isProductLoading && !productQuery.cachedProduct}
+      isError={productQuery.isProductError}
+      error={productQuery.productError}
+      data={productQuery.product as any}
       className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0"
     >
       <div className="min-h-screen">
@@ -95,7 +85,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
         )}
 
         <ProductInformation
-          product={productQuery.data?.product}
+          product={productQuery.product}
           selectedColor={selectedColor}
           selectedSize={selectedSize}
           setProductAddedToCart={setProductAddedToCart}

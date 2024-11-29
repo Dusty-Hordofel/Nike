@@ -9,19 +9,17 @@ import ProductSorterButton from "./sorting/product-sorter-button";
 import { Product } from "@/@types/admin/admin.products.interface";
 import MobileProductFilterAndSort from "./filters/mobile/mobile-product-filter-and-sort";
 import useWindowSize from "@/hooks/common/use-window-size";
-import QueryStatus from "@/components/ui/query-status";
+import { ProductsQueryStatus } from "./products-query-status";
 
 const ProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  console.log("🚀 ~ ProductsPage ~ filteredProducts:", filteredProducts);
   const [showFilterSidebar, setShowFilterSidebar] = useState(false);
   const [filterOpacity, setFilterOpacity] = useState(false);
 
   const [isFiltering, setIsFiltering] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  // const [showMobileMenu, setShowMobileMenu] = useState(false);
-  // const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 960);
+
   const isLargeScreen = useWindowSize(960);
 
   const [filters, setFilters] = useState<{
@@ -40,19 +38,30 @@ const ProductsPage = () => {
     brand: [],
   });
 
-  const { data, isLoading, error, isError } =
-    useQuery({
-      queryKey: ["products"],
-      placeholderData: (previousData, previousQuery) => previousData,
-      //   staleTime: 604800000, // 1 semaine en millisecondes
-      // cacheTime: 7 * 24 * 60 * 60 * 1000,
-      queryFn: () =>
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`).then((res) =>
-          res.json()
-        ),
-    }) || [];
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ["products"],
+    // placeholderData: (previousData, previousQuery) => previousData,
+    staleTime: 1000 * 60 * 60 * 24 * 30,
+    gcTime: 1000 * 60 * 60 * 24 * 30,
+    refetchOnWindowFocus: false,
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
+      );
+      const data = await response.json();
 
-  console.log("🚀 ~ ProductsPage ~ data:DATA", data);
+      // Sauvegarde des données dans localStorage
+      if (data && data.products) {
+        localStorage.setItem("productsData", JSON.stringify(data));
+      }
+
+      return data; // Retourne seulement la liste des produits
+    },
+    initialData: () => {
+      const cachedData = localStorage.getItem("productsData");
+      return cachedData ? JSON.parse(cachedData) : undefined;
+    },
+  });
 
   useEffect(() => {
     if (data && data.products && isLargeScreen) {
@@ -80,9 +89,6 @@ const ProductsPage = () => {
       }, 500);
     }
   }, [data, filters]);
-
-  // if (isLoading) return <p>Loading...</p>;
-  // if (isError) return <p>Error...</p>;
 
   type FilterKey = keyof typeof filters;
 
@@ -124,14 +130,12 @@ const ProductsPage = () => {
     }
   };
 
-  console.log("🚀 ~ page ~ filteredProducts:COCO", filteredProducts);
   return (
-    <QueryStatus
+    <ProductsQueryStatus
       isLoading={isLoading}
       isError={isError}
       error={error}
-      data={data?.products}
-      className="h-[calc(100vh-136px)] min-w-[320px] max-w-[1920px] w-full mx-0"
+      data={data}
     >
       <div
         className={`transition-opacity duration-500 ${
@@ -163,7 +167,7 @@ const ProductsPage = () => {
                   isLargeScreen={isLargeScreen}
                   showSidebar={showSidebar}
                 />
-                {/* <div className="hidden relative min-[960px]:block">
+                <div className="hidden relative min-[960px]:block">
                   <ProductSorterButton
                     showDropdown={showDropdown}
                     setShowDropdown={setShowDropdown}
@@ -171,7 +175,7 @@ const ProductsPage = () => {
                     handleSorterChange={handleSorterChange}
                     isLargeScreen={isLargeScreen}
                   />
-                </div> */}
+                </div>
               </nav>
             </div>
           </header>
@@ -207,7 +211,7 @@ const ProductsPage = () => {
           />
         </div>
       </div>
-    </QueryStatus>
+    </ProductsQueryStatus>
   );
 };
 

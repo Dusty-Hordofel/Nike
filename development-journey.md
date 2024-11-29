@@ -1298,6 +1298,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 107. Project Summary
 
+### 108. Gestion du cache
+
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
 ## External Links

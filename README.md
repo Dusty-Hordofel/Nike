@@ -120,3 +120,9 @@ The first version of this project is built using the following technologies:
 - **TanStack Query**: For efficient data fetching and caching.
 
 ---
+
+## 🌐 Explore Other Projects
+
+You can check out other projects on my GitHub: [GitHub - Dusty-Hordofel](https://github.com/Dusty-Hordofel).
+
+Also, feel free to explore my portfolio for more details: [Hordofel Dusty BAMANA](https://hordofel-dusty.vercel.app/).

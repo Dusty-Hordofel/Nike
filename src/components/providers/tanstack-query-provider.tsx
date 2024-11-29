@@ -11,7 +11,9 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      staleTime: 1000 * 60 * 60 * 24 * 30, // Cache pendant 1 mois
+      gcTime: 1000 * 60 * 60 * 24 * 30, // Cache pendant 1 mois
+      // gcTime: 1000 * 60 * 60 * 24, // 24 hours
     },
   },
 });

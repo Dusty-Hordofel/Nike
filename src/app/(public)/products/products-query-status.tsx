@@ -1,37 +1,22 @@
 import Loader from "@/components/ui/loader";
 import { cn } from "@/lib/common/utils";
-import React from "react";
 
-interface QueryStatusProps<T> {
-  isLoading: boolean;
-  isError: boolean;
-  error: any;
-  data?: T;
-  children: React.ReactNode;
-  className?: string;
-  dataKey?: keyof T; // Clé pour accéder aux données spécifiques
-}
-
-const QueryStatus = <T extends object>({
+export const ProductsQueryStatus = ({
   isLoading,
   isError,
   error,
   data,
   children,
   className,
-  dataKey,
-}: QueryStatusProps<T>) => {
-  const isEmpty = dataKey
-    ? !(
-        data &&
-        data[dataKey] &&
-        Array.isArray(data[dataKey]) &&
-        data[dataKey].length > 0
-      )
-    : !data;
+}: any) => {
+  const isEmpty =
+    !data?.products ||
+    !Array.isArray(data.products) ||
+    data.products.length === 0;
 
-  console.log("🚀 ~ isEmpty:EMPTY", isEmpty);
-  console.log("🚀 ~ isEmpty:ISLOADING", isLoading);
+  //   console.log("🚀 ~ isEmpty:EMPTY", isEmpty);
+  //   console.log("🚀 ~ isEmpty:LOLO", isLoading);
+  //   console.log("🚀 ~ isEmpty:DATA QUERY ", data);
 
   if (isLoading && isEmpty) {
     return (
@@ -60,11 +45,18 @@ const QueryStatus = <T extends object>({
 
   if (isEmpty) {
     return (
-      <div className="text-center text-gray-500">Aucun élément disponible.</div>
+      <div className="text-center text-gray-500">Aucun produit disponible.</div>
     );
   }
 
   return <>{children}</>;
 };
 
-export default QueryStatus;
+// Utilisation du composant
+//   <ProductsQueryStatus isLoading={isLoading} isError={isError} error={error} data={data}>
+//     <ProductsList
+//       filteredProducts={data.products}
+//       isLargeScreen={isLargeScreen}
+//       showSidebar={showSidebar}
+//     />
+//   </ProductsQueryStatus>
