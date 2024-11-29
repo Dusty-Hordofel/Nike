@@ -1,20 +1,34 @@
 import { getProduct } from "@/services/client/user/products.service";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetProduct = (slug: string, color: string) => {
+  const queryClient = useQueryClient();
+  const cachedProduct = queryClient.getQueryData(["product", slug, color]);
+
   const {
     data: product,
     isLoading: isProductLoading,
     isError: isProductError,
+    error: productError,
   } = useQuery({
     enabled: !!color && !!slug,
     queryKey: ["product", slug, color],
+    staleTime: 1000 * 60 * 60 * 24 * 30,
+    gcTime: 1000 * 60 * 60 * 24 * 30,
     queryFn: async () => {
       const { product } = await getProduct(slug, color);
       return product;
     },
+    initialData: cachedProduct,
   });
-  return { product, isProductLoading, isProductError };
+
+  return {
+    product,
+    isProductLoading,
+    isProductError,
+    productError,
+    // cachedProduct,
+  };
 };
 
 // const SubProductComponent = ({ selectedColor }) => {
@@ -54,6 +68,8 @@ export const usePrefetchAllProductVariants = async (
         enabled: !!color && !!slug,
         queryKey: ["product", slug, color],
         queryFn: () => getProduct(slug, color),
+        staleTime: 1000 * 60 * 60 * 24 * 30,
+        gcTime: 1000 * 60 * 60 * 24 * 30,
       })
     )
   );

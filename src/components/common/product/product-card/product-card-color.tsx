@@ -28,7 +28,7 @@ const ProductCardColor = ({
   setImages,
   setActive,
 }: CardColorProps) => {
-  console.log("🚀 ~ productColors:COLOR VOIR", productColors);
+  // console.log("🚀 ~ productColors:COLOR VOIR", productColors);
   return (
     <div className=" gap-2 pb-[10px]  group-hover:flex hidden">
       {productColors

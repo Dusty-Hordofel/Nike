@@ -1,6 +1,7 @@
 import { Product } from "@/@types/admin/admin.products.interface";
 import ProductCard from "@/components/common/product/product-card/product-card";
 import Loader from "@/components/ui/loader";
+import { usePrefetchAllProductVariants } from "@/hooks/user/products/use-get-product.hook";
 import { cn } from "@/lib/common/utils";
 
 const ProductsList = ({
@@ -8,6 +9,9 @@ const ProductsList = ({
   isLargeScreen,
   filteredProducts,
 }: any) => {
+  // console.log("🚀 ~ filteredProducts:FILTER-PRODUCTS", filteredProducts);
+  // const handleMouseEnter = () => {};
+
   return (
     <section
       className={cn(

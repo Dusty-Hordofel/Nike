@@ -1,10 +1,9 @@
 const getProducts = async () => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
-    // ,
-    // {
-    //   cache: "force-cache",
-    // }
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`,
+    {
+      cache: "force-cache",
+    }
   );
   const { products } = await response.json();
   return products;
@@ -17,6 +16,7 @@ const getProduct = async (slug: string, color: string) => {
     }/api/v1/products/${slug}?color=${color.toLocaleLowerCase()}`
   );
   const product = await response.json();
+  console.log("🚀 ~ getProduct ~ product:", product);
   return product;
 };
 
