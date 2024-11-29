@@ -1,20 +1,50 @@
-import Link from "next/link";
+"use client";
 
-const Disclaimer = () => {
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+
+import useWindowSize from "@/hooks/common/use-window-size";
+
+interface DisclaimerProps {
+  text: string;
+  limit: number;
+}
+
+const Disclaimer = ({ text, limit }: DisclaimerProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const isLargeScreen = useWindowSize(960);
+
+  const toggleExpand = () => setIsExpanded(!isExpanded);
+
+  const displayText = isLargeScreen
+    ? text
+    : isExpanded && !isLargeScreen
+    ? text
+    : text.slice(0, limit) + "...";
+
   return (
-    <div>
-      <p className="bg-black-200 text-white px-[50px] py-5">
-        This website is a personal project created as part of my developer
-        portfolio to showcase my web development skills. Since{" "}
-        <span className="font-medium">Nike</span> is such a significant part of
-        our lives, I wanted to explore and understand how their website is
-        built. This project is in no way affiliated with, endorsed, or sponsored
-        by <span className="font-medium">Nike</span>. All images, trademarks,
-        and related elements associated with{" "}
-        <span className="font-medium">Nike</span> remain the property of their
-        respective owners. If any copyright infringement is identified, please
-        contact me at <span className="font-medium">hordofel@gmail.com</span>{" "}
-        for immediate resolution.
+    <div className="bg-black-200 text-white px-7 py-3 min-[960px]:px-[50px] min-[960px]:py-5">
+      <p>
+        <AnimatePresence initial={false}>
+          <motion.span
+            key={isExpanded ? "expanded" : "collapsed"}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {displayText}
+          </motion.span>
+        </AnimatePresence>
+        {!isLargeScreen && (
+          <span
+            className="text-gray-400  cursor-pointer"
+            onClick={toggleExpand}
+          >
+            {!isExpanded ? " - Read more" : " - Read less"}
+          </span>
+        )}
       </p>
     </div>
   );

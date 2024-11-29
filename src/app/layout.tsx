@@ -27,7 +27,10 @@ export default async function RootLayout({
       <body className={`${helvetica.className} max-w-[1924px]`}>
         <ClientOnly>
           <AppProviders>
-            <Disclaimer />
+            <Disclaimer
+              text="This website is a personal project created as part of my developer portfolio to showcase my web development skills. Since Nike is such a significant part of our lives, I wanted to explore and understand how their website is built. This project is in no way affiliated with, endorsed, or sponsored by Nike. All images, trademarks, and related elements associated with Nike remain the property of their respective owners. If any copyright infringement is identified, please contact me at hordofel@gmail.com for immediate resolution."
+              limit={120}
+            />
             <Navbar />
             {children}
             <Footer footerLinks={footerLinks} />
