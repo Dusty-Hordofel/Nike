@@ -7,18 +7,8 @@ import ProductCardColor from "./product-card-color";
 import ProductCardDescription from "./product-card-description";
 import { Product } from "@/@types/admin/admin.products.interface";
 import useWindowSize from "@/hooks/common/use-window-size";
-import {
-  useGetProduct,
-  usePrefetchAllProductVariants,
-} from "@/hooks/user/products/use-get-product.hook";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getProduct } from "@/services/client/user/products.service";
 
 const ProductCard = ({ product }: { product: Product }) => {
-  // console.log("🚀 ~ ProductCard ~ product:POPO", product);
-
-  const queryClient = useQueryClient();
-
   const { name, subProducts, slug } = product;
 
   const [active, setActive] = useState(0);
@@ -29,7 +19,6 @@ const ProductCard = ({ product }: { product: Product }) => {
   const [productColors, setProductColors] = useState(
     subProducts.map((p) => p.color)
   );
-  // console.log("🚀 ~ ProductCard ~ productColors:PCOLORS", productColors);
 
   const bestSeller = true;
   const newRelease = false;
@@ -49,11 +38,6 @@ const ProductCard = ({ product }: { product: Product }) => {
           aria-label={name}
           className="product-card-link group"
           href={`/products/${slug}?color=${productColors[0]?.name.toLocaleLowerCase()}`}
-          // onMouseEnter={usePrefetchAllProductVariants()}
-          onMouseEnter={() => {
-            console.log("CARD", productColors);
-            usePrefetchAllProductVariants(slug, productColors, queryClient);
-          }}
         >
           <figure>
             <Link
