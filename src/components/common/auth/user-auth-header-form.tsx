@@ -10,7 +10,8 @@ type HeaderFormProps = {
 const UserAuthHeaderForm = ({ title, ariaLabel }: HeaderFormProps) => {
   return (
     <header tabIndex={0} aria-label={`${ariaLabel} group`}>
-      <div className="flex items-center gap-4 w-[460px] h-[100px]">
+      {/* w-[460px] */}
+      <div className="flex items-center gap-4 w-full h-[100px]">
         <div className="w-max h-full flex items-center justify-center">
           <Link href="/">
             <NikeIcon className="cursor-pointer hover:opacity-70 w-12 h-[60px] font-medium scale-125 " />

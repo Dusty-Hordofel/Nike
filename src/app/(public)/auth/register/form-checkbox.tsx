@@ -27,7 +27,7 @@ const FormCheckbox = <T extends FieldValues>({
   const error = errors[name];
   const errorMessage = error ? (error.message as string) : "";
   return (
-    <div className="flex mt-6 mb-2">
+    <div className="flex mt-6 mb-2 ">
       <div>
         <UserAuthInputFieldForm
           id={id}
