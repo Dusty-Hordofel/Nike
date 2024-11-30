@@ -3,7 +3,7 @@ import React from "react";
 
 const UserLoginTerms = () => {
   return (
-    <div className="w-[368px] py-6 text-gray-500">
+    <div className="w-[368px] py-6 text-gray-500 max-[960px]:text-sm">
       En continuant, tu acceptes les{" "}
       <Link
         target="_blank"

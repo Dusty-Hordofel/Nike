@@ -49,7 +49,7 @@ const FormCheckbox = <T extends FieldValues>({
         <label
           htmlFor="marketing-option"
           className={cn(
-            "inline-block leading-6 pl-3"
+            "inline-block leading-6 pl-3 max-[960px]:text-sm"
             // errors[name] ? "text-red-600" : "text-black-200"
           )}
         >
@@ -60,7 +60,7 @@ const FormCheckbox = <T extends FieldValues>({
         <label
           htmlFor="privacy-terms"
           className={cn(
-            "inline-block leading-6 pl-3",
+            "inline-block leading-6 pl-3 max-[960px]:text-sm",
             errors[name] ? "text-red-600" : "text-black-200"
           )}
         >
