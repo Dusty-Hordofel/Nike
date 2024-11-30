@@ -30,6 +30,7 @@ const ProductPage = () => {
     categories,
     products,
   } = useProductForm();
+  console.log("🚀 ~ ProductPage ~ products:PROD", products);
 
   useEffect(() => {
     if (entityToEdit) {
@@ -41,9 +42,9 @@ const ProductPage = () => {
 
   return (
     <QueryStatus
-      isLoading={categories.isLoading || products.isLoading}
-      isError={categories.isError || products.isLoading}
-      error={categories.error || products.error}
+      isLoading={categories.isLoading}
+      isError={categories.isError}
+      error={categories.error}
       data={categories.data}
     >
       {isModalOpen && (
