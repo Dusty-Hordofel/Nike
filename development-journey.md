@@ -1310,6 +1310,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 113. Register User
 
+### 114. handle form width
+
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
 ## External Links
