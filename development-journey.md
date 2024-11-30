@@ -1306,7 +1306,9 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 111. Gestion du filtre de produits
 
-### 112. auth text size
+### 112. Auth text size
+
+### 113. Register User
 
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
