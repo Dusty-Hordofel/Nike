@@ -21,7 +21,7 @@ import LoginForm from "./login-form";
 
 const LoginPage = () => {
   const router = useRouter();
-  // const user = useCurrentUser();
+  const user = useCurrentUser();
 
   // if (user /*&& userRole !== "user"*/) {
   //   router.push(`${window.location.origin}` || "/");
