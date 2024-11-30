@@ -11,25 +11,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
+import { UserAuthHeaderForm } from "@/components/common/auth";
 import {
-  UserAuthHeaderForm,
-  UserAuthInputFieldForm,
-} from "@/components/common/auth";
-import {
-  RegisterFormData,
   RegisterSchema,
   UserFormData,
 } from "../../../../schemas/user/auth.schema";
 import { cn } from "@/lib/common/utils";
-import { CrossedEye } from "@/assets/icons";
-import { Eye } from "lucide-react";
-import ShoppingPreference from "./shopping-preference";
 import { Button } from "@/components/ui/buttons/button/button";
 import FormCheckbox from "./form-checkbox";
-import { Input } from "@/components/ui/input";
+
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "@/auth";
-import { signInWithCredentials } from "@/actions/auth/user-auth.actions";
 import { ZodError } from "zod";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-form-field";
@@ -43,12 +34,11 @@ const SignUp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
-  // console.log("🚀 ~ SignUp ~ email:", email);
+  const user = useCurrentUser();
 
-  // const user = useCurrentUser();
-  // if (user /*&& userRole !== "user"*/) {
-  //   router.push(`${window.location.origin}` || "/");
-  // }
+  if (user) {
+    router.push(`${window.location.origin}` || "/");
+  }
 
   const {
     register,
@@ -63,20 +53,19 @@ const SignUp = () => {
       const om = JSON.stringify(userFormData);
       console.log("🚀 ~ mutationFn: ~ om:", om);
       const response = await fetch(
-        // "http://localhost:3000/api/auth/register",
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
         {
           method: "POST",
           body: JSON.stringify({
-            // ...userFormData,
-            code: 12345678,
-            lastName: "lionellebassola@gmail.com",
-            firstName: "lionellebassola@gmail.com",
-            email: "lionellebassola@gmail.com",
-            // password: ,
-            shoppingPreference: "homme",
-            marketingOption: true,
-            terms: true,
+            ...userFormData,
+            // code: 12345678,
+            // lastName: "lionellebassola@gmail.com",
+            // firstName: "lionellebassola@gmail.com",
+            // email: "lionellebassola@gmail.com",
+            // // password: ,
+            // shoppingPreference: "homme",
+            // marketingOption: true,
+            // terms: true,
           }),
         }
       );
@@ -129,7 +118,7 @@ const SignUp = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="">
             <div className="">
               <div className="flex flex-col ">
-                <div className="relative">
+                {/* <div className="relative">
                   <DynamicFormField
                     inputType="input"
                     label="Code"
@@ -148,8 +137,8 @@ const SignUp = () => {
                       type="button"
                       aria-label="renvoyer le code"
                       className="css-1qmkbv8 absolute right-3 top-4"
-                      // onClick={handleResendCode}
-                      disabled={/*timer > 0 ||*/ isPending}
+                     
+                      disabled={timer > 0 || isPending}
                     >
                       <svg
                         aria-hidden="false"
@@ -171,7 +160,7 @@ const SignUp = () => {
                       </svg>
                     </button>
                   </span>
-                </div>
+                </div> */}
 
                 <div className="flex gap-4 justify-between">
                   <DynamicFormField

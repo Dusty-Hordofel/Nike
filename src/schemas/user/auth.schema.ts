@@ -32,7 +32,7 @@ export const addressSchema = z.object({
 });
 
 export const UserSchema = z.object({
-  code: z.string().min(5, "Required"),
+  // code: z.string().min(5, "Required"),
   lastName: z.string({ message: "Le nom est requis." }),
   firstName: z.string({ message: "Le prénom est requis." }),
   email: z.string().email({ message: "L'adresse email est invalide." }),

@@ -1,4 +1,5 @@
 import { JordanIcon, NikeIcon } from "@/assets/icons";
+import Link from "next/link";
 import React from "react";
 
 type HeaderFormProps = {
@@ -11,7 +12,9 @@ const UserAuthHeaderForm = ({ title, ariaLabel }: HeaderFormProps) => {
     <header tabIndex={0} aria-label={`${ariaLabel} group`}>
       <div className="flex items-center gap-4 w-[460px] h-[100px]">
         <div className="w-max h-full flex items-center justify-center">
-          <NikeIcon className="cursor-pointer hover:opacity-70 w-12 h-[60px] font-medium scale-125 " />
+          <Link href="/">
+            <NikeIcon className="cursor-pointer hover:opacity-70 w-12 h-[60px] font-medium scale-125 " />
+          </Link>
         </div>
         <div className="w-max h-full flex items-center justify-center">
           <JordanIcon
