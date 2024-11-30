@@ -1302,6 +1302,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 109. Disclaimer
 
+### 110. link problem management (replaced subcategories by SubCategories)
+
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
 ## External Links
