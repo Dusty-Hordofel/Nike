@@ -25,7 +25,7 @@ export const adminNavLinksData = [
   },
   {
     name: "Subcategories",
-    href: "/admin/subcategories",
+    href: "/admin/subCategories",
     isActiveLink: true,
   },
   {
