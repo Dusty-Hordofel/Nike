@@ -1,9 +1,6 @@
-// import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
-import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/database";
-// import { RegisterSchema, UserFormData, UserSchema } from "../../../../schemas/user/auth.schema";
 import { z } from "zod";
 import User from "@/models/user.model";
 import { RegisterSchema } from "@/schemas/user/auth.schema";
