@@ -7,7 +7,7 @@ import {
   PasswordFormData,
   EmailSchema,
   PasswordSchema,
-} from "../../../../schemas/user/auth.schema";
+} from "@/schemas/user/auth.schema";
 import { UserSelectCountry } from "@/components/common/auth/login";
 import { UserAuthHeaderForm } from "@/components/common/auth";
 import { useMutation } from "@tanstack/react-query";
@@ -23,9 +23,9 @@ const LoginPage = () => {
   const router = useRouter();
   const user = useCurrentUser();
 
-  // if (user) {
-  //   router.push(`${window.location.origin}` || "/");
-  // }
+  if (user) {
+    router.push(`${window.location.origin}` || "/");
+  }
 
   const [email, setEmail] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
