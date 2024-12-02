@@ -24,7 +24,7 @@ const Disclaimer = ({ text, limit }: DisclaimerProps) => {
     : text.slice(0, limit) + "...";
 
   return (
-    <div className="bg-black-200 text-white px-7 py-3 min-[960px]:px-[50px] min-[960px]:py-5">
+    <div className="bg-black-200 text-white px-7 py-3 min-[960px]:px-[50px] min-[960px]:py-5 flex flex-col">
       <p>
         <AnimatePresence initial={false}>
           <motion.span
@@ -45,6 +45,9 @@ const Disclaimer = ({ text, limit }: DisclaimerProps) => {
             {!isExpanded ? " - Read more" : " - Read less"}
           </span>
         )}
+      </p>
+      <p className="font-bold text-5xl mx-auto mt-5 max-sm:text-3xl max-[355px]:text-2xl">
+        NIKE CLONE PART I
       </p>
     </div>
   );
