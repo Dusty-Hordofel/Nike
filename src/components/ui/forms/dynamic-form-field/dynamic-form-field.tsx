@@ -28,9 +28,10 @@ import { Item } from "@/@types/admin/admin.item.interface";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
-  options?: [] | Item[] | undefined;
-};
+type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement>;
+//  & {
+//   options?: [] | Item[] | undefined;
+// };
 type FileProps = React.InputHTMLAttributes<HTMLInputElement> & {
   fileInputRef?: React.RefObject<HTMLInputElement>;
   previewUrl: string | null;
@@ -122,12 +123,31 @@ const DynamicFormField = ({
               {/* value="preference" */}
               <option style={{ display: "none" }}>{label}</option>
 
-              {options?.length &&
+              {/* {options?.length &&
                 options.map((option) => (
-                  <option value={option._id} key={option._id}>
+                  <option value={option.id} key={option._id}>
                     {option.name}
                   </option>
-                ))}
+                ))} */}
+              {options?.length &&
+                options.map((option) => {
+                  if ("_id" in option) {
+                    // Option est de type Item1
+                    return (
+                      <option value={option._id} key={option._id}>
+                        {option.name}
+                      </option>
+                    );
+                  } else if ("id" in option) {
+                    // Option est de type Item2
+                    return (
+                      <option value={option.value} key={option.id}>
+                        {option.label}
+                      </option>
+                    );
+                  }
+                  return null; // Si aucune correspondance
+                })}
             </select>
           </div>
 

@@ -3,9 +3,10 @@ import bcrypt from "bcryptjs";
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/database";
-import { UserFormData, UserSchema } from "../../../../schemas/user/auth.schema";
+// import { RegisterSchema, UserFormData, UserSchema } from "../../../../schemas/user/auth.schema";
 import { z } from "zod";
 import User from "@/models/user.model";
+import { RegisterSchema } from "@/schemas/user/auth.schema";
 // import validator from "validator";
 
 // 1. With Zod
@@ -14,7 +15,7 @@ export async function POST(req: Request, res: Response) {
     const body = await req.json();
 
     connectDB();
-    const validatedFields = UserSchema.parse(body);
+    const validatedFields = RegisterSchema.parse(body);
     console.log("🚀 ~ POST ~ email:", validatedFields.email);
     // console.log("🚀 ~ POST ~ validatedField:", validatedFields);
 

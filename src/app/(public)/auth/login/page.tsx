@@ -23,9 +23,9 @@ const LoginPage = () => {
   const router = useRouter();
   const user = useCurrentUser();
 
-  if (user) {
-    router.push(`${window.location.origin}` || "/");
-  }
+  // if (user) {
+  //   router.push(`${window.location.origin}` || "/");
+  // }
 
   const [email, setEmail] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);

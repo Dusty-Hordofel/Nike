@@ -89,7 +89,7 @@ const userSchema = new Schema<IUser>(
       // required: true,
     },
     emailVerified: { type: Boolean, default: false },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: String /*, required: true*/ },
     role: { type: String, default: "user" },
     addresses: [addressSchema],
     wishlist: {

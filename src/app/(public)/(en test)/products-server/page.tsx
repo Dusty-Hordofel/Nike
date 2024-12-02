@@ -11,21 +11,21 @@ const page = async (props: Props) => {
   console.log("🚀 ~ page ~ products:", products);
 
   return (
-    <Suspense
-      fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <h2 className="font-extrabold text-4xl min-[450px]:text-5xl  sm:text-6xl md:text-7xl">
-            <Loader />
-          </h2>
-        </div>
-      }
-    >
-      <ProductsList
-        filteredProducts={products}
-        // isLargeScreen={isLargeScreen}
-        // showSidebar={showSidebar}
-      />
-    </Suspense>
+    // <Suspense
+    //   fallback={
+    //     <div className="w-full h-screen flex items-center justify-center">
+    //       <h2 className="font-extrabold text-4xl min-[450px]:text-5xl  sm:text-6xl md:text-7xl">
+    //         <Loader />
+    //       </h2>
+    //     </div>
+    //   }
+    // >
+    <ProductsList
+      filteredProducts={products}
+      // isLargeScreen={isLargeScreen}
+      // showSidebar={showSidebar}
+    />
+    // </Suspense>
   );
 };
 
