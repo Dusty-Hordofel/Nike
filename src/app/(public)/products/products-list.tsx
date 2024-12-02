@@ -28,7 +28,7 @@ const ProductsList = ({
       ) : (
         <div className="w-full h-screen flex items-center justify-center">
           <h2 className="font-extrabold text-4xl min-[450px]:text-5xl  sm:text-6xl md:text-7xl">
-            <Loader />
+            No Product Found
           </h2>
         </div>
       )}
