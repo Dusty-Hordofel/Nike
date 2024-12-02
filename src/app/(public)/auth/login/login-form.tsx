@@ -14,6 +14,7 @@ import {
 } from "../../../../schemas/user/auth.schema";
 import { cn } from "@/lib/common/utils";
 import { EmailProps, PasswordProps } from "./formProps";
+import ErrorMessage from "@/components/ui/error-message";
 
 type LoginFormProps = {
   formCurrentStep: number;
@@ -40,16 +41,11 @@ const LoginForm = ({
           : passwordProps.handleSubmitPassword(onSubmitStep2)
       }
     >
-      <div
-        className={cn(
-          ` h-11 bg-gray-100 py-3 px-4 mb-5 items-center gap-x-4 rounded-md ${
-            formCurrentStep === 2 && error.length > 1 ? "flex" : "hidden"
-          }`
-        )}
-      >
-        <CircleAlert color="#ee0005" />
-        <p>{error.length > 1 && error}</p>
-      </div>
+      <ErrorMessage
+        context="api-message"
+        error={error}
+        formCurrentStep={formCurrentStep}
+      />
 
       <LoginFormStep
         formCurrentStep={formCurrentStep}

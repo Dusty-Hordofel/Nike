@@ -7,29 +7,27 @@ import { connectDB } from "@/config/database";
 import { z } from "zod";
 import User from "@/models/user.model";
 import { RegisterSchema } from "@/schemas/user/auth.schema";
-// import validator from "validator";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+} from "@/utils/api-response.utils";
 
-// 1. With Zod
 export async function POST(req: Request, res: Response) {
   try {
     const body = await req.json();
 
     connectDB();
     const validatedFields = RegisterSchema.parse(body);
-    console.log("🚀 ~ POST ~ email:", validatedFields.email);
-    // console.log("🚀 ~ POST ~ validatedField:", validatedFields);
 
     const existingUser = await User.findOne({
       email: validatedFields.email,
     });
 
     if (existingUser) {
-      return new Response(
-        JSON.stringify({
-          sucess: false,
-          message: "The email address already exists.",
-        }),
-        { status: 400 }
+      return createErrorResponse(
+        null,
+        "The email address already exists.",
+        400
       );
     }
 
@@ -43,28 +41,24 @@ export async function POST(req: Request, res: Response) {
     //   );
     // }
 
-    // Hashage du mot de passe
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(validatedFields.password, salt);
 
-    // Create a new user with the hashed password
     const newUser = new User({
-      // ...body,
       ...validatedFields,
       password: hashedPassword,
     });
 
     await newUser.save();
 
-    // Return the created user (without password)
     const { password, ...userWithoutPassword } = newUser.toObject();
 
-    return new Response(
-      JSON.stringify({
-        success: true,
+    return createSuccessResponse(
+      {
         user: userWithoutPassword,
-      }),
-      { status: 201 }
+      },
+      "successResponse",
+      201
     );
   } catch (error) {
     console.error(error);
@@ -79,33 +73,20 @@ export async function POST(req: Request, res: Response) {
         JSON.stringify({
           success: false,
           messages: formattedErrors,
-          //  errors: formattedErrors,
         }),
         { status: 400 }
       );
     }
 
     if (error instanceof z.ZodError) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: error.message,
-        }),
-        { status: 422 }
-      );
+      return createErrorResponse(null, error.message, 422);
     }
 
     if (error instanceof Error) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: error.message,
-        }),
-        { status: 500 }
-      );
+      return createErrorResponse(null, error.message, 500);
     }
 
-    return new Response("Something went wrong", { status: 500 });
+    return createErrorResponse(null, "Something went wrong", 500);
   }
 }
 

@@ -10,6 +10,8 @@ import { cn } from "@/lib/common/utils";
 import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "./file-upload";
 import { Item } from "@/@types/admin/admin.item.interface";
+import { CircleAlert } from "lucide-react";
+import ErrorMessage from "../../error-message";
 
 // interface Option {
 //   // createdAt: string;
@@ -59,6 +61,7 @@ interface DynamicFormFieldProps {
   fileProps?: FileProps;
   onFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onButtonClick?: () => void;
+  type?: "text" | "email" | "password" | "number" | "checkbox" | "file";
 }
 
 const DynamicFormField = ({
@@ -73,6 +76,7 @@ const DynamicFormField = ({
   textareaProps,
   selectProps,
   fileProps,
+  type,
   onFileChange,
   onButtonClick,
 }: DynamicFormFieldProps) => {
@@ -96,7 +100,12 @@ const DynamicFormField = ({
               className
             )}
           />
-          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
+          <ErrorMessage
+            context="react-hook-form"
+            type="text"
+            error={error}
+            errorMessage={errorMessage}
+          />
         </div>
       );
 
@@ -151,7 +160,12 @@ const DynamicFormField = ({
             </select>
           </div>
 
-          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
+          <ErrorMessage
+            context="react-hook-form"
+            type="text"
+            error={error}
+            errorMessage={errorMessage}
+          />
         </div>
       );
 
@@ -185,7 +199,12 @@ const DynamicFormField = ({
             <FileUpload previewUrl={fileProps?.previewUrl} />
           </div>
 
-          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
+          <ErrorMessage
+            context="react-hook-form"
+            type="text"
+            error={error}
+            errorMessage={errorMessage}
+          />
         </div>
       );
 
@@ -197,6 +216,7 @@ const DynamicFormField = ({
             {label}
           </label>
           <Input
+            type={type}
             id={`input-${label}`}
             {...register(name)}
             {...inputProps}
@@ -206,7 +226,12 @@ const DynamicFormField = ({
               className
             )}
           />
-          <ErrorMessage type="text" error={error} errorMessage={errorMessage} />
+          <ErrorMessage
+            context="react-hook-form"
+            type="text"
+            error={error}
+            errorMessage={errorMessage}
+          />
         </div>
       );
   }
@@ -214,22 +239,41 @@ const DynamicFormField = ({
 
 export default DynamicFormField;
 
-interface ErrorMessageProps<T extends FieldValues> {
-  error: FieldErrors<T>[Path<T>];
-  type?: "text" | "email" | "password" | "number" | "checkbox" | "file";
-  errorMessage: string;
-}
+// interface ErrorMessageProps<T extends FieldValues> {
+//   error: FieldErrors<T>[Path<T>] | any;
+//   type?: "text" | "email" | "password" | "number" | "checkbox" | "file";
+//   errorMessage: string;
+//   context: "react-hook-form" | "api-message";
+//   formCurrentStep: number;
+// }
 
-const ErrorMessage = <T extends FieldValues>({
-  type,
-  error,
-  errorMessage,
-}: ErrorMessageProps<T>) => {
-  return (
-    <div className="h-6">
-      {error && type !== "checkbox" && (
-        <p className="px-4 pt-[6px] text-xs text-red-600">{errorMessage}</p>
-      )}
-    </div>
-  );
-};
+// export const ErrorMessage = <T extends FieldValues>({
+//   type,
+//   error,
+//   errorMessage,
+//   context,
+//   formCurrentStep,
+// }: ErrorMessageProps<T>) => {
+//   if (context === "react-hook-form") {
+//     return (
+//       <div className="h-6">
+//         {error && type !== "checkbox" && (
+//           <p className="px-4 pt-[6px] text-xs text-red-600">{errorMessage}</p>
+//         )}
+//       </div>
+//     );
+//   } else if (context === "api-message") {
+//     return (
+//       <div
+//         className={cn(
+//           ` h-11 bg-gray-100 py-3 px-4 mb-5 items-center gap-x-4 rounded-md ${
+//             formCurrentStep === 2 && error.length > 1 ? "flex" : "hidden"
+//           }`
+//         )}
+//       >
+//         <CircleAlert color="#ee0005" />
+//         <p>{error.length > 1 && error}</p>
+//       </div>
+//     );
+//   }
+// };
