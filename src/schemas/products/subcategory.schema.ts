@@ -27,9 +27,17 @@ export const SubCategorySchema = (validCategories: Item[] | [] | undefined) =>
     parent: z
       .string()
       .min(1, { message: "Le parent est requis" })
-      .refine((val) => validCategories?.some((cat) => cat._id === val), {
-        message: "Le parent sélectionné est invalide.",
-      }),
+      .refine(
+        (val) =>
+          validCategories?.some((cat) => {
+            if ("_id" in cat) {
+              cat._id === val;
+            }
+          }),
+        {
+          message: "Le parent sélectionné est invalide.",
+        }
+      ),
   });
 
 export type SubCategoryFormData = z.infer<ReturnType<typeof SubCategorySchema>>;
