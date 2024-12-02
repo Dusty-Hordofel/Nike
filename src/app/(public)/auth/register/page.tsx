@@ -24,6 +24,8 @@ import { useMutation } from "@tanstack/react-query";
 import { ZodError } from "zod";
 import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import DynamicFormField from "@/components/ui/forms/dynamic-form-field/dynamic-form-field";
+import ErrorMessage from "@/components/ui/error-message";
+import { CrossedEye, Eye } from "@/assets/icons";
 
 const options = [
   { id: "1", label: "Homme", value: "homme" },
@@ -39,7 +41,12 @@ const SignUp = () => {
 
   if (user) {
     router.push(`${window.location.origin}` || "/");
+  } else if (!email) {
+    router.push("/auth/login");
   }
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const {
     register,
@@ -51,6 +58,8 @@ const SignUp = () => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (RegisterFormData: RegisterFormData) => {
+      setError("");
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
         {
@@ -69,8 +78,10 @@ const SignUp = () => {
         if (errorData.message instanceof ZodError) {
           console.log("Zod Error olive", errorData.message);
         }
+
         console.log("🚀 ~ mutationFn: ~ errorData:", errorData);
-        throw new Error(errorData.message || "Failed to register");
+        setError(errorData.message);
+        // throw new Error(errorData.message || "Failed to register");
       }
 
       return response.json();
@@ -79,7 +90,6 @@ const SignUp = () => {
 
   const onSubmit = async (values: RegisterFormData) => {
     const result = await mutateAsync({ ...values, email });
-    console.log("🚀 ~ onSubmit ~ result:TALA", result);
 
     if (result.success) {
       router.push(`${window.location.origin}` || "/");
@@ -87,7 +97,7 @@ const SignUp = () => {
   };
 
   const togglePasswordVisibility = () => {
-    // setShowPassword((prev) => !prev);
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -112,9 +122,9 @@ const SignUp = () => {
 
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="">
-            <div className="">
-              <div className="flex flex-col ">
-                {/* <div className="relative">
+            <ErrorMessage context="api-message" error={error} />
+            <div className="flex flex-col ">
+              {/* <div className="relative">
                   <DynamicFormField
                     inputType="input"
                     label="Code"
@@ -158,91 +168,90 @@ const SignUp = () => {
                   </span>
                 </div> */}
 
-                <div className="flex gap-4 justify-between">
-                  <DynamicFormField
-                    inputType="input"
-                    label="FirstName"
-                    name="firstName"
-                    register={register}
-                    errors={errors}
-                    inputProps={{
-                      type: "text",
-                      placeholder: "FirstName*",
-                      disabled: isPending,
-                    }}
-                  />
-
-                  <DynamicFormField
-                    inputType="input"
-                    label="LastName"
-                    name="lastName"
-                    register={register}
-                    errors={errors}
-                    inputProps={{
-                      type: "text",
-                      placeholder: "LastName*",
-                      disabled: isPending,
-                    }}
-                  />
-                </div>
-
-                <div className="relative ">
-                  <DynamicFormField
-                    inputType="input"
-                    label="Password"
-                    name="password"
-                    register={register}
-                    errors={errors}
-                    inputProps={{
-                      type: "password",
-                      placeholder: "Password*",
-                      disabled: isPending,
-                    }}
-                    className="pr-10"
-                  />
-
-                  <button
-                    onClick={togglePasswordVisibility}
-                    className="absolute right-3 top-4"
-                  >
-                    {/* {showPassword ? <CrossedEye /> : <Eye />} */}
-                  </button>
-                </div>
-
+              <div className="flex gap-4 justify-between">
                 <DynamicFormField
-                  inputType="select"
-                  label="Préférence d'achat"
+                  inputType="input"
+                  label="FirstName"
+                  name="firstName"
                   register={register}
                   errors={errors}
-                  name="shoppingPreference"
-                  selectProps={{
-                    disabled: false,
+                  type="text"
+                  inputProps={{
+                    placeholder: "FirstName*",
+                    disabled: isPending,
                   }}
-                  options={options}
                 />
 
-                <FormCheckbox
-                  id="marketing-option"
-                  label="marketing-option"
-                  isLoading={isPending}
-                  type="mailing"
+                <DynamicFormField
+                  inputType="input"
+                  label="LastName"
+                  name="lastName"
                   register={register}
-                  errors={errors as FieldErrors<RegisterFormData>}
-                  name="marketingOption"
+                  errors={errors}
+                  type="text"
+                  inputProps={{
+                    placeholder: "LastName*",
+                    disabled: isPending,
+                  }}
                 />
+              </div>
 
-                <FormCheckbox
-                  id="terms"
-                  label="terms"
-                  isLoading={isPending}
+              <div className="relative ">
+                <DynamicFormField
+                  inputType="input"
+                  label="Password"
+                  name="password"
                   register={register}
-                  errors={errors as FieldErrors<RegisterFormData>}
-                  name="terms"
+                  errors={errors}
+                  type={showPassword ? "text" : "password"}
+                  inputProps={{
+                    placeholder: "Password*",
+                    disabled: isPending,
+                  }}
+                  className="pr-10"
                 />
 
-                <div className={cn("mt-10 flex justify-end")}>
-                  <Button isLoading={isPending}>Créer un compte</Button>
-                </div>
+                <button
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-3 top-4"
+                >
+                  {showPassword ? <CrossedEye /> : <Eye />}
+                </button>
+              </div>
+
+              <DynamicFormField
+                inputType="select"
+                label="Préférence d'achat"
+                register={register}
+                errors={errors}
+                name="shoppingPreference"
+                selectProps={{
+                  disabled: false,
+                }}
+                options={options}
+              />
+
+              <FormCheckbox
+                id="marketing-option"
+                label="marketing-option"
+                isLoading={isPending}
+                type="mailing"
+                register={register}
+                errors={errors as FieldErrors<RegisterFormData>}
+                name="marketingOption"
+              />
+
+              <FormCheckbox
+                id="terms"
+                label="terms"
+                isLoading={isPending}
+                register={register}
+                errors={errors as FieldErrors<RegisterFormData>}
+                name="terms"
+              />
+
+              <div className={cn("mt-10 flex justify-end")}>
+                <Button isLoading={isPending}>Créer un compte</Button>
               </div>
             </div>
           </form>

@@ -22,7 +22,7 @@ const CheckoutPage = () => {
   const { state: cartState } = useCart();
   const cart = useGetCart();
 
-  if ((!user && cartState.numItemsInCart >= 0) || !user) {
+  if (!user || (user && cartState.numItemsInCart === 0)) {
     router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/products`);
   }
 
@@ -30,7 +30,12 @@ const CheckoutPage = () => {
     "address" | "payment" | "summary"
   >(deliveryStep === 3 ? "payment" : "address");
 
-  if (deliveryAddress.isLoading || cart.isLoading)
+  if (
+    !user ||
+    (user && cartState.numItemsInCart === 0) ||
+    deliveryAddress.isLoading ||
+    cart.isLoading
+  )
     return (
       <div className="max-w-[1090px] px-[6px]  mx-auto h-screen">
         <div className="flex justify-center items-center h-full">

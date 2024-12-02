@@ -1,6 +1,7 @@
 import { connectDB } from "@/config/database";
 import User from "@/models/user.model";
 import { EmailSchema } from "@/schemas/user/auth.schema";
+import { createErrorResponse } from "@/utils/api-response.utils";
 
 export async function POST(req: Request) {
   try {
@@ -8,15 +9,12 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const validatedField = EmailSchema.safeParse(body);
-    console.log("🚀 ~ POST ~ validatedField:", validatedField);
 
     if (!validatedField.success) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: "Please Add a valid email address.",
-        }),
-        { status: 400 }
+      return createErrorResponse(
+        null,
+        "Please Add a valid email address.",
+        400
       );
     }
 
@@ -34,20 +32,13 @@ export async function POST(req: Request) {
         { status: 200 }
       );
     } else {
-      return new Response(
-        JSON.stringify({
-          message: "Email not associated with an account.",
-        }),
-        { status: 400 }
+      return createErrorResponse(
+        null,
+        "Email not associated with an account.",
+        400
       );
     }
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        message: "Something went wrong",
-      }),
-      { status: 400 }
-    );
+    return createErrorResponse(null, "Something went wrong", 400);
   }
 }
