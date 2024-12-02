@@ -1,4 +1,4 @@
-export interface Item {
+export interface Item1 {
   _id: string;
   name: string;
   slug: string;
@@ -8,6 +8,13 @@ export interface Item {
     name: string;
   };
 }
+export interface Item2 {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export type Item = Item1 | Item2;
 
 export interface ItemWithId extends Omit<Item, "_id" | "slug"> {
   id: string;

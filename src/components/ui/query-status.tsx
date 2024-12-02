@@ -30,9 +30,6 @@ const QueryStatus = <T extends object>({
       )
     : !data;
 
-  console.log("🚀 ~ isEmpty:EMPTY", isEmpty);
-  console.log("🚀 ~ isEmpty:ISLOADING", isLoading);
-
   if (isLoading && isEmpty) {
     return (
       <div

@@ -14,7 +14,7 @@ import { useSearchParams } from "next/navigation";
 import { UserAuthHeaderForm } from "@/components/common/auth";
 import {
   RegisterSchema,
-  RegisterFormData,
+  UserFormData,
 } from "../../../../schemas/user/auth.schema";
 import { cn } from "@/lib/common/utils";
 import { Button } from "@/components/ui/buttons/button/button";
@@ -34,12 +34,11 @@ const SignUp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") as string;
-
   const user = useCurrentUser();
 
-  if (user) {
-    router.push(`${window.location.origin}` || "/");
-  }
+  // if (user) {
+  //   router.push(`${window.location.origin}` || "/");
+  // }
 
   const {
     register,
@@ -47,22 +46,29 @@ const SignUp = () => {
     formState: { errors, isSubmitting, dirtyFields, touchedFields },
     reset,
     getValues,
-  } = useForm<RegisterFormData>({ resolver: zodResolver(RegisterSchema) });
+  } = useForm<UserFormData>({ resolver: zodResolver(RegisterSchema) });
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (RegisterFormData: RegisterFormData) => {
+    mutationFn: async (userFormData: UserFormData) => {
+      const om = JSON.stringify(userFormData);
+      console.log("🚀 ~ mutationFn: ~ om:", om);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
         {
           method: "POST",
           body: JSON.stringify({
-            ...RegisterFormData,
+            ...userFormData,
+            // code: 12345678,
+            // lastName: "lionellebassola@gmail.com",
+            // firstName: "lionellebassola@gmail.com",
+            // email: "lionellebassola@gmail.com",
+            // // password: ,
+            // shoppingPreference: "homme",
+            // marketingOption: true,
+            // terms: true,
           }),
         }
       );
-
-      console.log("🚀 ~ SignUp ~ response:RERE REGISTER", response);
-
       if (!response.ok) {
         const errorData = await response.json();
         console.log("INSTANCE,", errorData.message instanceof ZodError);
@@ -73,17 +79,15 @@ const SignUp = () => {
         throw new Error(errorData.message || "Failed to register");
       }
 
+      console.log("🚀 ~ mutationFn: ~ response:", response);
+
       return response.json();
     },
   });
 
-  const onSubmit = async (values: RegisterFormData) => {
-    const result = await mutateAsync({ ...values, email });
-    console.log("🚀 ~ onSubmit ~ result:TALA", result);
-
-    if (result.success) {
-      router.push(`${window.location.origin}` || "/");
-    }
+  const onSubmit = async (values: UserFormData) => {
+    console.log("🚀 ~ SignUp ~ values:", values);
+    // await mutateAsync({ ...values, email });
   };
 
   const togglePasswordVisibility = () => {
@@ -168,7 +172,7 @@ const SignUp = () => {
                     inputProps={{
                       type: "text",
                       placeholder: "FirstName*",
-                      disabled: isPending,
+                      // disabled: isPending,
                     }}
                   />
 
@@ -181,13 +185,13 @@ const SignUp = () => {
                     inputProps={{
                       type: "text",
                       placeholder: "LastName*",
-                      disabled: isPending,
+                      // disabled: isPending,
                     }}
                   />
                 </div>
 
                 <div className="relative ">
-                  <DynamicFormField
+                  {/* <DynamicFormField
                     inputType="input"
                     label="Password"
                     name="password"
@@ -199,17 +203,17 @@ const SignUp = () => {
                       disabled: isPending,
                     }}
                     className="pr-10"
-                  />
+                  /> */}
 
-                  <button
+                  {/* <button
                     onClick={togglePasswordVisibility}
                     className="absolute right-3 top-4"
                   >
-                    {/* {showPassword ? <CrossedEye /> : <Eye />} */}
-                  </button>
+                    {showPassword ? <CrossedEye /> : <Eye />}
+                  </button> */}
                 </div>
 
-                <DynamicFormField
+                {/* <DynamicFormField
                   inputType="select"
                   label="Préférence d'achat"
                   register={register}
@@ -219,29 +223,33 @@ const SignUp = () => {
                     disabled: false,
                   }}
                   options={options}
-                />
+                /> */}
 
-                <FormCheckbox
+                {/* <FormCheckbox
                   id="marketing-option"
                   label="marketing-option"
                   isLoading={isPending}
                   type="mailing"
                   register={register}
-                  errors={errors as FieldErrors<RegisterFormData>}
+                  errors={errors as FieldErrors<UserFormData>}
                   name="marketingOption"
-                />
+                /> */}
 
-                <FormCheckbox
+                {/* <FormCheckbox
                   id="terms"
                   label="terms"
                   isLoading={isPending}
                   register={register}
-                  errors={errors as FieldErrors<RegisterFormData>}
+                  errors={errors as FieldErrors<UserFormData>}
                   name="terms"
-                />
+                /> */}
 
                 <div className={cn("mt-10 flex justify-end")}>
-                  <Button isLoading={isPending}>Créer un compte</Button>
+                  <Button
+                  // isLoading={isPending}
+                  >
+                    Créer un compte
+                  </Button>
                 </div>
               </div>
             </div>

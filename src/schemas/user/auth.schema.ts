@@ -8,7 +8,8 @@ export const LogInSchema = z.object({
 });
 
 export const RegisterSchema = z.object({
-  code: z.string().min(5, "Required"),
+  // code: z.string().min(5, "Required"),
+  email: z.string().email({ message: "Adresse email invalide" }).optional(),
   lastName: z.string().min(2, "Required"),
   firstName: z.string().min(2, "Required"),
   password: z.string().min(6, "Required"),
@@ -35,22 +36,22 @@ export const UserSchema = z.object({
   // code: z.string().min(5, "Required"),
   lastName: z.string({ message: "Le nom est requis." }),
   firstName: z.string({ message: "Le prénom est requis." }),
-  email: z.string().email({ message: "L'adresse email est invalide." }),
-  password: z.string().min(6, {
-    message: "Le mot de passe doit contenir au moins 6 caractères.",
-  }),
-  shoppingPreference: z
-    .string()
-    .refine((value) => ["homme", "femme"].includes(value), {
-      message: "Required",
-    }),
+  // email: z.string().email({ message: "L'adresse email est invalide." }),
+  // password: z.string().min(6, {
+  //   message: "Le mot de passe doit contenir au moins 6 caractères.",
+  // }),
+  // shoppingPreference: z
+  //   .string()
+  //   .refine((value) => ["homme", "femme"].includes(value), {
+  //     message: "Required",
+  //   }),
 
-  phoneNumber: z.string().optional(),
-  role: z.string().default("user"),
-  marketingOption: z.boolean().default(false),
-  terms: z.boolean().refine((val) => val === true, {
-    message: "Required",
-  }),
+  // phoneNumber: z.string().optional(),
+  // role: z.string().default("user"),
+  // marketingOption: z.boolean().default(false),
+  // terms: z.boolean().refine((val) => val === true, {
+  //   message: "Required",
+  // }),
 });
 
 export const userResetPasswordSchema = z.object({
@@ -61,7 +62,7 @@ export const userResetPasswordSchema = z.object({
 // Création d'un schéma partiel pour l'email
 export const EmailSchema = LogInSchema.pick({ email: true });
 export const PasswordSchema = LogInSchema.pick({ password: true });
-export const OptionSchema = UserSchema.pick({ shoppingPreference: true });
+// export const OptionSchema = UserSchema.pick({ shoppingPreference: true });
 
 export type EmailFormData = z.infer<typeof EmailSchema>;
 export type PasswordFormData = z.infer<typeof PasswordSchema>;
@@ -69,4 +70,4 @@ export type LoginFormData = z.infer<typeof LogInSchema>;
 export type RegisterFormData = z.infer<typeof RegisterSchema>;
 export type UserFormData = z.infer<typeof UserSchema>;
 export type ResetPasswordFormData = z.infer<typeof userResetPasswordSchema>;
-export type OptionFormData = z.infer<typeof OptionSchema>;
+// export type OptionFormData = z.infer<typeof OptionSchema>;
