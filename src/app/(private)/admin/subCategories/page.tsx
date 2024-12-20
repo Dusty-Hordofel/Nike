@@ -8,6 +8,7 @@ import useSubProductForm from "@/hooks/admin/sucategories/use-subcategories-form
 import QueryStatus from "@/components/ui/query-status";
 import SubcategoryFormProvider from "@/components/common/subproduct/form-provider";
 import CreateSubCategory from "@/components/common/subproduct/create-subcategory";
+import Loader from "@/components/ui/loader";
 
 const SubCategoriesPage = () => {
   const router = useRouter();
@@ -52,13 +53,23 @@ const SubCategoriesPage = () => {
     formMode,
   } = useSubProductForm();
 
+  if (categories.isLoading || !categories.data)
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          <Loader />
+        </div>
+      </div>
+    );
+
   return (
-    <QueryStatus
-      isLoading={categories.isLoading}
-      isError={categories.isError}
-      error={categories.error}
-      data={categories.data}
-    >
+    // <QueryStatus
+    //   isLoading={categories.isLoading}
+    //   isError={categories.isError}
+    //   error={categories.error}
+    //   data={categories.data}
+    // >
+    <>
       {isModalOpen && (
         <SubcategoryFormProvider>
           <Modal title="Create your subcategory" onCloseModal={closeModal}>
@@ -102,7 +113,8 @@ const SubCategoriesPage = () => {
           />
         )}
       </div>
-    </QueryStatus>
+    </>
+    // </QueryStatus>
   );
 };
 

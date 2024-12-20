@@ -9,6 +9,7 @@ import { AddItemButton, ItemList } from "@/components/ui/item";
 import QueryStatus from "@/components/ui/query-status";
 import CategoryFormProvider from "@/app/(private)/admin/categories/components/form-provider";
 import useCategoryForm from "@/hooks/admin/categories/use-category-form.hook";
+import Loader from "@/components/ui/loader";
 
 const CategoriesPage = () => {
   const user = useCurrentUser();
@@ -51,13 +52,23 @@ const CategoriesPage = () => {
     deleteCategory,
   } = useCategoryForm();
 
+  if (categories.isLoading || !categories.data)
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          <Loader />
+        </div>
+      </div>
+    );
+
   return (
-    <QueryStatus
-      isLoading={categories.isLoading}
-      isError={categories.isError}
-      error={categories.error}
-      data={categories.data}
-    >
+    // <QueryStatus
+    //   isLoading={categories.isLoading}
+    //   isError={categories.isError}
+    //   error={categories.error}
+    //   data={categories.data}
+    // >
+    <>
       {isModalOpen && (
         <CategoryFormProvider>
           <Modal title="Create your subcategory" onCloseModal={closeModal}>
@@ -96,7 +107,8 @@ const CategoriesPage = () => {
           openModal={openModal}
         />
       </div>
-    </QueryStatus>
+    </>
+    // </QueryStatus>
   );
 };
 
