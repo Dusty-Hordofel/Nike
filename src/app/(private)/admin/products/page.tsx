@@ -7,6 +7,7 @@ import ProductForm from "@/app/(private)/admin/products/components/product-form"
 import QueryStatus from "@/components/ui/query-status";
 import ProductFormProvider from "@/app/(private)/admin/products/components/form-provider";
 import useProductForm from "@/hooks/admin/products/use-product-form.hook";
+import Loader from "@/components/ui/loader";
 // import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 
 const ProductPage = () => {
@@ -40,13 +41,17 @@ const ProductPage = () => {
     }
   }, [entityToEdit]);
 
+  if (products.isLoading || !products.data)
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          <Loader />
+        </div>
+      </div>
+    );
+
   return (
-    <QueryStatus
-      isLoading={categories.isLoading}
-      isError={categories.isError}
-      error={categories.error}
-      data={categories.data}
-    >
+    <>
       {isModalOpen && (
         <ProductFormProvider>
           <Modal title="Create your Product" onCloseModal={closeModal}>
@@ -139,7 +144,7 @@ const ProductPage = () => {
             );
           })}
       </div>
-    </QueryStatus>
+    </>
   );
 };
 
