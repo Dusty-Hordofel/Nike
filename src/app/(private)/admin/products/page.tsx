@@ -51,7 +51,14 @@ const ProductPage = () => {
     );
 
   return (
+    // <QueryStatus
+    //   isLoading={categories.isLoading}
+    //   isError={categories.isError}
+    //   error={categories.error}
+    //   data={categories.data}
+    // >
     <>
+      <QueryStatus queryResult={products} entityName="products" />
       {isModalOpen && (
         <ProductFormProvider>
           <Modal title="Create your Product" onCloseModal={closeModal}>
@@ -145,6 +152,7 @@ const ProductPage = () => {
           })}
       </div>
     </>
+    // </QueryStatus>
   );
 };
 

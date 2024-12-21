@@ -28,6 +28,10 @@ const useAdminGetProducts = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: adminGetProducts,
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
   });
 };
 
