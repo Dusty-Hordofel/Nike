@@ -3,12 +3,13 @@ import { getProducts } from "@/services/client/user/products.service";
 import React, { Suspense } from "react";
 import ProductsList from "../../products/products-list";
 import Loader from "@/components/ui/loader";
+import ProductsPage from "./products-page";
 
 type Props = {};
 
-const page = async (props: Props) => {
-  const products = await getProducts();
-  console.log("🚀 ~ page ~ products:", products);
+const ProductsPageServer = async (props: Props) => {
+  const data = await getProducts();
+  console.log("🚀 ~ ProductsPageServer ~ products:", data);
 
   return (
     // <Suspense
@@ -20,13 +21,9 @@ const page = async (props: Props) => {
     //     </div>
     //   }
     // >
-    <ProductsList
-      filteredProducts={products}
-      // isLargeScreen={isLargeScreen}
-      // showSidebar={showSidebar}
-    />
+    <ProductsPage data={data} />
     // </Suspense>
   );
 };
 
-export default page;
+export default ProductsPageServer;
