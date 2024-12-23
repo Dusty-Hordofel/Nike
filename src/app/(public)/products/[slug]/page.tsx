@@ -87,10 +87,6 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
     );
   }
 
-  // isProductLoading,
-  //   isProductError,
-  //   productError,
-
   if (productQuery.isProductError) {
     return (
       <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
