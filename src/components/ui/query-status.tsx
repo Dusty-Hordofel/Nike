@@ -50,7 +50,7 @@ const QueryStatus = <T,>({ queryResult, entityName }: QueryStatusProps<T>) => {
     return (
       <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
         <div className="flex justify-center items-center h-full">
-          {entityName} found.
+          {entityName} not found.
         </div>
       </div>
     );

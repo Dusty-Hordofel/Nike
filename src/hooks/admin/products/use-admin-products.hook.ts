@@ -26,7 +26,7 @@ const useAdminCreateProduct = () => {
 
 const useAdminGetProducts = () => {
   return useQuery({
-    queryKey: ["products"],
+    queryKey: ["admin-products"],
     queryFn: adminGetProducts,
     staleTime: 0,
     refetchOnWindowFocus: true,
@@ -41,7 +41,7 @@ const useAdminDeleteProduct = () => {
   const mutation = useMutation({
     mutationFn: adminDeleteProduct,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-products"] });
     },
     onError: (error) => {
       console.log(`Error: ${error.message}`);
@@ -57,7 +57,7 @@ const useAdminDeleteProductVariant = () => {
   const mutation = useMutation({
     mutationFn: adminDeleteProductVariant,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-products"] });
     },
     onError: (error) => {
       console.log(`Error: ${error.message}`);
@@ -73,7 +73,7 @@ const useAdminUpdateProduct = () => {
   const mutation = useMutation({
     mutationFn: adminUpdateProduct,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-products"] });
     },
     onError: (error) => {
       console.log(`Error: ${error.message}`);

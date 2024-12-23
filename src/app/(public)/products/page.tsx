@@ -10,6 +10,7 @@ import { Product } from "@/@types/admin/admin.products.interface";
 import MobileProductFilterAndSort from "./filters/mobile/mobile-product-filter-and-sort";
 import useWindowSize from "@/hooks/common/use-window-size";
 import { ProductsQueryStatus } from "./products-query-status";
+import { useAdminGetProducts } from "@/hooks/admin/products/use-admin-products.hook";
 
 const ProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -38,12 +39,16 @@ const ProductsPage = () => {
     brand: [],
   });
 
-  const { data, isLoading, error, isError } = useQuery({
+  const { data, isLoading, isSuccess, error, isError } = useQuery({
     queryKey: ["products"],
     // placeholderData: (previousData, previousQuery) => previousData,
     staleTime: 1000 * 60 * 60 * 24 * 30,
     gcTime: 1000 * 60 * 60 * 24 * 30,
-    refetchOnWindowFocus: false,
+    // staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    // refetchOnWindowFocus: false,
     queryFn: async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
@@ -51,27 +56,33 @@ const ProductsPage = () => {
       const data = await response.json();
 
       // Sauvegarde des données dans localStorage
-      if (data && data.products) {
-        localStorage.setItem("productsData", JSON.stringify(data));
-      }
+      // if (data && data.products) {
+      //   localStorage.setItem("productsData", JSON.stringify(data));
+      // }
 
       return data; // Retourne seulement la liste des produits
     },
-    initialData: () => {
-      const cachedData = localStorage.getItem("productsData");
-      return cachedData ? JSON.parse(cachedData) : undefined;
-    },
+    // initialData: () => {
+    //   const cachedData = localStorage.getItem("productsData");
+    //   return cachedData ? JSON.parse(cachedData) : undefined;
+    // },
   });
 
-  useEffect(() => {
-    if (data && data.products && isLargeScreen) {
-      setTimeout(() => {
-        setShowSidebar(true);
-      }, 1000);
-    } else {
-      setShowSidebar(false);
-    }
-  }, [data, isLargeScreen]);
+  console.log("🚀 ~ ProductsPage ~ data:DADA", data);
+  console.log("🚀 ~ ProductsPage ~ data:DODO", data?.products);
+
+  const products = useAdminGetProducts();
+  console.log("🚀 ~ ProductsPage ~ products:ADMIN", products);
+
+  // useEffect(() => {
+  //   if (data && data.products && isLargeScreen) {
+  //     setTimeout(() => {
+  //       setShowSidebar(true);
+  //     }, 1000);
+  //   } else {
+  //     setShowSidebar(false);
+  //   }
+  // }, [data, isLargeScreen]);
 
   useEffect(() => {
     if (data && data.products) {
@@ -90,53 +101,56 @@ const ProductsPage = () => {
     }
   }, [data, filters]);
 
-  type FilterKey = keyof typeof filters;
+  // type FilterKey = keyof typeof filters;
 
-  const handleSorterChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    filterKey: FilterKey
-  ) => {
-    if (filterKey === "price") {
-      setFilters((prev) => ({
-        ...prev,
-        price: e.target.value as "asc" | "desc",
-      }));
-    }
-  };
+  // const handleSorterChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   filterKey: FilterKey
+  // ) => {
+  //   if (filterKey === "price") {
+  //     setFilters((prev) => ({
+  //       ...prev,
+  //       price: e.target.value as "asc" | "desc",
+  //     }));
+  //   }
+  // };
 
-  const handleSubCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters((prev) => ({
-      ...prev,
-      subcategory: e.target.value,
-    }));
-  };
+  // const handleSubCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFilters((prev) => ({
+  //     ...prev,
+  //     subcategory: e.target.value,
+  //   }));
+  // };
 
-  const handleFilterChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    filterKey: FilterKey
-  ) => {
-    if (
-      filterKey === "category" ||
-      filterKey === "color" ||
-      filterKey === "size" ||
-      filterKey === "brand"
-    ) {
-      setFilters((prev) => ({
-        ...prev,
-        [filterKey]: e.target.checked
-          ? [...prev[filterKey], e.target.value]
-          : prev[filterKey].filter((val) => val !== e.target.value),
-      }));
-    }
-  };
+  // const handleFilterChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   filterKey: FilterKey
+  // ) => {
+  //   if (
+  //     filterKey === "category" ||
+  //     filterKey === "color" ||
+  //     filterKey === "size" ||
+  //     filterKey === "brand"
+  //   ) {
+  //     setFilters((prev) => ({
+  //       ...prev,
+  //       [filterKey]: e.target.checked
+  //         ? [...prev[filterKey], e.target.value]
+  //         : prev[filterKey].filter((val) => val !== e.target.value),
+  //     }));
+  //   }
+  // };
 
   return (
-    <ProductsQueryStatus
-      isLoading={isLoading}
-      isError={isError}
-      error={error}
-      data={data}
-    >
+    <>
+      <ProductsQueryStatus
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        isError={isError}
+        error={error}
+        data={data}
+      />
+
       <div
         className={`transition-opacity duration-500 ${
           filterOpacity ? "opacity-50" : "opacity-100"
@@ -154,7 +168,6 @@ const ProductsPage = () => {
                 className="font-medium text-2xl hidden min-[960px]:block"
                 id="Nike-Tech-Clothing"
               >
-                {/* enter the relevant category and number later */}
                 <span>Nike Tech Clothing</span>{" "}
                 <span>({filteredProducts.length})</span>
               </h1>
@@ -172,7 +185,7 @@ const ProductsPage = () => {
                     showDropdown={showDropdown}
                     setShowDropdown={setShowDropdown}
                     filters={filters}
-                    handleSorterChange={handleSorterChange}
+                    // handleSorterChange={handleSorterChange}
                     isLargeScreen={isLargeScreen}
                   />
                 </div>
@@ -187,22 +200,22 @@ const ProductsPage = () => {
             filters={filters}
             showSidebar={showSidebar}
             setShowSidebar={setShowSidebar}
-            handleFilterChange={handleFilterChange}
+            // handleFilterChange={handleFilterChange}
             isLargeScreen={isLargeScreen}
             setShowDropdown={setShowDropdown}
-            handleSorterChange={handleSorterChange}
+            // handleSorterChange={handleSorterChange}
           />
         )}
 
         <div className="flex ">
-          <ProductFiltersSidebar
+          {/* <ProductFiltersSidebar
             data={data}
             filters={filters}
             handleFilterChange={handleFilterChange}
             handleSubCategoryChange={handleSubCategoryChange}
             showSidebar={showSidebar}
             isLargeScreen={isLargeScreen}
-          />
+          /> */}
 
           <ProductsList
             filteredProducts={filteredProducts}
@@ -211,7 +224,7 @@ const ProductsPage = () => {
           />
         </div>
       </div>
-    </ProductsQueryStatus>
+    </>
   );
 };
 

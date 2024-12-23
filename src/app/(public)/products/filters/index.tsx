@@ -34,7 +34,7 @@ const BrandFilter = ({
             : "opacity-0  max-h-0"
         }  transition-all`}
       >
-        {data?.brands.map((brand: any, index: number) => (
+        {data?.brands?.map((brand: any, index: number) => (
           <li key={`${brand}${index}`}>
             <input
               type="checkbox"
@@ -88,7 +88,7 @@ const CategoryFilter = ({
             : "opacity-0  max-h-0"
         }  transition-all`}
       >
-        {data?.categories.map((category: any) => (
+        {data?.categories?.map((category: any) => (
           <li key={category._id} className="flex cursor-pointer">
             <input
               type="checkbox"
@@ -220,7 +220,7 @@ const SizesFilter = ({
             : "opacity-0  max-h-0"
         }  transition-all`}
       >
-        {data?.sizes.map((size: any) => (
+        {data?.sizes?.map((size: any) => (
           <li key={size._id}>
             <input
               type="checkbox"
