@@ -1320,6 +1320,8 @@ $  npm install stripe @stripe/stripe-js @stripe/react-stripe-js
 
 ### 118. handle loading state update
 
+### 119. handle loading state update
+
 <!-- TODO: Work on  CheckoutSectionHeader and CheckoutHeader component's name -->
 
 ## External Links
