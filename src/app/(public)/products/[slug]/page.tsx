@@ -17,6 +17,7 @@ import { useCurrentUser } from "@/hooks/user/auth/use-current-user.hook";
 import { saveCartItems } from "@/actions/cart/user-cart.actions";
 import QueryStatus from "@/components/ui/query-status";
 import { useGetProduct } from "@/hooks/user/products/use-get-product.hook";
+import Loader from "@/components/ui/loader";
 
 interface ProductPageParams {
   slug: string;
@@ -64,14 +65,61 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
     );
   };
 
+  const isOnline = navigator.onLine;
+
+  if (!isOnline) {
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          No Internet connection. Please check your network.
+        </div>
+      </div>
+    );
+  }
+
+  if (productQuery.isProductLoading) {
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          <Loader />
+        </div>
+      </div>
+    );
+  }
+
+  // isProductLoading,
+  //   isProductError,
+  //   productError,
+
+  if (productQuery.isProductError) {
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          Something went wrong while fetching Product. Please try again later.
+        </div>
+      </div>
+    );
+  }
+
+  // || productQuery.product.length === 0
+  if (productQuery.isProductSuccess && !productQuery.product) {
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          Product not found.
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <QueryStatus
-      isLoading={!productQuery.product}
-      // isLoading={productQuery.isProductLoading && !productQuery.cachedProduct}
-      isError={productQuery.isProductError}
-      error={productQuery.productError}
-      data={productQuery.product as any}
-      className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0"
+    <
+      // isLoading={!productQuery.product}
+      // // isLoading={productQuery.isProductLoading && !productQuery.cachedProduct}
+      // isError={productQuery.isProductError}
+      // error={productQuery.productError}
+      // data={productQuery.product as any}
+      // className="h-[calc(100vh-96px)] min-w-[320px] max-w-[1920px] w-full mx-0"
     >
       <div className="min-h-screen">
         {showCartModal && (
@@ -158,7 +206,7 @@ const ProductPage = ({ params, searchParams }: ProductPageProps) => {
           </MediaCarousel>
         </div>
       </div>
-    </QueryStatus>
+    </>
   );
 };
 

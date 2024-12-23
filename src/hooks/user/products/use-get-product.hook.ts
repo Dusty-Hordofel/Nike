@@ -10,6 +10,7 @@ export const useGetProduct = (slug: string, color: string) => {
     isLoading: isProductLoading,
     isError: isProductError,
     error: productError,
+    isSuccess: isProductSuccess,
   } = useQuery({
     enabled: !!color && !!slug,
     queryKey: ["product", slug, color],
@@ -27,6 +28,7 @@ export const useGetProduct = (slug: string, color: string) => {
     isProductLoading,
     isProductError,
     productError,
+    isProductSuccess,
     // cachedProduct,
   };
 };
