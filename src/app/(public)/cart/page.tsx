@@ -117,13 +117,8 @@ const CartProductsPage = () => {
           </div>
 
           {user && (
-            <QueryStatus
-              isLoading={wishlistQuery.isLoading}
-              isError={wishlistQuery.isError}
-              error={wishlistQuery.error}
-              data={wishlistQuery.data?.product}
-              className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0 "
-            >
+            <div className="h-56 min-[960px]:max-w-[66.6667%] w-full mx-0">
+              <QueryStatus queryResult={wishlistQuery} entityName="wishlist" />
               <h2 className="mt-6 text-2xl font-medium">Favourites</h2>
               <div className="grid min-[960px]:grid-cols-2  grid-cols-1">
                 {wishlistQuery.data?.length > 0 ? (
@@ -178,7 +173,7 @@ const CartProductsPage = () => {
                   </div>
                 )}
               </div>
-            </QueryStatus>
+            </div>
           )}
         </main>
       </div>

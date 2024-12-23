@@ -40,20 +40,14 @@ const SelectedProductCartModal = ({
       className=" fixed inset-0 bg-[hsla(0,0%,7%,0.36)]  flex justify-center items-center z-[900]"
     >
       <div className="relative p-6 bg-white  rounded-3xl w-[928px] h-[480px] flex items-center justify-center">
-        <QueryStatus
-          isLoading={productQuery.isLoading}
-          isError={productQuery.isError}
-          error={productQuery.error}
+        <QueryStatus queryResult={productQuery} entityName="product" />
+        <SelectedProductCartModalContent
           data={productQuery.data?.product}
-        >
-          <SelectedProductCartModalContent
-            data={productQuery.data?.product}
-            setSelectedCartItem={setSelectedCartItem}
-            selectedCartItem={selectedCartItem}
-            dispatch={dispatch}
-            // setCartItems={setCartItems}
-          />
-        </QueryStatus>
+          setSelectedCartItem={setSelectedCartItem}
+          selectedCartItem={selectedCartItem}
+          dispatch={dispatch}
+          // setCartItems={setCartItems}
+        />
       </div>
     </div>
   );

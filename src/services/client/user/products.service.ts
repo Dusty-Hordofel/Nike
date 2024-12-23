@@ -5,8 +5,8 @@ const getProducts = async () => {
       cache: "force-cache",
     }
   );
-  const { products } = await response.json();
-  return products;
+  const data = await response.json();
+  return data;
 };
 
 const getProduct = async (slug: string, color: string) => {

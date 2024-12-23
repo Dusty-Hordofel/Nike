@@ -1,43 +1,33 @@
-import Loader from "@/components/ui/loader";
-import { cn } from "@/lib/common/utils";
-import React from "react";
+import Loader from "./loader";
 
 interface QueryStatusProps<T> {
-  isLoading: boolean;
-  isError: boolean;
-  error: any;
-  data?: T;
-  children: React.ReactNode;
-  className?: string;
-  dataKey?: keyof T; // Clé pour accéder aux données spécifiques
+  queryResult: {
+    data?: T[]; // Les données de la requête
+    isLoading: boolean; // Si la requête est en cours de chargement
+    isError: boolean; // Si une erreur s'est produite
+    isSuccess: boolean; // Si la requête a réussi
+  };
+  entityName: string; // Nom de l'entité à afficher
 }
 
-const QueryStatus = <T extends object>({
-  isLoading,
-  isError,
-  error,
-  data,
-  children,
-  className,
-  dataKey,
-}: QueryStatusProps<T>) => {
-  const isEmpty = dataKey
-    ? !(
-        data &&
-        data[dataKey] &&
-        Array.isArray(data[dataKey]) &&
-        data[dataKey].length > 0
-      )
-    : !data;
+const QueryStatus = <T,>({ queryResult, entityName }: QueryStatusProps<T>) => {
+  const { data, isLoading, isError, isSuccess } = queryResult;
 
-  if (isLoading && isEmpty) {
+  const isOnline = navigator.onLine;
+
+  if (!isOnline) {
     return (
-      <div
-        className={cn(
-          "max-w-[1090px] px-[6px] mx-auto h-screen bg-white",
-          className
-        )}
-      >
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          No Internet connection. Please check your network.
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
         <div className="flex justify-center items-center h-full">
           <Loader />
         </div>
@@ -47,21 +37,26 @@ const QueryStatus = <T extends object>({
 
   if (isError) {
     return (
-      <div className="max-w-[1090px] px-[6px] mx-auto h-screen">
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
         <div className="flex justify-center items-center h-full">
-          <h1>Error: {error?.message}</h1>
+          Something went wrong while fetching {entityName}. Please try again
+          later.
         </div>
       </div>
     );
   }
 
-  if (isEmpty) {
+  if (isSuccess && (!data || data.length === 0)) {
     return (
-      <div className="text-center text-gray-500">Aucun élément disponible.</div>
+      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          {entityName} not found.
+        </div>
+      </div>
     );
   }
 
-  return <>{children}</>;
+  return null;
 };
 
 export default QueryStatus;

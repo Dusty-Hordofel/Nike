@@ -52,23 +52,18 @@ const CategoriesPage = () => {
     deleteCategory,
   } = useCategoryForm();
 
-  if (categories.isLoading || !categories.data)
-    return (
-      <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
-        <div className="flex justify-center items-center h-full">
-          <Loader />
-        </div>
-      </div>
-    );
+  // if (categories.isLoading || !categories.data)
+  //   return (
+  //     <div className="max-w-[1090px] px-[6px] mx-auto h-screen bg-white">
+  //       <div className="flex justify-center items-center h-full">
+  //         <Loader />
+  //       </div>
+  //     </div>
+  //   );
 
   return (
-    // <QueryStatus
-    //   isLoading={categories.isLoading}
-    //   isError={categories.isError}
-    //   error={categories.error}
-    //   data={categories.data}
-    // >
     <>
+      <QueryStatus queryResult={categories} entityName="categories" />
       {isModalOpen && (
         <CategoryFormProvider>
           <Modal title="Create your subcategory" onCloseModal={closeModal}>
@@ -108,7 +103,6 @@ const CategoriesPage = () => {
         />
       </div>
     </>
-    // </QueryStatus>
   );
 };
 
